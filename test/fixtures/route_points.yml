@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  customer_id: 1
+  status_id: 1
+  route_id: 1
+
+two:
+  customer_id: 1
+  status_id: 1
+  route_id: 1
