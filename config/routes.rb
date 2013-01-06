@@ -1,25 +1,12 @@
 Mss::Application.routes.draw do
+
   resources :order_items
-
-
   resources :orders
-
-
   resources :route_points
-
-
   resources :routes
-
-
   resources :products
-
-
   resources :managers
-
-
   resources :statuses
-
-
   resources :customers
 
 
