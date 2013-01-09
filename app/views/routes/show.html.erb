@@ -4,7 +4,23 @@
   <b>Date:</b>
   <%= @route.date %>
 </p>
-
+<h4>Route points</h4>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Route point</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @route.route_points.each do |route_point| %>  
+    <tr>
+      <td><%= route_point.shipping_address.name %></td>
+      <td><%= route_point.status.name %></td>
+    </tr>
+    <%end%>
+  </tbody>
+</table>
 
 <%= link_to 'Edit', edit_route_path(@route) %> |
 <%= link_to 'Back', routes_path %>

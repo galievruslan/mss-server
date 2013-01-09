@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Customer:</b>
-  <%= @shipping_address.customer_id %>
+  <b>Customer name:</b>
+  <%= @shipping_address.customer.name %>
 </p>
 
 <p>
@@ -16,5 +16,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_shipping_address_path(@shipping_address) %> |
-<%= link_to 'Back', shipping_addresses_path %>
+<%= link_to 'Edit', edit_customer_shipping_address_path(@customer, @shipping_address) %> |
+<%= link_to 'Back', customer_shipping_addresses_path(@customer) %>

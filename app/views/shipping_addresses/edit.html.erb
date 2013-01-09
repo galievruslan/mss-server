@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @shipping_address %> |
-<%= link_to 'Back', shipping_addresses_path %>
+<%= link_to 'Show', customer_shipping_address_path(@customer, @shipping_address) %> |
+<%= link_to 'Back', customer_shipping_addresses_path(@customer) %>

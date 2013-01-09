@@ -1,27 +1,28 @@
 <h1>Listing shipping_addresses</h1>
-
-<table>
-  <tr>
-    <th>Customer</th>
-    <th>Name</th>
-    <th>Address</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @shipping_addresses.each do |shipping_address| %>
-  <tr>
-    <td><%= shipping_address.customer_id %></td>
-    <td><%= shipping_address.name %></td>
-    <td><%= shipping_address.address %></td>
-    <td><%= link_to 'Show', shipping_address %></td>
-    <td><%= link_to 'Edit', edit_shipping_address_path(shipping_address) %></td>
-    <td><%= link_to 'Destroy', shipping_address, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+<table class="table table-striped table-hover">
+	<thead>
+	  <tr>
+	    <th>Customer</th>
+	    <th>Name</th>
+	    <th>Address</th>
+	    <th colspan="3"></th>
+	  </tr>
+  </thead>
+	<tbody>
+		<% @shipping_addresses.each do |shipping_address| %>
+		  <tr>
+		    <td><%= shipping_address.customer.name %></td>
+		    <td><%= shipping_address.name %></td>
+		    <td><%= shipping_address.address %></td>
+		    <td><%= link_to 'Show', customer_shipping_address_path(@customer, shipping_address) %></td>		    
+		    <td><%= link_to 'Edit', edit_customer_shipping_address_path(@customer, shipping_address) %></td>
+		    <td><%= link_to 'Destroy', customer_shipping_address_path(@customer, shipping_address), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		  </tr>
+		<% end %>
+	</tbody>
 </table>
 
 <br />
 
-<%= link_to 'New Shipping address', new_shipping_address_path %>
+<%= link_to 'New Shipping address', new_customer_shipping_address_path(@customer), :class =>'btn' %>
+	

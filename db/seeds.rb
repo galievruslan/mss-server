@@ -23,14 +23,14 @@
 
 @products = []
 for i in 0..1000
-  @products[i] = Product.create(name: "Водка #{i}")
+  @products[i] = Product.create(name: "Водка #{i}", price:100.54)
 end
  
 @shipping_addresses= Array.new(5).map!{Array.new(5)} 
 for i in 0..4  
     @name=@customers[i].name
   for j in 0..4
-    @shipping_addresses[i][j]=ShippingAddress.create(name: "#{@name} №#{j}")
+    @shipping_addresses[i][j]=ShippingAddress.create(name: "#{@name} №#{j}", address: "г. Казань ул. Восстания д.#{j}")
     @customers[i].shipping_addresses << @shipping_addresses[i][j]
     
   end

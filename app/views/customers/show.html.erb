@@ -4,7 +4,21 @@
   <b>Name:</b>
   <%= @customer.name %>
 </p>
-
+<h4>Shipping addresses</h4>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Shipping address</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @customer.shipping_addresses.each do |shipping_address| %>  
+    <tr>
+      <td><%= shipping_address.name %></td>
+    </tr>
+    <%end%>
+  </tbody>
+</table>
 
 <%= link_to 'Edit', edit_customer_path(@customer) %> |
 <%= link_to 'Back', customers_path %>

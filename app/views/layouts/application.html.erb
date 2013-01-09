@@ -1,14 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mss</title>
+  <title>Mobile sales system</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag 'jquery-1.8.3.min.js' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2">      
+        <ul class="nav nav-tabs nav-stacked">
+        <li class="nav-header">MSS menu </li>
+            <li <%= 'class=active' if @current_controller =='managers'%>>
+              <%= link_to "Managers", managers_path%>
+            </li>
+            <li <%= 'class=active' if @current_controller =='customers'%>>
+              <%= link_to "Customers", customers_path %>
+            </li>
+            <li <%= 'class=active' if @current_controller =='orders'%>>
+              <%= link_to "Orders", orders_path %>
+            </li>
+            <li <%= 'class=active' if @current_controller =='routes'%>>
+              <%= link_to "Routes", routes_path %>
+            </li>
+            <li <%= 'class=active' if @current_controller =='statuses'%>>
+              <%= link_to "Statuses", statuses_path %>
+            </li>
+            <li <%= 'class=active' if @current_controller =='products'%>>
+              <%= link_to "Products", products_path %>
+            </li>
+      </div>
+      
+      <div class="span10 well">
 
-<%= yield %>
-
+        <%= yield %> 
+      </div>
+    </div>
+  </div>
+<%= debug(params) if Rails.env.development? %>
 </body>
 </html>

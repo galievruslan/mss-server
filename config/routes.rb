@@ -1,17 +1,18 @@
-Mss::Application.routes.draw do
-
-  resources :shipping_addresses
-
-
-  resources :order_items
-  resources :orders
-  resources :route_points
-  resources :routes
+Mss::Application.routes.draw do  
+  resources :orders do
+    resources :order_items
+  end 
+  resources :routes do
+    resources :route_points
+  end
   resources :products
   resources :managers
   resources :statuses
-  resources :customers
-
+  resources :customers do
+    resources  :shipping_addresses
+  end
+  
+  root :to => 'managers#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

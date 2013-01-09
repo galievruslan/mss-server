@@ -1,6 +1,6 @@
 <h1>Editing customer</h1>
 
 <%= render 'form' %>
-
+<%= link_to 'Edit shipping addresses', customer_shipping_addresses_path(@customer), :class =>'btn' %><br><br>
 <%= link_to 'Show', @customer %> |
 <%= link_to 'Back', customers_path %>
