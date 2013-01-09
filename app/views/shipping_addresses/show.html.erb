@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Customer:</b>
+  <%= @shipping_address.customer_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @shipping_address.name %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @shipping_address.address %>
+</p>
+
+
+<%= link_to 'Edit', edit_shipping_address_path(@shipping_address) %> |
+<%= link_to 'Back', shipping_addresses_path %>

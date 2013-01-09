@@ -1,5 +1,8 @@
 Mss::Application.routes.draw do
 
+  resources :shipping_addresses
+
+
   resources :order_items
   resources :orders
   resources :route_points

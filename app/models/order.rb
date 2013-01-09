@@ -1,6 +1,6 @@
 class Order < ActiveRecord::Base
-  attr_accessible :customer_id, :date, :manager_id
-  has_many :customers
-  has_many :managers
-  belongs_to :order_item
+  attr_accessible :shipping_address_id, :date, :manager_id, :manager, :shipping_address  
+  belongs_to :shipping_address
+  belongs_to :manager
+  has_many :order_items
 end
