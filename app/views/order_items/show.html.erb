@@ -1,13 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Order:</b>
-  <%= @order_item.order_id %>
-</p>
-
-<p>
   <b>Product:</b>
-  <%= @order_item.product_id %>
+  <%= @order_item.product.name %>
 </p>
 
 <p>
@@ -16,5 +11,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_order_item_path(@order_item) %> |
-<%= link_to 'Back', order_items_path %>
+<%= link_to 'Edit', edit_order_order_item_path(@order, @order_item) %> |
+<%= link_to 'Back', order_order_items_path(@order) %>

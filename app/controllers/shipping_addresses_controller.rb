@@ -79,11 +79,12 @@ class ShippingAddressesController < ApplicationController
   # DELETE /shipping_addresses/1
   # DELETE /shipping_addresses/1.json
   def destroy
+    @customer = Customer.find(params[:customer_id])
     @shipping_address = ShippingAddress.find(params[:id])
     @shipping_address.destroy
 
     respond_to do |format|
-      format.html { redirect_to shipping_addresses_url }
+      format.html { redirect_to customer_shipping_addresses_path(@customer) }
       format.json { head :no_content }
     end
   end

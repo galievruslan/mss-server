@@ -1,6 +1,6 @@
 <h1>Editing order</h1>
 
 <%= render 'form' %>
-
+<%= link_to 'Edit order items', order_order_items_path(@order), :class =>'btn' %><br><br>
 <%= link_to 'Show', @order %> |
 <%= link_to 'Back', orders_path %>

@@ -16,7 +16,7 @@
             <li <%= 'class=active' if @current_controller =='managers'%>>
               <%= link_to "Managers", managers_path%>
             </li>
-            <li <%= 'class=active' if @current_controller =='customers'%>>
+            <li <%= 'class=active' if @current_controller =='customers' or @current_controller =='shipping_addresses'%>>
               <%= link_to "Customers", customers_path %>
             </li>
             <li <%= 'class=active' if @current_controller =='orders'%>>
