@@ -11,26 +11,26 @@
 @status3 = Status.create(name: 'Учет')
 @status4 = Status.create(name: 'Отказ')
 
-@manager1 = Manager.create(name: 'Иванов И.А')
-@manager2 = Manager.create(name: 'Петров А.П')
+@manager1 = Manager.create(name: 'Иванов И.А', external_key: '00001')
+@manager2 = Manager.create(name: 'Петров А.П', external_key: '00002')
 
 @customers= []
-@customers[0] = Customer.create(name: 'ООО "Тимерхан"')
-@customers[1] = Customer.create(name: 'ООО "Эдельвейс"')
-@customers[2] = Customer.create(name: 'ООО "Пятерочка"')
-@customers[3] = Customer.create(name: 'ООО "Реал"')
-@customers[4] = Customer.create(name: 'ООО "Метро"')
+@customers[0] = Customer.create(name: 'ООО "Тимерхан"', external_key: '10001')
+@customers[1] = Customer.create(name: 'ООО "Эдельвейс"', external_key: '10002')
+@customers[2] = Customer.create(name: 'ООО "Пятерочка"', external_key: '10003')
+@customers[3] = Customer.create(name: 'ООО "Реал"', external_key: '10004')
+@customers[4] = Customer.create(name: 'ООО "Метро"', external_key: '10005')
 
 @products = []
 for i in 0..1000
-  @products[i] = Product.create(name: "Водка #{i}", price:100.54)
+  @products[i] = Product.create(name: "Водка #{i}", price:100.54, external_key: "CB#{i}")
 end
  
 @shipping_addresses= Array.new(5).map!{Array.new(5)} 
 for i in 0..4  
     @name=@customers[i].name
   for j in 0..4
-    @shipping_addresses[i][j]=ShippingAddress.create(name: "#{@name} №#{j}", address: "г. Казань ул. Восстания д.#{j}")
+    @shipping_addresses[i][j]=ShippingAddress.create(name: "#{@name} №#{j}", address: "г. Казань ул. Восстания д.#{j}", external_key: "00#{i}#{j}")
     @customers[i].shipping_addresses << @shipping_addresses[i][j]
     
   end

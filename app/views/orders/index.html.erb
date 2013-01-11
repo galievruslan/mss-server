@@ -22,7 +22,8 @@
 		<% end %>
 	</tbody>
 </table>
-
-<br />
+<%=link_to "Download XML ", :controller => "orders", :action => "generate_xml" %> | 
+<%=link_to "View XML", :format => :xml%>
+<br /><br />
 
 <%= link_to 'New Order', new_order_path, class: 'btn' %>

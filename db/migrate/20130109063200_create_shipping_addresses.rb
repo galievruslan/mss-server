@@ -4,6 +4,7 @@ class CreateShippingAddresses < ActiveRecord::Migration
       t.integer :customer_id
       t.string :name
       t.string :address
+      t.string :external_key
       t.timestamps
     end
   end

@@ -1,17 +1,4 @@
 class OrdersController < ApplicationController
-  DISHES = [
-    { :rating =>2, :category => "singaporean", :dish_name => "Fish Head Curry", :where_to_buy => "Little India" },
-    { :rating =>0, :category => "singaporean", :dish_name => "Pig Organ Soup", :where_to_buy => "Food Court" },
-    { :rating =>8, :category => "indian", :dish_name => "Chicken Biryani", :where_to_buy => "Al Ameen's" },
-    { :rating =>9, :category => "german", :dish_name => "Pork Knuckle", :where_to_buy => "Stammtisch Restaurant" },
-    { :rating =>10, :category => "indian", :dish_name => "Butter Chicken", :where_to_buy => "Jaggi's Northern Indian Cuisine" },
-    { :rating =>10, :category => "indian", :dish_name => "Chicken Tikka", :where_to_buy => "Jaggi's Northern Indian Cuisine" },
-    { :rating =>7, :category => "singaporean", :dish_name => "Mutton Murtabak", :where_to_buy => "Zam Zam Restaurant" },
-    { :rating =>8, :category => "singaporean", :dish_name => "Chicken Murtabak", :where_to_buy => "Ah Mei Kaya Toast" },
-    { :rating =>9, :category => "western", :dish_name => "Beef Cheek", :where_to_buy => "Ember Restaurant" },
-    { :rating =>8, :category => "western", :dish_name => "Cowboy Burger", :where_to_buy => "Brewerkz" },
-    { :rating =>8, :category => "mexican", :dish_name => "Pork Enchilada", :where_to_buy => "Iguana Cafe" }
-  ]
   # GET /orders
   # GET /orders.json
   def index
@@ -20,6 +7,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @orders }
+      format.xml # index.xml.erb
     end
   end
 
@@ -95,23 +83,37 @@ class OrdersController < ApplicationController
   end
   
   def generate_xml
-    hijack_response(generate_builder)
+    data = Builder::XmlMarkup.new( :target => out_data = "", :indent => 2 )
+    data.instruct!
+    @orders = Order.all        
+    data.orders do
+      @orders.each do |order|
+        data.order do
+          data.id(order.id)
+          data.date(order.date)
+          data.customer_id(order.shipping_address.customer.id)
+          data.customer_name(order.shipping_address.customer.name)
+          data.customer_external_key(order.shipping_address.customer.external_key)
+          data.shipping_address_id(order.shipping_address.id)
+          data.shipping_address_external_key(order.shipping_address.external_key)
+          data.shipping_address_name(order.shipping_address.name)
+          data.manager_id(order.manager.id)
+          data.manager_name(order.manager.name)
+          data.manager_external_key(order.manager.external_key)
+          data.order_items do
+            order.order_items.each do |order_item|
+              data.order_item do
+                data.product_id(order_item.product.id)
+                data.product_external_key(order_item.product.external_key)
+                data.product_name(order_item.product.name)
+                data.quantity(order_item.quantity)
+              end
+            end
+          end
+        end
+      end  
+    end    
+    send_data( out_data, :type => "text/xml", :filename => "orders.xml" )  
   end
   
-  def hijack_response(out_data)
-    send_data(out_data, :type => "text/xml", :filename => "sample.xml")
-  end
-  
-  def generate_builder
-    doc = Builder::XmlMarkup.new( :target => out_string = "", :indent => 2 )
-    doc.Food {
-      DISHES.each{ |element_data|
-        doc.Dish( "rating" => element_data[:rating], "category" => element_data[:category] ){
-          doc.DishName( element_data[:dish_name] )
-          doc.WhereToBuy( element_data[:where_to_buy] )
-        }
-      }
-    }
-    return out_string
-  end
 end

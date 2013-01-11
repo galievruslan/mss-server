@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<orders>
+	<% @orders.each do |order|%>
+	  <order>
+	  	<id><%=order.id%></id>
+	  	<date><%=order.date%></date>
+	  	<shipping_address_name><%=order.shipping_address.name%></shipping_address_name>
+	  	<shipping_address_id><%=order.shipping_address.id%></shipping_address_id>
+	  	<manager_name><%=order.manager.name%></manager_name>
+	  	<manager_id><%=order.manager.id%></manager_id>  	
+	  	<order_items>
+	  		<%order.order_items.each do |order_item|%>
+		  		<order_item>
+		  			<product_id><%= order_item.product.id%></product_id>
+		  			<product_name><%= order_item.product.name%></product_name>
+		  			<quantity><%= order_item.quantity%></quantity>	
+		  		</order_item>
+	  		<%end%>
+	  	</order_items>
+	  </order>
+	<%end%>
+</orders>

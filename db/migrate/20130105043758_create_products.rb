@@ -3,7 +3,7 @@ class CreateProducts < ActiveRecord::Migration
     create_table :products do |t|
       t.string :name
       t.float :price
-
+      t.string :external_key
       t.timestamps
     end
   end

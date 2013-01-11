@@ -1,9 +1,7 @@
-Mss::Application.routes.draw do  
+Mss::Application.routes.draw do
+  match 'orders/generate_xml', :to => 'orders#generate_xml'
   resources :orders do
-    resources :order_items
-    member do
-      get :generate_xml
-    end    
+    resources :order_items    
   end 
   resources :routes do
     resources :route_points
@@ -17,7 +15,7 @@ Mss::Application.routes.draw do
   
   root :to => 'managers#index'
   
-  #match '/generate_xml', :to => 'orders#generate_xml'
+  
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
