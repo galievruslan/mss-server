@@ -1,0 +1,58 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this service from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+	<div class="field">
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </div>
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :manager %>
+    <%= f.number_field :manager_id %>
+  </div>
+  <div>
+  	<%= f.label :password %>
+  	<%= f.password_field :password%>
+  </div>
+  <div><%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <table class="table table-striped table-hover">
+  	<thead>
+  		<tr>
+  			<th>Role</th>
+  			<th>Enable</th>
+  		</tr>
+  	</thead>
+  	<tbody>
+  		<tr>
+  			<td>Admin</td>
+  			<td><%= check_box_tag("admin") %></td>
+  		</tr>
+  		<tr>
+  			<td>Supervisor</td>
+  			<td><%= check_box_tag("supervisor") %></td>
+  		</tr>
+  		<tr>
+  			<td>Manager</td>
+  			<td><%= check_box_tag("manager") %></td>
+  		</tr>
+  	</tbody>
+  </table>
+  <div class="actions">
+    <%= f.submit(:class =>'btn') %>
+  </div>
+<% end %>

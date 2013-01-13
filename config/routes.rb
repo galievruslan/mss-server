@@ -1,4 +1,8 @@
 Mss::Application.routes.draw do
+  get "pages/index"
+
+  devise_for :users
+
   match 'orders/generate_xml', :to => 'orders#generate_xml'
   resources :orders do
     resources :order_items    
@@ -12,8 +16,9 @@ Mss::Application.routes.draw do
   resources :customers do
     resources  :shipping_addresses
   end
+  resources :users
   
-  root :to => 'managers#index'
+  root :to => 'pages#index'
   
   
   

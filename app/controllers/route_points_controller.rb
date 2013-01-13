@@ -1,4 +1,5 @@
 class RoutePointsController < ApplicationController
+  load_and_authorize_resource
   # GET /route_points
   # GET /route_points.json
   def index

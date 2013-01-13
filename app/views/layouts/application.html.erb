@@ -4,7 +4,6 @@
   <title>Mobile sales system</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
-  <%= javascript_include_tag 'jquery-1.8.3.min.js' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -31,10 +30,17 @@
             <li <%= 'class=active' if @current_controller =='products'%>>
               <%= link_to "Products", products_path %>
             </li>
+            <li class="nav-header">Admin settings</li>
+            <li <%= 'class=active' if @current_controller =='users'%>>
+              <%= link_to "User", users_path %>
+            </li>	          
+	          <li>
+	          	<%= link_to 'Logout', destroy_user_session_path %>
+	          </li>
       </div>
       
       <div class="span10 well">
-
+      	<p id='error'><%= alert %></p>
         <%= yield %> 
       </div>
     </div>

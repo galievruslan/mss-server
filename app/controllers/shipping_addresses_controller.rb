@@ -1,4 +1,5 @@
 class ShippingAddressesController < ApplicationController
+  load_and_authorize_resource
   # GET /shipping_addresses
   # GET /shipping_addresses.json
   def index

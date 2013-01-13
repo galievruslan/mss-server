@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MSS Logon page</title>
+  <%= csrf_meta_tag %>
+  <%= stylesheet_link_tag 'application', :media => 'screen' %>
+  <%= javascript_include_tag 'application' %>
+</head>
+  <body>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span4">
+        </div>
+        <div class="well well-small span4">   
+          <%= yield %>
+        </div>
+        <div class="span4">
+        </div>   
+      </div>
+    </div>
+  </body>
+</html>

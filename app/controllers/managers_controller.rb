@@ -1,4 +1,5 @@
 class ManagersController < ApplicationController
+  load_and_authorize_resource
   # GET /managers
   # GET /managers.json
   def index
