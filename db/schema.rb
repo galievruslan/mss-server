@@ -20,12 +20,16 @@ ActiveRecord::Schema.define(:version => 20130113112226) do
     t.datetime "updated_at",   :null => false
   end
 
+  add_index "customers", ["external_key"], :name => "index_customers_on_external_key", :unique => true
+
   create_table "managers", :force => true do |t|
     t.string   "name"
     t.string   "external_key"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
+
+  add_index "managers", ["external_key"], :name => "index_managers_on_external_key", :unique => true
 
   create_table "order_items", :force => true do |t|
     t.integer  "order_id"
@@ -111,5 +115,6 @@ ActiveRecord::Schema.define(:version => 20130113112226) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
 end

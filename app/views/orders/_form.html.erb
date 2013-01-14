@@ -14,14 +14,14 @@
   <div class="field">
     <%= f.label :date %><br />
     <%= f.date_select :date %>
+  </div>  
+  <div class="field">
+    <%= f.label :shipping_address_id, 'Shipping_Address' %><br />
+    <%= f.select(:shipping_address_id, @shipping_addresses.collect  {|p| [ p.name, p.id ] }) %>
   </div>
   <div class="field">
-    <%= f.label :shipping_address_id %><br />
-    <%= f.number_field :shipping_address_id %>
-  </div>
-  <div class="field">
-    <%= f.label :manager_id %><br />
-    <%= f.number_field :manager_id %>
+    <%= f.label :manager_id, 'Manager' %><br />
+    <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ] }) %>
   </div>
   <div class="actions">
     <%= f.submit(:class =>'btn') %>

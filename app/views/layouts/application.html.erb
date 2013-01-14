@@ -18,10 +18,10 @@
             <li <%= 'class=active' if @current_controller =='customers' or @current_controller =='shipping_addresses'%>>
               <%= link_to "Customers", customers_path %>
             </li>
-            <li <%= 'class=active' if @current_controller =='orders'%>>
+            <li <%= 'class=active' if @current_controller =='orders' or @current_controller =='order_items'%>>
               <%= link_to "Orders", orders_path %>
             </li>
-            <li <%= 'class=active' if @current_controller =='routes'%>>
+            <li <%= 'class=active' if @current_controller =='routes' or @current_controller =='route_points'%>>
               <%= link_to "Routes", routes_path %>
             </li>
             <li <%= 'class=active' if @current_controller =='statuses'%>>
@@ -32,7 +32,7 @@
             </li>
             <li class="nav-header">Admin settings</li>
             <li <%= 'class=active' if @current_controller =='users'%>>
-              <%= link_to "User", users_path %>
+              <%= link_to "Users", users_path %>
             </li>	          
 	          <li>
 	          	<%= link_to 'Logout', destroy_user_session_path %>

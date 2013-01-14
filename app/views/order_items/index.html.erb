@@ -24,4 +24,5 @@
 </table>
 <br />
 
-<%= link_to 'New Order item', new_order_order_item_path(@order), class: 'btn' %>
+<%= link_to 'New Order item', new_order_order_item_path(@order), class: 'btn' %><br /><br />
+<%= link_to 'Back', order_path(@order) %> | <%= link_to 'Back to Orders', orders_path %>

@@ -26,7 +26,7 @@ class RoutesController < ApplicationController
   # GET /routes/new.json
   def new
     @route = Route.new
-
+    @managers=Manager.all
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @route }
@@ -36,6 +36,7 @@ class RoutesController < ApplicationController
   # GET /routes/1/edit
   def edit
     @route = Route.find(params[:id])
+    @managers=Manager.all
   end
 
   # POST /routes

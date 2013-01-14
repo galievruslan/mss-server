@@ -20,8 +20,8 @@
     <%= f.text_field :email %>
   </div>
   <div class="field">
-    <%= f.label :manager %>
-    <%= f.number_field :manager_id %>
+    <%= f.label :manager_id, 'Manager' %>
+    <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}, { :include_blank => true }) %>
   </div>
   <div>
   	<%= f.label :password %>

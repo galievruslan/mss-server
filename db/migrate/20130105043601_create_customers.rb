@@ -5,5 +5,7 @@ class CreateCustomers < ActiveRecord::Migration
       t.string :external_key
       t.timestamps
     end
+    
+    add_index :customers, :external_key, :unique => true
   end
 end

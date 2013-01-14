@@ -14,7 +14,7 @@ class OrderItemsController < ApplicationController
 
   # GET /order_items/1
   # GET /order_items/1.json
-  def show
+  def show    
     @order=Order.find(params[:order_id])
     @order_item = OrderItem.find(params[:id])
 
@@ -27,6 +27,7 @@ class OrderItemsController < ApplicationController
   # GET /order_items/new
   # GET /order_items/new.json
   def new
+    @products = Product.all
     @order=Order.find(params[:order_id])
     @order_item = OrderItem.new
 
@@ -38,6 +39,7 @@ class OrderItemsController < ApplicationController
 
   # GET /order_items/1/edit
   def edit
+    @products = Product.all
     @order=Order.find(params[:order_id])
     @order_item = OrderItem.find(params[:id])
   end
@@ -45,6 +47,7 @@ class OrderItemsController < ApplicationController
   # POST /order_items
   # POST /order_items.json
   def create
+    @products = Product.all
     @order=Order.find(params[:order_id])
     @order_item = OrderItem.new(params[:order_item])
     @order.order_items << @order_item
@@ -64,6 +67,7 @@ class OrderItemsController < ApplicationController
   # PUT /order_items/1
   # PUT /order_items/1.json
   def update
+    @products = Product.all
     @order=Order.find(params[:order_id])
     @order_item = OrderItem.find(params[:id])
 

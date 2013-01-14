@@ -3,4 +3,5 @@ class RoutePoint < ActiveRecord::Base
   belongs_to :shipping_address
   belongs_to :route
   belongs_to :status
+  validates :shipping_address_id, :route_id, :status_id, :presence => true
 end

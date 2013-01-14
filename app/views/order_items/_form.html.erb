@@ -12,12 +12,12 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :product_id %><br />
-    <%= f.number_field :product_id %>
+    <%= f.label :product_id , 'Product' %><br />
+    <%= f.select :product_id , (@products.collect {|p| [p.name, p.id]}) %>
   </div>
   <div class="field">
     <%= f.label :quantity %><br />
-    <%= f.text_field :quantity %>
+    <%= f.number_field :quantity, min: 1, step: 1  %>
   </div>
   <div class="actions">
     <%= f.submit(class: 'btn') %>

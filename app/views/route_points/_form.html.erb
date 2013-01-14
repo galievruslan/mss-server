@@ -12,12 +12,12 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :customer_id %><br />
-    <%= f.number_field :shipping_address_id %>
+    <%= f.label :shipping_address_id, 'Shipping address' %><br />
+    <%= f.select(:shipping_address_id, @shipping_addresses.collect {|p| [p.name, p.id]}) %>
   </div>
   <div class="field">
     <%= f.label :status_id %><br />
-    <%= f.number_field :status_id %>
+    <%= f.select(:status_id, @statuses.collect {|p| [p.name, p.id]}) %>
   </div>
   <div class="actions">
     <%= f.submit(class: 'btn') %>

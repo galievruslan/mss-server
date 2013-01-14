@@ -29,6 +29,8 @@ class RoutePointsController < ApplicationController
   def new
     @route=Route.find(params[:route_id])
     @route_point = RoutePoint.new
+    @shipping_addresses = ShippingAddress.all
+    @statuses = Status.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,6 +42,8 @@ class RoutePointsController < ApplicationController
   def edit
     @route=Route.find(params[:route_id])
     @route_point = RoutePoint.find(params[:id])
+    @shipping_addresses = ShippingAddress.all
+    @statuses = Status.all
   end
 
   # POST /route_points
