@@ -5,6 +5,9 @@ Mss::Application.routes.draw do
 
   match 'orders/generate_xml', :to => 'orders#generate_xml'
   resources :orders do
+    member do
+        put :export_again        
+      end
     resources :order_items    
   end 
   resources :routes do
@@ -18,6 +21,9 @@ Mss::Application.routes.draw do
   end
   resources :users
   
+  match 'exchange', :to => 'exchange#index'
+  match 'exchange/get_xml', :to => 'exchange#get_orders'
+  match 'exchange/upload', :to => 'exchange#upload'
   root :to => 'pages#index'
   
   

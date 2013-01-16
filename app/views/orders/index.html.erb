@@ -6,15 +6,18 @@
 	    <th>Date</th>
 	    <th>Shipping address</th>
 	    <th>Manager</th>
-	    <th colspan="3">Actions</th>
+	    <th>Status</th>
+	    <th colspan="4">Actions</th>
 	  </tr>
 	</thead>
 	<tbody>
 		<% @orders.each do |order| %>
-	  <tr>
+	  <tr <%='class=success' if order.exported_at %>>
 	    <td><%= order.date %></td>
 	    <td><%= order.shipping_address.name %></td>
 	    <td><%= order.manager.name %></td>
+	    <td><%= order.exported_at ?  'Exported' : 'Not exported' %></td>
+	    <td><%= link_to 'Export again', export_again_order_path(order), :method => :put %></td>
 	    <td><%= link_to 'Show', order %></td>
 	    <td><%= link_to 'Edit', edit_order_path(order) %></td>
 	    <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -121,4 +121,13 @@ class OrdersController < ApplicationController
     send_data( out_data, :type => "text/xml", :filename => "orders.xml" )  
   end
   
+  def export_again
+    @order = Order.find(params[:id])
+    @order.update_attributes(exported_at: nil)    
+    
+    respond_to do |format|
+        format.html { redirect_to orders_path, notice: "Order exported datetime removed." }
+        format.json { head :no_content }      
+    end
+  end  
 end

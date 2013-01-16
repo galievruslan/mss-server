@@ -31,9 +31,12 @@
               <%= link_to "Products", products_path %>
             </li>
             <li class="nav-header">Admin settings</li>
+            <li <%= 'class=active' if @current_controller =='exchange'%>>
+              <%= link_to "Exchange", exchange_path %>
+            </li>
             <li <%= 'class=active' if @current_controller =='users'%>>
               <%= link_to "Users", users_path %>
-            </li>	          
+            </li>                      
 	          <li>
 	          	<%= link_to 'Logout', destroy_user_session_path %>
 	          </li>
@@ -41,6 +44,7 @@
       
       <div class="span10 well">
       	<p id='error'><%= alert %></p>
+      	<p id='notice'><%= notice %></p>
         <%= yield %> 
       </div>
     </div>
