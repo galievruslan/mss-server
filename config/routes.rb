@@ -21,9 +21,9 @@ Mss::Application.routes.draw do
   end
   resources :users
   
-  match 'exchange', :to => 'exchange#index'
-  match 'exchange/get_xml', :to => 'exchange#get_orders'
-  match 'exchange/upload', :to => 'exchange#upload'
+  get 'exchange', :to => 'exchange#index'
+  get 'exchange/get_xml', :to => 'exchange#get_orders'
+  post 'exchange/upload', :to => 'exchange#upload'
   root :to => 'pages#index'
   
   

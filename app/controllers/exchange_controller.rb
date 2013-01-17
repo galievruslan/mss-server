@@ -8,23 +8,53 @@ class ExchangeController < ApplicationController
     uploaded_file = params[:xml_file]
     data = uploaded_file.read if uploaded_file.respond_to? :read
     if request.post? and data
-      parse_with_rexml( data )        
+      parse_with_rexml(data)        
     else
       redirect_to :action => 'index'
     end
   end
   
-  def parse_with_rexml( xml_data )
-    xml = REXML::Document.new( xml_data )
-    root = doc.root
-    root.each_recursive{ |element| 
-      logger.info "Element: #{element}" 
-    }
+  def parse_with_rexml(xml_data)
+    xml = REXML::Document.new(xml_data)
+    if params[:customers]
+      customers = xml.elements.to_a("//customer")
+      customers.each do |customer| 
+        customer_name = customer.elements['name'].text
+        customer_external_key = customer.elements['external_key'].text
+        new_customer = Customer.create(name: customer_name, external_key: customer_external_key)
+      end   
+    end
+    if params[:shipping_addresses]
+      shipping_addresses = xml.elements.to_a("//shipping_address")
+      shipping_addresses.each do |shipping_address| 
+        shipping_address_name = shipping_address.elements['name'].text
+        shipping_address_external_key = shipping_address.elements['external_key'].text
+        shipping_address_address = shipping_address.elements['address'].text
+        shipping_address_customer_external_key = shipping_address.elements['customer_external_key'].text
+        shipping_address_customer_id = Customer.find_by_external_key(shipping_address_customer_external_key).id        
+        new_shipping_address = ShippingAddress.create(name: shipping_address_name, external_key: shipping_address_external_key, address: shipping_address_address, customer_id: shipping_address_customer_id)
+      end   
+    end
     
-    # Hash.from_xml(xml)["customer"].inject({}) do |result, elem| 
-      # result[elem["name"]] = elem["value"] 
-      # logger.info result 
-    # end
+    if params[:managers]
+      managers = xml.elements.to_a("//manager")
+      managers.each do |manager| 
+        manager_name = manager.elements['name'].text
+        manager_external_key = manager.elements['external_key'].text              
+        new_manager = Manager.create(name: manager_name, external_key: manager_external_key)
+      end   
+    end
+    
+    if params[:products]
+      products = xml.elements.to_a("//product")
+      products.each do |product| 
+        product_name = product.elements['name'].text
+        product_external_key = product.elements['external_key'].text
+        product_price = product.elements['price'].text               
+        new_product = Product.create(name: product_name, external_key: product_external_key, price: product_price)
+      end   
+    end
+          
     redirect_to :action => 'index'
   end
    
