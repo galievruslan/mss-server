@@ -1,7 +1,8 @@
 class ExchangeController < ApplicationController
   require 'rexml/document'
     
-  def index    
+  def index
+    authorize! :exchange , :view     
   end
   
   def upload

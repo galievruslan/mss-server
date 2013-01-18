@@ -1,0 +1,27 @@
+<h1>Listing template_route_points</h1>
+
+<table class="table table-striped table-hover">
+	<thead>
+  <tr>
+    <th>Template route</th>
+    <th>Shipping address name</th>
+    <th>Shipping address address</th>
+    <th colspan="3">Actions</th>
+  </tr>
+  </thead>
+
+<% @template_route_points.each do |template_route_point| %>
+  <tr>
+    <td><%= template_route_point.template_route_id %></td>
+    <td><%= template_route_point.shipping_address.name %></td>
+    <td><%= template_route_point.shipping_address.address %></td>
+    <td><%= link_to 'Show', template_route_template_route_point_path(@template_route, template_route_point) %></td>
+    <td><%= link_to 'Edit', edit_template_route_template_route_point_path(@template_route, template_route_point) %></td>
+    <td><%= link_to 'Destroy', template_route_template_route_point_path(@template_route, template_route_point), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Template route point', new_template_route_template_route_point_path %> | <%= link_to 'Back to Template route', template_route_path(@template_route) %>

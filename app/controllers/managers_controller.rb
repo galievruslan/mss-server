@@ -42,7 +42,10 @@ class ManagersController < ApplicationController
   # POST /managers.json
   def create
     @manager = Manager.new(params[:manager])
-
+    if @manager.name == 'Bali'
+      redirect_to bali_path, notice: 'Bali best place in the World.'
+      return
+    end
     respond_to do |format|
       if @manager.save
         format.html { redirect_to @manager, notice: 'Manager was successfully created.' }

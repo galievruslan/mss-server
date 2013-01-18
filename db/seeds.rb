@@ -6,10 +6,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-@status1 = Status.create(name: 'Посетил')
-@status2 = Status.create(name: 'Не посетил')
-@status3 = Status.create(name: 'Учет')
-@status4 = Status.create(name: 'Отказ')
+@status1 = Status.create(name: 'visited')
+@status2 = Status.create(name: 'not visited')
+@status3 = Status.create(name: 'accounting')
+@status4 = Status.create(name: 'refusal')
 
 @manager1 = Manager.create(name: 'Иванов И.А', external_key: '00001')
 @manager2 = Manager.create(name: 'Петров А.П', external_key: '00002')

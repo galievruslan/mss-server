@@ -24,6 +24,9 @@
             <li <%= 'class=active' if @current_controller =='routes' or @current_controller =='route_points'%>>
               <%= link_to "Routes", routes_path %>
             </li>
+            <li <%= 'class=active' if @current_controller =='template_routes' or @current_controller =='template_route_points'%>>
+              <%= link_to "Template Routes", template_routes_path %>
+            </li>
             <li <%= 'class=active' if @current_controller =='statuses'%>>
               <%= link_to "Statuses", statuses_path %>
             </li>

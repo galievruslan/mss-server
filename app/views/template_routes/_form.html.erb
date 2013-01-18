@@ -1,0 +1,25 @@
+<%= form_for(@template_route) do |f| %>
+  <% if @template_route.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@template_route.errors.count, "error") %> prohibited this template_route from being saved:</h2>
+
+      <ul>
+      <% @template_route.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :manager_id, 'Manager' %><br />
+    <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}) %>
+  </div>
+  <div class="field">
+    <%= f.label :day_of_week %><br />
+    <%= f.select(:day_of_week, @days_of_week.collect  {|p| [ day_name(p), p ]}) %>
+  </div>
+  <div class="actions">
+    <%= f.submit(class: 'btn') %>
+  </div>
+<% end %>

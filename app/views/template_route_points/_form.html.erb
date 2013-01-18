@@ -1,0 +1,21 @@
+<%= form_for([@template_route, @template_route_point]) do |f| %>
+  <% if @template_route_point.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@template_route_point.errors.count, "error") %> prohibited this template_route_point from being saved:</h2>
+
+      <ul>
+      <% @template_route_point.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :shipping_address_id, 'Shipping address' %><br />
+    <%= f.select(:shipping_address_id, @shipping_addresses.collect {|p| [p.name, p.id]}) %>
+  </div>
+  <div class="actions">
+    <%= f.submit(class: 'btn') %>
+  </div>
+<% end %>

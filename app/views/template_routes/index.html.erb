@@ -1,0 +1,28 @@
+<h1>Listing template_routes</h1>
+
+<table class="table table-striped table-hover">
+	<thead>
+	  <tr>
+	    <th>Manager</th>
+	    <th>Day of week</th>
+	    <th>Points Count</th>
+	    <th colspan="3">Actions</th>
+	  </tr>
+	</thead>
+	<tbody>
+		<% @template_routes.each do |template_route| %>
+		  <tr>
+		    <td><%= template_route.manager.name %></td>
+		    <td><%= day_name(template_route.day_of_week) %></td>
+		    <td><%= template_route.template_route_points.count%></td>
+		    <td><%= link_to 'Show', template_route %></td>
+		    <td><%= link_to 'Edit', edit_template_route_path(template_route) %></td>
+		    <td><%= link_to 'Destroy', template_route, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		  </tr>
+		<% end %>
+	</tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Template route', new_template_route_path, class: 'btn' %>

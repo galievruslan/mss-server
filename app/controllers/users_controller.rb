@@ -15,6 +15,7 @@ class UsersController < ApplicationController
     end
 
     def update
+      @managers = Manager.all 
       @user = User.find(params[:id])
 
       respond_to do |format|
@@ -68,6 +69,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    @managers = Manager.all 
     @user = User.find(params[:id])
     @user.destroy
 

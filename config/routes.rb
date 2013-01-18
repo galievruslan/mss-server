@@ -1,18 +1,28 @@
 Mss::Application.routes.draw do
+  resources :template_route_points
+
+
+  resources :template_routes
+
+
   get "pages/index"
 
   devise_for :users
 
   match 'orders/generate_xml', :to => 'orders#generate_xml'
+  get 'routes/create_use_template', :to => 'routes#create_use_template'
   resources :orders do
     member do
         put :export_again        
       end
     resources :order_items    
   end 
-  resources :routes do
+  resources :routes do       
     resources :route_points
   end
+  resources :template_routes do
+    resources :template_route_points
+  end   
   resources :products
   resources :managers
   resources :statuses
@@ -25,6 +35,7 @@ Mss::Application.routes.draw do
   get 'exchange/get_xml', :to => 'exchange#get_orders'
   post 'exchange/upload', :to => 'exchange#upload'
   root :to => 'pages#index'
+  get 'bali', :to => 'pages#bali'
   
   
   

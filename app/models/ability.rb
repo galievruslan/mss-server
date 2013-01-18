@@ -8,12 +8,14 @@ class Ability
     
     if user.role? :admin
       can :manage, :all
+      can :exchange , :view
     elsif user.role? :supervisor
       can :read, :all
-      cannot :read, [User, Role]
-      can :manage, [Route, RoutePoint]
+      cannot :read, [User, Role]      
+      can :manage, [TemplateRoute, TemplateRoutePoint]
     elsif user.role? :manager
-      can :manage, [Order, OrderItem]          
+      can :manage, [Order, OrderItem]
+      can :route , :create_use_template          
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.

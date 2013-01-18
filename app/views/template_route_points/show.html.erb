@@ -1,0 +1,12 @@
+<p>
+  <b>Shipping address name:</b>
+  <%= @template_route_point.shipping_address.name %>
+</p>
+<p>
+  <b>Shipping address address:</b>
+  <%= @template_route_point.shipping_address.address %>
+</p>
+
+
+<%= link_to 'Edit', edit_template_route_template_route_point_path(@template_route, @template_route_point) %> |
+<%= link_to 'Back', template_route_template_route_points_path %>
