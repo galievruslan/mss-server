@@ -1,7 +1,7 @@
 <%= form_for(@route) do |f| %>
   <% if @route.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@route.errors.count, "error") %> prohibited this route from being saved:</h2>
+      <h4><%= pluralize(@route.errors.count, "error") %> prohibited this route from being saved:</h4>
 
       <ul>
       <% @route.errors.full_messages.each do |msg| %>
@@ -12,11 +12,11 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :date %><br />
+    <%= f.label :date %>
     <%= f.date_select :date %>
   </div>
   <div class="field">
-    <%= f.label :manager %><br />
+    <%= f.label :manager %>
     <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}) %>
   </div>
   <div class="actions">

@@ -74,8 +74,12 @@ class ProductsController < ApplicationController
   # DELETE /products/1.json
   def destroy
     @product = Product.find(params[:id])
-    @product.destroy
-
+    if @product.validity
+      @product.update_attributes(validity: false)
+    else
+      @product.update_attributes(validity: true)
+    end
+    
     respond_to do |format|
       format.html { redirect_to products_url }
       format.json { head :no_content }

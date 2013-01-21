@@ -16,8 +16,9 @@ ActiveRecord::Schema.define(:version => 20130117121856) do
   create_table "customers", :force => true do |t|
     t.string   "name"
     t.string   "external_key"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.boolean  "validity",     :default => true
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   add_index "customers", ["external_key"], :name => "index_customers_on_external_key", :unique => true
@@ -25,8 +26,9 @@ ActiveRecord::Schema.define(:version => 20130117121856) do
   create_table "managers", :force => true do |t|
     t.string   "name"
     t.string   "external_key"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.boolean  "validity",     :default => true
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   add_index "managers", ["external_key"], :name => "index_managers_on_external_key", :unique => true
@@ -52,8 +54,9 @@ ActiveRecord::Schema.define(:version => 20130117121856) do
     t.string   "name"
     t.float    "price"
     t.string   "external_key"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.boolean  "validity",     :default => true
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "roles", :force => true do |t|
@@ -87,8 +90,9 @@ ActiveRecord::Schema.define(:version => 20130117121856) do
     t.string   "name"
     t.string   "address"
     t.string   "external_key"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.boolean  "validity",     :default => true
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "statuses", :force => true do |t|

@@ -74,7 +74,11 @@ class CustomersController < ApplicationController
   # DELETE /customers/1.json
   def destroy
     @customer = Customer.find(params[:id])
-    @customer.destroy
+    if @customer.validity 
+      @customer.update_attributes(validity: false)
+    else
+      @customer.update_attributes(validity: true)
+    end
 
     respond_to do |format|
       format.html { redirect_to customers_url }

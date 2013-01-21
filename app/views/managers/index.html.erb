@@ -3,17 +3,21 @@
 <table class="table table-striped table-hover">
 	<thead>
 	  <tr>
+	  	<th>External Key</th>
 	    <th>Name</th>
+	    <th>Validity</th>
 	    <th colspan="3">Actions</th>
 	  </tr>
 	</thead>
 	<tbody>
 		<% @managers.each do |manager| %>
 		<tr>
+			<td><%= manager.external_key %></td>
 	    <td><%= manager.name %></td>
+	    <td><i class=<%=manager.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
 	    <td><%= link_to 'Show', manager %></td>
 	    <td><%= link_to 'Edit', edit_manager_path(manager) %></td>
-	    <td><%= link_to 'Destroy', manager, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	    <td><%= link_to 'Change validity', manager, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 	  </tr>
 		<% end %>
 	</tbody>

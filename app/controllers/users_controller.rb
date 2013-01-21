@@ -43,7 +43,7 @@ class UsersController < ApplicationController
     @managers = Manager.all 
     @user = User.new(params[:user])
     @user.save
-  
+    
     if params[:admin]
       role=Role.find_by_name('admin')
       @user.roles << role

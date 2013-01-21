@@ -3,6 +3,7 @@ class CreateManagers < ActiveRecord::Migration
     create_table :managers do |t|
       t.string :name
       t.string :external_key
+      t.boolean :validity, :default => true
       t.timestamps
     end
     

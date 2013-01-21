@@ -22,7 +22,15 @@ class ExchangeController < ApplicationController
       customers.each do |customer| 
         customer_name = customer.elements['name'].text
         customer_external_key = customer.elements['external_key'].text
-        new_customer = Customer.create(name: customer_name, external_key: customer_external_key)
+        customer_db = Customer.find_by_external_key(customer_external_key)
+        if !customer_db
+          new_customer = Customer.create(name: customer_name, external_key: customer_external_key)
+        else 
+          if !customer_db.validity
+            customer_db.validity = true            
+          end
+          customer_db.update_attributes(name: customer_name)        
+        end
       end   
     end
     if params[:shipping_addresses]
@@ -32,8 +40,16 @@ class ExchangeController < ApplicationController
         shipping_address_external_key = shipping_address.elements['external_key'].text
         shipping_address_address = shipping_address.elements['address'].text
         shipping_address_customer_external_key = shipping_address.elements['customer_external_key'].text
-        shipping_address_customer_id = Customer.find_by_external_key(shipping_address_customer_external_key).id        
-        new_shipping_address = ShippingAddress.create(name: shipping_address_name, external_key: shipping_address_external_key, address: shipping_address_address, customer_id: shipping_address_customer_id)
+        shipping_address_customer_id = Customer.find_by_external_key(shipping_address_customer_external_key).id
+        shipping_address_db = ShippingAddress.find_by_external_key(shipping_address_external_key)
+        if !shipping_address_db       
+          new_shipping_address = ShippingAddress.create(name: shipping_address_name, external_key: shipping_address_external_key, address: shipping_address_address, customer_id: shipping_address_customer_id)
+        else
+          if !shipping_address_db.validity
+            shipping_address_db.validity = true
+          end
+          shipping_address_db.update_attributes(name: shipping_address_name, address: shipping_address_address)
+        end
       end   
     end
     
@@ -41,8 +57,16 @@ class ExchangeController < ApplicationController
       managers = xml.elements.to_a("//manager")
       managers.each do |manager| 
         manager_name = manager.elements['name'].text
-        manager_external_key = manager.elements['external_key'].text              
-        new_manager = Manager.create(name: manager_name, external_key: manager_external_key)
+        manager_external_key = manager.elements['external_key'].text
+        manager_db = Manager.find_by_external_key(manager_external_key)   
+        if !manager_db
+          new_manager = Manager.create(name: manager_name, external_key: manager_external_key)
+        else
+          if !manager_db.validity
+            manager_db.validity = true
+          end
+          manager_db.update_attributes(name: manager_name)
+        end        
       end   
     end
     
@@ -51,8 +75,17 @@ class ExchangeController < ApplicationController
       products.each do |product| 
         product_name = product.elements['name'].text
         product_external_key = product.elements['external_key'].text
-        product_price = product.elements['price'].text               
-        new_product = Product.create(name: product_name, external_key: product_external_key, price: product_price)
+        product_price = product.elements['price'].text
+        product_db = Product.find_by_external_key(product_external_key)
+        if !product_db
+          new_product = Product.create(name: product_name, external_key: product_external_key, price: product_price)
+        else
+          if !product_db.validity
+            product_db.validity = true 
+          end
+          product_db.update_attributes(name: product_name, price: product_price)
+        end
+          
       end   
     end
           

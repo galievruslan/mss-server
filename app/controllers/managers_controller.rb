@@ -77,7 +77,11 @@ class ManagersController < ApplicationController
   # DELETE /managers/1.json
   def destroy
     @manager = Manager.find(params[:id])
-    @manager.destroy
+    if @manager.validity 
+      @manager.update_attributes(validity: false)
+    else
+      @manager.update_attributes(validity: true)
+    end  
 
     respond_to do |format|
       format.html { redirect_to managers_url }

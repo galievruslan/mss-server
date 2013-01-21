@@ -5,6 +5,7 @@
 	    <th>Customer</th>
 	    <th>Name</th>
 	    <th>Address</th>
+	    <th>Validity</th>
 	    <th colspan="3"></th>
 	  </tr>
   </thead>
@@ -14,9 +15,10 @@
 		    <td><%= shipping_address.customer.name %></td>
 		    <td><%= shipping_address.name %></td>
 		    <td><%= shipping_address.address %></td>
+		    <td><i class=<%=shipping_address.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
 		    <td><%= link_to 'Show', customer_shipping_address_path(@customer, shipping_address) %></td>		    
 		    <td><%= link_to 'Edit', edit_customer_shipping_address_path(@customer, shipping_address) %></td>
-		    <td><%= link_to 'Destroy', customer_shipping_address_path(@customer, shipping_address), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		    <td><%= link_to 'Chande validity', customer_shipping_address_path(@customer, shipping_address), method: :delete, data: { confirm: 'Are you sure?' } %></td>
 		  </tr>
 		<% end %>
 	</tbody>

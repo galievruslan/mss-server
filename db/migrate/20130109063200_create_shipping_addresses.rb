@@ -5,6 +5,7 @@ class CreateShippingAddresses < ActiveRecord::Migration
       t.string :name
       t.string :address
       t.string :external_key
+      t.boolean :validity, :default => true
       t.timestamps
     end
   end

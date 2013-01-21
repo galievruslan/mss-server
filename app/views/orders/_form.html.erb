@@ -1,7 +1,7 @@
 <%= form_for(@order) do |f| %>
   <% if @order.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+      <h4><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h4>
 
       <ul>
       <% @order.errors.full_messages.each do |msg| %>
@@ -12,15 +12,15 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :date %><br />
+    <%= f.label :date %>
     <%= f.date_select :date %>
   </div>  
   <div class="field">
-    <%= f.label :shipping_address_id, 'Shipping_Address' %><br />
+    <%= f.label :shipping_address_id, 'Shipping_Address' %>
     <%= f.select(:shipping_address_id, @shipping_addresses.collect  {|p| [ p.name, p.id ] }) %>
   </div>
   <div class="field">
-    <%= f.label :manager_id, 'Manager' %><br />
+    <%= f.label :manager_id, 'Manager' %>
     <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ] }) %>
   </div>
   <div class="actions">

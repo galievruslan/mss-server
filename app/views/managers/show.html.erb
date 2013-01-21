@@ -1,8 +1,11 @@
 <p>
+  <b>External key:</b>
+  <%= @manager.external_key %>
+</p>
+<p>
   <b>Name:</b>
   <%= @manager.name %>
 </p>
-
 
 <%= link_to 'Edit', edit_manager_path(@manager) %> |
 <%= link_to 'Back', managers_path %>

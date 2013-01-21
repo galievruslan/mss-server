@@ -82,7 +82,11 @@ class ShippingAddressesController < ApplicationController
   def destroy
     @customer = Customer.find(params[:customer_id])
     @shipping_address = ShippingAddress.find(params[:id])
-    @shipping_address.destroy
+    if @shipping_address.validity
+      @shipping_address.update_attributes(validity: false)
+    else
+      @shipping_address.update_attributes(validity: true)
+    end  
 
     respond_to do |format|
       format.html { redirect_to customer_shipping_addresses_path(@customer) }

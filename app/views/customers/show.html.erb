@@ -1,4 +1,8 @@
 <p>
+  <b>External Key:</b>
+  <%= @customer.external_key %>
+</p>
+<p>
   <b>Name:</b>
   <%= @customer.name %>
 </p>
@@ -7,14 +11,16 @@
   <thead>
     <tr>
       <th>Shipping address</th>
+      <th>Validity</th>
     </tr>
   </thead>
   <tbody>
     <% @customer.shipping_addresses.each do |shipping_address| %>  
     <tr>
       <td><%= shipping_address.name %></td>
+      <td><i class=<%=shipping_address.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
     </tr>
-    <%end%>
+    <% end %>
   </tbody>
 </table>
 
