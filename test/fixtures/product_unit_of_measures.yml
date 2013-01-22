@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  product_id: 1
+  unit_of_measure_id: 1
+  count_in_base_unit: 1
+
+two:
+  product_id: 1
+  unit_of_measure_id: 1
+  count_in_base_unit: 1

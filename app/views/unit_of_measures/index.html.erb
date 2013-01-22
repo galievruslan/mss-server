@@ -1,0 +1,24 @@
+<h3>Listing unit_of_measures</h3>
+
+<table class="table table-striped table-hover">
+	<thead>
+	  <tr>
+	    <th>Name</th>
+	    <th colspan="3">Actions</th>
+	  </tr>
+  </thead>
+  <tbody>
+		<% @unit_of_measures.each do |unit_of_measure| %>
+		  <tr>
+		    <td><%= unit_of_measure.name %></td>
+		    <td><%= link_to 'Show', unit_of_measure %></td>
+		    <td><%= link_to 'Edit', edit_unit_of_measure_path(unit_of_measure) %></td>
+		    <td><%= link_to 'Destroy', unit_of_measure, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		  </tr>
+		<% end %>
+	</tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Unit of measure', new_unit_of_measure_path, class: 'btn' %>

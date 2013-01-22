@@ -3,8 +3,8 @@ class RoutePointsController < ApplicationController
   # GET /route_points
   # GET /route_points.json
   def index
-    @route=Route.find(params[:route_id])
-    @route_points= @route.route_points
+    @route = Route.find(params[:route_id])
+    @route_points = @route.route_points
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,7 +15,7 @@ class RoutePointsController < ApplicationController
   # GET /route_points/1
   # GET /route_points/1.json
   def show
-    @route=Route.find(params[:route_id])
+    @route = Route.find(params[:route_id])
     @route_point = RoutePoint.find(params[:id])
 
     respond_to do |format|
@@ -40,7 +40,7 @@ class RoutePointsController < ApplicationController
 
   # GET /route_points/1/edit
   def edit
-    @route=Route.find(params[:route_id])
+    @route = Route.find(params[:route_id])
     @route_point = RoutePoint.find(params[:id])
     @shipping_addresses = ShippingAddress.all
     @statuses = Status.all
@@ -49,7 +49,7 @@ class RoutePointsController < ApplicationController
   # POST /route_points
   # POST /route_points.json
   def create
-    @route=Route.find(params[:route_id])
+    @route = sRoute.find(params[:route_id])
     @route_point = RoutePoint.new(params[:route_point])
     @route.route_points << @route_point
     @route.save
@@ -68,7 +68,7 @@ class RoutePointsController < ApplicationController
   # PUT /route_points/1
   # PUT /route_points/1.json
   def update
-    @route=Route.find(params[:route_id])
+    @route = Route.find(params[:route_id])
     @route_point = RoutePoint.find(params[:id])
 
     respond_to do |format|
@@ -85,7 +85,7 @@ class RoutePointsController < ApplicationController
   # DELETE /route_points/1
   # DELETE /route_points/1.json
   def destroy
-    @route=Route.find(params[:route_id])
+    @route = Route.find(params[:route_id])
     @route_point = RoutePoint.find(params[:id])
     @route_point.destroy
 

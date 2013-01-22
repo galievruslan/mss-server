@@ -1,6 +1,6 @@
-<h1>Editing product</h1>
+<h3>Editing product</h3>
 
 <%= render 'form' %>
-
+<%= link_to 'Edit product unit of measures', product_product_unit_of_measures_path(@product), :class =>'btn' %><br><br>
 <%= link_to 'Show', @product %> |
 <%= link_to 'Back', products_path %>

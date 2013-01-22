@@ -11,6 +11,9 @@
 @status3 = Status.create(name: 'accounting')
 @status4 = Status.create(name: 'refusal')
 
+@unit_of_measure1 = UnitOfMeasure.create(name: 'шт')
+@unit_of_measure2 = UnitOfMeasure.create(name: 'упак')
+
 @manager1 = Manager.create(name: 'Иванов И.А', external_key: '00001')
 @manager2 = Manager.create(name: 'Петров А.П', external_key: '00002')
 
@@ -23,12 +26,13 @@
 
 @products = []
 for i in 0..1000
-  @products[i] = Product.create(name: "Водка #{i}", price:100.54, external_key: "CB#{i}")
+  @products[i] = Product.create(name: "Водка #{i}", price:100.54, external_key: "CB#{i}", unit_of_measure: @unit_of_measure1)
+  @products[i].product_unit_of_measures = ProductUnitOfMeasure.create([{unit_of_measure: @unit_of_measure1, count_in_base_unit: 1}, {unit_of_measure: @unit_of_measure2, count_in_base_unit: 12}]) 
 end
  
 @shipping_addresses = Array.new(5).map!{Array.new(5)} 
 for i in 0..4  
-    @name=@customers[i].name
+    @name = @customers[i].name
   for j in 0..4
     @shipping_addresses[i][j] = ShippingAddress.create(name: "#{@name} №#{j}", address: "г. Казань ул. Восстания д.#{j}", external_key: "00#{i}#{j}")
     @customers[i].shipping_addresses << @shipping_addresses[i][j]
@@ -40,12 +44,12 @@ end
 @route1 = Route.create(date: '2013-01-15', manager: @manager1)
 
 @route1.route_points = RoutePoint.create([{shipping_address: @shipping_addresses[0][1], status: @status2}, {shipping_address: @shipping_addresses[1][2], status: @status2},{shipping_address: @shipping_addresses[1][0], status: @status2}])
-@route2=Route.create(date: '2013-01-15', manager: @manager2)
+@route2 = Route.create(date: '2013-01-15', manager: @manager2)
 @route2.route_points = RoutePoint.create([{shipping_address: @shipping_addresses[2][0], status: @status2}, {shipping_address: @shipping_addresses[3][1], status: @status2},{shipping_address: @shipping_addresses[3][2], status: @status2}])
 
-@order1=Order.create(date: '2013-01-15', manager: @manager1, shipping_address: @shipping_addresses[1][0])
+@order1 = Order.create(date: '2013-01-15', manager: @manager1, shipping_address: @shipping_addresses[1][0])
 @order1.order_items = OrderItem.create([{product: @products[1], quantity:10},{product: @products[5], quantity:12},{product: @products[10], quantity:20}])
-@order2=Order.create(date: '2013-01-15', manager: @manager2, shipping_address: @shipping_addresses[4][3])
+@order2 = Order.create(date: '2013-01-15', manager: @manager2, shipping_address: @shipping_addresses[4][3])
 @order2.order_items = OrderItem.create([{product: @products[1], quantity:10},{product: @products[5], quantity:12},{product: @products[10], quantity:20}])
 
 @user_admin = User.create(username: 'admin', password: '423200', password_confirmation: '423200', email: 'galievruslan@gmail.com')
@@ -62,9 +66,3 @@ end
 @user_supervisor.save
 @user_manager.roles << @role_manager
 @user_manager.save
-
-
-
-
-
-  

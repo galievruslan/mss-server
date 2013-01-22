@@ -1,0 +1,18 @@
+<p>
+  <b>Product:</b>
+  <%= @product_unit_of_measure.product.name %>
+</p>
+
+<p>
+  <b>Unit of measure:</b>
+  <%= @product_unit_of_measure.unit_of_measure.name %>
+</p>
+
+<p>
+  <b>Count in base unit:</b>
+  <%= @product_unit_of_measure.count_in_base_unit %>
+</p>
+
+
+<%= link_to 'Edit', edit_product_product_unit_of_measure_path(@product, @product_unit_of_measure) %> |
+<%= link_to 'Back', product_product_unit_of_measures_path(@product) %>

@@ -1,12 +1,6 @@
-Mss::Application.routes.draw do
-  resources :template_route_points
-
-
-  resources :template_routes
-
-
+Mss::Application.routes.draw do 
   get "pages/index"
-
+  
   devise_for :users
 
   match 'orders/generate_xml', :to => 'orders#generate_xml'
@@ -22,8 +16,11 @@ Mss::Application.routes.draw do
   end
   resources :template_routes do
     resources :template_route_points
-  end   
-  resources :products
+  end
+  resources :unit_of_measures   
+  resources :products do
+    resources :product_unit_of_measures
+  end
   resources :managers
   resources :statuses
   resources :customers do

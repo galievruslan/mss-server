@@ -26,12 +26,15 @@
             </li>
             <li <%= 'class=active' if @current_controller =='template_routes' or @current_controller =='template_route_points'%>>
               <%= link_to "Template Routes", template_routes_path %>
+            </li>            
+            <li <%= 'class=active' if @current_controller =='products'%>>
+              <%= link_to "Products", products_path %>
             </li>
             <li <%= 'class=active' if @current_controller =='statuses'%>>
               <%= link_to "Statuses", statuses_path %>
             </li>
-            <li <%= 'class=active' if @current_controller =='products'%>>
-              <%= link_to "Products", products_path %>
+            <li <%= 'class=active' if @current_controller =='unit_of_measures'%>>
+              <%= link_to "Units of measure", unit_of_measures_path %>
             </li>
             <li class="nav-header">Admin settings</li>
             <li <%= 'class=active' if @current_controller =='exchange'%>>
