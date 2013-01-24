@@ -1,0 +1,29 @@
+<%= form_for(@price_list) do |f| %>
+  <% if @price_list.errors.any? %>
+    <div id="error_explanation">
+      <h4><%= pluralize(@price_list.errors.count, "error") %> prohibited this price_list from being saved:</h4>
+
+      <ul>
+      <% @price_list.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :external_key %>
+    <%= f.text_field :external_key %>
+  </div>
+  <div class="field form-inline">    
+    <%= f.check_box :validity %>
+    <%= f.label :validity %><br /><br />
+  </div>
+  <div class="actions">
+    <%= f.submit(class: 'btn') %>
+  </div>
+<% end %>

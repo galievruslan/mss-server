@@ -1,0 +1,18 @@
+<p>
+  <b>Name:</b>
+  <%= @price_list.name %>
+</p>
+
+<p>
+  <b>External key:</b>
+  <%= @price_list.external_key %>
+</p>
+
+<p>
+  <b>Validity:</b>
+  <%= @price_list.validity %>
+</p>
+
+
+<%= link_to 'Edit', edit_price_list_path(@price_list) %> |
+<%= link_to 'Back', price_lists_path %>

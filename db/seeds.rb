@@ -17,6 +17,9 @@
 @manager1 = Manager.create(name: 'Иванов И.А', external_key: '00001')
 @manager2 = Manager.create(name: 'Петров А.П', external_key: '00002')
 
+@price_list1 = PriceList.create(name: 'Розничная', external_key: 'СВ001')
+@price_list2 = PriceList.create(name: 'Оптовая', external_key: 'СВ002')
+
 @customers= []
 @customers[0] = Customer.create(name: 'ООО "Тимерхан"', external_key: '10001')
 @customers[1] = Customer.create(name: 'ООО "Эдельвейс"', external_key: '10002')

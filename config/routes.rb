@@ -1,10 +1,12 @@
   Mss::Application.routes.draw do 
+    
   get "pages/index"
   
   devise_for :users
   match "/update_product_unit_of_measures" => "order_items#update_product_unit_of_measures"
   match 'orders/generate_xml', :to => 'orders#generate_xml'
   get 'routes/create_use_template', :to => 'routes#create_use_template'
+  
   resources :orders do
     member do
         put :export_again        
@@ -27,6 +29,7 @@
     resources  :shipping_addresses
   end
   resources :users
+  resources :price_lists
   
   get 'exchange', :to => 'exchange#index'
   get 'exchange/get_xml', :to => 'exchange#get_orders'

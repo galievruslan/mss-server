@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  external_key: MyString
+  validity: false
+
+two:
+  name: MyString
+  external_key: MyString
+  validity: false
