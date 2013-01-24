@@ -36,9 +36,10 @@ ActiveRecord::Schema.define(:version => 20130122074058) do
   create_table "order_items", :force => true do |t|
     t.integer  "order_id"
     t.integer  "product_id"
+    t.integer  "unit_of_measure_id"
     t.integer  "quantity"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   create_table "orders", :force => true do |t|
@@ -53,19 +54,19 @@ ActiveRecord::Schema.define(:version => 20130122074058) do
   create_table "product_unit_of_measures", :force => true do |t|
     t.integer  "product_id"
     t.integer  "unit_of_measure_id"
-    t.integer  "count_in_base_unit"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.float    "count_in_base_unit"
+    t.boolean  "base",               :default => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   create_table "products", :force => true do |t|
     t.string   "name"
-    t.integer  "unit_of_measure_id"
     t.float    "price"
     t.string   "external_key"
-    t.boolean  "validity",           :default => true
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.boolean  "validity",     :default => true
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "roles", :force => true do |t|
@@ -126,8 +127,10 @@ ActiveRecord::Schema.define(:version => 20130122074058) do
 
   create_table "unit_of_measures", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "external_key"
+    t.boolean  "validity",     :default => true
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "users", :force => true do |t|

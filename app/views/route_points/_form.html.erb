@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :shipping_address_id, 'Shipping address' %>
-    <%= f.select(:shipping_address_id, @shipping_addresses.collect {|p| [p.name, p.id]}) %>
+    <%= f.select(:shipping_address_id, @shipping_addresses.collect {|p| [p.name, p.id]}, :include_blank => "Select a shipping address") %>
   </div>
   <div class="field">
     <%= f.label :status_id %>
-    <%= f.select(:status_id, @statuses.collect {|p| [p.name, p.id]}) %>
+    <%= f.select(:status_id, @statuses.collect {|p| [p.name, p.id]}, :include_blank => "Select a status") %>
   </div>
   <div class="actions">
     <%= f.submit(class: 'btn') %>

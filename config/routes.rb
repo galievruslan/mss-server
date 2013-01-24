@@ -1,8 +1,8 @@
-Mss::Application.routes.draw do 
+  Mss::Application.routes.draw do 
   get "pages/index"
   
   devise_for :users
-
+  match "/update_product_unit_of_measures" => "order_items#update_product_unit_of_measures"
   match 'orders/generate_xml', :to => 'orders#generate_xml'
   get 'routes/create_use_template', :to => 'routes#create_use_template'
   resources :orders do

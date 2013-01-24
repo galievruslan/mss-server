@@ -3,6 +3,7 @@ class CreateOrderItems < ActiveRecord::Migration
     create_table :order_items do |t|
       t.integer :order_id
       t.integer :product_id
+      t.integer :unit_of_measure_id
       t.integer :quantity
 
       t.timestamps

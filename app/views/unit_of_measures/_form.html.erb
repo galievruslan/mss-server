@@ -10,11 +10,19 @@
       </ul>
     </div>
   <% end %>
-
+  
+  <div class="field">
+    <%= f.label :external_key %>
+    <%= f.text_field :external_key %>
+  </div>
   <div class="field">
     <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
+  <div class="field form-inline">    
+    <%= f.check_box :validity %>
+    <%= f.label :validity %><br /><br />
+  </div>  
   <div class="actions">
     <%= f.submit(class: 'btn') %>
   </div>

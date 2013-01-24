@@ -50,6 +50,7 @@ class OrderItemsController < ApplicationController
     @products = Product.all
     @order = Order.find(params[:order_id])
     @order_item = OrderItem.new(params[:order_item])
+    @order_item.unit_of_measure_id = params[:unit_of_measure_id]
     @order.order_items << @order_item
     @order.save
 
@@ -70,6 +71,7 @@ class OrderItemsController < ApplicationController
     @products = Product.all
     @order = Order.find(params[:order_id])
     @order_item = OrderItem.find(params[:id])
+    @order_item.unit_of_measure_id = params[:unit_of_measure_id]
 
     respond_to do |format|
       if @order_item.update_attributes(params[:order_item])
@@ -93,5 +95,19 @@ class OrderItemsController < ApplicationController
       format.html { redirect_to order_order_items_path(@order) }
       format.json { head :no_content }
     end
+  end
+  def update_product_unit_of_measures
+    @product_unit_of_measures = ProductUnitOfMeasure.where(product_id: params[:product_id])  
+    @unit_of_measures= [] 
+    @product_unit_of_measures.each do |product_unit_of_measure|
+      unit_of_measure_name = UnitOfMeasure.find(product_unit_of_measure.unit_of_measure_id).name
+      unit_of_measure_id = UnitOfMeasure.find(product_unit_of_measure.unit_of_measure_id).id
+      unit_of_measure = []
+      unit_of_measure << unit_of_measure_name
+      unit_of_measure << unit_of_measure_id   
+      @unit_of_measures << unit_of_measure
+    end
+    
+    render :partial => "product_unit_of_measures", :object => @unit_of_measures  
   end
 end

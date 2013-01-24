@@ -26,7 +26,6 @@ class ProductsController < ApplicationController
   # GET /products/new.json
   def new
     @product = Product.new
-    @units_of_mesures = UnitOfMeasure.all
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @product }
@@ -36,7 +35,6 @@ class ProductsController < ApplicationController
   # GET /products/1/edit
   def edit
     @product = Product.find(params[:id])
-    @units_of_mesures = UnitOfMeasure.all
   end
 
   # POST /products
@@ -58,7 +56,6 @@ class ProductsController < ApplicationController
   # PUT /products/1
   # PUT /products/1.json
   def update
-    @units_of_mesures = UnitOfMeasure.all
     @product = Product.find(params[:id])
 
     respond_to do |format|

@@ -1,4 +1,5 @@
 class ProductUnitOfMeasuresController < ApplicationController
+  load_and_authorize_resource
   # GET /product_unit_of_measures
   # GET /product_unit_of_measures.json
   def index

@@ -70,6 +70,23 @@ class ExchangeController < ApplicationController
       end   
     end
     
+    if params[:unit_of_measures]
+      unit_of_measures = xml.elements.to_a("//unit_of_measure")
+      unit_of_measures.each do |unit_of_measure| 
+        unit_of_measure_name = unit_of_measure.elements['name'].text
+        unit_of_measure_external_key = unit_of_measure.elements['external_key'].text
+        unit_of_measure_db = UnitOfMeasure.find_by_name(unit_of_measure_external_key)
+        if !unit_of_measure_db
+          new_unit_of_measure = UnitOfMeasure.create(name: unit_of_measure_name, external_key: unit_of_measure_external_key)
+        else
+          if !unit_of_measure_db.validity
+            unit_of_measure_db.validity = true 
+          end
+          unit_of_measure_db.update_attributes(name: unit_of_measure_name)
+        end          
+      end   
+    end
+    
     if params[:products]
       products = xml.elements.to_a("//product")
       products.each do |product| 
@@ -84,10 +101,30 @@ class ExchangeController < ApplicationController
             product_db.validity = true 
           end
           product_db.update_attributes(name: product_name, price: product_price)
-        end
-          
+        end          
       end   
     end
+    
+    if params[:product_unit_of_measures]
+      product_unit_of_measures = xml.elements.to_a("//product_unit_of_measure")
+      product_unit_of_measures.each do |product_unit_of_measure|
+        base_product_unit_of_measure = false
+        base_product_unit_of_measure = true if product_unit_of_measure.attributes['type'] =='base'
+          
+        
+        product_unit_of_measure_product_external_key = product_unit_of_measure.elements['product_external_key'].text
+        product_unit_of_measure_external_key = product_unit_of_measure.elements['unit_of_measure_external_key'].text
+        product_unit_of_measure_count_in_base_unit = product_unit_of_measure.elements['count_in_base_unit'].text
+        product_id = Product.find_by_external_key(product_unit_of_measure_product_external_key).id
+        unit_of_measure_id = UnitOfMeasure.find_by_external_key(product_unit_of_measure_external_key).id
+        product_unit_of_measure_db = ProductUnitOfMeasure.find_by_product_id_and_unit_of_measure_id(product_id, unit_of_measure_id)
+        if !product_unit_of_measure_db
+          new_product_unit_of_measure = ProductUnitOfMeasure.create(product_id: product_id, unit_of_measure_id: unit_of_measure_id, count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
+        else
+          product_unit_of_measure_db.update_attributes(count_in_base_unit: product_unit_of_measure_count_in_base_unit)
+        end          
+      end   
+    end    
           
     redirect_to :action => 'index'
   end
@@ -132,6 +169,8 @@ class ExchangeController < ApplicationController
             data.product_id(order_item.product.id)
             data.product_external_key(order_item.product.external_key)
             data.product_name(order_item.product.name)
+            data.unit_of_measure_name(order_item.unit_of_measure.name)
+            data.unit_of_measure_external_key(order_item.unit_of_measure.external_key)
             data.quantity(order_item.quantity)
           end
         end

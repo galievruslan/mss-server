@@ -4,6 +4,8 @@
   <title>Mobile sales system</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <%= yield :stylesheets %> 
+  <%= yield :javascripts %> 
   <%= csrf_meta_tags %>
 </head>
 <body>

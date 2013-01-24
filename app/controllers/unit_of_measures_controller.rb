@@ -1,4 +1,5 @@
 class UnitOfMeasuresController < ApplicationController
+  load_and_authorize_resource
   # GET /unit_of_measures
   # GET /unit_of_measures.json
   def index
@@ -73,7 +74,11 @@ class UnitOfMeasuresController < ApplicationController
   # DELETE /unit_of_measures/1.json
   def destroy
     @unit_of_measure = UnitOfMeasure.find(params[:id])
-    @unit_of_measure.destroy
+    if @unit_of_measure.validity 
+      @unit_of_measure.update_attributes(validity: false)
+    else
+      @unit_of_measure.update_attributes(validity: true)
+    end
 
     respond_to do |format|
       format.html { redirect_to unit_of_measures_url }

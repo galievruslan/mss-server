@@ -6,10 +6,7 @@
   <b>Name:</b>
   <%= @product.name %>
 </p>
-<p>
-  <b>Base unit of measure:</b>
-  <%= @product.unit_of_measure.name %>
-</p>
+
 <table class="table table-striped table-hover">
   <thead>
     <tr>
@@ -19,13 +16,14 @@
   </thead>
   <tbody>
     <% @product.product_unit_of_measures.each do |product_unit_of_measure| %>  
-    <tr>
+    <tr <%='class=success' if product_unit_of_measure.base %>>
       <td><%= product_unit_of_measure.unit_of_measure.name %></td>
       <td><%= product_unit_of_measure.count_in_base_unit %></td>
     </tr>
     <% end %>
   </tbody>
 </table>
+* Base unit of measure marked in green<br /><br />
 <p>
   <b>Price:</b>
   <%= @product.price %>
