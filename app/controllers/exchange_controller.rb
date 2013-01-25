@@ -75,7 +75,7 @@ class ExchangeController < ApplicationController
       unit_of_measures.each do |unit_of_measure| 
         unit_of_measure_name = unit_of_measure.elements['name'].text
         unit_of_measure_external_key = unit_of_measure.elements['external_key'].text
-        unit_of_measure_db = UnitOfMeasure.find_by_name(unit_of_measure_external_key)
+        unit_of_measure_db = UnitOfMeasure.find_by_external_key(unit_of_measure_external_key)
         if !unit_of_measure_db
           new_unit_of_measure = UnitOfMeasure.create(name: unit_of_measure_name, external_key: unit_of_measure_external_key)
         else
@@ -87,20 +87,36 @@ class ExchangeController < ApplicationController
       end   
     end
     
+    if params[:price_lists]
+      price_lists = xml.elements.to_a("//price_list")
+      price_lists.each do |price_list| 
+        price_list_name = price_list.elements['name'].text
+        price_list_external_key = price_list.elements['external_key'].text
+        price_list_db = PriceList.find_by_external_key(price_list_external_key)
+        if !price_list_db
+          new_price_list = PriceList.create(name: price_list_name, external_key: price_list_external_key)
+        else
+          if !price_list_db.validity
+            price_list_db.validity = true 
+          end
+          price_list_db.update_attributes(name: price_list_name)
+        end          
+      end   
+    end
+    
     if params[:products]
       products = xml.elements.to_a("//product")
       products.each do |product| 
         product_name = product.elements['name'].text
         product_external_key = product.elements['external_key'].text
-        product_price = product.elements['price'].text
         product_db = Product.find_by_external_key(product_external_key)
         if !product_db
-          new_product = Product.create(name: product_name, external_key: product_external_key, price: product_price)
+          new_product = Product.create(name: product_name, external_key: product_external_key)
         else
           if !product_db.validity
             product_db.validity = true 
           end
-          product_db.update_attributes(name: product_name, price: product_price)
+          product_db.update_attributes(name: product_name)
         end          
       end   
     end
@@ -109,9 +125,7 @@ class ExchangeController < ApplicationController
       product_unit_of_measures = xml.elements.to_a("//product_unit_of_measure")
       product_unit_of_measures.each do |product_unit_of_measure|
         base_product_unit_of_measure = false
-        base_product_unit_of_measure = true if product_unit_of_measure.attributes['type'] =='base'
-          
-        
+        base_product_unit_of_measure = true if product_unit_of_measure.attributes['type'] =='base'       
         product_unit_of_measure_product_external_key = product_unit_of_measure.elements['product_external_key'].text
         product_unit_of_measure_external_key = product_unit_of_measure.elements['unit_of_measure_external_key'].text
         product_unit_of_measure_count_in_base_unit = product_unit_of_measure.elements['count_in_base_unit'].text
@@ -122,6 +136,23 @@ class ExchangeController < ApplicationController
           new_product_unit_of_measure = ProductUnitOfMeasure.create(product_id: product_id, unit_of_measure_id: unit_of_measure_id, count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
         else
           product_unit_of_measure_db.update_attributes(count_in_base_unit: product_unit_of_measure_count_in_base_unit)
+        end          
+      end   
+    end
+    
+    if params[:price_list_lines]
+      price_list_lines = xml.elements.to_a("//price_list_line")
+      price_list_lines.each do |price_list_line| 
+        product_external_key = price_list_line.elements['product_external_key'].text
+        price_list_external_key = price_list_line.elements['price_list_external_key'].text
+        price = price_list_line.elements['price'].text
+        product_id = Product.find_by_external_key(product_external_key).id
+        price_list_id = PriceList.find_by_external_key(price_list_external_key).id
+        price_list_line_db = PriceListLine.find_by_product_id_and_price_list_id(product_id, price_list_id)
+        if !price_list_line_db
+          new_price_list_line = PriceListLine.create(product_id: product_id, price_list_id: price_list_id, price: price)
+        else          
+          price_list_line_db.update_attributes(price: price)
         end          
       end   
     end    
@@ -163,6 +194,12 @@ class ExchangeController < ApplicationController
       data.manager_id(order.manager.id)
       data.manager_name(order.manager.name)
       data.manager_external_key(order.manager.external_key)
+      data.warehouse_id(order.warehouse.id)
+      data.warehouse_name(order.warehouse.name)
+      data.warehouse_external_key(order.warehouse.external_key)
+      data.price_list_id(order.price_list.id)
+      data.price_list_name(order.price_list.name)
+      data.price_list_external_key(order.price_list.external_key)
       data.order_items do
         order.order_items.each do |order_item|
           data.order_item do

@@ -49,10 +49,24 @@ for i in 0..4
 end
 
 @route1 = Route.create(date: '2013-01-15', manager: @manager1)
-
 @route1.route_points = RoutePoint.create([{shipping_address: @shipping_addresses[0][1], status: @status2}, {shipping_address: @shipping_addresses[1][2], status: @status2},{shipping_address: @shipping_addresses[1][0], status: @status2}])
 @route2 = Route.create(date: '2013-01-15', manager: @manager2)
 @route2.route_points = RoutePoint.create([{shipping_address: @shipping_addresses[2][0], status: @status2}, {shipping_address: @shipping_addresses[3][1], status: @status2},{shipping_address: @shipping_addresses[3][2], status: @status2}])
+
+@route_template1 = TemplateRoute.create(manager: @manager1, day_of_week: 0)
+@route_template1.template_route_points = TemplateRoutePoint.create([{shipping_address: @shipping_addresses[0][1]},{shipping_address: @shipping_addresses[1][1]}])
+@route_template2 = TemplateRoute.create(manager: @manager1, day_of_week: 1)
+@route_template2.template_route_points = TemplateRoutePoint.create([{shipping_address: @shipping_addresses[0][2]},{shipping_address: @shipping_addresses[1][2]}])
+@route_template3 = TemplateRoute.create(manager: @manager1, day_of_week: 2)
+@route_template3.template_route_points = TemplateRoutePoint.create([{shipping_address: @shipping_addresses[0][3]},{shipping_address: @shipping_addresses[1][3]}])
+@route_template4 = TemplateRoute.create(manager: @manager1, day_of_week: 3)
+@route_template4.template_route_points = TemplateRoutePoint.create([{shipping_address: @shipping_addresses[0][4]},{shipping_address: @shipping_addresses[1][4]}])
+@route_template5 = TemplateRoute.create(manager: @manager1, day_of_week: 4)
+@route_template5.template_route_points = TemplateRoutePoint.create([{shipping_address: @shipping_addresses[2][1]},{shipping_address: @shipping_addresses[3][1]}])
+@route_template6 = TemplateRoute.create(manager: @manager1, day_of_week: 5)
+@route_template6.template_route_points = TemplateRoutePoint.create([{shipping_address: @shipping_addresses[2][2]},{shipping_address: @shipping_addresses[3][2]}])
+@route_template7 = TemplateRoute.create(manager: @manager1, day_of_week: 6)
+@route_template7.template_route_points = TemplateRoutePoint.create([{shipping_address: @shipping_addresses[2][3]},{shipping_address: @shipping_addresses[3][3]}])
 
 @order1 = Order.create(date: '2013-01-15', manager: @manager1, shipping_address: @shipping_addresses[1][0], warehouse: @warehouse1, price_list: @price_list1, comment: "Срочная заявка")
 @order1.order_items = OrderItem.create([{product: @products[1], unit_of_measure: @unit_of_measure1, quantity:10},{product: @products[5], unit_of_measure: @unit_of_measure1, quantity:12},{product: @products[10], unit_of_measure: @unit_of_measure2, quantity:20}])
