@@ -26,8 +26,10 @@ class OrdersController < ApplicationController
   # GET /orders/new
   # GET /orders/new.json
   def new
-    @shipping_addresses=ShippingAddress.all
-    @managers=Manager.all
+    @shipping_addresses = ShippingAddress.all
+    @managers = Manager.all
+    @price_lists = PriceList.all
+    @warehouses = Warehouse.all
     @order = Order.new
 
     respond_to do |format|
@@ -38,8 +40,10 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
-    @shipping_addresses=ShippingAddress.all
-    @managers=Manager.all
+    @shipping_addresses = ShippingAddress.all
+    @managers = Manager.all
+    @price_lists = PriceList.all
+    @warehouses = Warehouse.all
     @order = Order.find(params[:id])
   end
 

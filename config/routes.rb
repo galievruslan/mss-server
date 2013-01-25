@@ -1,7 +1,4 @@
   Mss::Application.routes.draw do 
-    
-  
-
 
   get "pages/index"
   
@@ -35,6 +32,7 @@
   resources :price_lists do    
     resources :price_list_lines
   end   
+  resources :warehouses
   
   get 'exchange', :to => 'exchange#index'
   get 'exchange/get_xml', :to => 'exchange#get_orders'

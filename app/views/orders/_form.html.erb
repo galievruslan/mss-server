@@ -20,8 +20,20 @@
     <%= f.select(:shipping_address_id, @shipping_addresses.collect  {|p| [ p.name, p.id ] }, :include_blank => "Select a shipping address") %>
   </div>
   <div class="field">
+    <%= f.label :warehouse_id, 'Warehouse' %>
+    <%= f.select(:warehouse_id, @warehouses.collect  {|p| [ p.name, p.id ] }, :include_blank => "Select a warehouse") %>
+  </div>
+  <div class="field">
+    <%= f.label :price_list_id, 'Price list' %>
+    <%= f.select(:price_list_id, @price_lists.collect  {|p| [ p.name, p.id ] }, :include_blank => "Select a price list") %>
+  </div>
+  <div class="field">
     <%= f.label :manager_id, 'Manager' %>
     <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ] }, :include_blank => "Select a manager") %>
+  </div>
+  <div class="field">
+    <%= f.label :comment, 'Comment' %>
+    <%= f.text_area :comment, :cols => 20, :rows => 4 %>
   </div>
   <div class="actions">
     <%= f.submit(:class =>'btn') %>

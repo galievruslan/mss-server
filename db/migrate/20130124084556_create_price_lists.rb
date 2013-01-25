@@ -4,8 +4,8 @@ class CreatePriceLists < ActiveRecord::Migration
       t.string :name
       t.string :external_key
       t.boolean :validity, :default => true
-
       t.timestamps
     end
+    add_index :price_lists, :external_key, :unique => true
   end
 end

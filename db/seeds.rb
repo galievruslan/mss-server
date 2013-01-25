@@ -20,6 +20,9 @@
 @price_list1 = PriceList.create(name: 'Розничная', external_key: 'СВ001')
 @price_list2 = PriceList.create(name: 'Оптовая', external_key: 'СВ002')
 
+@warehouse1 = Warehouse.create(name: 'Оптовый склад №1', external_key: 'СВ001', address: 'Техническая, 21')
+@warehouse2 = Warehouse.create(name: 'Оптовый склад №30', external_key: 'СВ002', address: 'Техническая, 21а')
+
 @customers= []
 @customers[0] = Customer.create(name: 'ООО "Тимерхан"', external_key: '10001')
 @customers[1] = Customer.create(name: 'ООО "Эдельвейс"', external_key: '10002')
@@ -51,9 +54,9 @@ end
 @route2 = Route.create(date: '2013-01-15', manager: @manager2)
 @route2.route_points = RoutePoint.create([{shipping_address: @shipping_addresses[2][0], status: @status2}, {shipping_address: @shipping_addresses[3][1], status: @status2},{shipping_address: @shipping_addresses[3][2], status: @status2}])
 
-@order1 = Order.create(date: '2013-01-15', manager: @manager1, shipping_address: @shipping_addresses[1][0])
+@order1 = Order.create(date: '2013-01-15', manager: @manager1, shipping_address: @shipping_addresses[1][0], warehouse: @warehouse1, price_list: @price_list1, comment: "Срочная заявка")
 @order1.order_items = OrderItem.create([{product: @products[1], unit_of_measure: @unit_of_measure1, quantity:10},{product: @products[5], unit_of_measure: @unit_of_measure1, quantity:12},{product: @products[10], unit_of_measure: @unit_of_measure2, quantity:20}])
-@order2 = Order.create(date: '2013-01-15', manager: @manager2, shipping_address: @shipping_addresses[4][3])
+@order2 = Order.create(date: '2013-01-15', manager: @manager2, shipping_address: @shipping_addresses[4][3], warehouse: @warehouse2, price_list: @price_list2, comment: "Приложить документы с прошлой отгрузки")
 @order2.order_items = OrderItem.create([{product: @products[1], unit_of_measure: @unit_of_measure1, quantity:10},{product: @products[5], unit_of_measure: @unit_of_measure1, quantity:12},{product: @products[10], unit_of_measure: @unit_of_measure2, quantity:20}])
 
 @user_admin = User.create(username: 'admin', password: '423200', password_confirmation: '423200', email: 'galievruslan@gmail.com')

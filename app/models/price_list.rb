@@ -1,6 +1,7 @@
 class PriceList < ActiveRecord::Base
   attr_accessible :external_key, :name, :validity
   has_many :price_list_lines, :dependent => :destroy
+  has_many :orders, :dependent => :destroy
   validates :name, :external_key, :presence => true
-  validates :external_key, :uniqueness => { :case_sensitive => false }
+  validates :name, :external_key, :uniqueness => { :case_sensitive => false }
 end

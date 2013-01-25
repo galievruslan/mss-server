@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130124090814) do
+ActiveRecord::Schema.define(:version => 20130125045104) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -44,8 +44,11 @@ ActiveRecord::Schema.define(:version => 20130124090814) do
 
   create_table "orders", :force => true do |t|
     t.date     "date"
+    t.text     "comment"
     t.integer  "shipping_address_id"
     t.integer  "manager_id"
+    t.integer  "warehouse_id"
+    t.integer  "price_list_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.datetime "exported_at"
@@ -66,6 +69,8 @@ ActiveRecord::Schema.define(:version => 20130124090814) do
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
   end
+
+  add_index "price_lists", ["external_key"], :name => "index_price_lists_on_external_key", :unique => true
 
   create_table "product_unit_of_measures", :force => true do |t|
     t.integer  "product_id"
@@ -148,6 +153,8 @@ ActiveRecord::Schema.define(:version => 20130124090814) do
     t.datetime "updated_at",                     :null => false
   end
 
+  add_index "unit_of_measures", ["external_key"], :name => "index_unit_of_measures_on_external_key", :unique => true
+
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
@@ -168,5 +175,16 @@ ActiveRecord::Schema.define(:version => 20130124090814) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
+
+  create_table "warehouses", :force => true do |t|
+    t.string   "name"
+    t.string   "address"
+    t.string   "external_key"
+    t.boolean  "validity",     :default => true
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  add_index "warehouses", ["external_key"], :name => "index_warehouses_on_external_key", :unique => true
 
 end

@@ -6,5 +6,6 @@ class CreateUnitOfMeasures < ActiveRecord::Migration
       t.boolean :validity, :default => true
       t.timestamps
     end
+    add_index :unit_of_measures, :external_key, :unique => true
   end
 end

@@ -1,0 +1,23 @@
+<p>
+  <b>Name:</b>
+  <%= @warehouse.name %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @warehouse.address %>
+</p>
+
+<p>
+  <b>External key:</b>
+  <%= @warehouse.external_key %>
+</p>
+
+<p>
+  <b>Validity:</b>
+  <%= @warehouse.validity %>
+</p>
+
+
+<%= link_to 'Edit', edit_warehouse_path(@warehouse) %> |
+<%= link_to 'Back', warehouses_path %>

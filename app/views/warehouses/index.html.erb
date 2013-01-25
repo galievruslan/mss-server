@@ -1,0 +1,30 @@
+<h3>Listing warehouses</h3>
+
+<table class="table table-striped table-hover">
+  <thead>
+	  <tr>
+	    <th>Name</th>
+	    <th>External key</th>
+	    <th>Address</th>	    
+	    <th>Validity</th>
+	    <th colspan="3">Actions</th>
+	  </tr>
+	</thead>
+	<tbody>
+		<% @warehouses.each do |warehouse| %>
+		  <tr>
+		    <td><%= warehouse.name %></td>		    
+		    <td><%= warehouse.external_key %></td>
+		    <td><%= warehouse.address %></td>
+		    <td><i class=<%=warehouse.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
+		    <td><%= link_to 'Show', warehouse %></td>
+		    <td><%= link_to 'Edit', edit_warehouse_path(warehouse) %></td>
+		    <td><%= link_to 'Change validity', warehouse, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		  </tr>
+		<% end %>
+	</tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Warehouse', new_warehouse_path, class: 'btn' %>

@@ -1,0 +1,33 @@
+<%= form_for(@warehouse) do |f| %>
+  <% if @warehouse.errors.any? %>
+    <div id="error_explanation">
+      <h4><%= pluralize(@warehouse.errors.count, "error") %> prohibited this warehouse from being saved:</h4>
+
+      <ul>
+      <% @warehouse.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :address %>
+    <%= f.text_field :address %>
+  </div>
+  <div class="field">
+    <%= f.label :external_key %>
+    <%= f.text_field :external_key %>
+  </div>
+  <div class="field form-inline">
+  	<%= f.check_box :validity %>
+    <%= f.label :validity %>    
+  </div>
+  <div class="actions">
+    <%= f.submit(class: 'btn') %>
+  </div>
+<% end %>

@@ -27,6 +27,10 @@
 				<td><%= check_box_tag(:unit_of_measures) %>	</td>
 			</tr>
 			<tr>
+				<td><%= label_tag(:price_list, "Price lists") %> </td>
+				<td><%= check_box_tag(:price_list) %>	</td>
+			</tr>
+			<tr>
 				<td><%= label_tag(:products, "Products") %> </td>
 				<td><%= check_box_tag(:products) %>	</td>
 			</tr>
@@ -35,8 +39,16 @@
 				<td><%= check_box_tag(:product_unit_of_measures) %>	</td>
 			</tr>
 			<tr>
+				<td><%= label_tag(:price_list_lines, "price list lines") %> </td>
+				<td><%= check_box_tag(:price_list_lines) %>	</td>
+			</tr>
+			<tr>
 				<td><%= label_tag(:managers, "Managers") %> </td>
 				<td><%= check_box_tag(:managers) %>	</td>
+			</tr>			
+			<tr>
+				<td><%= label_tag(:warehouse, "Warehouses") %> </td>
+				<td><%= check_box_tag(:warehouse) %>	</td>
 			</tr>
 		</tbody>
 	</table>
