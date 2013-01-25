@@ -5,6 +5,7 @@
 	  <tr>
 	    <th>Name</th>
 	    <th>External key</th>
+	    <th>Count products</th>
 	    <th>Validity</th>
 	    <th colspan="3">Actions</th>
 	  </tr>
@@ -13,6 +14,7 @@
   <tr>
     <td><%= price_list.name %></td>
     <td><%= price_list.external_key %></td>
+    <td><%= price_list.price_list_lines.count %></td>
     <td><i class=<%= price_list.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
     <td><%= link_to 'Show', price_list %></td>
     <td><%= link_to 'Edit', edit_price_list_path(price_list) %></td>

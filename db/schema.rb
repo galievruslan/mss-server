@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130124084556) do
+ActiveRecord::Schema.define(:version => 20130124090814) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -51,6 +51,14 @@ ActiveRecord::Schema.define(:version => 20130124084556) do
     t.datetime "exported_at"
   end
 
+  create_table "price_list_lines", :force => true do |t|
+    t.integer  "price_list_id"
+    t.integer  "product_id"
+    t.decimal  "price",         :precision => 7, :scale => 2
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+  end
+
   create_table "price_lists", :force => true do |t|
     t.string   "name"
     t.string   "external_key"
@@ -70,7 +78,6 @@ ActiveRecord::Schema.define(:version => 20130124084556) do
 
   create_table "products", :force => true do |t|
     t.string   "name"
-    t.float    "price"
     t.string   "external_key"
     t.boolean  "validity",     :default => true
     t.datetime "created_at",                     :null => false

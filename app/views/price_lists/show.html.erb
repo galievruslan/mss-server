@@ -12,6 +12,21 @@
   <b>Validity:</b>
   <%= @price_list.validity %>
 </p>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @price_list.price_list_lines.each do |price_list_line| %>
+      <td><%= price_list_line.product.name %></td>
+      <td><%= price_list_line.price %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 
 
 <%= link_to 'Edit', edit_price_list_path(@price_list) %> |

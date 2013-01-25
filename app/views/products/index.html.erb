@@ -5,7 +5,6 @@
 	  <tr>
 	  	<th>External Key</th>
 	    <th>Name</th>
-	    <th>Price</th>
 	    <th>Validity</th>
 	    <th colspan="3">Actions</th>
 	  </tr>
@@ -15,7 +14,6 @@
 	  <tr>
 	  	<td><%= product.external_key %></td>
 	    <td><%= product.name %></td>
-	    <td><%= product.price %></td>
 	    <td><i class=<%=product.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
 	    <td><%= link_to 'Show', product %></td>
 	    <td><%= link_to 'Edit', edit_product_path(product) %></td>

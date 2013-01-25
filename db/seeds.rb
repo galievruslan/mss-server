@@ -29,8 +29,9 @@
 
 @products = []
 for i in 0..1000
-  @products[i] = Product.create(name: "Водка #{i}", price:100.54, external_key: "CB#{i}")
-  @products[i].product_unit_of_measures = ProductUnitOfMeasure.create([{unit_of_measure: @unit_of_measure1, count_in_base_unit: 1, base: true}, {unit_of_measure: @unit_of_measure2, count_in_base_unit: 12}]) 
+  @products[i] = Product.create(name: "Водка #{i}", external_key: "CB#{i}")
+  @products[i].product_unit_of_measures = ProductUnitOfMeasure.create([{unit_of_measure: @unit_of_measure1, count_in_base_unit: 1, base: true}, {unit_of_measure: @unit_of_measure2, count_in_base_unit: 12}])
+  @products[i].price_list_lines = PriceListLine.create([{price_list: @price_list1, price: 100.50},{price_list: @price_list2, price: 80.52}]) 
 end
  
 @shipping_addresses = Array.new(5).map!{Array.new(5)} 
