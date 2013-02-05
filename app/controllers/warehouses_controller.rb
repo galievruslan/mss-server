@@ -2,7 +2,7 @@ class WarehousesController < ApplicationController
   # GET /warehouses
   # GET /warehouses.json
   def index
-    @warehouses = Warehouse.all
+    @warehouses = Warehouse.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

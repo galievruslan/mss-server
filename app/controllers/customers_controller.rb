@@ -3,11 +3,11 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
-    @customers = Customer.all
-
+    @customers = Customer.page(params[:page])
+    @customers_json = Customer.includes(:shipping_addresses)
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @customers }
+      format.json { render json: @customers_json.to_json(:include => [:shipping_addresses]) }
     end
   end
 

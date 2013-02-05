@@ -3,7 +3,7 @@ class ManagersController < ApplicationController
   # GET /managers
   # GET /managers.json
   def index
-    @managers = Manager.all
+    @managers = Manager.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

@@ -3,11 +3,12 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
-
+    # @products = Product.all
+    @products = Product.page(params[:page])
+    @products_json = Product.includes(:product_unit_of_measures)
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @products }
+      format.json { render json: @products_json.to_json(:include => [:product_unit_of_measures]) }
     end
   end
 

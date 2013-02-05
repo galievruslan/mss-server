@@ -2,7 +2,7 @@ class TemplateRoutesController < ApplicationController
   # GET /template_routes
   # GET /template_routes.json
   def index
-    @template_routes = TemplateRoute.all
+    @template_routes = TemplateRoute.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

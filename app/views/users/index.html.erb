@@ -5,6 +5,7 @@
   	<th>Username</th>
     <th>Email</th>
     <th>Roles</th>
+    <th>Manager</th>
     <th>Last login</th>
     <th>Login IP</th>
     <th colspan="2">Actions</th>
@@ -17,9 +18,10 @@
     <td><%= user.email %></td>
     <td>
     	<% user.roles.each do |role| %>
-    	<%= role.name %> <%=user.manager_id if role.name=='manager'%><br>
+    	<%= role.name %> <br>
     	<% end %>
     </td>
+    <td><%= Manager.find(user.manager_id).name if user.manager_id%></td>
     <td><%= user.current_sign_in_at %></td>
     <td><%= user.current_sign_in_ip %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
@@ -29,5 +31,4 @@
 </tbody>
 </table>
 <br/>
-<%= link_to 'Current manager', users_get_current_manager_path, :class =>'btn' %><br/><br/>
 <%= link_to 'New User', new_user_path, :class =>'btn' %>

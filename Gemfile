@@ -7,6 +7,7 @@ gem 'rails', '3.2.11'
 
 gem 'sqlite3'
 
+gem 'kaminari'
 gem 'builder'
 gem 'devise'
 gem 'cancan'

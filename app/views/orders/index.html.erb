@@ -29,6 +29,7 @@
 		<% end %>
 	</tbody>
 </table>
+<%= paginate @orders %>
 <%=link_to "Download XML ", :controller => "orders", :action => "generate_xml" %> | 
 <%=link_to "View XML", :format => :xml%>
 <br /><br />
