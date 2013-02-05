@@ -45,6 +45,10 @@
             <li <%= 'class=active' if @current_controller =='price_lists'%>>
               <%= link_to "Price lists", price_lists_path %>
             </li>
+            <li class="nav-header">User settings</li>
+            <li <%= 'class=active' if @current_controller =='profile'%>>
+              <%= link_to "Profile", profile_path %>
+            </li>
             <li class="nav-header">Admin settings</li>
             <li <%= 'class=active' if @current_controller =='exchange'%>>
               <%= link_to "Exchange", exchange_path %>

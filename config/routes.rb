@@ -1,11 +1,18 @@
   Mss::Application.routes.draw do 
-
-  get "pages/index"
+  
+  root :to => 'pages#index'
   
   devise_for :users
-  match "/update_product_unit_of_measures" => "order_items#update_product_unit_of_measures"
-  match 'orders/generate_xml', :to => 'orders#generate_xml'
+  
+  get 'exchange', :to => 'exchange#index'
+  get 'exchange/get_xml', :to => 'exchange#get_orders' 
+  get 'pages/index'
+  get 'bali', :to => 'pages#bali'
   get 'routes/create_use_template', :to => 'routes#create_use_template'
+  get 'profile', :to => 'profiles#current' 
+  post 'exchange/upload', :to => 'exchange#upload'
+  match '/update_product_unit_of_measures' => 'order_items#update_product_unit_of_measures'
+  match 'orders/generate_xml', :to => 'orders#generate_xml'   
   
   resources :orders do
     member do
@@ -28,17 +35,13 @@
   resources :customers do
     resources  :shipping_addresses
   end
-  resources :users
+  resources :users 
   resources :price_lists do    
     resources :price_list_lines
   end   
   resources :warehouses
   
-  get 'exchange', :to => 'exchange#index'
-  get 'exchange/get_xml', :to => 'exchange#get_orders'
-  post 'exchange/upload', :to => 'exchange#upload'
-  root :to => 'pages#index'
-  get 'bali', :to => 'pages#bali'
+ 
   
   
   
