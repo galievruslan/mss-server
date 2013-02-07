@@ -11,6 +11,7 @@ gem 'kaminari'
 gem 'builder'
 gem 'devise'
 gem 'cancan'
+gem 'ransack'
 gem 'rubyzip', :require => 'zip/zip'
 
 # Gems used only for assets and not required

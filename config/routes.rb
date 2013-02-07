@@ -28,6 +28,8 @@
   end
   resources :unit_of_measures   
   resources :products do
+    # post 'page/:page', :action => :index, :on => :collection
+    # collection { post :search, to: 'products#index' }
     resources :product_unit_of_measures
   end
   resources :managers
