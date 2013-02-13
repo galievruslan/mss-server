@@ -1,11 +1,41 @@
 <h3>Listing price_list_lines</h3>
-
+<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+  <i class="icon-filter icon-white"></i> Filter:
+</button>
+<div id="demo" class="collapse">
+	<br />
+	<div class='well well-small'>		
+		<%= search_form_for [@price_list, @search], class: "form-horizontal" do |f| %>
+		  <div class="control-group">
+		  	<%= f.label :price_list_name_cont, 'Price name:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :price_list_name_cont, class: 'input-medium'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :product_name_cont, 'Product name:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :product_name_cont, class: 'input-medium'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :price_eq, 'Price:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :price_eq, class: 'input-medium'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">	  	
+		  		<%= f.submit "Search", class: 'btn btn-info' %>	  	
+		  </div>	
+		<%end%>
+	</div>
+</div>
 <table class="table table-striped table-hover">
 	<thead>
 	  <tr>
-	    <th>Price list</th>
-	    <th>Product</th>
-	    <th>Price</th>
+	    <th><%= sort_link @search, :price_list_name, "Price list" %></th>
+	    <th><%= sort_link @search, :product_name, "Product" %></th>
+	    <th><%= sort_link @search, :price, "Price" %></th>
 	    <th colspan="3">Actions</th>
 	  </tr>
 	</thead>
@@ -22,7 +52,7 @@
 		<% end %>
 	</tbody>
 </table>
-
+<%= paginate @price_list_lines %>
 <br />
 
 <%= link_to 'New Price list line', new_price_list_price_list_line_path(@price_list), class: 'btn' %>

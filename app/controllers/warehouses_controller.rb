@@ -2,7 +2,8 @@ class WarehousesController < ApplicationController
   # GET /warehouses
   # GET /warehouses.json
   def index
-    @warehouses = Warehouse.page(params[:page])
+    @search = Warehouse.search(params[:q])
+    @warehouses = @search.result.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

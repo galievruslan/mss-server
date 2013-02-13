@@ -3,7 +3,8 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.page(params[:page])
+    @search = Order.search(params[:q])
+    @orders = @search.result.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

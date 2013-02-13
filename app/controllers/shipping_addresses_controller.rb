@@ -4,7 +4,8 @@ class ShippingAddressesController < ApplicationController
   # GET /shipping_addresses.json
   def index
     @customer = Customer.find(params[:customer_id])
-    @shipping_addresses = @customer.shipping_addresses
+    @search = @customer.shipping_addresses.search(params[:q])
+    @shipping_addresses = @search.result.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

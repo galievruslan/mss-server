@@ -90,7 +90,7 @@ class ProductUnitOfMeasuresController < ApplicationController
     @product_unit_of_measure.destroy
 
     respond_to do |format|
-      format.html { redirect_to product_product_unit_of_measures_path(@product) }
+      format.html { redirect_to product_product_unit_of_measures_path(@product), notice: 'Product unit of measure was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

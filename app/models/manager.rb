@@ -1,5 +1,5 @@
 class Manager < ActiveRecord::Base
-  attr_accessible :name, :external_key, :validity
+  attr_accessible :name, :external_key, :validity, :order_ids, :route_ids, :template_route_ids
   has_many :orders, :dependent => :destroy
   has_many :routes, :dependent => :destroy
   has_many :template_routes, :dependent => :destroy

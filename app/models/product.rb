@@ -1,5 +1,5 @@
 class Product < ActiveRecord::Base
-  attr_accessible :name, :external_key, :validity
+  attr_accessible :name, :external_key, :validity, :order_item_ids, :product_unit_of_measure_ids, :price_list_line_ids
   has_many :order_items, :dependent => :destroy
   has_many :product_unit_of_measures, :dependent => :destroy
   has_many :price_list_lines , :dependent => :destroy

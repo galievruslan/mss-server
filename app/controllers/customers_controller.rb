@@ -3,7 +3,9 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
-    @customers = Customer.page(params[:page])
+    @search = Customer.search(params[:q])
+    @customers = @search.result.page(params[:page])
+    
     @customers_json = Customer.includes(:shipping_addresses)
     respond_to do |format|
       format.html # index.html.erb

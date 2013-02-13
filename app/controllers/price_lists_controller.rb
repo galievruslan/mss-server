@@ -2,7 +2,8 @@ class PriceListsController < ApplicationController
   # GET /price_lists
   # GET /price_lists.json
   def index
-    @price_lists = PriceList.page(params[:page])
+    @search = PriceList.search(params[:q])
+    @price_lists = @search.result.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

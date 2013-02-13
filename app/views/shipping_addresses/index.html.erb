@@ -1,17 +1,50 @@
 <h3>Listing shipping_addresses</h3>
+<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+  <i class="icon-filter icon-white"></i> Filter:
+</button>
+<div id="demo" class="collapse">
+	<br>
+	<div class='well well-small'>
+		<%= search_form_for [@customer, @search], class: "form-horizontal" do |f| %>
+		  <div class="control-group">
+		  	<%= f.label :name_cont, 'Name:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :name_cont, class: 'input-medium'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :external_key_cont, 'External_key:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :external_key_cont, class: 'input-medium'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :address_cont, 'Address:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :address_cont, class: 'input-medium'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">	  	
+		  		<%= f.submit "Search", class: 'btn btn-info' %>	  	
+		  </div>	
+		<%end%>
+	</div>
+</div>
 <table class="table table-striped table-hover">
 	<thead>
 	  <tr>
-	    <th>Customer</th>
-	    <th>Name</th>
-	    <th>Address</th>
-	    <th>Validity</th>
+	  	<th><%= sort_link @search, :external_key, "External key" %></th>
+	    <th><%= sort_link @search, :customer, "Customer" %></th>
+	    <th><%= sort_link @search, :name, "Name" %></th>
+	    <th><%= sort_link @search, :address, "Address" %></th>
+	    <th><%= sort_link @search, :validity, "Validity" %></th>
 	    <th colspan="3"></th>
 	  </tr>
   </thead>
 	<tbody>
 		<% @shipping_addresses.each do |shipping_address| %>
 		  <tr>
+		  	<td><%= shipping_address.external_key %></td>
 		    <td><%= shipping_address.customer.name %></td>
 		    <td><%= shipping_address.name %></td>
 		    <td><%= shipping_address.address %></td>
@@ -23,7 +56,7 @@
 		<% end %>
 	</tbody>
 </table>
-
+<%= paginate @shipping_addresses %>
 <br />
 
 <%= link_to 'New Shipping address', new_customer_shipping_address_path(@customer), :class =>'btn' %><br /><br />

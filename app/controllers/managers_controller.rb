@@ -3,7 +3,8 @@ class ManagersController < ApplicationController
   # GET /managers
   # GET /managers.json
   def index
-    @managers = Manager.page(params[:page])
+    @search = Manager.search(params[:q])
+    @managers = @search.result.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

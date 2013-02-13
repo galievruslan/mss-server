@@ -9,5 +9,5 @@
 </p>
 <p>
   <b>Manager:</b>
-  <%= @manager.name %>
+  <%= @manager ? @manager.name : 'No manager'%>
 </p>

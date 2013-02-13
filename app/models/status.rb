@@ -1,5 +1,5 @@
 class Status < ActiveRecord::Base
-  attr_accessible :name
+  attr_accessible :name, :route_point_ids
   has_many :route_points, :dependent => :destroy
   validates :name, :presence => true
 end

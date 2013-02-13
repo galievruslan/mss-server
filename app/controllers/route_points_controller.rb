@@ -90,7 +90,7 @@ class RoutePointsController < ApplicationController
     @route_point.destroy
 
     respond_to do |format|
-      format.html { redirect_to route_route_points_paths(@route) }
+      format.html { redirect_to route_route_points_path(@route) }
       format.json { head :no_content }
     end
   end

@@ -3,7 +3,8 @@ class UnitOfMeasuresController < ApplicationController
   # GET /unit_of_measures
   # GET /unit_of_measures.json
   def index
-    @unit_of_measures = UnitOfMeasure.all
+    @search = UnitOfMeasure.search(params[:q])
+    @unit_of_measures = @search.result.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

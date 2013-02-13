@@ -3,7 +3,8 @@ class StatusesController < ApplicationController
   # GET /statuses
   # GET /statuses.json
   def index
-    @statuses = Status.all
+    @search = Status.search(params[:q])
+    @statuses = @search.result.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
