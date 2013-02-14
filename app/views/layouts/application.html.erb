@@ -32,6 +32,9 @@
             </li>
             <li <%= 'class=active' if @current_controller =='template_routes' or @current_controller =='template_route_points'%>>
               <%= link_to "Template Routes", template_routes_path %>
+            </li>
+            <li <%= 'class=active' if @current_controller =='categories'%>>
+              <%= link_to "Categories", categories_path %>
             </li>            
             <li <%= 'class=active' if @current_controller =='products'%>>
               <%= link_to "Products", products_path %>

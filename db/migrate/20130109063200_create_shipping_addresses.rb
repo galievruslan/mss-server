@@ -8,5 +8,6 @@ class CreateShippingAddresses < ActiveRecord::Migration
       t.boolean :validity, :default => true
       t.timestamps
     end
+    add_index :shipping_addresses, :external_key, :unique => true
   end
 end

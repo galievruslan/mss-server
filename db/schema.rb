@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130207063450) do
+ActiveRecord::Schema.define(:version => 20130214121806) do
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.integer  "parent_id"
+    t.string   "external_key"
+    t.boolean  "validity",     :default => true
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  add_index "categories", ["external_key"], :name => "index_categories_on_external_key", :unique => true
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -87,7 +98,10 @@ ActiveRecord::Schema.define(:version => 20130207063450) do
     t.boolean  "validity",     :default => true
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
+    t.integer  "category_id"
   end
+
+  add_index "products", ["external_key"], :name => "index_products_on_external_key", :unique => true
 
   create_table "rails_admin_histories", :force => true do |t|
     t.text     "message"
@@ -137,6 +151,8 @@ ActiveRecord::Schema.define(:version => 20130207063450) do
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
   end
+
+  add_index "shipping_addresses", ["external_key"], :name => "index_shipping_addresses_on_external_key", :unique => true
 
   create_table "statuses", :force => true do |t|
     t.string   "name"

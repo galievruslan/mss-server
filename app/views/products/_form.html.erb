@@ -15,6 +15,10 @@
     <%= f.text_field :external_key %>
   </div>
   <div class="field">
+    <%= f.label :category_id %>
+    <%= f.select(:category_id, @categories.collect  {|p| [ p.name, p.id ] }, :include_blank => "Select a category") %>
+  </div>
+  <div class="field">
     <%= f.label :name %>
     <%= f.text_field :name %>
   </div>

@@ -30,9 +30,21 @@
 @customers[3] = Customer.create(name: 'ООО "Реал"', external_key: '10004')
 @customers[4] = Customer.create(name: 'ООО "Метро"', external_key: '10005')
 
+@category1 = Category.create(name: 'Водка', external_key: '10001')
+@category2 = Category.create(name: 'Вино', external_key: '10002')
+@category3 = Category.create(name: 'Коньяк', external_key: '10003')
+@subcategory1 = Category.create(name: 'КЛВЗ', external_key: '10004')
+@subcategory2 = Category.create(name: 'ЧЛВЗ', external_key: '10005')
+@subcategory3 = Category.create(name: 'УСЗ', external_key: '10006')
+@category1.childrens << @subcategory1
+@category1.childrens << @subcategory2
+@category1.childrens << @subcategory3
+@category1.save
+
+
 @products = []
 for i in 0..1000
-  @products[i] = Product.create(name: "Водка #{i}", external_key: "CB#{i}")
+  @products[i] = Product.create(name: "Водка #{i}", external_key: "CB#{i}", category: @subcategory1)
   @products[i].product_unit_of_measures = ProductUnitOfMeasure.create([{unit_of_measure: @unit_of_measure1, count_in_base_unit: 1, base: true}, {unit_of_measure: @unit_of_measure2, count_in_base_unit: 12}])
   @products[i].price_list_lines = PriceListLine.create([{price_list: @price_list1, price: 100.50},{price_list: @price_list2, price: 80.52}]) 
 end
