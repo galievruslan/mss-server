@@ -1,13 +1,49 @@
 <h3>User listing</h3>
+
+<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+  <i class="icon-filter icon-white"></i> Filter:
+</button>
+
+<div id="demo" class="collapse">
+	<br>
+	<div class='well well-small'>	
+		<%= search_form_for @search, class: "form-horizontal" do |f| %>
+		  <div class="control-group">
+		  	<%= f.label :username_cont, 'Username:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :username_cont, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :email_cont, 'External_key:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :email_cont, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :manager_id_eq, 'Manager:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.select :manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, :include_blank => "Select a manager" %>
+		  		
+		  	</div>
+		  </div>
+		  <div class="control-group">	  	
+		  		<%= f.submit "Search", class: 'btn btn-info' %>
+		  		<button type="button" class='btn btn-info' id="q_reset">Reset</button>	  	
+		  </div>	
+		<%end%>
+	</div>
+</div>
+
 <table class="table table-striped table-hover">
 <thead>
   <tr>
-  	<th>Username</th>
-    <th>Email</th>
+  	<th><%= sort_link @search, :username, "Username" %></th>
+    <th><%= sort_link @search, :email, "Email" %></th>
     <th>Roles</th>
-    <th>Manager</th>
-    <th>Last login</th>
-    <th>Login IP</th>
+    <th><%= sort_link @search, :manager_id, "Manager" %></th>
+    <th><%= sort_link @search, :current_sign_in_at, "Last login" %></th>
+    <th><%= sort_link @search, :current_sign_in_ip, "Login IP" %></th>
     <th colspan="2">Actions</th>
   </tr>
 </thead>

@@ -9,17 +9,18 @@
 		  <div class="control-group">
 		  	<%= f.label :name_cont, 'Name:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :name_cont, class: 'input-medium'%>
+		  		<%= f.text_field :name_cont, class: 'input-medium search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :external_key_cont, 'External_key:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :external_key_cont, class: 'input-medium'%>
+		  		<%= f.text_field :external_key_cont, class: 'input-medium search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">	  	
-		  		<%= f.submit "Search", class: 'btn btn-info' %>	  	
+		  		<%= f.submit "Search", class: 'btn btn-info' %>
+		  		<button type="button" class='btn btn-info' id="q_reset">Reset</button>
 		  </div>	
 		<%end%>
 	</div>

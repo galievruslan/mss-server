@@ -1,11 +1,45 @@
 <h3>Listing product_unit_of_measures</h3>
 
+<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+  <i class="icon-filter icon-white"></i> Filter:
+</button>
+
+<div id="demo" class="collapse">
+	<br>
+	<div class='well well-small'>
+		<%= search_form_for [@product, @search], class: "form-horizontal" do |f| %>
+		  <div class="control-group">
+		  	<%= f.label :product_name_cont, 'Product name:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :product_name_cont, class: 'input-medium search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :unit_of_measure_name_cont, 'Unit of measure:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :unit_of_measure_name_cont, class: 'input-medium search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :count_in_base_unit_eq, 'Count in base unit:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :count_in_base_unit_eq, class: 'input-medium search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">	  	
+		  		<%= f.submit "Search", class: 'btn btn-info' %>
+		  		<button type="button" class='btn btn-info' id="q_reset">Reset</button>   	
+		  </div>	
+		<%end%>
+	</div>
+</div>
+
 <table class="table table-striped table-hover">
 	<thead>
 	  <tr>
-	    <th>Product</th>
-	    <th>Unit of measure</th>
-	    <th>Count in base unit</th>
+	    <th><%= sort_link @search, :product_name, "Product" %></th>
+	    <th><%= sort_link @search, :unit_of_measure_name, "Unit of measure" %></th>
+	    <th><%= sort_link @search, :count_in_base_unit, "Count in base unit" %></th>
 	    <th colspan="3">Actions</th>
 	  </tr>
 	</thead>
@@ -23,7 +57,7 @@
 	</tbody>
 </table>
 * Base product unit of measure marked in green<br /><br />
-<br />
+<%= paginate @product_unit_of_measures %>
 
 <%= link_to 'New Product unit of measure', new_product_product_unit_of_measure_path, class: 'btn' %><br /><br />
 <%= link_to 'Back', product_path(@product) %> | <%= link_to 'Back to Products', products_path %>

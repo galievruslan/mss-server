@@ -15,18 +15,19 @@
 		  <div class="control-group">
 		  	<%= f.label :date_gt, 'Date from:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :date_gt, id: 'date_gt' , class: 'input-medium'%>
-		  		to: <%= f.text_field :date_lt, id: 'date_lt' , class: 'input-medium'%>
+		  		<%= f.text_field :date_gt, id: 'date_gt' , class: 'input-medium search-field'%>
+		  		to: <%= f.text_field :date_lt, id: 'date_lt' , class: 'input-medium search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :manager_name_cont, 'Manager:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :manager_name_cont, class: 'input-medium'%>
+		  		<%= f.text_field :manager_name_cont, class: 'input-medium search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">	  	
-		  		<%= f.submit "Search", class: 'btn btn-info' %>	  	
+		  		<%= f.submit "Search", class: 'btn btn-info' %>
+		  		<button type="button" class='btn btn-info' id="q_reset">Reset</button>	  	
 		  </div>	
 		<%end%>
 	</div>

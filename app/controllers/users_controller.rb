@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def index
     @search = User.search(params[:q])
     @users = @search.result.page(params[:page])
-
+    @managers = Manager.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @users }

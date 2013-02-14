@@ -9,23 +9,24 @@
 		  <div class="control-group">
 		  	<%= f.label :price_list_name_cont, 'Price name:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :price_list_name_cont, class: 'input-medium'%>
+		  		<%= f.text_field :price_list_name_cont, class: 'input-medium search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :product_name_cont, 'Product name:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :product_name_cont, class: 'input-medium'%>
+		  		<%= f.text_field :product_name_cont, class: 'input-medium search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :price_eq, 'Price:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :price_eq, class: 'input-medium'%>
+		  		<%= f.text_field :price_eq, class: 'input-medium search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">	  	
-		  		<%= f.submit "Search", class: 'btn btn-info' %>	  	
+		  		<%= f.submit "Search", class: 'btn btn-info' %>
+		  		<button type="button" class='btn btn-info' id="q_reset">Reset</button>	  	
 		  </div>	
 		<%end%>
 	</div>

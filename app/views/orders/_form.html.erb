@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'orders' %>
+<% end %>
 <%= form_for(@order) do |f| %>
   <% if @order.errors.any? %>
     <div id="error_explanation">
@@ -13,7 +16,7 @@
 
   <div class="field">
     <%= f.label :date %>
-    <%= f.date_select :date %>
+    <%= f.text_field :date, id: 'date_gt'%>
   </div>  
   <div class="field">
     <%= f.label :shipping_address_id, 'Shipping_Address' %>

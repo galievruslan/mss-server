@@ -4,7 +4,8 @@ class ProductUnitOfMeasuresController < ApplicationController
   # GET /product_unit_of_measures.json
   def index
     @product = Product.find(params[:product_id])
-    @product_unit_of_measures = @product.product_unit_of_measures
+    @search = @product.product_unit_of_measures.search(params[:q])
+    @product_unit_of_measures = @search.result.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

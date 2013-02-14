@@ -15,42 +15,43 @@
 		  <div class="control-group">
 		  	<%= f.label :date_gt, 'Date from:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :date_gt, id: 'date_gt' , class: 'input-medium'%>
-		  		to: <%= f.text_field :date_lt, id: 'date_lt' , class: 'input-medium'%>
+		  		<%= f.text_field :date_gt, id: 'date_gt' , class: 'input-medium search-field'%>
+		  		to: <%= f.text_field :date_lt, id: 'date_lt' , class: 'input-medium search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :shipping_address_name_cont, 'Shipping address:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :shipping_address_name_cont, class: 'input-medium'%>
+		  		<%= f.text_field :shipping_address_name_cont, class: 'input-medium search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :manager_name_cont, 'Manager:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :manager_name_cont, class: 'input-medium'%>
+		  		<%= f.text_field :manager_name_cont, class: 'input-medium search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :warehouse_name_cont, 'Warehouse:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :warehouse_name_cont, class: 'input-medium'%>
+		  		<%= f.text_field :warehouse_name_cont, class: 'input-medium search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :price_list_name_cont, 'Price list:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :price_list_name_cont, class: 'input-medium'%>
+		  		<%= f.text_field :price_list_name_cont, class: 'input-medium search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :exported_at_cont, 'Status:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :exported_at_cont, class: 'input-medium'%>
+		  		<%= f.text_field :exported_at_cont, class: 'input-medium search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">	  	
-		  		<%= f.submit "Search", class: 'btn btn-info' %>	  	
+		  		<%= f.submit "Search", class: 'btn btn-info' %>	
+		  		<button type="button" class='btn btn-info' id="q_reset">Reset</button>  	
 		  </div>	
 		<%end%>
 	</div>
