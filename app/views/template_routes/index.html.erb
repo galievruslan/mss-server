@@ -1,10 +1,37 @@
 <h3>Listing template_routes</h3>
 
+<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+  <i class="icon-filter icon-white"></i> Filter:
+</button>
+
+<div id="demo" class="collapse">
+	<br>
+	<div class='well well-small'>
+		<%= search_form_for @search, class: "form-horizontal" do |f| %>
+		  <div class="control-group">
+		  	<%= f.label :manager_name_cont, 'Manager name:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :manager_name_cont%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :day_of_week_eq, 'Day of week:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.select :day_of_week_eq, @days_of_week.collect  {|p| [ day_name(p), p ]}, :include_blank => "Select a day of week" %>
+		  	</div>
+		  </div>
+		  <div class="control-group">	  	
+		  		<%= f.submit "Search", class: 'btn btn-info' %>	  	
+		  </div>	
+		<%end%>
+	</div>
+</div>
+
 <table class="table table-striped table-hover">
 	<thead>
 	  <tr>
-	    <th>Manager</th>
-	    <th>Day of week</th>
+	    <th><%= sort_link @search, :manager_name, "Manager" %></th>
+	    <th><%= sort_link @search, :day_of_week, "Day of week" %></th>
 	    <th>Points Count</th>
 	    <th colspan="3">Actions</th>
 	  </tr>
@@ -22,7 +49,7 @@
 		<% end %>
 	</tbody>
 </table>
+
 <%= paginate @template_routes %>
-<br />
 
 <%= link_to 'New Template route', new_template_route_path, class: 'btn' %>

@@ -4,7 +4,8 @@ class OrderItemsController < ApplicationController
   # GET /order_items.json
   def index    
     @order = Order.find(params[:order_id])
-    @order_items = @order.order_items
+    @search = @order.order_items.search(params[:q])
+    @order_items = @search.result.page(params[:page])
     
     respond_to do |format|
       format.html # index.html.erb

@@ -2,43 +2,44 @@ class UsersController < ApplicationController
   load_and_authorize_resource  
   
   def index
-      @users = User.all
+    @search = User.search(params[:q])
+    @users = @search.result.page(params[:page])
 
-      respond_to do |format|
-        format.html # index.html.erb
-        format.json { render json: @users }
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @users }
+    end
+  end
+
+  def edit
+    @managers = Manager.all 
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @managers = Manager.all 
+    @user = User.find(params[:id])
+
+    respond_to do |format|
+      if @user.update_attributes(params[:user])
+        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
-
-    def edit
-      @managers = Manager.all 
-      @user = User.find(params[:id])
-    end
-
-    def update
-      @managers = Manager.all 
-      @user = User.find(params[:id])
-
-      respond_to do |format|
-        if @user.update_attributes(params[:user])
-          format.html { redirect_to users_path, notice: 'User was successfully updated.' }
-          format.json { head :no_content }
-        else
-          format.html { render action: "edit" }
-          format.json { render json: @user.errors, status: :unprocessable_entity }
-        end
-      end
   end
 
   def new
-      @user = User.new
-      @managers = Manager.all 
-      
-      respond_to do |format|
-        format.html # new.html.erb
-        format.json { render json: @user }
-      end
+    @user = User.new
+    @managers = Manager.all 
+    
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @user }
     end
+  end
 
   def create
     @managers = Manager.all 

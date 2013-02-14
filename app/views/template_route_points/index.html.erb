@@ -1,18 +1,43 @@
 <h3>Listing template_route_points</h3>
 
+<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+  <i class="icon-filter icon-white"></i> Filter:
+</button>
+
+<div id="demo" class="collapse">
+	<br>
+	<div class='well well-small'>
+		<%= search_form_for [@template_route, @search], class: "form-horizontal" do |f| %>
+		  <div class="control-group">
+		  	<%= f.label :shipping_address_name_cont, 'Name:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :shipping_address_name_cont, class: 'input-medium'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :shipping_address_address_cont, 'Address:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :shipping_address_address_cont, class: 'input-medium'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">	  	
+		  		<%= f.submit "Search", class: 'btn btn-info' %>	  	
+		  </div>	
+		<%end%>
+	</div>
+</div>
+
 <table class="table table-striped table-hover">
 	<thead>
   <tr>
-    <th>Template route</th>
-    <th>Shipping address name</th>
-    <th>Shipping address address</th>
+    <th><%= sort_link @search, :shipping_address_name, "Name" %></th>
+    <th><%= sort_link @search, :shipping_address_address, "Address" %></th>
     <th colspan="3">Actions</th>
   </tr>
   </thead>
 
 <% @template_route_points.each do |template_route_point| %>
   <tr>
-    <td><%= template_route_point.template_route_id %></td>
     <td><%= template_route_point.shipping_address.name %></td>
     <td><%= template_route_point.shipping_address.address %></td>
     <td><%= link_to 'Show', template_route_template_route_point_path(@template_route, template_route_point) %></td>
@@ -21,5 +46,8 @@
   </tr>
 <% end %>
 </table>
+
+<%= paginate @template_route_points %>
+
 <%= link_to 'New Template route point', new_template_route_template_route_point_path, class: 'btn' %><br /><br />
 <%= link_to 'Back to Template route', template_route_path(@template_route) %>

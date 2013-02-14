@@ -4,7 +4,8 @@ class RoutePointsController < ApplicationController
   # GET /route_points.json
   def index
     @route = Route.find(params[:route_id])
-    @route_points = @route.route_points
+    @search = @route.route_points.search(params[:q])
+    @route_points = @search.result.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

@@ -2,42 +2,39 @@
   <b>Date:</b>
   <%= @order.date %>
 </p>
-
 <p>
   <b>Shipping address:</b>
   <%= @order.shipping_address.name %>
 </p>
-
 <p>
   <b>Manager:</b>
   <%= @order.manager.name %>
 </p>
-
 <p>
   <b>Warehouse:</b>
   <%= @order.warehouse.name %>
 </p>
-
 <p>
   <b>Price list:</b>
   <%= @order.price_list.name %>
 </p>
-
 <p>
   <b>Comment:</b>
   <%= @order.comment %>
 </p>
+
 <h4>Order items</h4>
+
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th>Product</th>
-      <th>Unit of measure</th>
-      <th>Count</th>
+      <th><%= sort_link @search, :product_name, "Product" %></th>
+      <th><%= sort_link @search, :unit_of_measure_name, "Unit of measure" %></th>
+      <th><%= sort_link @search, :quantity, "Count" %></th>
     </tr>
   </thead>
   <tbody>
-    <% @order.order_items.each do |order_item| %>  
+    <% @order_items.each do |order_item| %>  
     <tr>
       <td><%= order_item.product.name %></td>
       <td><%= order_item.unit_of_measure.name %></td>
@@ -46,6 +43,7 @@
     <%end%>
   </tbody>
 </table>
+<%= paginate @order_items %>
 
 <%= link_to 'Edit', edit_order_path(@order) %> |
 <%= link_to 'Back', orders_path %>

@@ -62,8 +62,7 @@
       </div>
       
       <div class="span10 well">
-      	<p id='error'><%= alert %></p>
-      	<p id='notice'><%= notice %></p>
+      	<%= render :partial => "/pages/flash", :locals => {:flash => flash}%>
         <%= yield %> 
       </div>
     </div>

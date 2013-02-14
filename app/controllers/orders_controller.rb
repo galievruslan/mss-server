@@ -17,7 +17,8 @@ class OrdersController < ApplicationController
   # GET /orders/1.json
   def show
     @order = Order.find(params[:id])
-
+    @search = @order.order_items.search(params[:q])
+    @order_items = @search.result.page(params[:page])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @order }

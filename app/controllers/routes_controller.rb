@@ -37,7 +37,8 @@ class RoutesController < ApplicationController
   # GET /routes
   # GET /routes.json
   def index
-    @routes = Route.page(params[:page])
+    @search = Route.search(params[:q])
+    @routes = @search.result.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -49,7 +50,9 @@ class RoutesController < ApplicationController
   # GET /routes/1.json
   def show
     @route = Route.find(params[:id])
-
+    @search = @route.route_points.search(params[:q])
+    @route_points = @search.result.page(params[:page])
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @route }

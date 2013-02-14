@@ -3,7 +3,8 @@ class TemplateRoutePointsController < ApplicationController
   # GET /template_route_points.json
   def index
     @template_route = TemplateRoute.find(params[:template_route_id])
-    @template_route_points = @template_route.template_route_points
+    @search = @template_route.template_route_points.search(params[:q])
+    @template_route_points = @search.result.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

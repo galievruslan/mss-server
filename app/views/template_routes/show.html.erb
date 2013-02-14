@@ -12,12 +12,12 @@
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th>Shipping address name</th>
-      <th>Shipping address address</th>
+      <th><%= sort_link @search, :shipping_address_name, "Name" %></th>
+      <th><%= sort_link @search, :shipping_address_address, "Address" %></th>
     </tr>
   </thead>
   <tbody>
-    <% @template_route.template_route_points.each do |template_route_points| %>  
+    <% @template_route_points.each do |template_route_points| %>  
     <tr>
       <td><%= template_route_points.shipping_address.name %></td>
       <td><%= template_route_points.shipping_address.address %></td>
@@ -25,6 +25,8 @@
     <%end%>
   </tbody>
 </table>
+
+<%= paginate @template_route_points %>
 
 <%= link_to 'Edit', edit_template_route_path(@template_route) %> |
 <%= link_to 'Back', template_routes_path %>

@@ -30,5 +30,7 @@
 <% end %>
 </tbody>
 </table>
-<br/>
+
+<%= paginate @users %>
+
 <%= link_to 'New User', new_user_path, :class =>'btn' %>
