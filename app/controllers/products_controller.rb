@@ -5,8 +5,13 @@ class ProductsController < ApplicationController
   def index
     @search = Product.search(params[:q])
     @products = @search.result.page(params[:page])
-     
-    @products_json = Product.includes(:product_unit_of_measures)
+    @categories = Category.all
+    if params[:updated_at]
+      @products_json = Product.where("updated_at >= #{params[:updated_at]}").includes(:product_unit_of_measures)
+    else
+      @products_json = Product.includes(:product_unit_of_measures)
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @products_json.to_json(:include => [:product_unit_of_measures]) }

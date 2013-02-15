@@ -5,7 +5,10 @@ class OrdersController < ApplicationController
   def index
     @search = Order.search(params[:q])
     @orders = @search.result.page(params[:page])
-
+    @managers = Manager.all
+    @warehouses = Warehouse.all
+    @price_lists = PriceList.all
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @orders }
@@ -52,6 +55,10 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
+    @shipping_addresses = ShippingAddress.all
+    @managers = Manager.all
+    @price_lists = PriceList.all
+    @warehouses = Warehouse.all
     @order = Order.new(params[:order])
 
     respond_to do |format|

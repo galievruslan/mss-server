@@ -6,7 +6,12 @@ class CustomersController < ApplicationController
     @search = Customer.search(params[:q])
     @customers = @search.result.page(params[:page])
     
-    @customers_json = Customer.includes(:shipping_addresses)
+    if params[:updated_at]
+      @customers_json = Customer.where("updated_at >= #{params[:updated_at]}").includes(:shipping_addresses)
+    else
+      @customers_json = Customer.includes(:shipping_addresses)
+    end    
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @customers_json.to_json(:include => [:shipping_addresses]) }

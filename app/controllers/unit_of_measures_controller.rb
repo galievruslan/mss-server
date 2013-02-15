@@ -5,10 +5,15 @@ class UnitOfMeasuresController < ApplicationController
   def index
     @search = UnitOfMeasure.search(params[:q])
     @unit_of_measures = @search.result.page(params[:page])
+    if params[:updated_at]
+      @unit_of_measures_json = UnitOfMeasure.where("updated_at >= #{params[:updated_at]}")
+    else
+      @unit_of_measures_json = UnitOfMeasure.all
+    end 
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @unit_of_measures }
+      format.json { render json: @unit_of_measures_json }
     end
   end
 

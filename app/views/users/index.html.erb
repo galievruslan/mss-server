@@ -23,7 +23,7 @@
 		  <div class="control-group">
 		  	<%= f.label :manager_id_eq, 'Manager:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.select :manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, :include_blank => "Select a manager" %>
+		  		<%= f.select :manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => "Select a manager"},{:class => 'search-field'} %>
 		  		
 		  	</div>
 		  </div>

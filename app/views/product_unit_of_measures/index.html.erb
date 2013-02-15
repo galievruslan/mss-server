@@ -9,21 +9,15 @@
 	<div class='well well-small'>
 		<%= search_form_for [@product, @search], class: "form-horizontal" do |f| %>
 		  <div class="control-group">
-		  	<%= f.label :product_name_cont, 'Product name:', class: "control-label"%>
+		  	<%= f.label :unit_of_measure_id_eq, 'Unit of measure:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :product_name_cont, class: 'input-medium search-field'%>
-		  	</div>
-		  </div>
-		  <div class="control-group">
-		  	<%= f.label :unit_of_measure_name_cont, 'Unit of measure:', class: "control-label"%>
-		  	<div class="controls">
-		  		<%= f.text_field :unit_of_measure_name_cont, class: 'input-medium search-field'%>
+		  		<%= f.select :unit_of_measure_id_eq, @unit_of_measures.collect  {|p| [ p.name, p.id ]}, {:include_blank => "Select a unit of measure"}, {:class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :count_in_base_unit_eq, 'Count in base unit:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :count_in_base_unit_eq, class: 'input-medium search-field'%>
+		  		<%= f.text_field :count_in_base_unit_eq, class: 'search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">	  	

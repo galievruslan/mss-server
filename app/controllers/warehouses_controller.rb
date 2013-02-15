@@ -4,10 +4,16 @@ class WarehousesController < ApplicationController
   def index
     @search = Warehouse.search(params[:q])
     @warehouses = @search.result.page(params[:page])
+    
+    if params[:updated_at]
+      @warehouses_json = Warehouse.where("updated_at >= #{params[:updated_at]}")
+    else
+      @warehouses_json = Warehouse.all
+    end 
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @warehouses }
+      format.json { render json: @warehouses_json }
     end
   end
 

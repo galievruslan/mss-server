@@ -10,6 +10,22 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="container">
+			<a class="brand" href="#">Mobile Sale System</a>
+			<ul class="nav pull-right">
+			  <li <%= 'class=active' if @current_controller =='pages'%>>
+			    <%= link_to "Home", root_path %>
+			  </li>
+			  <li <%= 'class=active' if @current_controller =='profiles'%>>
+              <%= link_to "Profile", profile_path %>
+        </li>
+			  <li><%= link_to 'Logout', destroy_user_session_path %></li>
+			</ul>
+	  </div>
+	</div>
+</div>
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span2">      
@@ -47,23 +63,16 @@
             </li>
             <li <%= 'class=active' if @current_controller =='price_lists'%>>
               <%= link_to "Price lists", price_lists_path %>
-            </li>
-            <li class="nav-header">User settings</li>
-            <li <%= 'class=active' if @current_controller =='profile'%>>
-              <%= link_to "Profile", profile_path %>
-            </li>
+            </li>            
             <li class="nav-header">Admin settings</li>
             <li <%= 'class=active' if @current_controller =='exchange'%>>
               <%= link_to "Exchange", exchange_path %>
             </li>
             <li <%= 'class=active' if @current_controller =='users'%>>
               <%= link_to "Users", users_path %>
-            </li>                      
-	          <li>
-	          	<%= link_to 'Logout', destroy_user_session_path %>
-	          </li>
+            </li>
       </div>
-      
+      <br />
       <div class="span10 well">
       	<%= render :partial => "/pages/flash", :locals => {:flash => flash}%>
         <%= yield %> 

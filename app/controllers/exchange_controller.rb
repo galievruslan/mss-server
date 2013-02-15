@@ -104,38 +104,71 @@ class ExchangeController < ApplicationController
       end   
     end
     
+    if params[:categories]
+      categories = xml.elements.to_a("//category")
+      categories.each do |category| 
+        category_name = category.elements['name'].text
+        category_external_key = category.elements['external_key'].text
+        category_db = Category.find_by_external_key(category_external_key)
+        
+        if category.attributes['type'] =='root'          
+          if !category_db             
+            new_category = Category.create(name: category_name, external_key: category_external_key)
+          else
+            if !category_db.validity
+              category_db.validity = true 
+            end
+            category_db.update_attributes(name: category_name, parent: nil)
+          end 
+              
+        else
+          category_parent_ext_key = category.elements['parent_category_external_key'].text
+          category_parent = Category.find_by_external_key(category_parent_ext_key)
+          if !category_db             
+            new_category = Category.create(name: category_name, external_key: category_external_key, parent: category_parent)
+          else
+            if !category_db.validity
+              category_db.validity = true 
+            end
+            category_db.update_attributes(name: category_name, parent: category_parent)
+          end  
+        end
+      end   
+    end
+    
     if params[:products]
       products = xml.elements.to_a("//product")
       products.each do |product| 
         product_name = product.elements['name'].text
         product_external_key = product.elements['external_key'].text
+        product_category_external_key = product.elements['category_external_key'].text
+        product_category = Category.find_by_external_key(product_category_external_key)
         product_db = Product.find_by_external_key(product_external_key)
         if !product_db
-          new_product = Product.create(name: product_name, external_key: product_external_key)
+          new_product = Product.create(name: product_name, external_key: product_external_key, category: product_category)
         else
           if !product_db.validity
             product_db.validity = true 
           end
-          product_db.update_attributes(name: product_name)
+          product_db.update_attributes(name: product_name, category: product_category)
         end          
       end   
     end
     
     if params[:product_unit_of_measures]
       product_unit_of_measures = xml.elements.to_a("//product_unit_of_measure")
-      product_unit_of_measures.each do |product_unit_of_measure|
-        base_product_unit_of_measure = false
-        base_product_unit_of_measure = true if product_unit_of_measure.attributes['type'] =='base'       
+      product_unit_of_measures.each do |product_unit_of_measure|        
+        product_unit_of_measure.attributes['type'] =='base' ? base_product_unit_of_measure = true : base_product_unit_of_measure = false        
         product_unit_of_measure_product_external_key = product_unit_of_measure.elements['product_external_key'].text
         product_unit_of_measure_external_key = product_unit_of_measure.elements['unit_of_measure_external_key'].text
         product_unit_of_measure_count_in_base_unit = product_unit_of_measure.elements['count_in_base_unit'].text
-        product_id = Product.find_by_external_key(product_unit_of_measure_product_external_key).id
-        unit_of_measure_id = UnitOfMeasure.find_by_external_key(product_unit_of_measure_external_key).id
-        product_unit_of_measure_db = ProductUnitOfMeasure.find_by_product_id_and_unit_of_measure_id(product_id, unit_of_measure_id)
+        product = Product.find_by_external_key(product_unit_of_measure_product_external_key)
+        unit_of_measure = UnitOfMeasure.find_by_external_key(product_unit_of_measure_external_key)
+        product_unit_of_measure_db = ProductUnitOfMeasure.find_by_product_id_and_unit_of_measure_id(product.id, unit_of_measure.id)
         if !product_unit_of_measure_db
-          new_product_unit_of_measure = ProductUnitOfMeasure.create(product_id: product_id, unit_of_measure_id: unit_of_measure_id, count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
+          new_product_unit_of_measure = ProductUnitOfMeasure.create(product: product, unit_of_measure: unit_of_measure, count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
         else
-          product_unit_of_measure_db.update_attributes(count_in_base_unit: product_unit_of_measure_count_in_base_unit)
+          product_unit_of_measure_db.update_attributes(count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
         end          
       end   
     end
@@ -146,18 +179,18 @@ class ExchangeController < ApplicationController
         product_external_key = price_list_line.elements['product_external_key'].text
         price_list_external_key = price_list_line.elements['price_list_external_key'].text
         price = price_list_line.elements['price'].text
-        product_id = Product.find_by_external_key(product_external_key).id
-        price_list_id = PriceList.find_by_external_key(price_list_external_key).id
-        price_list_line_db = PriceListLine.find_by_product_id_and_price_list_id(product_id, price_list_id)
+        product = Product.find_by_external_key(product_external_key)
+        price_list = PriceList.find_by_external_key(price_list_external_key)
+        price_list_line_db = PriceListLine.find_by_product_id_and_price_list_id(product.id, price_list.id)
         if !price_list_line_db
-          new_price_list_line = PriceListLine.create(product_id: product_id, price_list_id: price_list_id, price: price)
+          new_price_list_line = PriceListLine.create(product: product, price_list: price_list, price: price)
         else          
           price_list_line_db.update_attributes(price: price)
         end          
       end   
     end    
           
-    redirect_to :action => 'index'
+    redirect_to exchange_path, notice: 'Handbook was successfully imported.' 
   end
    
   def get_orders

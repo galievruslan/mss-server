@@ -39,7 +39,7 @@ class RoutesController < ApplicationController
   def index
     @search = Route.search(params[:q])
     @routes = @search.result.page(params[:page])
-
+    @managers = Manager.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @routes }

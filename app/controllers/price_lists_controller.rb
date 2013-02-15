@@ -4,10 +4,14 @@ class PriceListsController < ApplicationController
   def index
     @search = PriceList.search(params[:q])
     @price_lists = @search.result.page(params[:page])
-
+    if params[:updated_at]
+      @price_lists_json = PriceList.where("updated_at >= #{params[:updated_at]}").includes(:price_list_lines)
+    else
+      @price_lists_json = PriceList.includes(:price_list_lines)
+    end 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @price_lists }
+      format.json { render json: @price_lists_json.to_json(:include => [:price_list_lines]) }
     end
   end
 

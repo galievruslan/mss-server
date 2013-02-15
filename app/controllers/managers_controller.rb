@@ -5,10 +5,16 @@ class ManagersController < ApplicationController
   def index
     @search = Manager.search(params[:q])
     @managers = @search.result.page(params[:page])
-
+    
+    if params[:updated_at]
+      @managers_json = Manager.where("updated_at >= #{params[:updated_at]}")
+    else
+      @managers_json = Manager.all
+    end 
+    
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @managers }
+      format.json { render json: @managers_json }
     end
   end
 

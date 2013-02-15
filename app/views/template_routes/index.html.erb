@@ -9,15 +9,15 @@
 	<div class='well well-small'>
 		<%= search_form_for @search, class: "form-horizontal" do |f| %>
 		  <div class="control-group">
-		  	<%= f.label :manager_name_cont, 'Manager name:', class: "control-label"%>
+		  	<%= f.label :manager_id_eq, 'Manager name:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :manager_name_cont, class: 'search-field'%>
+		  		<%= f.select :manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => "Select a manager"}, {:class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :day_of_week_eq, 'Day of week:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.select :day_of_week_eq, @days_of_week.collect  {|p| [ day_name(p), p ]}, :include_blank => "Select a day of week" %>
+		  		<%= f.select :day_of_week_eq, @days_of_week.collect  {|p| [ day_name(p), p ]},{:include_blank => "Select a day of week"},{:class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  <div class="control-group">	  	

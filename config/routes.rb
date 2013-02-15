@@ -6,12 +6,12 @@
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   
   get 'exchange', :to => 'exchange#index'
-  get 'exchange/get_xml', :to => 'exchange#get_orders' 
+  get 'exchange/get_xml', :to => 'exchange#get_orders'
+  post 'exchange/upload', :to => 'exchange#upload' 
   get 'pages/index'
   get 'bali', :to => 'pages#bali'
   get 'routes/create_use_template', :to => 'routes#create_use_template'
-  get 'profile', :to => 'profiles#current' 
-  post 'exchange/upload', :to => 'exchange#upload'
+  get 'profile', :to => 'profiles#current'  
   match '/update_product_unit_of_measures' => 'order_items#update_product_unit_of_measures'
   match 'orders/generate_xml', :to => 'orders#generate_xml'   
   

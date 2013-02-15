@@ -5,23 +5,17 @@
 <div id="demo" class="collapse">
 	<br />
 	<div class='well well-small'>		
-		<%= search_form_for [@price_list, @search], class: "form-horizontal" do |f| %>
-		  <div class="control-group">
-		  	<%= f.label :price_list_name_cont, 'Price name:', class: "control-label"%>
-		  	<div class="controls">
-		  		<%= f.text_field :price_list_name_cont, class: 'input-medium search-field'%>
-		  	</div>
-		  </div>
+		<%= search_form_for [@price_list, @search], class: "form-horizontal" do |f| %>		  
 		  <div class="control-group">
 		  	<%= f.label :product_name_cont, 'Product name:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :product_name_cont, class: 'input-medium search-field'%>
+		  		<%= f.text_field :product_name_cont, class: 'search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :price_eq, 'Price:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :price_eq, class: 'input-medium search-field'%>
+		  		<%= f.text_field :price_eq, class: 'search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">	  	

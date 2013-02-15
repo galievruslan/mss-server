@@ -5,7 +5,7 @@ class TemplateRoutesController < ApplicationController
     @days_of_week = [0,1,2,3,4,5,6]
     @search = TemplateRoute.search(params[:q])
     @template_routes = @search.result.page(params[:page])
-
+    @managers = Manager.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @template_routes }

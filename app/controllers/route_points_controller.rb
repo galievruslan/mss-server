@@ -6,7 +6,7 @@ class RoutePointsController < ApplicationController
     @route = Route.find(params[:route_id])
     @search = @route.route_points.search(params[:q])
     @route_points = @search.result.page(params[:page])
-
+    @statuses = Status.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @route_points }

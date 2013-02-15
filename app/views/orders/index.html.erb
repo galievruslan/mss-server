@@ -13,40 +13,40 @@
 		<%= search_form_for @search, class: "form-horizontal" do |f| %>
 		
 		  <div class="control-group">
-		  	<%= f.label :date_gt, 'Date from:', class: "control-label"%>
+		  	<%= f.label :date_gt, 'Date period:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :date_gt, id: 'date_gt' , class: 'input-medium search-field'%>
-		  		to: <%= f.text_field :date_lt, id: 'date_lt' , class: 'input-medium search-field'%>
+		  		<%= f.text_field :date_gt, id: 'date_gt' , class: 'input-small search-field'%>
+		  		- <%= f.text_field :date_lt, id: 'date_lt' , class: 'input-small search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :shipping_address_name_cont, 'Shipping address:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :shipping_address_name_cont, class: 'input-medium search-field'%>
+		  		<%= f.text_field :shipping_address_name_cont, class: 'search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">
-		  	<%= f.label :manager_name_cont, 'Manager:', class: "control-label"%>
+		  	<%= f.label :manager_id_eq, 'Manager:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :manager_name_cont, class: 'input-medium search-field'%>
+		  		<%= f.select :manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => "Select a manager"}, {:class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  <div class="control-group">
-		  	<%= f.label :warehouse_name_cont, 'Warehouse:', class: "control-label"%>
+		  	<%= f.label :warehouse_id_eq, 'Warehouse:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :warehouse_name_cont, class: 'input-medium search-field'%>
+		  		<%= f.select :warehouse_id_eq, @warehouses.collect  {|p| [ p.name, p.id ]}, {:include_blank => "Select a warehouse"}, {:class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  <div class="control-group">
-		  	<%= f.label :price_list_name_cont, 'Price list:', class: "control-label"%>
+		  	<%= f.label :price_list_id_eq, 'Price list:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :price_list_name_cont, class: 'input-medium search-field'%>
+		  		<%= f.select :price_list_id_eq, @price_lists.collect  {|p| [ p.name, p.id ]}, {:include_blank => "Select a price list"}, {:class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  <div class="control-group">
-		  	<%= f.label :exported_at_cont, 'Status:', class: "control-label"%>
+		  	<%= f.label :exported_at_eq, 'Status:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :exported_at_cont, class: 'input-medium search-field'%>
+		  		<%= f.select :exported_at_eq, [['Exported', true], ['Not exported', false]], {:include_blank => "Select a status"}, {:class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  <div class="control-group">	  	
