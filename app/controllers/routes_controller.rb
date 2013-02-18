@@ -34,6 +34,7 @@ class RoutesController < ApplicationController
         format.json { render json: @route, status: :created, location: @route }      
     end
   end
+  
   # GET /routes
   # GET /routes.json
   def index

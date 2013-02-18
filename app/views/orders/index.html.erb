@@ -44,11 +44,11 @@
 		  	</div>
 		  </div>
 		  <div class="control-group">
-		  	<%= f.label :exported_at_eq, 'Status:', class: "control-label"%>
+		  	<%= f.label :exported_at_gt, 'Exported period:', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.select :exported_at_eq, [['Exported', true], ['Not exported', false]], {:include_blank => "Select a status"}, {:class => 'search-field'} %>
+		  		<%= f.text_field :exported_at_gt, id: 'exported_at_gt' , class: 'input-small search-field'%>
+		  		- <%= f.text_field :exported_at_lt, id: 'exported_at_lt' , class: 'input-small search-field'%></div>
 		  	</div>
-		  </div>
 		  <div class="control-group">	  	
 		  		<%= f.submit "Search", class: 'btn btn-info' %>	
 		  		<button type="button" class='btn btn-info' id="q_reset">Reset</button>  	
@@ -64,7 +64,7 @@
 	    <th><%= sort_link @search, :manager_name, "Manager" %></th>
 	    <th><%= sort_link @search, :warehouse_name, "Warehouse" %></th>
 	    <th><%= sort_link @search, :price_list_name, "Price list" %></th>
-	    <th><%= sort_link @search, :exported_at, "Status" %></th>
+	    <th><%= sort_link @search, :exported_at, "Exported at" %></th>
 	    <th colspan="4">Actions</th>
 	  </tr>
 	</thead>
@@ -76,7 +76,7 @@
 	    <td><%= order.manager.name %></td>
 	    <td><%= order.warehouse.name %></td>
 	    <td><%= order.price_list.name %></td>
-	    <td><%= order.exported_at ?  'Exported' : 'Not exported' %></td>
+	    <td><%= order.exported_at.strftime("%T %d-%m-%y")%></td>
 	    <td><%= link_to 'Export again', export_again_order_path(order), :method => :put %></td>
 	    <td><%= link_to 'Show', order %></td>
 	    <td><%= link_to 'Edit', edit_order_path(order) %></td>
