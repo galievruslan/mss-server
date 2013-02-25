@@ -30,6 +30,7 @@
 	  <tr>
 	  	<th><%= sort_link @search, :external_key, "External Key" %></th>
 	    <th><%= sort_link @search, :name, "Name" %></th>
+	    <th>Shipping addresses count</th>
 	    <th><%= sort_link @search, :validity, "Validity" %></th>
 	    <th colspan="3">Actions</th>
 	  </tr>
@@ -39,6 +40,7 @@
 		<tr>
 			<td><%= manager.external_key %></td>
 	    <td><%= manager.name %></td>
+	    <td><%= manager.manager_shipping_addresses.count%></td>
 	    <td><i class=<%=manager.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
 	    <td><%= link_to 'Show', manager %></td>
 	    <td><%= link_to 'Edit', edit_manager_path(manager) %></td>

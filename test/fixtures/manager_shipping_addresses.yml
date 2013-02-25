@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  manager_id: 1
+  shipping_address_id: 1
+
+two:
+  manager_id: 1
+  shipping_address_id: 1

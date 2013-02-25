@@ -28,7 +28,8 @@ class ManagersController < ApplicationController
   # GET /managers/1.json
   def show
     @manager = Manager.find(params[:id])
-
+    @search = @manager.manager_shipping_addresses.search(params[:q])
+    @manager_shipping_addresses = @search.result.page(params[:page]).per(current_user.list_page_size)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @manager }

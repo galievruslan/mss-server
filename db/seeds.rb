@@ -54,11 +54,15 @@ for i in 0..4
     @name = @customers[i].name
   for j in 0..4
     @shipping_addresses[i][j] = ShippingAddress.create(name: "#{@name} №#{j}", address: "г. Казань ул. Восстания д.#{j}", external_key: "00#{i}#{j}")
-    @customers[i].shipping_addresses << @shipping_addresses[i][j]
-    
+    @customers[i].shipping_addresses << @shipping_addresses[i][j]    
   end
   @customers[i].save
 end
+
+
+@manager1.manager_shipping_addresses = ManagerShippingAddress.create([{shipping_address: @shipping_addresses[0][0]},{shipping_address: @shipping_addresses[0][1]},{shipping_address: @shipping_addresses[0][2]},{shipping_address: @shipping_addresses[0][3]},{shipping_address: @shipping_addresses[0][4]}])
+@manager2.manager_shipping_addresses = ManagerShippingAddress.create([{shipping_address: @shipping_addresses[1][0]},{shipping_address: @shipping_addresses[1][1]},{shipping_address: @shipping_addresses[1][2]},{shipping_address: @shipping_addresses[1][3]},{shipping_address: @shipping_addresses[1][4]}])
+
 
 @route1 = Route.create(date: '2013-01-15', manager: @manager1)
 @route1.route_points = RoutePoint.create([{shipping_address: @shipping_addresses[0][1], status: @status2}, {shipping_address: @shipping_addresses[1][2], status: @status2},{shipping_address: @shipping_addresses[1][0], status: @status2}])

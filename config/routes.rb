@@ -1,5 +1,5 @@
   Mss::Application.routes.draw do 
-  
+    
   root :to => 'pages#index'
   
   devise_for :users
@@ -32,7 +32,9 @@
   resources :products do    
     resources :product_unit_of_measures
   end
-  resources :managers
+  resources :managers do
+    resources :manager_shipping_addresses    
+  end
   resources :statuses
   resources :customers do
     resources  :shipping_addresses

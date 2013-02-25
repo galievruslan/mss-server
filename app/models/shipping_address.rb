@@ -4,6 +4,7 @@ class ShippingAddress < ActiveRecord::Base
   has_many :orders, :dependent => :destroy
   has_many :route_points, :dependent => :destroy
   has_many :template_route_points, :dependent => :destroy
+  has_many :manager_shipping_addresses, :dependent => :destroy
   validates :name, :address, :customer_id, :external_key, :presence => true
   validates :external_key, :uniqueness => { :case_sensitive => false }
 end

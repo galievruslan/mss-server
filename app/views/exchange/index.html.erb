@@ -24,12 +24,12 @@
 				<td><%= check_box_tag(:shipping_addresses) %>	</td>
 			</tr>
 			<tr>
-				<td><%= label_tag(:unit_of_measures, "Unit of measures") %> </td>
-				<td><%= check_box_tag(:unit_of_measures) %>	</td>
+				<td><%= label_tag(:warehouses, "Warehouses") %> </td>
+				<td><%= check_box_tag(:warehouses) %>	</td>
 			</tr>
 			<tr>
-				<td><%= label_tag(:price_lists, "Price lists") %> </td>
-				<td><%= check_box_tag(:price_lists) %>	</td>
+				<td><%= label_tag(:managers, "Managers") %> </td>
+				<td><%= check_box_tag(:managers) %>	</td>
 			</tr>
 			<tr>
 				<td><%= label_tag(:categories, "Categories") %> </td>
@@ -40,21 +40,25 @@
 				<td><%= check_box_tag(:products) %>	</td>
 			</tr>
 			<tr>
+				<td><%= label_tag(:managers_shipping_addresses, "Managers shipping addresses") %> </td>
+				<td><%= check_box_tag(:managers_shipping_addresses) %>	</td>
+			</tr>		
+			<tr>
+				<td><%= label_tag(:unit_of_measures, "Unit of measures") %> </td>
+				<td><%= check_box_tag(:unit_of_measures) %>	</td>
+			</tr>
+			<tr>
+				<td><%= label_tag(:price_lists, "Price lists") %> </td>
+				<td><%= check_box_tag(:price_lists) %>	</td>
+			</tr>			
+			<tr>
 				<td><%= label_tag(:product_unit_of_measures, "Product unit of measures") %> </td>
 				<td><%= check_box_tag(:product_unit_of_measures) %>	</td>
 			</tr>
 			<tr>
 				<td><%= label_tag(:price_list_lines, "Price list lines") %> </td>
 				<td><%= check_box_tag(:price_list_lines) %>	</td>
-			</tr>
-			<tr>
-				<td><%= label_tag(:managers, "Managers") %> </td>
-				<td><%= check_box_tag(:managers) %>	</td>
-			</tr>			
-			<tr>
-				<td><%= label_tag(:warehouses, "Warehouses") %> </td>
-				<td><%= check_box_tag(:warehouses) %>	</td>
-			</tr>
+			</tr>				
 		</tbody>
 	</table>
   <div class="actions">

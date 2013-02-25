@@ -103,30 +103,34 @@ class OrdersController < ApplicationController
   def generate_xml
     data = Builder::XmlMarkup.new( :target => out_data = "", :indent => 2 )
     data.instruct!
-    @orders = Order.all        
-    data.orders do
-      @orders.each do |order|
-        data.order do
-          data.id(order.id)
-          data.date(order.date)
-          data.customer_id(order.shipping_address.customer.id)
-          data.customer_name(order.shipping_address.customer.name)
-          data.customer_external_key(order.shipping_address.customer.external_key)
-          data.shipping_address_id(order.shipping_address.id)
-          data.shipping_address_external_key(order.shipping_address.external_key)
-          data.shipping_address_name(order.shipping_address.name)
-          data.manager_id(order.manager.id)
-          data.manager_name(order.manager.name)
-          data.manager_external_key(order.manager.external_key)
-          data.order_items do
-            order.order_items.each do |order_item|
-              data.order_item do
-                data.product_id(order_item.product.id)
-                data.product_external_key(order_item.product.external_key)
-                data.product_name(order_item.product.name)
-                data.quantity(order_item.quantity)
-              end
-            end
+    order = Order.find(params[:id])        
+    data.order do        
+      data.id(order.id)
+      data.date(order.date)
+      data.customer_id(order.shipping_address.customer.id)
+      data.customer_name(order.shipping_address.customer.name)
+      data.customer_external_key(order.shipping_address.customer.external_key)
+      data.shipping_address_id(order.shipping_address.id)
+      data.shipping_address_external_key(order.shipping_address.external_key)
+      data.shipping_address_name(order.shipping_address.name)
+      data.manager_id(order.manager.id)
+      data.manager_name(order.manager.name)
+      data.manager_external_key(order.manager.external_key)
+      data.warehouse_id(order.warehouse.id)
+      data.warehouse_name(order.warehouse.name)
+      data.warehouse_external_key(order.warehouse.external_key)
+      data.price_list_id(order.price_list.id)
+      data.price_list_name(order.price_list.name)
+      data.price_list_external_key(order.price_list.external_key)
+      data.order_items do
+        order.order_items.each do |order_item|
+          data.order_item do
+            data.product_id(order_item.product.id)
+            data.product_external_key(order_item.product.external_key)
+            data.product_name(order_item.product.name)
+            data.unit_of_measure_name(order_item.unit_of_measure.name)
+            data.unit_of_measure_external_key(order_item.unit_of_measure.external_key)
+            data.quantity(order_item.quantity)
           end
         end
       end  

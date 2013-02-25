@@ -1,0 +1,25 @@
+<%= form_for(@manager_shipping_address) do |f| %>
+  <% if @manager_shipping_address.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@manager_shipping_address.errors.count, "error") %> prohibited this manager_shipping_address from being saved:</h2>
+
+      <ul>
+      <% @manager_shipping_address.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :manager_id %><br />
+    <%= f.number_field :manager_id %>
+  </div>
+  <div class="field">
+    <%= f.label :shipping_address_id %><br />
+    <%= f.number_field :shipping_address_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

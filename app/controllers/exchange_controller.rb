@@ -70,6 +70,20 @@ class ExchangeController < ApplicationController
       end   
     end
     
+    if params[:managers_shipping_addresses]
+      manager_shipping_addresses = xml.elements.to_a("//manager_shipping_address")
+      manager_shipping_addresses.each do |manager_shipping_address|
+        manager_external_key = manager_shipping_address.elements['manager_external_key'].text
+        shipping_address_external_key = manager_shipping_address.elements['shipping_address_external_key'].text
+        manager_db = Manager.find_by_external_key(manager_external_key)
+        shipping_address_db = ShippingAddress.find_by_external_key(shipping_address_external_key)
+        manager_shipping_address_db = ManagerShippingAddress.find_by_manager_id_and_shipping_address_id(manager_db.id, shipping_address_db.id)
+        if !manager_shipping_address_db
+          manager_shipping_address = ManagerShippingAddress.create(manager: manager_db, shipping_address: shipping_address_db)          
+        end        
+      end   
+    end
+    
     if params[:unit_of_measures]
       unit_of_measures = xml.elements.to_a("//unit_of_measure")
       unit_of_measures.each do |unit_of_measure| 
