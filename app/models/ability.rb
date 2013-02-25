@@ -14,6 +14,7 @@ class Ability
       cannot :read, [User, Role]      
       can :manage, [TemplateRoute, TemplateRoutePoint]
     elsif user.role? :manager
+      can :read, :all
       can :manage, [Order, OrderItem]
       can :route , :create_use_template          
     end

@@ -1,4 +1,5 @@
 class WarehousesController < ApplicationController
+  load_and_authorize_resource
   # GET /warehouses
   # GET /warehouses.json
   def index
