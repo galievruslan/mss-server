@@ -4,7 +4,7 @@ class PriceListLinesController < ApplicationController
   def index
     @price_list = PriceList.find(params[:price_list_id])
     @search = @price_list.price_list_lines.search(params[:q])
-    @price_list_lines = @search.result.page(params[:page])
+    @price_list_lines = @search.result.page(params[:page]).per(current_user.list_page_size)
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,0 +1,38 @@
+<h3>Edit Profile</h3>
+<%= form_for @user, :url => profile_update_path do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h4><%= pluralize(@user.errors.count, "error") %> prohibited this warehouse from being saved:</h4>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </div>
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+  <div>
+  	<%= f.label :password %>
+  	<%= f.password_field :password%>
+  </div>
+  <div><%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <h4>Options</h4>
+  <div><%= f.label :list_page_size %>
+    <%= f.select(:list_page_size, [5,10,15,20,25,30], :include_blank => "Select a page size") %>
+  </div>
+  <div class="actions">
+    <%= f.submit('Update profile',class: 'btn') %>
+  </div>
+<% end %>
+<%= link_to 'Back', profile_show_path %>

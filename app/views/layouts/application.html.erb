@@ -19,7 +19,7 @@
 			    <%= link_to "Home", root_path %>
 			  </li>
 			  <li <%= 'class=active' if @current_controller =='profiles'%>>
-              <%= link_to "Profile", profile_path %>
+              <%= link_to "Profile", profile_show_path %>
         </li>
 			  <li><%= link_to 'Logout', destroy_user_session_path %></li>
 			</ul>

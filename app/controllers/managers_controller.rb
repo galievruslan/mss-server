@@ -4,12 +4,18 @@ class ManagersController < ApplicationController
   # GET /managers.json
   def index
     @search = Manager.search(params[:q])
-    @managers = @search.result.page(params[:page])
+    @managers = @search.result.page(params[:page]).per(current_user.list_page_size)
+    
+    if params[:page_size]
+      page_size = params[:page_size]
+    else
+      page_size = 100
+    end
     
     if params[:updated_at]
-      @managers_json = Manager.where("updated_at >= #{params[:updated_at]}")
+      @managers_json = Manager.where("updated_at >= #{params[:updated_at]}").page(params[:page]).per(page_size)
     else
-      @managers_json = Manager.all
+      @managers_json = Manager.page(params[:page]).per(page_size)
     end 
     
     respond_to do |format|

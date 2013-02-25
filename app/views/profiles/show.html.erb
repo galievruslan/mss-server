@@ -11,3 +11,9 @@
   <b>Manager:</b>
   <%= @manager ? @manager.name : 'No manager'%>
 </p>
+<h4>Options</h4>
+<p>
+  <b>List page size:</b>
+  <%= @user.list_page_size ? @user.list_page_size : '25'%>
+</p>
+<%= link_to 'Edit', profile_edit_path %>

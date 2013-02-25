@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   # GET /orders.json
   def index
     @search = Order.search(params[:q])
-    @orders = @search.result.page(params[:page])
+    @orders = @search.result.page(params[:page]).per(current_user.list_page_size)
     @managers = Manager.all
     @warehouses = Warehouse.all
     @price_lists = PriceList.all
@@ -21,7 +21,7 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
     @search = @order.order_items.search(params[:q])
-    @order_items = @search.result.page(params[:page])
+    @order_items = @search.result.page(params[:page]).per(current_user.list_page_size)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @order }

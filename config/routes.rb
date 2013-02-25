@@ -11,10 +11,11 @@
   get 'pages/index'
   get 'bali', :to => 'pages#bali'
   get 'routes/create_use_template', :to => 'routes#create_use_template'
-  get 'profile', :to => 'profiles#current'  
+  get 'profile/show', :to => 'profiles#show'
+  match 'profile/edit', :to => 'profiles#edit'
+  put 'profile/update', :to => 'profiles#update'   
   match '/update_product_unit_of_measures' => 'order_items#update_product_unit_of_measures'
-  match 'orders/generate_xml', :to => 'orders#generate_xml'   
-  
+  match 'orders/generate_xml', :to => 'orders#generate_xml' 
   resources :orders do
     member do
         put :export_again        
@@ -28,9 +29,7 @@
     resources :template_route_points
   end
   resources :unit_of_measures   
-  resources :products do
-    # post 'page/:page', :action => :index, :on => :collection
-    # collection { post :search, to: 'products#index' }
+  resources :products do    
     resources :product_unit_of_measures
   end
   resources :managers

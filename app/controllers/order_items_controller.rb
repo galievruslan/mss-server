@@ -5,7 +5,7 @@ class OrderItemsController < ApplicationController
   def index    
     @order = Order.find(params[:order_id])
     @search = @order.order_items.search(params[:q])
-    @order_items = @search.result.page(params[:page])
+    @order_items = @search.result.page(params[:page]).per(current_user.list_page_size)
     
     respond_to do |format|
       format.html # index.html.erb

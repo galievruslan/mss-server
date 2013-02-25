@@ -4,12 +4,18 @@ class CustomersController < ApplicationController
   # GET /customers.json
   def index
     @search = Customer.search(params[:q])
-    @customers = @search.result.page(params[:page])
+    @customers = @search.result.page(params[:page]).per(current_user.list_page_size)
+    
+    if params[:page_size]
+      page_size = params[:page_size]
+    else
+      page_size = 100
+    end
     
     if params[:updated_at]
-      @customers_json = Customer.where("updated_at >= #{params[:updated_at]}").includes(:shipping_addresses)
+      @customers_json = Customer.where("updated_at >= #{params[:updated_at]}").page(params[:page]).per(page_size).includes(:shipping_addresses)
     else
-      @customers_json = Customer.includes(:shipping_addresses)
+      @customers_json = Customer.page(params[:page]).per(page_size).includes(:shipping_addresses)
     end    
     
     respond_to do |format|
@@ -23,7 +29,7 @@ class CustomersController < ApplicationController
   def show
     @customer = Customer.find(params[:id])
     @search = @customer.shipping_addresses.search(params[:q])
-    @shipping_addresses = @search.result.page(params[:page])
+    @shipping_addresses = @search.result.page(params[:page]).per(current_user.list_page_size)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @customer }

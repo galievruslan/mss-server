@@ -39,7 +39,7 @@ class RoutesController < ApplicationController
   # GET /routes.json
   def index
     @search = Route.search(params[:q])
-    @routes = @search.result.page(params[:page])
+    @routes = @search.result.page(params[:page]).per(current_user.list_page_size)
     @managers = Manager.all
     respond_to do |format|
       format.html # index.html.erb
@@ -52,7 +52,7 @@ class RoutesController < ApplicationController
   def show
     @route = Route.find(params[:id])
     @search = @route.route_points.search(params[:q])
-    @route_points = @search.result.page(params[:page])
+    @route_points = @search.result.page(params[:page]).per(current_user.list_page_size)
     
     respond_to do |format|
       format.html # show.html.erb

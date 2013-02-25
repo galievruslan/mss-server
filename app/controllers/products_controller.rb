@@ -4,12 +4,19 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     @search = Product.search(params[:q])
-    @products = @search.result.page(params[:page])
+    @products = @search.result.page(params[:page]).per(current_user.list_page_size)
     @categories = Category.all
-    if params[:updated_at]
-      @products_json = Product.where("updated_at >= #{params[:updated_at]}").includes(:product_unit_of_measures)
+    
+    if params[:page_size]
+      page_size = params[:page_size]
     else
-      @products_json = Product.includes(:product_unit_of_measures)
+      page_size = 100
+    end
+    
+    if params[:updated_at]
+      @products_json = Product.where("updated_at >= #{params[:updated_at]}").page(params[:page]).per(page_size).includes(:product_unit_of_measures)
+    else
+      @products_json = Product.page(params[:page]).per(page_size).includes(:product_unit_of_measures)
     end
     
     respond_to do |format|

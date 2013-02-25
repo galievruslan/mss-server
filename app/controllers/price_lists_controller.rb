@@ -4,11 +4,18 @@ class PriceListsController < ApplicationController
   # GET /price_lists.json
   def index
     @search = PriceList.search(params[:q])
-    @price_lists = @search.result.page(params[:page])
-    if params[:updated_at]
-      @price_lists_json = PriceList.where("updated_at >= #{params[:updated_at]}").includes(:price_list_lines)
+    @price_lists = @search.result.page(params[:page]).per(current_user.list_page_size)
+    
+    if params[:page_size]
+      page_size = params[:page_size]
     else
-      @price_lists_json = PriceList.includes(:price_list_lines)
+      page_size = 100
+    end
+    
+    if params[:updated_at]
+      @price_lists_json = PriceList.where("updated_at >= #{params[:updated_at]}").page(params[:page]).per(page_size).includes(:price_list_lines)
+    else
+      @price_lists_json = PriceList.page(params[:page]).per(page_size).includes(:price_list_lines)
     end 
     respond_to do |format|
       format.html # index.html.erb
@@ -21,7 +28,7 @@ class PriceListsController < ApplicationController
   def show
     @price_list = PriceList.find(params[:id])
     @search = @price_list.price_list_lines.search(params[:q])
-    @price_list_lines = @search.result.page(params[:page])
+    @price_list_lines = @search.result.page(params[:page]).per(current_user.list_page_size)
 
     respond_to do |format|
       format.html # show.html.erb

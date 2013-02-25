@@ -4,7 +4,7 @@ class TemplateRoutesController < ApplicationController
   def index
     @days_of_week = [0,1,2,3,4,5,6]
     @search = TemplateRoute.search(params[:q])
-    @template_routes = @search.result.page(params[:page])
+    @template_routes = @search.result.page(params[:page]).per(current_user.list_page_size)
     @managers = Manager.all
     respond_to do |format|
       format.html # index.html.erb
@@ -17,7 +17,7 @@ class TemplateRoutesController < ApplicationController
   def show
     @template_route = TemplateRoute.find(params[:id])
     @search = @template_route.template_route_points.search(params[:q])
-    @template_route_points = @search.result.page(params[:page])
+    @template_route_points = @search.result.page(params[:page]).per(current_user.list_page_size)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @template_route }

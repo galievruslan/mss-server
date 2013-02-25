@@ -4,12 +4,18 @@ class WarehousesController < ApplicationController
   # GET /warehouses.json
   def index
     @search = Warehouse.search(params[:q])
-    @warehouses = @search.result.page(params[:page])
+    @warehouses = @search.result.page(params[:page]).per(current_user.list_page_size)
+    
+    if params[:page_size]
+      page_size = params[:page_size]
+    else
+      page_size = 100
+    end
     
     if params[:updated_at]
-      @warehouses_json = Warehouse.where("updated_at >= #{params[:updated_at]}")
+      @warehouses_json = Warehouse.where("updated_at >= #{params[:updated_at]}").page(params[:page]).per(page_size)
     else
-      @warehouses_json = Warehouse.all
+      @warehouses_json = Warehouse.page(params[:page]).per(page_size)
     end 
 
     respond_to do |format|

@@ -4,11 +4,23 @@ class StatusesController < ApplicationController
   # GET /statuses.json
   def index
     @search = Status.search(params[:q])
-    @statuses = @search.result.page(params[:page])
-
+    @statuses = @search.result.page(params[:page]).per(current_user.list_page_size)
+    
+    if params[:page_size]
+      page_size = params[:page_size]
+    else
+      page_size = 100
+    end
+    
+    if params[:updated_at]
+      @statuses_json = Status.where("updated_at >= #{params[:updated_at]}").page(params[:page]).per(page_size)
+    else
+      @statuses_json = Status.page(params[:page]).per(page_size)
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @statuses }
+      format.json { render json: @statuses_json }
     end
   end
 
