@@ -13,6 +13,10 @@
 </p>
 <h4>Options</h4>
 <p>
+  <b>Language:</b>
+  <%= @user.language ? @user.language : 'EN'%>
+</p>
+<p>
   <b>List page size:</b>
   <%= @user.list_page_size ? @user.list_page_size : '25'%>
 </p>

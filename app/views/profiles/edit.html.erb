@@ -28,6 +28,10 @@
     <%= f.password_field :password_confirmation %>
   </div>
   <h4>Options</h4>
+  <div class="field">
+    <%= f.label :language %>
+    <%= f.select(:language, ['EN','RU'], :include_blank => "Select a language") %>
+  </div>
   <div><%= f.label :list_page_size %>
     <%= f.select(:list_page_size, [5,10,15,20,25,30], :include_blank => "Select a page size") %>
   </div>

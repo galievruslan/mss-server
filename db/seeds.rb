@@ -89,9 +89,9 @@ end
 @order2 = Order.create(date: '2013-01-15', manager: @manager2, shipping_address: @shipping_addresses[4][3], warehouse: @warehouse2, price_list: @price_list2, comment: "Приложить документы с прошлой отгрузки")
 @order2.order_items = OrderItem.create([{product: @products[1], unit_of_measure: @unit_of_measure1, quantity:10},{product: @products[5], unit_of_measure: @unit_of_measure1, quantity:12},{product: @products[10], unit_of_measure: @unit_of_measure2, quantity:20}])
 
-@user_admin = User.create(username: 'admin', password: '423200', password_confirmation: '423200', email: 'galievruslan@gmail.com')
-@user_supervisor = User.create(username: 'supervisor', password: '423200', password_confirmation: '423200', email: 'supervisor@alkotorg.com')
-@user_manager = User.create(username: 'manager', password: '423200', password_confirmation: '423200', email: 'manager@alkotorg.com', manager_id:1)
+@user_admin = User.create(username: 'admin', password: '423200', password_confirmation: '423200', email: 'galievruslan@gmail.com', language : 'EN')
+@user_supervisor = User.create(username: 'supervisor', password: '423200', password_confirmation: '423200', email: 'supervisor@alkotorg.com', language : 'EN')
+@user_manager = User.create(username: 'manager', password: '423200', password_confirmation: '423200', email: 'manager@alkotorg.com', manager_id:1, language : 'EN')
 
 @role_admin = Role.create(name: 'admin')
 @role_supervisor = Role.create(name: 'supervisor')

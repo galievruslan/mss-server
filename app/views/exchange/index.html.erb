@@ -1,67 +1,67 @@
-<h4>Export Orders:</h4>
-<%=link_to "Download ZIP", exchange_get_xml_path, :class => 'btn' %><br>
-<h4>Import handbooks:</h4>
+<h4><%= t(:export_orders)%>:</h4>
+<%=link_to t(:download_zip), exchange_get_xml_path, :class => 'btn' %><br>
+<h4><%=t(:import_handbooks)%>:</h4>
 
 <%= form_tag( {:action => 'upload'}, {:multipart => true} ) do %>
   <div class="field">
   	<%= file_field_tag "xml_file", :accept => 'text/xml',:value => 'index.html' %>
 	</div>
-	* Only supported file format xml
+	* <%=t(:only_supported_file_format_xml)%>
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
-				<th>Import objects</th>
-				<th>Action</th>
+				<th><%= t(:import_object)%></th>
+				<th><%= t(:select)%></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td><%= label_tag(:customers, "Customers") %> </td>
+				<td><%= label_tag(:customers, t(:customers)) %> </td>
 				<td><%= check_box_tag(:customers) %></td>
 			</tr>
 			<tr>
-				<td><%= label_tag(:shipping_addresses, "Shipping Addresses") %> </td>
+				<td><%= label_tag(:shipping_addresses, t(:shipping_addresses)) %> </td>
 				<td><%= check_box_tag(:shipping_addresses) %>	</td>
 			</tr>
 			<tr>
-				<td><%= label_tag(:warehouses, "Warehouses") %> </td>
+				<td><%= label_tag(:warehouses, t(:warehouses)) %> </td>
 				<td><%= check_box_tag(:warehouses) %>	</td>
 			</tr>
 			<tr>
-				<td><%= label_tag(:managers, "Managers") %> </td>
+				<td><%= label_tag(:managers, t(:managers)) %> </td>
 				<td><%= check_box_tag(:managers) %>	</td>
 			</tr>
 			<tr>
-				<td><%= label_tag(:categories, "Categories") %> </td>
+				<td><%= label_tag(:categories, t(:categories)) %> </td>
 				<td><%= check_box_tag(:categories) %>	</td>
 			</tr>
 			<tr>
-				<td><%= label_tag(:products, "Products") %> </td>
+				<td><%= label_tag(:products, t(:products)) %> </td>
 				<td><%= check_box_tag(:products) %>	</td>
 			</tr>
 			<tr>
-				<td><%= label_tag(:managers_shipping_addresses, "Managers shipping addresses") %> </td>
+				<td><%= label_tag(:managers_shipping_addresses, t(:manager_shipping_addresses)) %> </td>
 				<td><%= check_box_tag(:managers_shipping_addresses) %>	</td>
 			</tr>		
 			<tr>
-				<td><%= label_tag(:unit_of_measures, "Unit of measures") %> </td>
+				<td><%= label_tag(:unit_of_measures, t(:unit_of_measures)) %> </td>
 				<td><%= check_box_tag(:unit_of_measures) %>	</td>
 			</tr>
 			<tr>
-				<td><%= label_tag(:price_lists, "Price lists") %> </td>
+				<td><%= label_tag(:price_lists, t(:price_lists)) %> </td>
 				<td><%= check_box_tag(:price_lists) %>	</td>
 			</tr>			
 			<tr>
-				<td><%= label_tag(:product_unit_of_measures, "Product unit of measures") %> </td>
+				<td><%= label_tag(:product_unit_of_measures, t(:product_unit_of_measures)) %> </td>
 				<td><%= check_box_tag(:product_unit_of_measures) %>	</td>
 			</tr>
 			<tr>
-				<td><%= label_tag(:price_list_lines, "Price list lines") %> </td>
+				<td><%= label_tag(:price_list_lines, t(:price_list_lines)) %> </td>
 				<td><%= check_box_tag(:price_list_lines) %>	</td>
 			</tr>				
 		</tbody>
 	</table>
   <div class="actions">
-  	<%= submit_tag "Upload", :class =>'btn' %>    
+  	<%= submit_tag t(:upload), :class =>'btn' %>    
   </div>
 <% end %>

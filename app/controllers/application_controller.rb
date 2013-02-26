@@ -17,6 +17,15 @@ class ApplicationController < ActionController::Base
         @current_action = action_name
         @current_controller = controller_name
     end
+  before_filter :set_language_from_current_user
+  
+  def set_language_from_current_user
+    if current_user and current_user.language == 'RU'
+      I18n.default_locale = :ru      
+    else
+      I18n.default_locale = :en
+    end   
+  end
     
   def layout
     if devise_controller? && devise_mapping.name == :user

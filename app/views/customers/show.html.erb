@@ -1,15 +1,15 @@
 <p>
-  <b>External Key:</b>
+  <b><%= t(:external_key)%>:</b>
   <%= @customer.external_key %>
 </p>
 <p>
-  <b>Name:</b>
+  <b><%= t(:name)%>:</b>
   <%= @customer.name %>
 </p>
-<h4>Shipping addresses</h4>
+<h4><%= t(:shipping_addresses)%>:</h4>
 
 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
-  <i class="icon-filter icon-white"></i> Filter:
+  <i class="icon-filter icon-white"></i> <%=t(:filter)%>
 </button>
 
 <div id="demo" class="collapse">
@@ -17,26 +17,26 @@
 	<div class='well well-small'>
 		<%= search_form_for [@customer, @search], class: "form-horizontal" do |f| %>
 		  <div class="control-group">
-		  	<%= f.label :name_cont, 'Name:', class: "control-label"%>
+		  	<%= f.label :name_cont, t(:name)+':', class: "control-label"%>
 		  	<div class="controls">
 		  		<%= f.text_field :name_cont, class: 'search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">
-		  	<%= f.label :address_cont, 'Address:', class: "control-label"%>
+		  	<%= f.label :address_cont, t(:address)+':', class: "control-label"%>
 		  	<div class="controls">
 		  		<%= f.text_field :address_cont, class: 'search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">
-		  	<%= f.label :external_key_cont, 'External_key:', class: "control-label"%>
+		  	<%= f.label :external_key_cont, t(:external_key)+':', class: "control-label"%>
 		  	<div class="controls">
 		  		<%= f.text_field :external_key_cont, class: 'search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">	  	
-		  		<%= f.submit "Search", class: 'btn btn-info' %>
-		  		<button type="button" class='btn btn-info' id="q_reset">Reset</button>	  	
+		  		<%= f.submit t(:search), class: 'btn btn-info' %>
+		  		<button type="button" class='btn btn-info' id="q_reset"><%=t(:reset)%></button>	  	
 		  </div>	
 		<%end%>
 	</div>
@@ -45,10 +45,10 @@
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-    	<th><%= sort_link @search, :external_key, "External key" %></th>
-      <th><%= sort_link @search, :name, "Name" %></th>
-      <th><%= sort_link @search, :address, "Address" %></th>
-      <th><%= sort_link @search, :validity, "Validity" %></th>
+    	<th><%= sort_link @search, :external_key, t(:external_key) %></th>
+      <th><%= sort_link @search, :name, t(:name) %></th>
+      <th><%= sort_link @search, :address, t(:address) %></th>
+      <th><%= sort_link @search, :validity, t(:validity) %></th>
     </tr>
   </thead>
   <tbody>
@@ -64,5 +64,5 @@
 </table>
 <%= paginate @shipping_addresses %>
 
-<%= link_to 'Edit', edit_customer_path(@customer) %> |
-<%= link_to 'Back', customers_path %>
+<%= link_to t(:edit), edit_customer_path(@customer) %> |
+<%= link_to t(:back), customers_path %>

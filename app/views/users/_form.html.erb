@@ -20,6 +20,10 @@
     <%= f.text_field :email %>
   </div>
   <div class="field">
+    <%= f.label :language %>
+    <%= f.select(:language, ['EN','RU'], :include_blank => "Select a language") %>
+  </div>
+  <div class="field">
     <%= f.label :manager_id, 'Manager' %>
     <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}, :include_blank => "Select a manager") %>
   </div>

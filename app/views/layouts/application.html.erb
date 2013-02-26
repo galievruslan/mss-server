@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mobile sales system</title>
+  <title><%=t(:brand)%></title>
   <%= favicon_link_tag 'favicon.ico', :type => 'image/png' %>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
@@ -13,15 +13,15 @@
 <div class="navbar">
 	<div class="navbar-inner">
 		<div class="container">
-			<a class="brand" href="#">Mobile Sale System</a>
+			<a class="brand" href="#"><%=t(:brand)%></a>
 			<ul class="nav pull-right">
 			  <li <%= 'class=active' if @current_controller =='pages'%>>
-			    <%= link_to "Home", root_path %>
+			    <%= link_to t(:home), root_path %>
 			  </li>
 			  <li <%= 'class=active' if @current_controller =='profiles'%>>
-              <%= link_to "Profile", profile_show_path %>
+              <%= link_to t(:profile), profile_show_path %>
         </li>
-			  <li><%= link_to 'Logout', destroy_user_session_path %></li>
+			  <li><%= link_to t(:logout), destroy_user_session_path %></li>
 			</ul>
 	  </div>
 	</div>
@@ -30,46 +30,46 @@
   <div class="row-fluid">
     <div class="span2">      
         <ul class="nav nav-tabs nav-stacked">
-        <li class="nav-header">MSS menu </li>
+        <li class="nav-header"><%= t(:menu)%> </li>
             <li <%= 'class=active' if @current_controller =='managers'%>>
-              <%= link_to "Managers", managers_path%>
+              <%= link_to t(:managers), managers_path%>
             </li>
             <li <%= 'class=active' if @current_controller =='customers' or @current_controller =='shipping_addresses'%>>
-              <%= link_to "Customers", customers_path %>
+              <%= link_to t(:customers), customers_path %>
             </li>
             <li <%= 'class=active' if @current_controller =='warehouses'%>>
-              <%= link_to "Warehouses", warehouses_path %>
+              <%= link_to t(:warehouses), warehouses_path %>
             </li>
             <li <%= 'class=active' if @current_controller =='orders' or @current_controller =='order_items'%>>
-              <%= link_to "Orders", orders_path %>
+              <%= link_to t(:orders), orders_path %>
             </li>
             <li <%= 'class=active' if @current_controller =='routes' or @current_controller =='route_points'%>>
-              <%= link_to "Routes", routes_path %>
+              <%= link_to t(:routes), routes_path %>
             </li>
             <li <%= 'class=active' if @current_controller =='template_routes' or @current_controller =='template_route_points'%>>
-              <%= link_to "Template Routes", template_routes_path %>
+              <%= link_to t(:template_routes), template_routes_path %>
             </li>
             <li <%= 'class=active' if @current_controller =='categories'%>>
-              <%= link_to "Categories", categories_path %>
+              <%= link_to t(:categories), categories_path %>
             </li>            
             <li <%= 'class=active' if @current_controller =='products'%>>
-              <%= link_to "Products", products_path %>
+              <%= link_to t(:products), products_path %>
             </li>
             <li <%= 'class=active' if @current_controller =='statuses'%>>
-              <%= link_to "Statuses", statuses_path %>
+              <%= link_to t(:statuses), statuses_path %>
             </li>
             <li <%= 'class=active' if @current_controller =='unit_of_measures'%>>
-              <%= link_to "Units of measures", unit_of_measures_path %>
+              <%= link_to t(:unit_of_measures), unit_of_measures_path %>
             </li>
             <li <%= 'class=active' if @current_controller =='price_lists'%>>
-              <%= link_to "Price lists", price_lists_path %>
+              <%= link_to t(:price_lists), price_lists_path %>
             </li>            
-            <li class="nav-header">Admin settings</li>
+            <li class="nav-header"><%= t(:settings)%></li>
             <li <%= 'class=active' if @current_controller =='exchange'%>>
-              <%= link_to "Exchange", exchange_path %>
+              <%= link_to t(:exchange), exchange_path %>
             </li>
             <li <%= 'class=active' if @current_controller =='users'%>>
-              <%= link_to "Users", users_path %>
+              <%= link_to t(:users), users_path %>
             </li>
       </div>
       <br />
