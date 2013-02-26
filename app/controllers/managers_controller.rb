@@ -40,7 +40,8 @@ class ManagersController < ApplicationController
   # GET /managers/new.json
   def new
     @manager = Manager.new
-
+    @warehouses = Warehouse.all
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @manager }
@@ -50,11 +51,13 @@ class ManagersController < ApplicationController
   # GET /managers/1/edit
   def edit
     @manager = Manager.find(params[:id])
+    @warehouses = Warehouse.all
   end
 
   # POST /managers
   # POST /managers.json
   def create
+    @warehouses = Warehouse.all
     @manager = Manager.new(params[:manager])
     if @manager.name == 'Bali'
       redirect_to bali_path, notice: 'Bali best place in the World.'

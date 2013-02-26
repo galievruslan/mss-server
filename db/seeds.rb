@@ -14,14 +14,14 @@
 @unit_of_measure1 = UnitOfMeasure.create(name: 'шт', external_key: 'СВ343')
 @unit_of_measure2 = UnitOfMeasure.create(name: 'упак', external_key: 'СВ353')
 
-@manager1 = Manager.create(name: 'Иванов И.А', external_key: '00001')
-@manager2 = Manager.create(name: 'Петров А.П', external_key: '00002')
-
 @price_list1 = PriceList.create(name: 'Розничная', external_key: 'СВ001')
 @price_list2 = PriceList.create(name: 'Оптовая', external_key: 'СВ002')
 
 @warehouse1 = Warehouse.create(name: 'Оптовый склад №1', external_key: 'СВ001', address: 'Техническая, 21')
 @warehouse2 = Warehouse.create(name: 'Оптовый склад №30', external_key: 'СВ002', address: 'Техническая, 21а')
+
+@manager1 = Manager.create(name: 'Иванов И.А', external_key: '00001', default_warehouse: @warehouse1)
+@manager2 = Manager.create(name: 'Петров А.П', external_key: '00002', default_warehouse: @warehouse2)
 
 @customers= []
 @customers[0] = Customer.create(name: 'ООО "Тимерхан"', external_key: '10001')

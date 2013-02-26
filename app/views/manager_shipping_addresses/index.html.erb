@@ -1,25 +1,55 @@
-<h1>Listing manager_shipping_addresses</h1>
+<h3>Listing manager_shipping_addresses</h3>
 
-<table>
-  <tr>
-    <th>Manager</th>
-    <th>Shipping address</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+  <i class="icon-filter icon-white"></i> Filter:
+</button>
 
-<% @manager_shipping_addresses.each do |manager_shipping_address| %>
-  <tr>
-    <td><%= manager_shipping_address.manager_id %></td>
-    <td><%= manager_shipping_address.shipping_address_id %></td>
-    <td><%= link_to 'Show', manager_shipping_address %></td>
-    <td><%= link_to 'Edit', edit_manager_shipping_address_path(manager_shipping_address) %></td>
-    <td><%= link_to 'Destroy', manager_shipping_address, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+<div id="demo" class="collapse">
+	<br>
+	<div class='well well-small'>
+		<%= search_form_for [@manager, @search], class: "form-horizontal" do |f| %>		  
+		  <div class="control-group">
+		  	<%= f.label :shipping_address_name_cont, 'Name:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :shipping_address_name_cont, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :shipping_address_address_cont, 'Address:', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :shipping_address_address_cont, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">	  	
+		  		<%= f.submit "Search", class: 'btn btn-info' %>
+		  		<button type="button" class='btn btn-info' id="q_reset">Reset</button>   	
+		  </div>	
+		<%end%>
+	</div>
+</div>
+
+<table class="table table-striped table-hover">
+	<thead>
+	  <tr>
+	    <th><%= sort_link @search, :shipping_address_name, "Shipping address name" %></th>
+	    <th><%= sort_link @search, :shipping_address_address, "Shipping address address" %></th>
+	    <th colspan="3">Actions</th>
+	  </tr>
+	</thead>
+	<tbody>
+		<% @manager_shipping_addresses.each do |manager_shipping_address| %>
+		  <tr>
+		    <td><%= manager_shipping_address.shipping_address.name %></td>
+		    <td><%= manager_shipping_address.shipping_address.address %></td>
+		    <td><%= link_to 'Show', manager_manager_shipping_address_path(@manager, manager_shipping_address) %></td>
+		    <td><%= link_to 'Edit', edit_manager_manager_shipping_address_path(@manager, manager_shipping_address) %></td>
+		    <td><%= link_to 'Destroy', manager_manager_shipping_address_path(@manager, manager_shipping_address), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		  </tr>
+		<% end %>
+	</tbody>
 </table>
 
-<br />
+<%= paginate @manager_shipping_addresses %>
 
-<%= link_to 'New Manager shipping address', new_manager_shipping_address_path %>
+<%= link_to 'New Manager shipping address', new_manager_manager_shipping_address_path(@manager), class: 'btn' %><br /><br />
+<%= link_to 'Back', manager_path(@manager) %> | <%= link_to 'Back to managers', managers_path %>

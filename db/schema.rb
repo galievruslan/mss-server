@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130225112709) do
+ActiveRecord::Schema.define(:version => 20130226052700) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -44,9 +44,10 @@ ActiveRecord::Schema.define(:version => 20130225112709) do
   create_table "managers", :force => true do |t|
     t.string   "name"
     t.string   "external_key"
-    t.boolean  "validity",     :default => true
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.boolean  "validity",             :default => true
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+    t.integer  "default_warehouse_id"
   end
 
   add_index "managers", ["external_key"], :name => "index_managers_on_external_key", :unique => true

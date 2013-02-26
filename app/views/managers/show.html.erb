@@ -6,6 +6,10 @@
   <b>Name:</b>
   <%= @manager.name %>
 </p>
+<p>
+  <b>Warehouse:</b>
+  <%= @manager.default_warehouse ? @manager.default_warehouse.name : 'No default warehouse' %>
+</p>
 
 <h4>Shipping addresses</h4>
 

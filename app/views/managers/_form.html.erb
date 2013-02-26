@@ -18,6 +18,10 @@
     <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
+  <div class="field">
+    <%= f.label :default_warehouse_id, 'Default warehouse' %>
+    <%= f.select(:default_warehouse_id, @warehouses.collect  {|p| [ p.name, p.id ] }, :include_blank => "Select a warehouse") %>
+  </div>
   <div class="field form-inline">    
     <%= f.check_box :validity %>
     <%= f.label :validity %><br /><br />

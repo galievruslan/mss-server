@@ -1,7 +1,7 @@
-<%= form_for(@manager_shipping_address) do |f| %>
+<%= form_for([@manager, @manager_shipping_address]) do |f| %>
   <% if @manager_shipping_address.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@manager_shipping_address.errors.count, "error") %> prohibited this manager_shipping_address from being saved:</h2>
+      <h4><%= pluralize(@manager_shipping_address.errors.count, "error") %> prohibited this manager_shipping_address from being saved:</h4>
 
       <ul>
       <% @manager_shipping_address.errors.full_messages.each do |msg| %>
@@ -12,14 +12,10 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :manager_id %><br />
-    <%= f.number_field :manager_id %>
-  </div>
-  <div class="field">
-    <%= f.label :shipping_address_id %><br />
-    <%= f.number_field :shipping_address_id %>
+    <%= f.label :shipping_address_id %>
+    <%= f.select(:shipping_address_id, @shipping_addresses.collect  {|p| [ p.name, p.id ] }, :include_blank => "Select a shipping address") %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit(class: 'btn') %>
   </div>
 <% end %>
