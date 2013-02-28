@@ -10,7 +10,7 @@
   post 'exchange/upload', :to => 'exchange#upload' 
   get 'pages/index'
   get 'bali', :to => 'pages#bali'
-  get 'routes/create_use_template', :to => 'routes#create_use_template'
+  get 'routes/current', :to => 'routes#current'
   get 'profile/show', :to => 'profiles#show'
   match 'profile/edit', :to => 'profiles#edit'
   put 'profile/update', :to => 'profiles#update'   

@@ -1,6 +1,6 @@
-<h1>Editing manager_shipping_address</h1>
+<h3><%= t(:edit_manager_shipping_addresses)%></h3>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', manager_manager_shipping_address_path(@manager, @manager_shipping_address) %> |
-<%= link_to 'Back', manager_manager_shipping_addresses_path(@manager) %>
+<%= link_to t(:show), manager_manager_shipping_address_path(@manager, @manager_shipping_address) %> |
+<%= link_to t(:back), manager_manager_shipping_addresses_path(@manager) %>

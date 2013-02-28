@@ -12,10 +12,10 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :shipping_address_id %>
-    <%= f.select(:shipping_address_id, @shipping_addresses.collect  {|p| [ p.name, p.id ] }, :include_blank => "Select a shipping address") %>
+    <%= f.label :shipping_address_id, t(:shipping_address)%>
+    <%= f.select(:shipping_address_id, @shipping_addresses.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_shipping_address)) %>
   </div>
   <div class="actions">
-    <%= f.submit(class: 'btn') %>
+    <%= f.submit(t(:save), class: 'btn') %>
   </div>
 <% end %>

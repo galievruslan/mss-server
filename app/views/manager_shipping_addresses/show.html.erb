@@ -1,17 +1,17 @@
 <p>
-  <b>Manager:</b>
+  <b><%= t(:manager)%>:</b>
   <%= @manager_shipping_address.manager.name %>
 </p>
 
 <p>
-  <b>Shipping address name:</b>
+  <b><%=t(:shipping_address)%>:</b>
   <%= @manager_shipping_address.shipping_address.name %>
 </p>
 
 <p>
-  <b>Shipping address address:</b>
+  <b><%= t(:address)%>:</b>
   <%= @manager_shipping_address.shipping_address.address %>
 </p>
 
-<%= link_to 'Edit', edit_manager_manager_shipping_address_path(@manager, @manager_shipping_address) %> |
-<%= link_to 'Back', manager_manager_shipping_addresses_path(@manager) %>
+<%= link_to t(:edit), edit_manager_manager_shipping_address_path(@manager, @manager_shipping_address) %> |
+<%= link_to t(:back), manager_manager_shipping_addresses_path(@manager) %>

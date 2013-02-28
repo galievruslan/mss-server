@@ -16,7 +16,8 @@ class Ability
     elsif user.role? :manager
       can :read, :all
       can :manage, [Order, OrderItem]
-      can :route , :create_use_template          
+      can :route , :current
+      can :manage, [Route, RoutePoint]          
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.
