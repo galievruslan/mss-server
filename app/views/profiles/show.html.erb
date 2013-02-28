@@ -1,23 +1,23 @@
-<h3>Profile</h3>
+<h3><%= t(:profile)%></h3>
 <p>
-  <b>User:</b>
+  <b><%= t(:username)%>:</b>
   <%= @user.username %>
 </p>
 <p>
-  <b>E-mail:</b>
+  <b><%= t(:email)%>:</b>
   <%= @user.email %>
 </p>
 <p>
-  <b>Manager:</b>
-  <%= @manager ? @manager.name : 'No manager'%>
+  <b><%= t(:manager)%>:</b>
+  <%= @manager ? @manager.name : t(:no_manager)%>
 </p>
-<h4>Options</h4>
+<h4><%= t(:settings)%></h4>
 <p>
-  <b>Language:</b>
+  <b><%= t(:language)%>:</b>
   <%= @user.language ? @user.language : 'EN'%>
 </p>
 <p>
-  <b>List page size:</b>
+  <b><%= t(:list_page_size)%>:</b>
   <%= @user.list_page_size ? @user.list_page_size : '25'%>
 </p>
-<%= link_to 'Edit', profile_edit_path %>
+<%= link_to t(:edit), profile_edit_path %>

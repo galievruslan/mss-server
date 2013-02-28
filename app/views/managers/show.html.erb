@@ -1,13 +1,13 @@
 <p>
-  <b><%= t(:external_key)%></b>
+  <b><%= t(:external_key)%>:</b>
   <%= @manager.external_key %>
 </p>
 <p>
-  <b><%=t(:name)%></b>
+  <b><%=t(:name)%>:</b>
   <%= @manager.name %>
 </p>
 <p>
-  <b><%=t(:warehouse)%></b>
+  <b><%=t(:default_warehouse)%>:</b>
   <%= @manager.default_warehouse ? @manager.default_warehouse.name : t(:no_default_warehouse) %>
 </p>
 

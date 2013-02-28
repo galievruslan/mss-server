@@ -1,4 +1,4 @@
-<h3>Edit Profile</h3>
+<h3><%= t(:edit_profile)%></h3>
 <%= form_for @user, :url => profile_update_path do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -13,30 +13,23 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :username %>
+    <%= f.label :username, t(:username) %>
     <%= f.text_field :username %>
   </div>
   <div class="field">
-    <%= f.label :email %>
+    <%= f.label :email, t(:email) %>
     <%= f.text_field :email %>
   </div>
-  <div>
-  	<%= f.label :password %>
-  	<%= f.password_field :password%>
-  </div>
-  <div><%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
-  </div>
-  <h4>Options</h4>
+  <h4><%= t(:settings)%></h4>
   <div class="field">
-    <%= f.label :language %>
-    <%= f.select(:language, ['EN','RU'], :include_blank => "Select a language") %>
+    <%= f.label :language, t(:language) %>
+    <%= f.select(:language, ['EN','RU'], :include_blank => t(:select_language)) %>
   </div>
-  <div><%= f.label :list_page_size %>
-    <%= f.select(:list_page_size, [5,10,15,20,25,30], :include_blank => "Select a page size") %>
+  <div><%= f.label :list_page_size, t(:list_page_size) %>
+    <%= f.select(:list_page_size, [5,10,15,20,25,30], :include_blank => t(:select_list_page_size)) %>
   </div>
   <div class="actions">
-    <%= f.submit('Update profile',class: 'btn') %>
+    <%= f.submit(t(:save),class: 'btn') %>
   </div>
 <% end %>
-<%= link_to 'Back', profile_show_path %>
+<%= link_to t(:back), profile_show_path %>

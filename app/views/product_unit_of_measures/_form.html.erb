@@ -12,18 +12,18 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :unit_of_measure_id, 'Unit of measure' %>
-    <%= f.select(:unit_of_measure_id, @unit_of_measures.collect {|p| [p.name, p.id]}, :include_blank => "Select a unit of measure") %>
+    <%= f.label :unit_of_measure_id, t(:unit_of_measure) %>
+    <%= f.select(:unit_of_measure_id, @unit_of_measures.collect {|p| [p.name, p.id]}, :include_blank => t(:select_unit_of_measure)) %>
   </div>
   <div class="field">
-    <%= f.label :count_in_base_unit %>
+    <%= f.label :count_in_base_unit, t(:count_in_base_unit) %>
     <%= f.number_field :count_in_base_unit, :min => 0, :step => 0.01 %>
   </div>
     <div class="field form-inline">    
     <%= f.check_box :base %>
-    <%= f.label :base , 'Base unit of measure'%><br /><br />
+    <%= f.label :base , t(:base)%><br /><br />
   </div>
   <div class="actions">
-    <%= f.submit(class: 'btn') %>
+    <%= f.submit(t(:save), class: 'btn') %>
   </div>
 <% end %>

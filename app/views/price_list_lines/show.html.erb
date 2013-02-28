@@ -1,18 +1,18 @@
 <p>
-  <b>Price list:</b>
+  <b><%= t(:price_list)%>:</b>
   <%= @price_list_line.price_list.name %>
 </p>
 
 <p>
-  <b>Product:</b>
+  <b><%= t(:product)%>:</b>
   <%= @price_list_line.product.name %>
 </p>
 
 <p>
-  <b>Price:</b>
+  <b><%= t(:price)%>:</b>
   <%= @price_list_line.price %>
 </p>
 
 
-<%= link_to 'Edit', edit_price_list_price_list_line_path(@price_list, @price_list_line) %> |
-<%= link_to 'Back', price_list_price_list_lines_path(@price_list) %>
+<%= link_to t(:edit), edit_price_list_price_list_line_path(@price_list, @price_list_line) %> |
+<%= link_to t(:back), price_list_price_list_lines_path(@price_list) %>

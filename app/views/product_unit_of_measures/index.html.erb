@@ -1,7 +1,7 @@
-<h3>Listing product_unit_of_measures</h3>
+<h3><%= t(:listing_product_unit_of_measures)%></h3>
 
 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
-  <i class="icon-filter icon-white"></i> Filter:
+  <i class="icon-filter icon-white"></i> <%= t(:filter)%>
 </button>
 
 <div id="demo" class="collapse">
@@ -9,20 +9,20 @@
 	<div class='well well-small'>
 		<%= search_form_for [@product, @search], class: "form-horizontal" do |f| %>
 		  <div class="control-group">
-		  	<%= f.label :unit_of_measure_id_eq, 'Unit of measure:', class: "control-label"%>
+		  	<%= f.label :unit_of_measure_id_eq, t(:unit_of_measure)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.select :unit_of_measure_id_eq, @unit_of_measures.collect  {|p| [ p.name, p.id ]}, {:include_blank => "Select a unit of measure"}, {:class => 'search-field'} %>
+		  		<%= f.select :unit_of_measure_id_eq, @unit_of_measures.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_unit_of_measure)}, {:class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  <div class="control-group">
-		  	<%= f.label :count_in_base_unit_eq, 'Count in base unit:', class: "control-label"%>
+		  	<%= f.label :count_in_base_unit_eq, t(:count_in_base_unit)+':', class: "control-label"%>
 		  	<div class="controls">
 		  		<%= f.text_field :count_in_base_unit_eq, class: 'search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">	  	
-		  		<%= f.submit "Search", class: 'btn btn-info' %>
-		  		<button type="button" class='btn btn-info' id="q_reset">Reset</button>   	
+		  		<%= f.submit t(:search), class: 'btn btn-info' %>
+		  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>   	
 		  </div>	
 		<%end%>
 	</div>
@@ -31,10 +31,10 @@
 <table class="table table-striped table-hover">
 	<thead>
 	  <tr>
-	    <th><%= sort_link @search, :product_name, "Product" %></th>
-	    <th><%= sort_link @search, :unit_of_measure_name, "Unit of measure" %></th>
-	    <th><%= sort_link @search, :count_in_base_unit, "Count in base unit" %></th>
-	    <th colspan="3">Actions</th>
+	    <th><%= sort_link @search, :product_name, t(:product) %></th>
+	    <th><%= sort_link @search, :unit_of_measure_name, t(:unit_of_measure) %></th>
+	    <th><%= sort_link @search, :count_in_base_unit, t(:count_in_base_unit) %></th>
+	    <th colspan="3"><%= t(:actions)%></th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -43,15 +43,15 @@
 		    <td><%= product_unit_of_measure.product.name %></td>
 		    <td><%= product_unit_of_measure.unit_of_measure.name %></td>
 		    <td><%= product_unit_of_measure.count_in_base_unit %></td>
-		    <td><%= link_to 'Show', product_product_unit_of_measure_path(@product, product_unit_of_measure) %></td>
-		    <td><%= link_to 'Edit', edit_product_product_unit_of_measure_path(@product, product_unit_of_measure) %></td>
-		    <td><%= link_to 'Destroy', product_product_unit_of_measure_path(@product, product_unit_of_measure), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		    <td><%= link_to(product_product_unit_of_measure_path(@product, product_unit_of_measure)) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
+		    <td><%= link_to(edit_product_product_unit_of_measure_path(@product, product_unit_of_measure)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+		    <td><%= link_to(product_product_unit_of_measure_path(@product, product_unit_of_measure), method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>
 		  </tr>
 		<% end %>
 	</tbody>
 </table>
-* Base product unit of measure marked in green<br /><br />
+<%= t(:base_unit_mark)%><br /><br />
 <%= paginate @product_unit_of_measures %>
 
-<%= link_to 'New Product unit of measure', new_product_product_unit_of_measure_path, class: 'btn' %><br /><br />
-<%= link_to 'Back', product_path(@product) %> | <%= link_to 'Back to Products', products_path %>
+<%= link_to t(:new_product_unit_of_measure), new_product_product_unit_of_measure_path, class: 'btn' %><br /><br />
+<%= link_to t(:back), product_path(@product) %> | <%= link_to t(:back_to_products), products_path %>

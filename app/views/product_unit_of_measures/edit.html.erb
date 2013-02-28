@@ -1,6 +1,6 @@
-<h3>Editing product_unit_of_measure</h3>
+<h3><%= t(:edit_product_unit_of_measure)%></h3>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', product_product_unit_of_measure_path(@product, @product_unit_of_measure) %> |
-<%= link_to 'Back', product_product_unit_of_measures_path(@product) %>
+<%= link_to t(:show), product_product_unit_of_measure_path(@product, @product_unit_of_measure) %> |
+<%= link_to t(:back), product_product_unit_of_measures_path(@product) %>

@@ -53,19 +53,39 @@ class ExchangeController < ApplicationController
       end   
     end
     
+    if params[:warehouses]
+      warehouses = xml.elements.to_a("//warehouse")
+      warehouses.each do |warehouse| 
+        warehouse_name = warehouse.elements['name'].text
+        warehouse_external_key = warehouse.elements['external_key'].text
+        warehouse_address = warehouse.elements['address'].text
+        warehouse_db = Warehouse.find_by_external_key(warehouse_external_key)   
+        if !warehouse_db
+          new_warehouse = Warehouse.create(name: warehouse_name, external_key: warehouse_external_key, address: warehouse_address)
+        else
+          if !warehouse_db.validity
+            warehouse_db.validity = true
+          end
+          warehouse_db.update_attributes(name: warehouse_name, address: warehouse_address)
+        end        
+      end   
+    end
+    
     if params[:managers]
       managers = xml.elements.to_a("//manager")
       managers.each do |manager| 
         manager_name = manager.elements['name'].text
         manager_external_key = manager.elements['external_key'].text
+        manager_default_warehouse_external_key = manager.elements['default_warehouse'].text
+        default_warehouse_db = Warehouse.find_by_external_key(manager_default_warehouse_external_key)
         manager_db = Manager.find_by_external_key(manager_external_key)   
         if !manager_db
-          new_manager = Manager.create(name: manager_name, external_key: manager_external_key)
+          new_manager = Manager.create(name: manager_name, external_key: manager_external_key, default_warehouse: default_warehouse_db)
         else
           if !manager_db.validity
             manager_db.validity = true
           end
-          manager_db.update_attributes(name: manager_name)
+          manager_db.update_attributes(name: manager_name, default_warehouse: default_warehouse_db)
         end        
       end   
     end

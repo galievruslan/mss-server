@@ -1,17 +1,17 @@
 <p>
-  <b>Product:</b>
+  <b><%=t(:product)%>:</b>
   <%= @order_item.product.name %>
 </p>
 <p>
-  <b>Unit of measure:</b>
+  <b><%=t(:unit_of_measure)%>:</b>
   <%= @order_item.unit_of_measure.name %>
 </p>
 
 <p>
-  <b>Quantity:</b>
+  <b><%=t(:quantity)%>:</b>
   <%= @order_item.quantity %>
 </p>
 
 
-<%= link_to 'Edit', edit_order_order_item_path(@order, @order_item) %> |
-<%= link_to 'Back', order_order_items_path(@order) %>
+<%= link_to t(:edit), edit_order_order_item_path(@order, @order_item) %> |
+<%= link_to t(:back), order_order_items_path(@order) %>

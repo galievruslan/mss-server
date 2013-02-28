@@ -4,41 +4,42 @@ class RoutesController < ApplicationController
   def current
     authorize! :route , :current
     @user = current_user
-    @manager = Manager.find(@user.manager_id)    
+    if @user.manager_id
+      @manager = Manager.find(@user.manager_id)    
+    end
     @day_of_week = Date.today.wday
     @today = Date.today
     @status = Status.find_by_name('not visited')
     if @manager
       @template_route = TemplateRoute.find_by_manager_id_and_day_of_week(@manager.id, @day_of_week)
       if !@template_route
-        @route = Route.create(manager_id: @manager.id, date: @today)
-        respond_to do |format|      
-          format.html { redirect_to @route, notice: 'Tied to the current user manager is not created the route pattern for the current day of the week, create empty route' }
-          format.json { render json: @route, status: :created, location: @route }      
+        @route = Route.find_by_manager_id_and_date(@manager.id, @today)
+        if !@route
+          @route = Route.create(manager_id: @manager.id, date: @today)
+          respond_to do |format|      
+            format.html { redirect_to @route, notice: 'Tied to the current user manager is not created the route pattern for the current day of the week, create empty route' }
+            format.json { render json: @route, status: :created, location: @route }      
+          end
+          return
+        else
+          respond_to do |format|      
+            format.html { redirect_to @route }
+            format.json { render json: @route, status: :created, location: @route }      
+          end          
         end
-        return
+      else
+        @route = Route.create(manager_id: @manager.id, date: @today)
+        @template_route.template_route_points.each do |template_route_point|
+          @route_point = RoutePoint.create(route_id: @route.id, shipping_address_id: template_route_point.shipping_address.id, status_id: @status.id) 
+        end
+        respond_to do |format|      
+          format.html { redirect_to @route, notice: 'Route was successfully created.' }
+          format.json { render json: @route.to_json(:include => [:route_points]), status: :created, location: @route }      
+        end  
       end   
     else
-      redirect_to @route, notice: 'Current user not tied to the manager.'
+      redirect_to routes_path, notice: 'Current user not tied to the manager.'
       return
-    end
-    @route = Route.find_by_manager_id_and_date(@manager.id, @today)
-    if !@route
-      @route = Route.create(manager_id: @manager.id, date: @today)
-      @template_route.template_route_points.each do |template_route_point|
-        @route_point = RoutePoint.create(route_id: @route.id, shipping_address_id: template_route_point.shipping_address.id, status_id: @status.id) 
-      end
-    else      
-      respond_to do |format|      
-        format.html { redirect_to @route, notice: 'Manager tied to the current user has already created a route for the current day of the week.' }
-        format.json { render json: @route.to_json(:include => [:route_points]), status: :created, location: @route }      
-      end
-      return        
-    end   
-    
-    respond_to do |format|      
-        format.html { redirect_to @route, notice: 'Route was successfully created.' }
-        format.json { render json: @route.to_json(:include => [:route_points]), status: :created, location: @route }      
     end
   end
   

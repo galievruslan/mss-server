@@ -1,9 +1,9 @@
 <% content_for :javascripts do %>
   <%= javascript_include_tag 'order_items' %>
 <% end %>
-<h3>Editing order_item</h3>
+<h3><%= t(:edit_order_item)%></h3>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', order_order_item_path(@order, @order_item) %> |
-<%= link_to 'Back', order_order_items_path(@order) %>
+<%= link_to t(:show), order_order_item_path(@order, @order_item) %> |
+<%= link_to t(:back), order_order_items_path(@order) %>

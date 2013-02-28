@@ -12,14 +12,14 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :product_id, 'Product' %>
-    <%= f.select :product_id, @products.collect {|p| [p.name, p.id]}, {:include_blank => 'select a product'} %>
+    <%= f.label :product_id, t(:product) %>
+    <%= f.select :product_id, @products.collect {|p| [p.name, p.id]}, {:include_blank => t(:select_product)} %>
   </div>
   <div class="field">
-    <%= f.label :price %>
+    <%= f.label :price, t(:price) %>
     <%= f.number_field :price, min: 0, step: 0.01 %>
   </div>
   <div class="actions">
-    <%= f.submit(class: 'btn') %>
+    <%= f.submit(t(:save), class: 'btn') %>
   </div>
 <% end %>

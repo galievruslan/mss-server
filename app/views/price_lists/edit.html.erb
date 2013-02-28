@@ -1,7 +1,7 @@
-<h3>Editing price_list</h3>
+<h3><%= t(:edit_price_list)%></h3>
 
 <%= render 'form' %>
 
-<%= link_to 'Edit product price lists', price_list_price_list_lines_path(@price_list), :class =>'btn' %><br><br>
-<%= link_to 'Show', @price_list %> |
-<%= link_to 'Back', price_lists_path %>
+<%= link_to t(:edit_price_list_lines), price_list_price_list_lines_path(@price_list), :class =>'btn' %><br><br>
+<%= link_to t(:show), @price_list %> |
+<%= link_to t(:back), price_lists_path %>

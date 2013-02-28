@@ -1,22 +1,22 @@
 <p>
-  <b>Product:</b>
+  <b><%= t(:product)%>:</b>
   <%= @product_unit_of_measure.product.name %>
 </p>
 
 <p>
-  <b>Unit of measure:</b>
+  <b><%= t(:unit_of_measure)%>:</b>
   <%= @product_unit_of_measure.unit_of_measure.name %>
 </p>
 
 <p>
-  <b>Base:</b>
-  <%= @product_unit_of_measure.base %>
+  <b><%= t(:base)%>:</b>
+  <%= @product_unit_of_measure.base ? t(:truth) : t(:lie) %>
 </p>
 <p>
-  <b>Count in base unit:</b>
+  <b><%= t(:count_in_base_unit)%>:</b>
   <%= @product_unit_of_measure.count_in_base_unit %>
 </p>
 
 
-<%= link_to 'Edit', edit_product_product_unit_of_measure_path(@product, @product_unit_of_measure) %> |
-<%= link_to 'Back', product_product_unit_of_measures_path(@product) %>
+<%= link_to t(:edit), edit_product_product_unit_of_measure_path(@product, @product_unit_of_measure) %> |
+<%= link_to t(:back), product_product_unit_of_measures_path(@product) %>
