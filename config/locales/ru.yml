@@ -249,3 +249,5 @@ ru:
   product_price_created: "Цена номенклатуры успешно создана."
   product_price_updated: "Цена номенклатуры успешно обновлена."
   product_price_destroyed: "Цена номенклатуры успешно удалена."
+  edit_product_unit_of_measures: "Редактировать единицы измерения продукта"
+  once_per_product: "может быть только одна у продукта"

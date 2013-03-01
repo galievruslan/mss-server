@@ -249,3 +249,5 @@ en:
   product_price_created: "Product price was successfully created."
   product_price_updated: "Product price was successfully updated."
   product_price_destroyed: "Product price was successfully destroyed."
+  edit_product_unit_of_measures: "Edit product unit of measures"
+  once_per_product: "should happen once per product"

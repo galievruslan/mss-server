@@ -87,7 +87,11 @@ class StatusesController < ApplicationController
   # DELETE /statuses/1.json
   def destroy
     @status = Status.find(params[:id])
-    @status.destroy
+    if @status.validity 
+      @status.update_attributes(validity: false)
+    else
+      @status.update_attributes(validity: true)
+    end
 
     respond_to do |format|
       format.html { redirect_to statuses_url }

@@ -164,8 +164,9 @@ ActiveRecord::Schema.define(:version => 20130301095344) do
 
   create_table "statuses", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.boolean  "validity",   :default => true
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   create_table "template_route_points", :force => true do |t|

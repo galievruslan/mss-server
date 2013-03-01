@@ -1,7 +1,7 @@
 <h3><%= t(:edit_product)%></h3>
 
 <%= render 'form' %>
-<%= link_to t(:edit_product_unit_of_measure), product_product_unit_of_measures_path(@product), :class =>'btn' %><br><br>
+<%= link_to t(:edit_product_unit_of_measures), product_product_unit_of_measures_path(@product), :class =>'btn' %><br><br>
 <%= link_to t(:edit_product_prices), product_product_prices_path(@product), :class =>'btn' %><br><br>
 <%= link_to t(:show), @product %> |
 <%= link_to t(:back), products_path %>
