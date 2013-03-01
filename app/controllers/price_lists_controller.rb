@@ -59,7 +59,7 @@ class PriceListsController < ApplicationController
 
     respond_to do |format|
       if @price_list.save
-        format.html { redirect_to @price_list, notice: 'Price list was successfully created.' }
+        format.html { redirect_to @price_list, notice: t(:price_list_created) }
         format.json { render json: @price_list, status: :created, location: @price_list }
       else
         format.html { render action: "new" }
@@ -75,7 +75,7 @@ class PriceListsController < ApplicationController
 
     respond_to do |format|
       if @price_list.update_attributes(params[:price_list])
-        format.html { redirect_to @price_list, notice: 'Price list was successfully updated.' }
+        format.html { redirect_to @price_list, notice: t(:price_list_updated) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -58,7 +58,7 @@ class UnitOfMeasuresController < ApplicationController
 
     respond_to do |format|
       if @unit_of_measure.save
-        format.html { redirect_to @unit_of_measure, notice: 'Unit of measure was successfully created.' }
+        format.html { redirect_to @unit_of_measure, notice: t(:unit_of_measure_created) }
         format.json { render json: @unit_of_measure, status: :created, location: @unit_of_measure }
       else
         format.html { render action: "new" }
@@ -74,7 +74,7 @@ class UnitOfMeasuresController < ApplicationController
 
     respond_to do |format|
       if @unit_of_measure.update_attributes(params[:unit_of_measure])
-        format.html { redirect_to @unit_of_measure, notice: 'Unit of measure was successfully updated.' }
+        format.html { redirect_to @unit_of_measure, notice: t(:unit_of_measure_updated) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

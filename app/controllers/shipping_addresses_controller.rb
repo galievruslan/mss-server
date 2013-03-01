@@ -52,7 +52,7 @@ class ShippingAddressesController < ApplicationController
     @customer.save 
     respond_to do |format|
       if @shipping_address.save
-        format.html { redirect_to customer_shipping_address_path(@customer, @shipping_address), notice: 'Shipping address was successfully created.' }
+        format.html { redirect_to customer_shipping_address_path(@customer, @shipping_address), notice: t(:shipping_address_created) }
         format.json { render json: @shipping_address, status: :created, location: @shipping_address }
       else
         format.html { render action: "new" }
@@ -69,7 +69,7 @@ class ShippingAddressesController < ApplicationController
 
     respond_to do |format|
       if @shipping_address.update_attributes(params[:shipping_address])
-        format.html { redirect_to customer_shipping_address_path(@customer, @shipping_address), notice: 'Shipping address was successfully updated.' }
+        format.html { redirect_to customer_shipping_address_path(@customer, @shipping_address), notice: t(:shipping_address_updated) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

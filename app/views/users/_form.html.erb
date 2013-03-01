@@ -12,51 +12,51 @@
   <% end %>
   
 	<div class="field">
-    <%= f.label :username %>
+    <%= f.label :username, t(:username) %>
     <%= f.text_field :username %>
   </div>
   <div class="field">
-    <%= f.label :email %>
+    <%= f.label :email, t(:email) %>
     <%= f.text_field :email %>
   </div>
   <div class="field">
-    <%= f.label :language %>
+    <%= f.label :language, t(:language) %>
     <%= f.select(:language, ['EN','RU'], :include_blank => "Select a language") %>
   </div>
   <div class="field">
-    <%= f.label :manager_id, 'Manager' %>
+    <%= f.label :manager_id, t(:manager) %>
     <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}, :include_blank => "Select a manager") %>
   </div>
   <div>
-  	<%= f.label :password %>
+  	<%= f.label :password, t(:password) %>
   	<%= f.password_field :password%>
   </div>
-  <div><%= f.label :password_confirmation %>
+  <div><%= f.label :password_confirmation, t(:confirmation) %>
     <%= f.password_field :password_confirmation %>
   </div>
   <table class="table table-striped table-hover">
   	<thead>
   		<tr>
-  			<th>Role</th>
-  			<th>Enable</th>
+  			<th><%= t(:role)%></th>
+  			<th><%= t(:enable)%></th>
   		</tr>
   	</thead>
   	<tbody>
   		<tr>
-  			<td>Admin</td>
+  			<td><%= t(:admin)%></td>
   			<td><%= check_box_tag("admin") %></td>
   		</tr>
   		<tr>
-  			<td>Supervisor</td>
+  			<td><%= t(:supervisor)%></td>
   			<td><%= check_box_tag("supervisor") %></td>
   		</tr>
   		<tr>
-  			<td>Manager</td>
+  			<td><%= t(:manager)%></td>
   			<td><%= check_box_tag("manager") %></td>
   		</tr>
   	</tbody>
   </table>
   <div class="actions">
-    <%= f.submit(:class =>'btn') %>
+    <%= f.submit(t(:save), :class =>'btn') %>
   </div>
 <% end %>

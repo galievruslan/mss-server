@@ -224,7 +224,7 @@ class ExchangeController < ApplicationController
       end   
     end    
           
-    redirect_to exchange_path, notice: 'Handbook was successfully imported.' 
+    redirect_to exchange_path, notice: t(:handbook_imported) 
   end
    
   def get_orders

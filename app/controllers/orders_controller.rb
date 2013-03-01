@@ -63,7 +63,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
+        format.html { redirect_to @order, notice: t(:order_created) }
         format.json { render json: @order, status: :created, location: @order }
       else
         format.html { render action: "new" }
@@ -79,7 +79,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.update_attributes(params[:order])
-        format.html { redirect_to @order, notice: 'Order was successfully updated.' }
+        format.html { redirect_to @order, notice: t(:order_updated) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -95,7 +95,7 @@ class OrdersController < ApplicationController
     @order.destroy
 
     respond_to do |format|
-      format.html { redirect_to orders_url }
+      format.html { redirect_to orders_url, notice: t(:order_destroyed)}
       format.json { head :no_content }
     end
   end
@@ -143,7 +143,7 @@ class OrdersController < ApplicationController
     @order.update_attributes(exported_at: nil)    
     
     respond_to do |format|
-        format.html { redirect_to orders_path, notice: "Order exported datetime removed." }
+        format.html { redirect_to orders_path, notice: t(:order_export_again) }
         format.json { head :no_content }      
     end
   end  

@@ -58,7 +58,7 @@ class WarehousesController < ApplicationController
 
     respond_to do |format|
       if @warehouse.save
-        format.html { redirect_to @warehouse, notice: 'Warehouse was successfully created.' }
+        format.html { redirect_to @warehouse, notice: t(:warehouse_created) }
         format.json { render json: @warehouse, status: :created, location: @warehouse }
       else
         format.html { render action: "new" }
@@ -74,7 +74,7 @@ class WarehousesController < ApplicationController
 
     respond_to do |format|
       if @warehouse.update_attributes(params[:warehouse])
-        format.html { redirect_to @warehouse, notice: 'Warehouse was successfully updated.' }
+        format.html { redirect_to @warehouse, notice: t(:warehouse_updated) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

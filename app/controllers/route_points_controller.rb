@@ -57,7 +57,7 @@ class RoutePointsController < ApplicationController
     
     respond_to do |format|
       if @route_point.save
-        format.html { redirect_to route_route_point_path(@route, @route_point), notice: 'Route point was successfully created.' }
+        format.html { redirect_to route_route_point_path(@route, @route_point), notice: t(:route_point_created) }
         format.json { render json: @route_point, status: :created, location: @route_point }
       else
         format.html { render action: "new" }
@@ -74,7 +74,7 @@ class RoutePointsController < ApplicationController
 
     respond_to do |format|
       if @route_point.update_attributes(params[:route_point])
-        format.html { redirect_to route_route_point_path(@route, @route_point), notice: 'Route point was successfully updated.' }
+        format.html { redirect_to route_route_point_path(@route, @route_point), notice: t(:route_point_updated) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -91,7 +91,7 @@ class RoutePointsController < ApplicationController
     @route_point.destroy
 
     respond_to do |format|
-      format.html { redirect_to route_route_points_path(@route) }
+      format.html { redirect_to route_route_points_path(@route), notice: t(:route_point_destroyed) }
       format.json { head :no_content }
     end
   end

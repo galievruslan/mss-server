@@ -56,7 +56,7 @@ class ProductUnitOfMeasuresController < ApplicationController
     
     respond_to do |format|
       if @product_unit_of_measure.save
-        format.html { redirect_to product_product_unit_of_measure_path(@product, @product_unit_of_measure), notice: 'Product unit of measure was successfully created.' }
+        format.html { redirect_to product_product_unit_of_measure_path(@product, @product_unit_of_measure), notice: t(:product_unit_of_measure_created) }
         format.json { render json: @product_unit_of_measure, status: :created, location: @product_unit_of_measure }
       else
         format.html { render action: "new" }
@@ -74,7 +74,7 @@ class ProductUnitOfMeasuresController < ApplicationController
 
     respond_to do |format|
       if @product_unit_of_measure.update_attributes(params[:product_unit_of_measure])
-        format.html { redirect_to product_product_unit_of_measure_path(@product, @product_unit_of_measure), notice: 'Product unit of measure was successfully updated.' }
+        format.html { redirect_to product_product_unit_of_measure_path(@product, @product_unit_of_measure), notice: t(:product_unit_of_measure_updated) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -91,7 +91,7 @@ class ProductUnitOfMeasuresController < ApplicationController
     @product_unit_of_measure.destroy
 
     respond_to do |format|
-      format.html { redirect_to product_product_unit_of_measures_path(@product), notice: 'Product unit of measure was successfully destroyed.' }
+      format.html { redirect_to product_product_unit_of_measures_path(@product), notice: t(:product_unit_of_measure_destroyed) }
       format.json { head :no_content }
     end
   end

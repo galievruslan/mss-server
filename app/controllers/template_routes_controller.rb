@@ -51,7 +51,7 @@ class TemplateRoutesController < ApplicationController
 
     respond_to do |format|
       if @template_route.save
-        format.html { redirect_to @template_route, notice: 'Template route was successfully created.' }
+        format.html { redirect_to @template_route, notice: t(:template_route_created) }
         format.json { render json: @template_route, status: :created, location: @template_route }
       else
         format.html { render action: "new" }
@@ -67,7 +67,7 @@ class TemplateRoutesController < ApplicationController
 
     respond_to do |format|
       if @template_route.update_attributes(params[:template_route])
-        format.html { redirect_to @template_route, notice: 'Template route was successfully updated.' }
+        format.html { redirect_to @template_route, notice: t(:template_route_updated) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -83,7 +83,7 @@ class TemplateRoutesController < ApplicationController
     @template_route.destroy
 
     respond_to do |format|
-      format.html { redirect_to template_routes_url }
+      format.html { redirect_to template_routes_url, notice: t(:template_route_destroyed) }
       format.json { head :no_content }
     end
   end

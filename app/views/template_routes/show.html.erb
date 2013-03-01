@@ -1,19 +1,19 @@
 <p>
-  <b>Manager:</b>
+  <b><%= t(:manager)%>:</b>
   <%= @template_route.manager.name %>
 </p>
 
 <p>
-  <b>Day of week:</b>
+  <b><%= t(:day_of_week)%>:</b>
   <%= day_name(@template_route.day_of_week) %>
 </p>
 
-<h4>Template route points</h4>
+<h4><%= t(:template_route_points)%>s</h4>
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th><%= sort_link @search, :shipping_address_name, "Name" %></th>
-      <th><%= sort_link @search, :shipping_address_address, "Address" %></th>
+      <th><%= sort_link @search, :shipping_address_name, t(:shipping_address) %></th>
+      <th><%= sort_link @search, :shipping_address_address, t(:address) %></th>
     </tr>
   </thead>
   <tbody>
@@ -28,5 +28,5 @@
 
 <%= paginate @template_route_points %>
 
-<%= link_to 'Edit', edit_template_route_path(@template_route) %> |
-<%= link_to 'Back', template_routes_path %>
+<%= link_to t(:edit), edit_template_route_path(@template_route) %> |
+<%= link_to t(:back), template_routes_path %>

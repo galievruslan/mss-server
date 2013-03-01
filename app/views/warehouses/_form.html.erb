@@ -12,22 +12,22 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %>
+    <%= f.label :name, t(:name) %>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :address %>
+    <%= f.label :address, t(:address) %>
     <%= f.text_field :address %>
   </div>
   <div class="field">
-    <%= f.label :external_key %>
+    <%= f.label :external_key, t(:external_key) %>
     <%= f.text_field :external_key %>
   </div>
   <div class="field form-inline">
   	<%= f.check_box :validity %>
-    <%= f.label :validity %>    
+    <%= f.label :validity, t(:validity) %>    
   </div>
   <div class="actions">
-    <%= f.submit(class: 'btn') %>
+    <%= f.submit(t(:save), class: 'btn') %>
   </div>
 <% end %>

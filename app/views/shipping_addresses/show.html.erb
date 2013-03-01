@@ -1,18 +1,18 @@
 <p>
-  <b>Customer name:</b>
+  <b><%= t(:customer)%>:</b>
   <%= @shipping_address.customer.name %>
 </p>
 
 <p>
-  <b>Name:</b>
+  <b><%= t(:shipping_address)%>:</b>
   <%= @shipping_address.name %>
 </p>
 
 <p>
-  <b>Address:</b>
+  <b><%= t(:address)%>:</b>
   <%= @shipping_address.address %>
 </p>
 
 
-<%= link_to 'Edit', edit_customer_shipping_address_path(@customer, @shipping_address) %> |
-<%= link_to 'Back', customer_shipping_addresses_path(@customer) %>
+<%= link_to t(:edit), edit_customer_shipping_address_path(@customer, @shipping_address) %> |
+<%= link_to t(:back), customer_shipping_addresses_path(@customer) %>

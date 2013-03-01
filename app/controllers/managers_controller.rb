@@ -65,7 +65,7 @@ class ManagersController < ApplicationController
     end
     respond_to do |format|
       if @manager.save
-        format.html { redirect_to @manager, notice: 'Manager was successfully created.' }
+        format.html { redirect_to @manager, notice: t(:manager_created) }
         format.json { render json: @manager, status: :created, location: @manager }
       else
         format.html { render action: "new" }
@@ -81,7 +81,7 @@ class ManagersController < ApplicationController
 
     respond_to do |format|
       if @manager.update_attributes(params[:manager])
-        format.html { redirect_to @manager, notice: 'Manager was successfully updated.' }
+        format.html { redirect_to @manager, notice: t(:manager_updated) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

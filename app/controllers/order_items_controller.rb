@@ -57,7 +57,7 @@ class OrderItemsController < ApplicationController
 
     respond_to do |format|
       if @order_item.save
-        format.html { redirect_to order_order_item_path(@order, @order_item), notice: 'Order item was successfully created.' }
+        format.html { redirect_to order_order_item_path(@order, @order_item), notice: t(:order_item_created) }
         format.json { render json: @order_item, status: :created, location: @order_item }
       else
         format.html { render action: "new" }
@@ -76,7 +76,7 @@ class OrderItemsController < ApplicationController
 
     respond_to do |format|
       if @order_item.update_attributes(params[:order_item])
-        format.html { redirect_to order_order_item_path(@order, @order_item), notice: 'Order item was successfully updated.' }
+        format.html { redirect_to order_order_item_path(@order, @order_item), notice: t(:order_item_updated) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -93,7 +93,7 @@ class OrderItemsController < ApplicationController
     @order_item.destroy
 
     respond_to do |format|
-      format.html { redirect_to order_order_items_path(@order) }
+      format.html { redirect_to order_order_items_path(@order), notice: t(:order_item_destroyed) }
       format.json { head :no_content }
     end
   end

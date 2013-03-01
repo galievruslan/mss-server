@@ -53,7 +53,7 @@ class TemplateRoutePointsController < ApplicationController
     
     respond_to do |format|
       if @template_route_point.save
-        format.html { redirect_to template_route_template_route_points_path(@template_route), notice: 'Template route point was successfully created.' }
+        format.html { redirect_to template_route_template_route_points_path(@template_route), notice: t(:template_route_point_created) }
         format.json { render json: @template_route_point, status: :created, location: @template_route_point }
       else
         format.html { render action: "new" }
@@ -70,7 +70,7 @@ class TemplateRoutePointsController < ApplicationController
 
     respond_to do |format|
       if @template_route_point.update_attributes(params[:template_route_point])
-        format.html { redirect_to template_route_template_route_points_path(@template_route), notice: 'Template route point was successfully updated.' }
+        format.html { redirect_to template_route_template_route_points_path(@template_route), notice: t(:template_route_point_updated) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -87,7 +87,7 @@ class TemplateRoutePointsController < ApplicationController
     @template_route_point.destroy
 
     respond_to do |format|
-      format.html { redirect_to template_route_template_route_points_path(@template_route), notice: 'Template route point was successfully daleted.' }
+      format.html { redirect_to template_route_template_route_points_path(@template_route), notice: t(:template_route_point_destroyed) }
       format.json { head :no_content }
     end
   end

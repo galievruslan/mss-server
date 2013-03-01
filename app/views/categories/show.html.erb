@@ -1,23 +1,23 @@
 <p>
-  <b>Name:</b>
+  <b><%= t(:name)%>:</b>
   <%= @category.name %>
 </p>
 
 <p>
-  <b>External key:</b>
+  <b><%= t(:external_key)%>:</b>
   <%= @category.external_key %>
 </p>
 
 <p>
-  <b>Parent:</b>
+  <b><%= t(:parent)%>:</b>
   <%= @category.parent.name %>
 </p>
 
 <p>
-  <b>Validity:</b>
-  <%= @category.validity %>
+  <b><%= t(:validity)%>:</b>
+  <%= @category.validity ? t(:truth) : t(:lie) %>
 </p>
 
 
-<%= link_to 'Edit', edit_category_path(@category) %> |
-<%= link_to 'Back', categories_path %>
+<%= link_to t(:edit), edit_category_path(@category) %> |
+<%= link_to t(:back), categories_path %>

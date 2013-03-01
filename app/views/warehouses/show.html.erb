@@ -1,22 +1,22 @@
 <p>
-  <b>Name:</b>
+  <b><%= t(:name)%>:</b>
   <%= @warehouse.name %>
 </p>
 
 <p>
-  <b>Address:</b>
+  <b><%= t(:address)%>:</b>
   <%= @warehouse.address %>
 </p>
 
 <p>
-  <b>External key:</b>
+  <b><%= t(:external_key)%>:</b>
   <%= @warehouse.external_key %>
 </p>
 
 <p>
-  <b>Validity:</b>
-  <%= @warehouse.validity %>
+  <b><%= t(:validity)%>:</b>
+  <%= @warehouse.validity ? t(:truth) : t(:lie) %>
 </p>
 
-<%= link_to 'Edit', edit_warehouse_path(@warehouse) %> |
-<%= link_to 'Back', warehouses_path %>
+<%= link_to t(:edit), edit_warehouse_path(@warehouse) %> |
+<%= link_to t(:back), warehouses_path %>

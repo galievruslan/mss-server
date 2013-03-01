@@ -17,7 +17,7 @@ class RoutesController < ApplicationController
         if !@route
           @route = Route.create(manager_id: @manager.id, date: @today)
           respond_to do |format|      
-            format.html { redirect_to @route, notice: 'Tied to the current user manager is not created the route pattern for the current day of the week, create empty route' }
+            format.html { redirect_to @route, notice: t(:create_empty_route) }
             format.json { render json: @route, status: :created, location: @route }      
           end
           return
@@ -28,17 +28,27 @@ class RoutesController < ApplicationController
           end          
         end
       else
-        @route = Route.create(manager_id: @manager.id, date: @today)
-        @template_route.template_route_points.each do |template_route_point|
-          @route_point = RoutePoint.create(route_id: @route.id, shipping_address_id: template_route_point.shipping_address.id, status_id: @status.id) 
-        end
-        respond_to do |format|      
-          format.html { redirect_to @route, notice: 'Route was successfully created.' }
-          format.json { render json: @route.to_json(:include => [:route_points]), status: :created, location: @route }      
-        end  
+        @route = Route.find_by_manager_id_and_date(@manager.id, @today)        
+        if !@route
+          @route = Route.create(manager_id: @manager.id, date: @today)
+          @template_route.template_route_points.each do |template_route_point|
+            @route_point = RoutePoint.create(route_id: @route.id, shipping_address_id: template_route_point.shipping_address.id, status_id: @status.id) 
+          end
+          respond_to do |format|      
+            format.html { redirect_to @route, notice: t(:route_created) }
+            format.json { render json: @route.to_json(:include => [:route_points]), status: :created, location: @route }      
+          end
+          return
+        else
+          respond_to do |format|      
+            format.html { redirect_to @route }
+            format.json { render json: @route.to_json(:include => [:route_points]), status: :created, location: @route }      
+          end    
+          return  
+        end        
       end   
     else
-      redirect_to routes_path, notice: 'Current user not tied to the manager.'
+      redirect_to routes_path, notice: t(:current_user_no_manager)
       return
     end
   end
@@ -92,7 +102,7 @@ class RoutesController < ApplicationController
 
     respond_to do |format|
       if @route.save
-        format.html { redirect_to @route, notice: 'Route was successfully created.' }
+        format.html { redirect_to @route, notice: t(:route_created) }
         format.json { render json: @route, status: :created, location: @route }
       else
         format.html { render action: "new" }
@@ -108,7 +118,7 @@ class RoutesController < ApplicationController
 
     respond_to do |format|
       if @route.update_attributes(params[:route])
-        format.html { redirect_to @route, notice: 'Route was successfully updated.' }
+        format.html { redirect_to @route, notice: t(:route_updated) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -124,7 +134,7 @@ class RoutesController < ApplicationController
     @route.destroy
 
     respond_to do |format|
-      format.html { redirect_to routes_url }
+      format.html { redirect_to routes_url, notice: t(:route_destroyed) }
       format.json { head :no_content }
     end
   end

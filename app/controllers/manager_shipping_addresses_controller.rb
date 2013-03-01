@@ -54,7 +54,7 @@ class ManagerShippingAddressesController < ApplicationController
     @manager.save
     respond_to do |format|
       if @manager_shipping_address.save
-        format.html { redirect_to manager_manager_shipping_addresses_path(@manager), notice: 'Manager shipping address was successfully created.' }
+        format.html { redirect_to manager_manager_shipping_addresses_path(@manager), notice: t(:manager_shipping_address_created) }
         format.json { render json: @manager_shipping_address, status: :created, location: @manager_shipping_address }
       else
         format.html { render action: "new" }
@@ -71,7 +71,7 @@ class ManagerShippingAddressesController < ApplicationController
 
     respond_to do |format|
       if @manager_shipping_address.update_attributes(params[:manager_shipping_address])
-        format.html { redirect_to manager_manager_shipping_addresses_path(@manager), notice: 'Manager shipping address was successfully updated.' }
+        format.html { redirect_to manager_manager_shipping_addresses_path(@manager), notice: t(:manager_shipping_address_updated) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -88,7 +88,7 @@ class ManagerShippingAddressesController < ApplicationController
     @manager_shipping_address.destroy
 
     respond_to do |format|
-      format.html { redirect_to manager_manager_shipping_addresses_path(@manager), notice: 'Manager shipping address was successfully deleted.' }
+      format.html { redirect_to manager_manager_shipping_addresses_path(@manager), notice: t(:manager_shipping_address_destroyed) }
       format.json { head :no_content }
     end
   end
