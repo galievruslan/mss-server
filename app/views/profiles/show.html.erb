@@ -20,4 +20,4 @@
   <b><%= t(:list_page_size)%>:</b>
   <%= @user.list_page_size ? @user.list_page_size : '25'%>
 </p>
-<%= link_to t(:edit), profile_edit_path %>
+<%= link_to t(:edit), profile_edit_path %> | <%= link_to t(:edit_password), profile_edit_password_path %>

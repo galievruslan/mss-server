@@ -13,7 +13,9 @@
   get 'routes/current', :to => 'routes#current'
   get 'profile/show', :to => 'profiles#show'
   match 'profile/edit', :to => 'profiles#edit'
-  put 'profile/update', :to => 'profiles#update'   
+  put 'profile/update', :to => 'profiles#update'
+  match 'profile/edit_password', :to => 'profiles#edit_password'
+  put 'profile/update_password', :to => 'profiles#update_password'   
   match '/update_product_unit_of_measures' => 'order_items#update_product_unit_of_measures'
   match 'orders/generate_xml', :to => 'orders#generate_xml' 
   resources :orders do
@@ -39,7 +41,12 @@
   resources :customers do
     resources  :shipping_addresses
   end
-  resources :users 
+  resources :users do
+    member do
+      match :edit_password
+      put :update_password
+    end
+  end
   resources :price_lists do    
     resources :price_list_lines
   end   

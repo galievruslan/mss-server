@@ -239,3 +239,5 @@ en:
   user_destroyed: "User was successfully destroy."
   warehouse_created: "Warehouse was successfully created."
   warehouse_updated: "Warehouse was successfully updated."
+  edit_password: "Password edit"
+  password_updated: "Password successfully updated."

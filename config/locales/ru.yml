@@ -239,3 +239,5 @@ ru:
   user_destroyed: "Пользователь успешно удален"
   warehouse_created: "Склад успешно создан"
   warehouse_updated: "Склад успешно обновлен"
+  edit_password: "Редактирование пароля"
+  password_updated: "Пароль успешно обновлен"
