@@ -1,0 +1,6 @@
+<h3><%= t(:edit_product_price)%></h3>
+
+<%= render 'form' %>
+
+<%= link_to t(:show), product_product_price_path(@product, @product_price) %> |
+<%= link_to t(:back), product_product_prices_path(@product) %>

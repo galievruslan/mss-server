@@ -1,0 +1,25 @@
+<%= form_for([@product, @product_price]) do |f| %>
+  <% if @product_price.errors.any? %>
+    <div id="error_explanation">
+      <h4><%= pluralize(@product_price.errors.count, "error") %> prohibited this product_price from being saved:</h4>
+
+      <ul>
+      <% @product_price.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+    <%= f.label :price_list_id, t(:price_list) %>
+    <%= f.select(:price_list_id, @price_lists.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_price_list)) %>
+  </div>
+  <div class="field">
+    <%= f.label :price, t(:price) %>
+    <%= f.text_field :price %>
+  </div>
+  <div class="actions">
+    <%= f.submit(t(:save), class: 'btn') %>
+  </div>
+<% end %>

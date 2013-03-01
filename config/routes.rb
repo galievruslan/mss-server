@@ -1,5 +1,5 @@
   Mss::Application.routes.draw do 
-    
+  
   root :to => 'pages#index'
   
   devise_for :users
@@ -31,7 +31,8 @@
     resources :template_route_points
   end
   resources :unit_of_measures   
-  resources :products do    
+  resources :products do      
+    resources :product_prices    
     resources :product_unit_of_measures
   end
   resources :managers do
@@ -47,9 +48,7 @@
       put :update_password
     end
   end
-  resources :price_lists do    
-    resources :price_list_lines
-  end   
+  resources :price_lists  
   resources :warehouses
   resources :categories  
   

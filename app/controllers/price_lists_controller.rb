@@ -15,11 +15,11 @@ class PriceListsController < ApplicationController
     if params[:updated_at]
       @price_lists_json = PriceList.where("updated_at >= #{params[:updated_at]}").page(params[:page]).per(page_size).includes(:price_list_lines)
     else
-      @price_lists_json = PriceList.page(params[:page]).per(page_size).includes(:price_list_lines)
+      @price_lists_json = PriceList.page(params[:page]).per(page_size)
     end 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @price_lists_json.to_json(:include => [:price_list_lines]) }
+      format.json { render json: @price_lists_json }
     end
   end
 
