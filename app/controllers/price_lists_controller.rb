@@ -27,8 +27,8 @@ class PriceListsController < ApplicationController
   # GET /price_lists/1.json
   def show
     @price_list = PriceList.find(params[:id])
-    @search = @price_list.price_list_lines.search(params[:q])
-    @price_list_lines = @search.result.page(params[:page]).per(current_user.list_page_size)
+    @search = @price_list.product_prices.search(params[:q])
+    @product_prices = @search.result.page(params[:page]).per(current_user.list_page_size)
 
     respond_to do |format|
       format.html # show.html.erb

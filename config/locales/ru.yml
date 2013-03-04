@@ -64,7 +64,7 @@ ru:
   select: "Выбор"
   manager_shipping_addresses: "Адреса поставки менеджера"
   product_unit_of_measures: "Единицы имерения номенклатуры"
-  price_list_lines: "Строки прайс-листа"
+  product_prices: "Цены номенклатуры"
   upload: "Загрузить"
   shipping_address: "Адрес поставки"
   select_shipping_address: "Выберите адресс поставки"

@@ -48,7 +48,9 @@
       put :update_password
     end
   end
-  resources :price_lists  
+  resources :price_lists do
+    resources :product_prices
+  end 
   resources :warehouses
   resources :categories  
   

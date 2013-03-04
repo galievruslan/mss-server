@@ -207,19 +207,19 @@ class ExchangeController < ApplicationController
       end   
     end
     
-    if params[:price_list_lines]
-      price_list_lines = xml.elements.to_a("//price_list_line")
-      price_list_lines.each do |price_list_line| 
+    if params[:product_prices]
+      product_prices = xml.elements.to_a("//product_price")
+      product_prices.each do |product_price| 
         product_external_key = price_list_line.elements['product_external_key'].text
         price_list_external_key = price_list_line.elements['price_list_external_key'].text
-        price = price_list_line.elements['price'].text
+        price = product_price.elements['price'].text
         product = Product.find_by_external_key(product_external_key)
         price_list = PriceList.find_by_external_key(price_list_external_key)
-        price_list_line_db = PriceListLine.find_by_product_id_and_price_list_id(product.id, price_list.id)
-        if !price_list_line_db
-          new_price_list_line = PriceListLine.create(product: product, price_list: price_list, price: price)
+        product_price_db = ProductPrice.find_by_product_id_and_price_list_id(product.id, price_list.id)
+        if !product_price_db
+          new_product_price = ProductPrice.create(product: product, price_list: price_list, price: price)
         else          
-          price_list_line_db.update_attributes(price: price)
+          product_price_db.update_attributes(price: price)
         end          
       end   
     end    

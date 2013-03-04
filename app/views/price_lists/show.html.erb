@@ -45,15 +45,15 @@
     </tr>
   </thead>
   <tbody>
-    <% @price_list_lines.each do |price_list_line| %>
-      <td><%= price_list_line.product.name %></td>
-      <td><%= price_list_line.price %></td>
+    <% @product_prices.each do |product_price| %>
+      <td><%= product_price.product.name %></td>
+      <td><%= product_price.price %></td>
     </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= paginate @price_list_lines %>
+<%= paginate @product_prices %>
 
 <%= link_to t(:edit), edit_price_list_path(@price_list) %> |
 <%= link_to t(:back), price_lists_path %>

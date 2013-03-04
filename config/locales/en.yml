@@ -64,7 +64,7 @@ en:
   select: "Select"
   manager_shipping_addresses: "Manager shipping addresses"
   product_unit_of_measures: "Product unit of measures"
-  price_list_lines: "Price list lines"
+  price_list_lines: "Product prices"
   upload: "Upload"
   shipping_address: "Shipping address"
   select_shipping_address: "Select shipping address"
