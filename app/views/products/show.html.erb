@@ -37,10 +37,10 @@
     </tr>
   </thead>
   <tbody>
-    <% @product.price_list_lines.each do |price_list_line| %>  
+    <% @product.product_prices.each do |product_price| %>  
     <tr>
-      <td><%= price_list_line.price_list.name %></td>
-      <td><%= price_list_line.price %></td>
+      <td><%= product_price.price_list.name %></td>
+      <td><%= product_price.price %></td>
     </tr>
     <% end %>
   </tbody>
