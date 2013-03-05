@@ -1,4 +1,19 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'exchange' %>
+<% end %>
+<% if @errors %>
+    <div class="alert alert-error">
+    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4><%=t('errors.title')%></h4>
+      <ul>
+      <% @errors.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+<% end %>
 <h4><%= t(:export_orders)%>:</h4>
+
 <%=link_to t(:download_zip), exchange_get_xml_path, :class => 'btn' %><br>
 <h4><%=t(:import_handbooks)%>:</h4>
 
@@ -11,7 +26,7 @@
 		<thead>
 			<tr>
 				<th><%= t(:import_object)%></th>
-				<th><%= t(:select)%></th>
+				<th><a href="#" onclick="selectAll()"><%= t(:select) %></a></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -61,6 +76,7 @@
 			</tr>				
 		</tbody>
 	</table>
+	
   <div class="actions">
   	<%= submit_tag t(:upload), :class =>'btn' %>    
   </div>

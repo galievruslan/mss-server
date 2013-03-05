@@ -11,11 +11,12 @@ class ExchangeController < ApplicationController
     if request.post? and data
       parse_with_rexml(data)        
     else
-      redirect_to :action => 'index'
+      redirect_to exchange_path, notice: t(:select_file)
     end
   end
   
   def parse_with_rexml(xml_data)
+    @errors = []
     xml = REXML::Document.new(xml_data)
     if params[:customers]
       customers = xml.elements.to_a("//customer")
@@ -40,10 +41,15 @@ class ExchangeController < ApplicationController
         shipping_address_external_key = shipping_address.elements['external_key'].text
         shipping_address_address = shipping_address.elements['address'].text
         shipping_address_customer_external_key = shipping_address.elements['customer_external_key'].text
-        shipping_address_customer_id = Customer.find_by_external_key(shipping_address_customer_external_key).id
+        shipping_address_customer = Customer.find_by_external_key(shipping_address_customer_external_key)
+        if !shipping_address_customer
+          error = I18n.t('errors.not_found_customer', external_key: shipping_address_customer_external_key) 
+          @errors << error
+          next          
+        end
         shipping_address_db = ShippingAddress.find_by_external_key(shipping_address_external_key)
         if !shipping_address_db       
-          new_shipping_address = ShippingAddress.create(name: shipping_address_name, external_key: shipping_address_external_key, address: shipping_address_address, customer_id: shipping_address_customer_id)
+          new_shipping_address = ShippingAddress.create(name: shipping_address_name, external_key: shipping_address_external_key, address: shipping_address_address, customer: shipping_address_customer)
         else
           if !shipping_address_db.validity
             shipping_address_db.validity = true
@@ -96,6 +102,13 @@ class ExchangeController < ApplicationController
         manager_external_key = manager_shipping_address.elements['manager_external_key'].text
         shipping_address_external_key = manager_shipping_address.elements['shipping_address_external_key'].text
         manager_db = Manager.find_by_external_key(manager_external_key)
+        
+        if !manager_db
+          error = I18n.t('errors.not_found_manager', external_key: manager_external_key) 
+          @errors << error
+          next          
+        end
+        
         shipping_address_db = ShippingAddress.find_by_external_key(shipping_address_external_key)
         manager_shipping_address_db = ManagerShippingAddress.find_by_manager_id_and_shipping_address_id(manager_db.id, shipping_address_db.id)
         if !manager_shipping_address_db
@@ -158,6 +171,13 @@ class ExchangeController < ApplicationController
         else
           category_parent_ext_key = category.elements['parent_category_external_key'].text
           category_parent = Category.find_by_external_key(category_parent_ext_key)
+          
+          if !category_parent
+            error = I18n.t('errors.not_found_category', external_key: category_parent_ext_key) 
+            @errors << error
+            next          
+          end
+          
           if !category_db             
             new_category = Category.create(name: category_name, external_key: category_external_key, parent: category_parent)
           else
@@ -177,6 +197,13 @@ class ExchangeController < ApplicationController
         product_external_key = product.elements['external_key'].text
         product_category_external_key = product.elements['category_external_key'].text
         product_category = Category.find_by_external_key(product_category_external_key)
+        
+        if !product_category
+          error = I18n.t('errors.not_found_category', external_key: product_category_external_key) 
+          @errors << error
+          next          
+        end
+        
         product_db = Product.find_by_external_key(product_external_key)
         if !product_db
           new_product = Product.create(name: product_name, external_key: product_external_key, category: product_category)
@@ -197,7 +224,21 @@ class ExchangeController < ApplicationController
         product_unit_of_measure_external_key = product_unit_of_measure.elements['unit_of_measure_external_key'].text
         product_unit_of_measure_count_in_base_unit = product_unit_of_measure.elements['count_in_base_unit'].text
         product = Product.find_by_external_key(product_unit_of_measure_product_external_key)
+        
+        if !product
+          error = I18n.t('errors.not_found_product', external_key: product_unit_of_measure_product_external_key) 
+          @errors << error
+          next          
+        end
+        
         unit_of_measure = UnitOfMeasure.find_by_external_key(product_unit_of_measure_external_key)
+        
+        if !unit_of_measure
+          error = I18n.t('errors.not_found_unit_of_measure', external_key: product_unit_of_measure_external_key) 
+          @errors << error
+          next          
+        end
+        
         product_unit_of_measure_db = ProductUnitOfMeasure.find_by_product_id_and_unit_of_measure_id(product.id, unit_of_measure.id)
         if !product_unit_of_measure_db
           new_product_unit_of_measure = ProductUnitOfMeasure.create(product: product, unit_of_measure: unit_of_measure, count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
@@ -210,11 +251,25 @@ class ExchangeController < ApplicationController
     if params[:product_prices]
       product_prices = xml.elements.to_a("//product_price")
       product_prices.each do |product_price| 
-        product_external_key = price_list_line.elements['product_external_key'].text
-        price_list_external_key = price_list_line.elements['price_list_external_key'].text
+        product_external_key = product_price.elements['product_external_key'].text
+        price_list_external_key = product_price.elements['price_list_external_key'].text
         price = product_price.elements['price'].text
         product = Product.find_by_external_key(product_external_key)
+        
+        if !product
+          error = I18n.t('errors.not_found_product', external_key: product_external_key) 
+          @errors << error
+          next          
+        end
+        
         price_list = PriceList.find_by_external_key(price_list_external_key)
+        
+        if !price_list
+          error = I18n.t('errors.not_found_price_list', external_key: price_list_external_key) 
+          @errors << error
+          next          
+        end
+        
         product_price_db = ProductPrice.find_by_product_id_and_price_list_id(product.id, price_list.id)
         if !product_price_db
           new_product_price = ProductPrice.create(product: product, price_list: price_list, price: price)
@@ -222,9 +277,14 @@ class ExchangeController < ApplicationController
           product_price_db.update_attributes(price: price)
         end          
       end   
-    end    
-          
-    redirect_to exchange_path, notice: t(:handbook_imported) 
+    end        
+     
+    if @errors.count == 0
+      redirect_to exchange_path, notice: t(:handbook_imported)    
+    else
+      render action: "index"       
+    end   
+    
   end
    
   def get_orders

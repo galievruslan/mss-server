@@ -15,7 +15,8 @@
     <%= f.label :product_id , t(:product) %>
     <%= f.select :product_id , @products.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_product)}, {:onchange => "update_product_unit_of_measures(this.value)"} %>
   </div>  
-  <div id="product_unit_of_measures" class="field">  
+  <div id="product_unit_of_measures" class="field">
+  	<%= select_tag "unit_of_measure_id", options_for_select(@unit_of_measures, @select_unit_of_measure), :prompt => t(:select_unit_of_measure) if @order_item.unit_of_measure %>	  
 	</div>
   <div class="field">
     <%= f.label :quantity, t(:quantity) %>

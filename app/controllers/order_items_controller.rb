@@ -43,6 +43,19 @@ class OrderItemsController < ApplicationController
     @products = Product.all
     @order = Order.find(params[:order_id])
     @order_item = OrderItem.find(params[:id])
+    @product = @order_item.product
+    @select_unit_of_measure = @order_item.unit_of_measure.id
+    @product_unit_of_measures = ProductUnitOfMeasure.where(product_id: @product.id)      
+    @unit_of_measures= [] 
+    @product_unit_of_measures.each do |product_unit_of_measure|
+      unit_of_measure_name = UnitOfMeasure.find(product_unit_of_measure.unit_of_measure_id).name
+      unit_of_measure_id = UnitOfMeasure.find(product_unit_of_measure.unit_of_measure_id).id
+      unit_of_measure = []
+      unit_of_measure << unit_of_measure_name
+      unit_of_measure << unit_of_measure_id   
+      @unit_of_measures << unit_of_measure
+    end   
+   
   end
 
   # POST /order_items
