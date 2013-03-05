@@ -6,6 +6,12 @@ en:
         previous: "Previous"
         truncate: "..."
         first: "First"
+  errors:
+    title: "The following errors need to be corrected before saving"
+    messages:
+      blank: "can not be blank"
+      taken: "has already been taken"
+      numericality: "is not a number"
   brand: "Mobile Sale System"
   home: "Home"
   profile: "Profile"

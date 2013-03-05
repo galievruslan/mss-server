@@ -6,5 +6,4 @@ class Order < ActiveRecord::Base
   belongs_to :price_list
   has_many :order_items, :dependent => :destroy
   validates :date, :manager_id, :shipping_address_id, :warehouse_id,:price_list_id, :presence => true
-  validates_associated :order_items
 end

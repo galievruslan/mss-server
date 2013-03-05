@@ -3,9 +3,9 @@
 <% end %>
 <%= form_for(@route) do |f| %>
   <% if @route.errors.any? %>
-    <div id="error_explanation">
-      <h4><%= pluralize(@route.errors.count, "error") %> prohibited this route from being saved:</h4>
-
+    <div class="alert alert-error">
+    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4><%=t('errors.title')%></h4>
       <ul>
       <% @route.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>

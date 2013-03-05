@@ -1,8 +1,8 @@
 <%= form_for(@status) do |f| %>
   <% if @status.errors.any? %>
-    <div id="error_explanation">
-      <h4><%= pluralize(@status.errors.count, "error") %> prohibited this status from being saved:</h4>
-
+    <div class="alert alert-error">
+    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4><%=t('errors.title')%></h4>
       <ul>
       <% @status.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>

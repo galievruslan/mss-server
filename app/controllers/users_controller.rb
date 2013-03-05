@@ -10,27 +10,29 @@ class UsersController < ApplicationController
       format.json { render json: @users }
     end
   end
+  
+  def show
+    @user = User.find(params[:id])
+    if @user.manager_id
+      @manager = Manager.find(@user.manager_id)
+    end    
+  end
 
   def edit
     @managers = Manager.all 
     @user = User.find(params[:id])
-  end
-
-  def update
-    @managers = Manager.all 
-    @user = User.find(params[:id])
-
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.html { redirect_to users_path, notice: t(:user_updated) }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    @user.roles.each do |role|
+      case role.name
+      when 'admin'
+        @role_admin = true
+      when 'supervisor'
+        @role_supervisor = true
+      when 'manager'
+        @role_manager = true
+      end      
     end
   end
-
+  
   def new
     @user = User.new
     @managers = Manager.all 
@@ -47,15 +49,15 @@ class UsersController < ApplicationController
     @user.save
     
     if params[:admin]
-      role=Role.find_by_name('admin')
+      role = Role.find_by_name('admin')
       @user.roles << role
     end
     if params[:supervisor]
-      role=Role.find_by_name('supervisor')
+      role = Role.find_by_name('supervisor')
       @user.roles << role
     end
     if params[:manager]
-      role=Role.find_by_name('manager')
+      role = Role.find_by_name('manager')
       @user.roles << role
     end
              
@@ -66,6 +68,35 @@ class UsersController < ApplicationController
       else
         format.html { render action: "new" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
+  def update
+    @managers = Manager.all 
+    @user = User.find(params[:id])
+    @user.roles.delete_all
+    if params[:admin]
+      role = Role.find_by_name('admin')
+      @user.roles << role
+    end
+    if params[:supervisor]
+      role = Role.find_by_name('supervisor')
+      @user.roles << role
+    end
+    if params[:manager]
+      role = Role.find_by_name('manager')
+      @user.roles << role
+    end
+    @user.save
+    
+    respond_to do |format|
+      if @user.update_attributes(params[:user])
+        format.html { redirect_to users_path, notice: t(:user_updated) }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @user1.errors, status: :unprocessable_entity }
       end
     end
   end

@@ -3,9 +3,9 @@
 <% end %>
 <%= form_for(@order) do |f| %>
   <% if @order.errors.any? %>
-    <div id="error_explanation">
-      <h4><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h4>
-
+    <div class="alert alert-error">
+    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4><%=t('errors.title')%></h4>
       <ul>
       <% @order.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>

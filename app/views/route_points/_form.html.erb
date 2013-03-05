@@ -1,8 +1,8 @@
 <%= form_for([@route, @route_point]) do |f| %>
   <% if @route_point.errors.any? %>
-    <div id="error_explanation">
-      <h4><%= pluralize(@route_point.errors.count, "error") %> prohibited this route_point from being saved:</h4>
-
+    <div class="alert alert-error">
+    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4><%=t('errors.title')%></h4>
       <ul>
       <% @route_point.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
