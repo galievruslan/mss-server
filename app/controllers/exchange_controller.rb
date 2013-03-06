@@ -82,8 +82,14 @@ class ExchangeController < ApplicationController
       managers.each do |manager| 
         manager_name = manager.elements['name'].text
         manager_external_key = manager.elements['external_key'].text
-        manager_default_warehouse_external_key = manager.elements['default_warehouse'].text
-        default_warehouse_db = Warehouse.find_by_external_key(manager_default_warehouse_external_key)
+        
+        if manager.elements['default_warehouse']
+          manager_default_warehouse_external_key = manager.elements['default_warehouse'].text
+          default_warehouse_db = Warehouse.find_by_external_key(manager_default_warehouse_external_key)
+        else
+          default_warehouse_db = nil
+        end
+        
         manager_db = Manager.find_by_external_key(manager_external_key)   
         if !manager_db
           new_manager = Manager.create(name: manager_name, external_key: manager_external_key, default_warehouse: default_warehouse_db)

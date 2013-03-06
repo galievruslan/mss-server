@@ -12,7 +12,7 @@
 @status4 = Status.create(name: 'refusal')
 
 @unit_of_measure1 = UnitOfMeasure.create(name: 'шт', external_key: 'СВ343')
-@unit_of_measure2 = UnitOfMeasure.create(name: 'упак', external_key: 'СВ353')
+@unit_of_measure2 = UnitOfMeasure.create(name: 'ящик', external_key: 'СВ353')
 
 @price_list1 = PriceList.create(name: 'Розничная', external_key: 'СВ001')
 @price_list2 = PriceList.create(name: 'Оптовая', external_key: 'СВ002')

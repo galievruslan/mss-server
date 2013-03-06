@@ -10,7 +10,7 @@
 
 <p>
   <b><%= t(:parent)%>:</b>
-  <%= @category.parent.name %>
+  <%= @category.parent ? @category.parent.name : t(:root_category) %>
 </p>
 
 <p>

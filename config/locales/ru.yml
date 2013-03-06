@@ -264,3 +264,4 @@ ru:
   edit_product_unit_of_measures: "Редактировать единицы измерения продукта"
   once_per_product: "может быть только одна у продукта"
   select_file: "Выберите файл"
+  root_category: "Корневая категория"
