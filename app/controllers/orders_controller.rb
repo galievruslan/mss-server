@@ -35,6 +35,8 @@ class OrdersController < ApplicationController
     @managers = Manager.all
     @price_lists = PriceList.all
     @warehouses = Warehouse.all
+    @products = Product.all
+    @unit_of_measures = UnitOfMeasure.all
     @order = Order.new
 
     respond_to do |format|
@@ -49,6 +51,8 @@ class OrdersController < ApplicationController
     @managers = Manager.all
     @price_lists = PriceList.all
     @warehouses = Warehouse.all
+    @products = Product.all
+    @unit_of_measures = UnitOfMeasure.all
     @order = Order.find(params[:id])
   end
 
@@ -59,6 +63,8 @@ class OrdersController < ApplicationController
     @managers = Manager.all
     @price_lists = PriceList.all
     @warehouses = Warehouse.all
+    @products = Product.all
+    @unit_of_measures = UnitOfMeasure.all
     @order = Order.new(params[:order])
 
     respond_to do |format|
@@ -76,7 +82,12 @@ class OrdersController < ApplicationController
   # PUT /orders/1.json
   def update
     @order = Order.find(params[:id])
-
+    @shipping_addresses = ShippingAddress.all
+    @managers = Manager.all
+    @price_lists = PriceList.all
+    @warehouses = Warehouse.all
+    @products = Product.all
+    @unit_of_measures = UnitOfMeasure.all
     respond_to do |format|
       if @order.update_attributes(params[:order])
         format.html { redirect_to @order, notice: t(:order_updated) }

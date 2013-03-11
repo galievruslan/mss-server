@@ -1,7 +1,7 @@
 <% content_for :javascripts do %>
   <%= javascript_include_tag 'orders' %>
 <% end %>
-<%= form_for(@order) do |f| %>
+
   <% if @order.errors.any? %>
     <div class="alert alert-error">
     	<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -13,32 +13,69 @@
       </ul>
     </div>
   <% end %>
+<%= nested_form_for(@order) do |f| %>
+	<div class="tabbable">
+	  <ul class="nav nav-tabs">
+	    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:details)%></a></li>
+	    <li><a href="#tab2" data-toggle="tab"><%= t(:products)%></a></li>
+	  </ul>
+	  <div class="tab-content">
+	    <div class="tab-pane active" id="tab1">	    
+		    <div class="field">
+		    <%= f.label :date, t(:date) %>
+		    <%= f.text_field :date, id: 'date_gt'%>
+			  </div>  
+			  <div class="field">
+			    <%= f.label :shipping_address_id, t(:shipping_address) %>
+			    <%= f.select(:shipping_address_id, @shipping_addresses.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_shipping_address)) %>
+			  </div>
+			  <div class="field">
+			    <%= f.label :warehouse_id, t(:warehouse) %>
+			    <%= f.select(:warehouse_id, @warehouses.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_warehouse)) %>
+			  </div>
+			  <div class="field">
+			    <%= f.label :price_list_id, t(:price_list) %>
+			    <%= f.select(:price_list_id, @price_lists.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_price_list)) %>
+			  </div>
+			  <div class="field">
+			    <%= f.label :manager_id, t(:manager) %>
+			    <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_manager)) %>
+			  </div>
+			  <div class="field">
+			    <%= f.label :comment, t(:comment) %>
+			    <%= f.text_area :comment, :cols => 20, :rows => 4 %>
+			  </div>			  		  		  			   
+	    </div>	
+	    <div class="tab-pane" id="tab2">
+	    	<table id="table" class="table table-striped table-hover">
+					<thead>
+					  <tr>
+					    <th><%= t(:product) %></th>
+					    <th><%= t(:unit_of_measure) %></th>
+					    <th><%= t(:quantity) %></th>
+					    <th><%= t(:actions) %></th>
+					  </tr>
+					</thead>
+					<tbody>      
+						<%= f.fields_for :order_items, :wrapper => false do |order_item| %>
+							<tr class="fields">
+						  <td><%= order_item.select :product_id , @products.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_product)} %></td>
+						  <td><%= order_item.select :unit_of_measure_id , @unit_of_measures.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_unit_of_measure)} %></td>
+						  <td><%= order_item.number_field :quantity, min: 1, step: 1 %></td>
+						  <td><%= order_item.link_to_remove do%><i class='icon-remove' title="<%= t(:remove)%>"></i><%end%></td>
+						  </tr>
+						<% end %>
+					</tbody>
+				</table>
+				<p><%= f.link_to_add t(:add), :order_items, :class =>'btn', :data => { :target => "#table" } %></p>			  
+	    </div>
+	  </div>
+	  <div class="actions">
+	    <%= f.submit(t(:save), :class =>'btn') %>
+	  </div>
+	</div>
+<% end %> 
 
-  <div class="field">
-    <%= f.label :date, t(:date) %>
-    <%= f.text_field :date, id: 'date_gt'%>
-  </div>  
-  <div class="field">
-    <%= f.label :shipping_address_id, t(:shipping_address) %>
-    <%= f.select(:shipping_address_id, @shipping_addresses.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_shipping_address)) %>
-  </div>
-  <div class="field">
-    <%= f.label :warehouse_id, t(:warehouse) %>
-    <%= f.select(:warehouse_id, @warehouses.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_warehouse)) %>
-  </div>
-  <div class="field">
-    <%= f.label :price_list_id, t(:price_list) %>
-    <%= f.select(:price_list_id, @price_lists.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_price_list)) %>
-  </div>
-  <div class="field">
-    <%= f.label :manager_id, t(:manager) %>
-    <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_manager)) %>
-  </div>
-  <div class="field">
-    <%= f.label :comment, t(:comment) %>
-    <%= f.text_area :comment, :cols => 20, :rows => 4 %>
-  </div>
-  <div class="actions">
-    <%= f.submit(t(:save), :class =>'btn') %>
-  </div>
-<% end %>
+  
+  
+

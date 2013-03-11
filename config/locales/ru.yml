@@ -12,6 +12,7 @@ ru:
       blank: "не может быть пустым"
       taken: "должно быть уникальным"
       numericality: "должен быть чилом"
+      not_a_number: "не числовой"
     not_found_customer: "Не найден клиент с внешним ключом %{external_key}"
     not_found_manager: "Не найден менеджер с внешним ключом %{external_key}"
     not_found_category: "Не найдена категория номенклатуры с внешним ключом %{external_key}"
@@ -265,3 +266,5 @@ ru:
   once_per_product: "может быть только одна у продукта"
   select_file: "Выберите файл"
   root_category: "Корневая категория"
+  details: "Реквизиты"
+  add: "Добавить"

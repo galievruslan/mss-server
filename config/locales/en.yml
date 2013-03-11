@@ -12,6 +12,7 @@ en:
       blank: "can not be blank"
       taken: "has already been taken"
       numericality: "is not a number"
+      not_a_number: "not a number"
     not_found_customer: "Not found customer with external key is %{external_key}"
     not_found_manager: "Not found manager with external key is %{external_key}"
     not_found_category: "Not found product category with external key is %{external_key}"
@@ -265,3 +266,5 @@ en:
   once_per_product: "should happen once per product"
   select_file: "Select a file"
   root_category: "Root category"
+  details: "Details"
+  add: "Add"

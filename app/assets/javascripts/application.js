@@ -1,7 +1,8 @@
 //= require jquery
+
 //= require jquery-ui
 //= require jquery_ujs
-
+//= require jquery_nested_form
 /* ===================================================
  Reset button for filter form
  * ========================================================== */
@@ -12,7 +13,6 @@
  });
   });
 }(window.jQuery);
-
 /* ===================================================
  Twitter Bootstrap
  * ========================================================== */
@@ -2699,4 +2699,4 @@
 							'</div>'+
 						'</div>';
 
-}( window.jQuery );
+}( window.jQuery );  
