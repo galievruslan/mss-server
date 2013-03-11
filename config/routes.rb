@@ -3,7 +3,6 @@
   root :to => 'pages#index'
   
   devise_for :users
-  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   
   get 'exchange', :to => 'exchange#index'
   get 'exchange/get_xml', :to => 'exchange#get_orders'

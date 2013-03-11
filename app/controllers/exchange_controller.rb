@@ -162,8 +162,21 @@ class ExchangeController < ApplicationController
       categories.each do |category| 
         category_name = category.elements['name'].text
         category_external_key = category.elements['external_key'].text
-        category_db = Category.find_by_external_key(category_external_key)
-        
+        category_db = Category.find_by_external_key(category_external_key)        
+        if !category_db             
+            new_category = Category.create(name: category_name, external_key: category_external_key)
+        else
+          if !category_db.validity
+            category_db.validity = true 
+          end
+          category_db.update_attributes(name: category_name)          
+        end
+      end
+      
+      categories.each do |category| 
+        category_name = category.elements['name'].text
+        category_external_key = category.elements['external_key'].text
+        category_db = Category.find_by_external_key(category_external_key)  
         if category.attributes['type'] =='root'          
           if !category_db             
             new_category = Category.create(name: category_name, external_key: category_external_key)
@@ -181,7 +194,7 @@ class ExchangeController < ApplicationController
           if !category_parent
             error = I18n.t('errors.not_found_category', external_key: category_parent_ext_key) 
             @errors << error
-            next          
+            next         
           end
           
           if !category_db             
@@ -191,7 +204,8 @@ class ExchangeController < ApplicationController
               category_db.validity = true 
             end
             category_db.update_attributes(name: category_name, parent: category_parent)
-          end  
+          end
+            
         end
       end   
     end

@@ -111,19 +111,6 @@ ActiveRecord::Schema.define(:version => 20130301095344) do
 
   add_index "products", ["external_key"], :name => "index_products_on_external_key", :unique => true
 
-  create_table "rails_admin_histories", :force => true do |t|
-    t.text     "message"
-    t.string   "username"
-    t.integer  "item"
-    t.string   "table"
-    t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 5
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
-  end
-
-  add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
-
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false

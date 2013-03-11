@@ -13,7 +13,6 @@ gem 'devise'
 gem 'cancan'
 gem 'ransack'
 gem 'rubyzip', :require => 'zip/zip'
-gem 'rails_admin'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

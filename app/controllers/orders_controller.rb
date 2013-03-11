@@ -135,7 +135,7 @@ class OrdersController < ApplicationController
         end
       end  
     end    
-    send_data( out_data, :type => "text/xml", :filename => "orders.xml" )  
+    send_data( out_data, :type => "text/xml", :filename => "order-#{order.id}-#{order.date}.xml" )  
   end
   
   def export_again
