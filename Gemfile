@@ -1,12 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 gem 'sqlite3'
-
+gem 'mysql2'
 gem 'kaminari'
 gem 'builder'
 gem 'devise'
@@ -14,6 +10,7 @@ gem 'cancan'
 gem 'ransack'
 gem 'nested_form', :github => 'ryanb/nested_form'
 gem 'rubyzip', :require => 'zip/zip'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

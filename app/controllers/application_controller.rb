@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
+  before_filter :set_language_from_current_user
   #check_authorization
   protect_from_forgery
   
@@ -16,14 +17,15 @@ class ApplicationController < ActionController::Base
     def instantiate_controller_and_action_names
         @current_action = action_name
         @current_controller = controller_name
-    end
-  before_filter :set_language_from_current_user
+    end  
   
   def set_language_from_current_user
     if current_user and current_user.language == 'RU'
-      I18n.default_locale = :ru      
+      I18n.default_locale = :ru
+      I18n.locale = :ru   
     else
       I18n.default_locale = :en
+      I18n.locale = :en
     end   
   end
     
