@@ -2,6 +2,8 @@
 
 en:
   sign_in: "Sign in"
+  forgot_passwors: "Forgot your password?"
+  send_reset_password_instructions: "Send me reset password instructions"
   errors:
     messages:
       expired: "has expired, please request a new one"

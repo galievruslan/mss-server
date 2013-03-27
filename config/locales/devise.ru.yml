@@ -2,6 +2,8 @@
 
 ru:
   sign_in: "Войти"
+  forgot_passwors: "Забыли пароль?"
+  send_reset_password_instructions: "Отправить инстукцию по смене пароля"
   errors:
     messages:
       expired: "has expired, please request a new one"
