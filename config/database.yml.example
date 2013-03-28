@@ -22,8 +22,8 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false  
-  database: mss
+  database: DATABASE_NAME
   pool: 5
-  username: mss
-  password: uEfMJDRErCUKFCb5
+  username: DATABASE_USER
+  password: USER_PASSWORD
   host: localhost

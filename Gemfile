@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'execjs'
 gem 'rails', '3.2.11'
 gem 'sqlite3'
 gem 'mysql2'
