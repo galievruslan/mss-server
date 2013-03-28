@@ -25,7 +25,7 @@ set :scm_command, "/usr/bin/git"
 set :deploy_via, :remote_cache
 
 before 'deploy:assets:precompile', 'deploy:symlink_db'
-
+after "deploy:restart", "deploy:cleanup"
 
 # TASKS #####################################################
 namespace :deploy do
