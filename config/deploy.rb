@@ -25,7 +25,7 @@ set :scm_command, "/usr/bin/git"
 set :deploy_via, :remote_cache
 
 
-after "deploy:update_code","deploy:symlink_db","deploy:restart"
+after "deploy:update_code", "deploy:symlink_db"
 
 # TASKS #####################################################
 namespace :deploy do
@@ -38,7 +38,7 @@ namespace :deploy do
     run "cd # {current_path}; rake db:seed RAILS_ENV = #{rails_env}"
   end
   desc "Symlinks the database.yml"
-  task :symlink_db, :roles => :app do
+  task :symlink_db do
     run "rm -f #{current_release}/config/database.yml"
     run "ln -s #{shared_path}/config/database.yml #{current_release}/config/database.yml"
   end
