@@ -1,0 +1,30 @@
+<h3><%= t(:new_product_price)%></h3>
+
+<%= form_for @price_list_line, :url => price_list_price_list_lines_path(@price_list) do |f| %>
+  <% if @price_list_line.errors.any? %>
+    <div class="alert alert-error">
+    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4><%=t('errors.title')%></h4>
+      <ul>
+      <% @price_list_line.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+    <%= f.label :product_id, t(:product) %>
+    <%= f.select(:product_id, @products.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_product)) %>
+  </div>
+  <div class="field">
+    <%= f.label :price, t(:price) %>
+    <%= f.text_field :price %>
+  </div>
+  <div class="actions">
+    <%= f.submit(t(:save), class: 'btn') %>
+  </div>
+<% end %>
+
+
+<%= link_to t(:back), price_list_price_list_lines_path(@price_list) %>

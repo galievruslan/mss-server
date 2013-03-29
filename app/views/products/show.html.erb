@@ -10,7 +10,7 @@
   <b><%= t(:name)%>:</b>
   <%= @product.name %>
 </p>
-<h4><%= t(:product_unit_of_measures)%></h4>
+<h4><%= link_to(product_product_unit_of_measures_path(@product)) do t(:product_unit_of_measures) end%></h4>
 <table class="table table-striped table-hover">
   <thead>
     <tr>
@@ -28,7 +28,7 @@
   </tbody>
 </table>
 <%= t(:base_unit_mark)%><br /><br />
-<h4><%= t(:price_lists)%></h4>	
+<h4><%= link_to(product_product_prices_path(@product)) do t(:price_lists) end%></h4>	
 <table class="table table-striped table-hover">
   <thead>
     <tr>

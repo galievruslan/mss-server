@@ -70,7 +70,7 @@
               <%= link_to t(:exchange), exchange_path %>
             </li>
             <% end %>
-            <% if cannot? :read, :user %>    
+            <% if can? :read, User %>    
             <li <%= 'class=active' if @current_controller =='users'%>>
               <%= link_to t(:users), users_path %>
             </li>

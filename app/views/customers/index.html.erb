@@ -42,7 +42,7 @@
   		<tr>
   			<td><%= customer.external_key %></td>
 		    <td><%= customer.name %></td>
-		    <td><%= customer.shipping_addresses.count %></td>
+		    <td><%= link_to(customer_shipping_addresses_path(customer)) do %><%= customer.shipping_addresses.count %><%end%></td>
 		    <td><i class=<%=customer.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
 		    <td><%= link_to(customer) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
 		    <% if can? :manage, Customer %>

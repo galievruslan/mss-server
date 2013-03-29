@@ -54,8 +54,8 @@
     end
   end
   resources :price_lists do
-    resources :product_prices
-  end 
+    resources :price_list_lines
+  end
   resources :warehouses
   resources :categories
   

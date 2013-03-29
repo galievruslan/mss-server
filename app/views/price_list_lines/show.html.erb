@@ -1,0 +1,17 @@
+<p>
+  <b><%= t(:product)%>:</b>
+  <%= @price_list_line.product.name %>
+</p>
+
+<p>
+  <b><%= t(:price_list)%>:</b>
+  <%= @price_list_line.price_list.name %>
+</p>
+
+<p>
+  <b><%= t(:price)%>:</b>
+  <%= @price_list_line.price %>
+</p>
+
+<% if can? :manage, ProductPrice %><%= link_to t(:edit), edit_price_list_price_list_line_path(@price_list, @price_list_line) %> |<% end %>
+<%= link_to t(:back), price_list_price_list_lines_path(@price_list) %>

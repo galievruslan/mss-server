@@ -1,0 +1,2 @@
+module PriceListLinesHelper
+end

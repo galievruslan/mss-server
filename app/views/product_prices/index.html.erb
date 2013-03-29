@@ -52,7 +52,8 @@
 	</tbody>
 </table>
 
-<br />
+<%= paginate @product_prices %>
+
 <% if can? :create, ProductPrice %>
 	<%= link_to t(:new_product_price), new_product_product_price_path(@product), class: 'btn' %>
 <% end %>
