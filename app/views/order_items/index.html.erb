@@ -49,14 +49,17 @@
 		    <td><%= order_item.unit_of_measure.name %></td>
 		    <td><%= order_item.quantity %></td>    
 		    <td><%= link_to(order_order_item_path(@order, order_item)) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
-		    <td><%= link_to(edit_order_order_item_path(@order, order_item)) do%><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-		    <td><%= link_to(order_order_item_path(@order, order_item), method: :delete, data: { confirm: t(:are_you_sure) }) do%><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>
+		    <% if can? :manage, OrderItem %>
+			    <td><%= link_to(edit_order_order_item_path(@order, order_item)) do%><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+			    <td><%= link_to(order_order_item_path(@order, order_item), method: :delete, data: { confirm: t(:are_you_sure) }) do%><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>
+			  <% end %>
 		  </tr>
 		<% end %>
 	</tbody>
 </table>
 
 <%= paginate @order_items %>
-
-<%= link_to t(:new_order_item), new_order_order_item_path(@order), class: 'btn' %><br /><br />
+<% if can? :create, OrderItem %>
+	<%= link_to t(:new_order_item), new_order_order_item_path(@order), class: 'btn' %><br /><br />
+<% end %>
 <%= link_to t(:back), order_path(@order) %> | <%= link_to t(:back_to_orders), orders_path %>

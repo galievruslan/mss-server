@@ -1,6 +1,6 @@
 function update_product_unit_of_measures(product_id) {  
   jQuery.ajax({
-    url: "/update_product_unit_of_measures",
+    url: "update_product_unit_of_measures",
     type: "GET",
     data: {"product_id" : product_id},
     dataType: "html",

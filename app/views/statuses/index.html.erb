@@ -33,13 +33,16 @@
 	    <td><%= status.name %></td>
 	    <td><i class=<%=status.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
 	    <td><%= link_to(status) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
-		  <td><%= link_to(edit_status_path(status)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-		  <td><%= link_to(status, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=status.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
+	    <% if can? :manage, Status %>
+			  <td><%= link_to(edit_status_path(status)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+			  <td><%= link_to(status, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=status.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
+			<% end %>
 	  </tr>
 		<% end %>
 	</tbody>
 </table>
 
 <%= paginate @statuses %>
-
-<%= link_to t(:new_status), new_status_path, :class =>'btn' %>
+<% if can? :create, Status %>
+	<%= link_to t(:new_status), new_status_path, :class =>'btn' %>
+<% end %>

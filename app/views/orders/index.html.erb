@@ -65,7 +65,7 @@
 	    <th><%= sort_link @search, :warehouse_name, t(:warehouse) %></th>
 	    <th><%= sort_link @search, :price_list_name, t(:price_list) %></th>
 	    <th><%= sort_link @search, :exported_at, t(:exported_date) %></th>
-	    <th colspan="5">Actions</th>
+	    <th colspan="5"><%= t(:actions)%></th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -76,16 +76,19 @@
 	    <td><%= order.manager.name %></td>
 	    <td><%= order.warehouse.name %></td>
 	    <td><%= order.price_list.name %></td>
-	    <td><%= order.exported_at ? order.exported_at.strftime("%T %d-%m-%y") : 'Not exported'%></td>
-	    <td><%= link_to 'Export again', export_again_order_path(order), :method => :put %></td>
-	    <td><%= link_to(:controller => "orders", :action => "generate_xml", :id => order) do %><i class='icon-download' title="<%= t(:download_xml)%>"></i><% end %></td>
+	    <td><%= order.exported_at ? order.exported_at.strftime("%T %d-%m-%y") : t(:not_exported)%></td>
+	    <td><%= link_to(export_again_order_path(order), :method => :put) do %><i class='icon-download-alt' title="<%= t(:export_again)%>"></i><%end%></td>
+	    <td><%= link_to(generate_xml_order_path(order)) do %><i class='icon-download' title="<%= t(:download_xml)%>"></i><% end %></td>
 	    <td><%= link_to(order) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
-		  <td><%= link_to(edit_order_path(order)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-		  <td><%= link_to(order, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%= t(:remove)%>"></i><%end%></td>
+		  <% if can? :manage, Order %>
+			  <td><%= link_to(edit_order_path(order)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+			  <td><%= link_to(order, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%= t(:remove)%>"></i><%end%></td>
+			<% end %>
 	  </tr>
 		<% end %>
 	</tbody>
 </table>
 <%= paginate @orders %> 
-
-<%= link_to t(:new_order), new_order_path, class: 'btn' %>
+<% if can? :create, Order %>
+	<%= link_to t(:new_order), new_order_path, class: 'btn' %>
+<% end %>

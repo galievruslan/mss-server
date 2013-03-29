@@ -18,5 +18,5 @@
   <%= @warehouse.validity ? t(:truth) : t(:lie) %>
 </p>
 
-<%= link_to t(:edit), edit_warehouse_path(@warehouse) %> |
+<% if can? :manage, Warehouse %><%= link_to t(:edit), edit_warehouse_path(@warehouse) %> |<% end %>
 <%= link_to t(:back), warehouses_path %>

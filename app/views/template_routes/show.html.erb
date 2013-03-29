@@ -28,5 +28,5 @@
 
 <%= paginate @template_route_points %>
 
-<%= link_to t(:edit), edit_template_route_path(@template_route) %> |
+<% if can? :manage, TemplateRoute %><%= link_to t(:edit), edit_template_route_path(@template_route) %> |<% end %>
 <%= link_to t(:back), template_routes_path %>

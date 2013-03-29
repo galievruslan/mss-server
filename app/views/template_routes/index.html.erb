@@ -44,13 +44,16 @@
 		    <td><%= day_name(template_route.day_of_week) %></td>
 		    <td><%= template_route.template_route_points.count%></td>
 		    <td><%= link_to(template_route) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
-		  	<td><%= link_to(edit_template_route_path(template_route)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-		  	<td><%= link_to(template_route, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>
+		    <% if can? :manage, TemplateRoute %>
+			  	<td><%= link_to(edit_template_route_path(template_route)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+			  	<td><%= link_to(template_route, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>
+			  <% end %>
 		  </tr>
 		<% end %>
 	</tbody>
 </table>
 
 <%= paginate @template_routes %>
-
-<%= link_to t(:new_template_route), new_template_route_path, class: 'btn' %>
+<% if can? :create, TemplateRoute %>
+	<%= link_to t(:new_template_route), new_template_route_path, class: 'btn' %>
+<% end %>

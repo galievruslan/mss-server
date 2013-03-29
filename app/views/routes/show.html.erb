@@ -24,6 +24,5 @@
 </table>
 
 <%= paginate @route_points %>
-
-<%= link_to t(:edit), edit_route_path(@route) %> |
+<% if can? :manage, Route %><%= link_to t(:edit), edit_route_path(@route) %> |<% end %>
 <%= link_to t(:back), routes_path %>

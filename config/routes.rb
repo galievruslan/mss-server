@@ -6,24 +6,30 @@
   
   get 'exchange', :to => 'exchange#index'
   get 'exchange/get_xml', :to => 'exchange#get_orders'
-  post 'exchange/upload', :to => 'exchange#upload' 
-  get 'pages/index'
-  get 'bali', :to => 'pages#bali'
-  get 'routes/current', :to => 'routes#current'
+  post 'exchange/upload', :to => 'exchange#upload'  
   get 'profile/show', :to => 'profiles#show'
   match 'profile/edit', :to => 'profiles#edit'
   put 'profile/update', :to => 'profiles#update'
   match 'profile/edit_password', :to => 'profiles#edit_password'
-  put 'profile/update_password', :to => 'profiles#update_password'   
-  match '/update_product_unit_of_measures' => 'order_items#update_product_unit_of_measures'
-  match 'orders/generate_xml', :to => 'orders#generate_xml' 
+  put 'profile/update_password', :to => 'profiles#update_password'
+  get 'bali', :to => 'pages#bali'    
+
   resources :orders do
     member do
-        put :export_again        
+        put :export_again
+        get :generate_xml        
       end
-    resources :order_items    
+    resources :order_items do      
+        get :update_product_unit_of_measures
+        collection do
+          get :update_product_unit_of_measures
+        end               
+    end    
   end 
-  resources :routes do       
+  resources :routes do
+    collection do
+      get :current
+    end       
     resources :route_points
   end
   resources :template_routes do
@@ -51,62 +57,6 @@
     resources :product_prices
   end 
   resources :warehouses
-  resources :categories  
+  resources :categories
   
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
 end

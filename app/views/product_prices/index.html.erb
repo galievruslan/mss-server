@@ -43,13 +43,16 @@
 		    <td><%= product_price.price_list.name %></td>
 		    <td><%= product_price.price %></td>
 		    <td><%= link_to(product_product_price_path(@product, product_price)) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
-		    <td><%= link_to(edit_product_product_price_path(@product, product_price)) do%><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-		    <td><%= link_to(product_product_price_path(@product, product_price), method: :delete, data: { confirm: t(:are_you_sure) }) do%><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>
+		    <% if can? :manage, ProductPrice %>
+			    <td><%= link_to(edit_product_product_price_path(@product, product_price)) do%><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+			    <td><%= link_to(product_product_price_path(@product, product_price), method: :delete, data: { confirm: t(:are_you_sure) }) do%><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>
+			  <% end %>
 		  </tr>
 		<% end %>
 	</tbody>
 </table>
 
 <br />
-
-<%= link_to t(:new_product_price), new_product_product_price_path(@product), class: 'btn' %>
+<% if can? :create, ProductPrice %>
+	<%= link_to t(:new_product_price), new_product_product_price_path(@product), class: 'btn' %>
+<% end %>

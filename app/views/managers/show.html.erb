@@ -68,5 +68,5 @@
 </table>
 <%= paginate @manager_shipping_addresses %>
 
-<%= link_to t(:edit), edit_manager_path(@manager) %> |
+<% if can? :manage, Manager %><%= link_to t(:edit), edit_manager_path(@manager) %> |<% end %>
 <%= link_to t(:back), managers_path %>

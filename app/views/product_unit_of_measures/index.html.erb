@@ -44,8 +44,10 @@
 		    <td><%= product_unit_of_measure.unit_of_measure.name %></td>
 		    <td><%= product_unit_of_measure.count_in_base_unit %></td>
 		    <td><%= link_to(product_product_unit_of_measure_path(@product, product_unit_of_measure)) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
-		    <td><%= link_to(edit_product_product_unit_of_measure_path(@product, product_unit_of_measure)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-		    <td><%= link_to(product_product_unit_of_measure_path(@product, product_unit_of_measure), method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>
+		    <% if can? :manage, ProductUnitOfMeasure %>
+			    <td><%= link_to(edit_product_product_unit_of_measure_path(@product, product_unit_of_measure)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+			    <td><%= link_to(product_product_unit_of_measure_path(@product, product_unit_of_measure), method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>
+			  <% end %>
 		  </tr>
 		<% end %>
 	</tbody>
@@ -53,5 +55,7 @@
 <%= t(:base_unit_mark)%><br /><br />
 <%= paginate @product_unit_of_measures %>
 
-<%= link_to t(:new_product_unit_of_measure), new_product_product_unit_of_measure_path, class: 'btn' %><br /><br />
+<% if can? :create, ProductUnitOfMeasure %>
+	<%= link_to t(:new_product_unit_of_measure), new_product_product_unit_of_measure_path, class: 'btn' %><br /><br />
+<% end %>
 <%= link_to t(:back), product_path(@product) %> | <%= link_to t(:back_to_products), products_path %>

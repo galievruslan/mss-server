@@ -7,5 +7,5 @@
   <%= @status.validity ? t(:truth) : t(:lie) %>
 </p>
 
-<%= link_to t(:edit), edit_status_path(@status) %> |
+<% if can? :manage, Status %><%= link_to t(:edit), edit_status_path(@status) %> |<% end %>
 <%= link_to t(:back), statuses_path %>

@@ -14,5 +14,5 @@
 </p>
 
 
-<%= link_to t(:edit), edit_customer_shipping_address_path(@customer, @shipping_address) %> |
+<% if can? :manage, ShippingAddress %><%= link_to t(:edit), edit_customer_shipping_address_path(@customer, @shipping_address) %> |<% end %>
 <%= link_to t(:back), customer_shipping_addresses_path(@customer) %>

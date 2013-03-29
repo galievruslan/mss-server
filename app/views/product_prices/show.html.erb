@@ -14,5 +14,5 @@
 </p>
 
 
-<%= link_to t(:edit), edit_product_product_price_path(@product, @product_price) %> |
+<% if can? :manage, ProductPrice %><%= link_to t(:edit), edit_product_product_price_path(@product, @product_price) %> |<% end %>
 <%= link_to t(:back), product_product_prices_path(@product) %>

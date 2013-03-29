@@ -8,5 +8,5 @@
 </p>
 
 
-<%= link_to t(:edit), edit_unit_of_measure_path(@unit_of_measure) %> |
+<% if can? :manage, UnitOfMeasure %><%= link_to t(:edit), edit_unit_of_measure_path(@unit_of_measure) %> |<% end %>
 <%= link_to t(:back), unit_of_measures_path %>

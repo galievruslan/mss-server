@@ -45,5 +45,5 @@
 </table>
 <%= paginate @order_items %>
 
-<%= link_to t(:edit), edit_order_path(@order) %> |
+<% if can? :manage, Order %><%= link_to t(:edit), edit_order_path(@order) %> |<% end %>
 <%= link_to t(:back), orders_path %>

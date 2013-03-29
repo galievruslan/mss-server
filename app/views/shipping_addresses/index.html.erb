@@ -50,9 +50,11 @@
 		    <td><%= shipping_address.name %></td>
 		    <td><%= shipping_address.address %></td>
 		    <td><i class=<%=shipping_address.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
-		    <td><%= link_to(customer_shipping_address_path(@customer, shipping_address)) do%><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>		    
-		    <td><%= link_to(edit_customer_shipping_address_path(@customer, shipping_address)) do%><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-		    <td><%= link_to(customer_shipping_address_path(@customer, shipping_address), method: :delete, data: { confirm: t(:are_you_sure) }) do%><i class='icon-remove' title="<%=shipping_address.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
+		    <td><%= link_to(customer_shipping_address_path(@customer, shipping_address)) do%><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
+		    <% if can? :manage, ShippingAddress %>		    
+			    <td><%= link_to(edit_customer_shipping_address_path(@customer, shipping_address)) do%><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+			    <td><%= link_to(customer_shipping_address_path(@customer, shipping_address), method: :delete, data: { confirm: t(:are_you_sure) }) do%><i class='icon-remove' title="<%=shipping_address.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
+			  <% end %>
 		  </tr>
 		<% end %>
 	</tbody>
@@ -60,6 +62,8 @@
 
 <%= paginate @shipping_addresses %>
 
-<%= link_to t(:new_shipping_address), new_customer_shipping_address_path(@customer), :class =>'btn' %><br /><br />
+<% if can? :create, ShippingAddress %>
+	<%= link_to t(:new_shipping_address), new_customer_shipping_address_path(@customer), :class =>'btn' %><br /><br />
+<% end %>
 <%= link_to t(:back), customer_path(@customer) %> | <%= link_to t(:back_customers), customers_path %>
 	

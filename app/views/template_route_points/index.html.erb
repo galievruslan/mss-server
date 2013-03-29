@@ -42,13 +42,16 @@
     <td><%= template_route_point.shipping_address.name %></td>
     <td><%= template_route_point.shipping_address.address %></td>
     <td><%= link_to(template_route_template_route_point_path(@template_route, template_route_point)) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
-    <td><%= link_to(edit_template_route_template_route_point_path(@template_route, template_route_point)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-    <td><%= link_to(template_route_template_route_point_path(@template_route, template_route_point), method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>
+    <% if can? :manage, TemplateRoutePoint %>
+	    <td><%= link_to(edit_template_route_template_route_point_path(@template_route, template_route_point)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+	    <td><%= link_to(template_route_template_route_point_path(@template_route, template_route_point), method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>
+    <% end %>
   </tr>
 <% end %>
 </table>
 
 <%= paginate @template_route_points %>
-
-<%= link_to t(:new_template_route_point), new_template_route_template_route_point_path, class: 'btn' %><br /><br />
+<% if can? :create, TemplateRoutePoint %>
+	<%= link_to t(:new_template_route_point), new_template_route_template_route_point_path, class: 'btn' %><br /><br />
+<% end %>
 <%= link_to t(:back), template_route_path(@template_route) %> | <%= link_to t(:back_template_routes), template_routes_path %>

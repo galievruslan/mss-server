@@ -19,5 +19,5 @@
 </p>
 
 
-<%= link_to t(:edit), edit_category_path(@category) %> |
+<% if can? :manage, Category %><%= link_to t(:edit), edit_category_path(@category) %> | <%end%>
 <%= link_to t(:back), categories_path %>

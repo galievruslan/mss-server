@@ -42,12 +42,15 @@
     <td><%= price_list.product_prices.count %></td>
     <td><i class=<%= price_list.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
     <td><%= link_to(price_list) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
-		<td><%= link_to(edit_price_list_path(price_list)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-		<td><%= link_to(price_list, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=price_list.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
+    <% if can? :manage, PriceList %>
+			<td><%= link_to(edit_price_list_path(price_list)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+			<td><%= link_to(price_list, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=price_list.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
+		<% end %>
   </tr>
 <% end %>
 </table>
 
 <%= paginate @price_lists %>
-
-<%= link_to t(:new_price_list), new_price_list_path, class: 'btn' %>
+<% if can? :create, PriceList %>
+	<%= link_to t(:new_price_list), new_price_list_path, class: 'btn' %>
+<% end %>

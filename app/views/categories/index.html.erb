@@ -40,8 +40,8 @@
 	    <th><%= sort_link @search, :name, t(:name) %></th>
 	    <th><%= sort_link @search, :external_key, t(:external_key) %></th>
 	    <th><%= sort_link @search, :parent_name, t(:parent) %></th>	    
-	    <th><%= sort_link @search, :validity, t(:validity) %></th>
-	    <th colspan="3"><%= t(:actions) %></th>
+	    <th><%= sort_link @search, :validity, t(:validity) %></th>	    
+	    <th colspan="3"><%= t(:actions) %></th>	    
 	  </tr>
 	</thead>
 	<tbody>
@@ -50,10 +50,12 @@
 		    <td><%= category.name %></td>
 		    <td><%= category.external_key %></td>
 		    <td><%= category.parent.name if category.parent %></td>		    
-		    <td><i class=<%=category.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
-		    <td><%= link_to(category) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
-		    <td><%= link_to(edit_category_path(category)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-		    <td><%= link_to(category, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=category.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
+		    <td><i class=<%=category.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>		    
+			  <td><%= link_to(category) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
+			  <% if can? :manage, Category %>
+			    <td><%= link_to(edit_category_path(category)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+			    <td><%= link_to(category, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=category.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
+			  <% end %>
 		  </tr>
 		<% end %>
 </tbody>
@@ -61,4 +63,6 @@
 
 <%= paginate @categories%>
 
-<%= link_to t(:new_category), new_category_path, class: 'btn' %>
+<% if can? :create, Category %>
+	<%= link_to t(:new_category), new_category_path, class: 'btn' %>
+<%end%>

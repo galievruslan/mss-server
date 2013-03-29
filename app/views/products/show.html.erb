@@ -46,5 +46,5 @@
   </tbody>
 </table>
 
-<%= link_to t(:edit), edit_product_path(@product) %> |
+<% if can? :manage, Product %><%= link_to t(:edit), edit_product_path(@product) %> |<% end %>
 <%= link_to t(:back), products_path %>

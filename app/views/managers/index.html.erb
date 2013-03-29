@@ -51,13 +51,16 @@
 	    <td><%= manager.manager_shipping_addresses.count%></td>
 	    <td><i class=<%=manager.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
 	    <td><%= link_to(manager) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
-		  <td><%= link_to(edit_manager_path(manager)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-		  <td><%= link_to(manager, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=manager.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
+	    <% if can? :manage, Manager %>
+			  <td><%= link_to(edit_manager_path(manager)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+			  <td><%= link_to(manager, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=manager.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
+			<% end %>
 	  </tr>
 		<% end %>
 	</tbody>
 </table>
 
 <%= paginate @managers %>
-
-<%= link_to t(:new_manager), new_manager_path, :class =>'btn' %>
+<% if can? :create, Manager %>
+	<%= link_to t(:new_manager), new_manager_path, :class =>'btn' %>
+<% end %>

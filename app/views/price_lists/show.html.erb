@@ -55,5 +55,5 @@
 
 <%= paginate @product_prices %>
 
-<%= link_to t(:edit), edit_price_list_path(@price_list) %> |
+<% if can? :manage, PriceList %><%= link_to t(:edit), edit_price_list_path(@price_list) %> |<% end %>
 <%= link_to t(:back), price_lists_path %>

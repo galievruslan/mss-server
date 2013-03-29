@@ -45,12 +45,15 @@
 		    <td><%= customer.shipping_addresses.count %></td>
 		    <td><i class=<%=customer.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
 		    <td><%= link_to(customer) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
-		    <td><%= link_to(edit_customer_path(customer)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-		    <td><%= link_to(customer, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=customer.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
+		    <% if can? :manage, Customer %>
+			    <td><%= link_to(edit_customer_path(customer)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+			    <td><%= link_to(customer, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=customer.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
+			  <% end %>
   		</tr>
   		<% end %>	
 	</tbody>
 </table>
 <%= paginate @customers %>
-
-<%= link_to t(:new_customer), new_customer_path, :class =>'btn' %>
+<% if can? :create, Customer %>
+	<%= link_to t(:new_customer), new_customer_path, :class =>'btn' %>
+<% end %>

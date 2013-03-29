@@ -18,5 +18,5 @@
 </p>
 
 
-<%= link_to t(:edit), edit_product_product_unit_of_measure_path(@product, @product_unit_of_measure) %> |
+<% if can? :manage, ProductUnitOfMeasure %><%= link_to t(:edit), edit_product_product_unit_of_measure_path(@product, @product_unit_of_measure) %> |<% end %>
 <%= link_to t(:back), product_product_unit_of_measures_path(@product) %>

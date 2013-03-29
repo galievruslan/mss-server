@@ -52,13 +52,16 @@
 		    <td><%= warehouse.address %></td>
 		    <td><i class=<%=warehouse.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
 		    <td><%= link_to(warehouse) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
-		  	<td><%= link_to(edit_warehouse_path(warehouse)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-		  	<td><%= link_to(warehouse, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=warehouse.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
+		    <% if can? :manage, Warehouse %>
+			  	<td><%= link_to(edit_warehouse_path(warehouse)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+			  	<td><%= link_to(warehouse, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=warehouse.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
+			  <% end %>
 		  </tr>
 		<% end %>
 	</tbody>
 </table>
 
 <%= paginate @warehouses %>
-
-<%= link_to t(:new_warehouse), new_warehouse_path, class: 'btn' %>
+<% if can? :create, Warehouse %>
+	<%= link_to t(:new_warehouse), new_warehouse_path, class: 'btn' %>
+<% end %>
