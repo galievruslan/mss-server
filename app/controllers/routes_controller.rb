@@ -82,7 +82,9 @@ class RoutesController < ApplicationController
   # GET /routes/new.json
   def new
     @route = Route.new
-    @managers=Manager.all
+    @managers = Manager.all
+    @shipping_addresses = ShippingAddress.all
+    @statuses = Status.all    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @route }
@@ -92,14 +94,18 @@ class RoutesController < ApplicationController
   # GET /routes/1/edit
   def edit
     @route = Route.find(params[:id])
-    @managers=Manager.all
+    @managers = Manager.all
+    @shipping_addresses = ShippingAddress.all
+    @statuses = Status.all
   end
 
   # POST /routes
   # POST /routes.json
   def create
     @route = Route.new(params[:route])
-
+    @managers = Manager.all
+    @shipping_addresses = ShippingAddress.all
+    @statuses = Status.all
     respond_to do |format|
       if @route.save
         format.html { redirect_to @route, notice: t(:route_created) }
@@ -115,7 +121,9 @@ class RoutesController < ApplicationController
   # PUT /routes/1.json
   def update
     @route = Route.find(params[:id])
-
+    @managers = Manager.all
+    @shipping_addresses = ShippingAddress.all
+    @statuses = Status.all
     respond_to do |format|
       if @route.update_attributes(params[:route])
         format.html { redirect_to @route, notice: t(:route_updated) }

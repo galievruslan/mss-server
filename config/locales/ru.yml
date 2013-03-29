@@ -277,4 +277,5 @@ ru:
   Thursday: "Четверг"
   Friday: "Пятница"
   Saturday: "Суббота"
-  
+  export_not_exported_orders: "Выгрузить не выгруженные заказы"
+  route: "Маршрут"

@@ -59,10 +59,10 @@
 					<tbody>      
 						<%= f.fields_for :order_items, :wrapper => false do |order_item| %>
 							<tr class="fields">
-						  <td><%= order_item.select :product_id , @products.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_product)} %></td>
-						  <td><%= order_item.select :unit_of_measure_id , @unit_of_measures.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_unit_of_measure)} %></td>
-						  <td><%= order_item.number_field :quantity, min: 1, step: 1 %></td>
-						  <td><%= order_item.link_to_remove do%><i class='icon-remove' title="<%= t(:remove)%>"></i><%end%></td>
+							  <td><%= order_item.select :product_id , @products.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_product)} %></td>
+							  <td><%= order_item.select :unit_of_measure_id , @unit_of_measures.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_unit_of_measure)} %></td>
+							  <td><%= order_item.number_field :quantity, min: 1, step: 1 %></td>
+							  <td><%= order_item.link_to_remove do%><i class='icon-remove' title="<%= t(:remove)%>"></i><%end%></td>
 						  </tr>
 						<% end %>
 					</tbody>

@@ -277,3 +277,5 @@ en:
   Thursday: "Thursday"
   Friday: "Friday"
   Saturday: "Saturday"
+  export_not_exported_orders: "Export not exported orders"
+  route: "Route"
