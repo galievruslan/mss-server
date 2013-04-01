@@ -30,6 +30,7 @@ class TemplateRoutesController < ApplicationController
     @days_of_week = [0,1,2,3,4,5,6]
     @managers = Manager.all
     @template_route = TemplateRoute.new
+    @shipping_addresses = ShippingAddress.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -42,12 +43,14 @@ class TemplateRoutesController < ApplicationController
     @days_of_week = [0,1,2,3,4,5,6]
     @managers = Manager.all
     @template_route = TemplateRoute.find(params[:id])
+    @shipping_addresses = ShippingAddress.all
   end
 
   # POST /template_routes
   # POST /template_routes.json
   def create
     @template_route = TemplateRoute.new(params[:template_route])
+    @shipping_addresses = ShippingAddress.all
 
     respond_to do |format|
       if @template_route.save
@@ -64,6 +67,7 @@ class TemplateRoutesController < ApplicationController
   # PUT /template_routes/1.json
   def update
     @template_route = TemplateRoute.find(params[:id])
+    @shipping_addresses = ShippingAddress.all
 
     respond_to do |format|
       if @template_route.update_attributes(params[:template_route])
