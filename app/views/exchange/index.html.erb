@@ -20,7 +20,8 @@
 	<div class="tab-content">
     <div class="tab-pane active" id="tab1">	 
 			<h5><%= t(:export_not_exported_orders)%>:</h5>
-			<%=link_to t(:download_zip), exchange_get_xml_path, :class => 'btn' %><br>
+			<%=link_to t(:download_zip), exchange_download_zip_path, :class => 'btn' %><br /><br />
+			<%=link_to t(:send_to_ftp), exchange_send_to_ftp_path, :class => 'btn' %><br />
 		</div>	
 		<div class="tab-pane" id="tab2">
 			

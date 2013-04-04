@@ -5,7 +5,8 @@
   devise_for :users
   
   get 'exchange', :to => 'exchange#index'
-  get 'exchange/get_xml', :to => 'exchange#get_orders'
+  get 'exchange/download_zip', :to => 'exchange#download_zip'
+  get 'exchange/send_to_ftp', :to => 'exchange#send_to_ftp'
   post 'exchange/upload', :to => 'exchange#upload'  
   get 'profile/show', :to => 'profiles#show'
   match 'profile/edit', :to => 'profiles#edit'

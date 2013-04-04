@@ -279,3 +279,6 @@ ru:
   Saturday: "Суббота"
   export_not_exported_orders: "Выгрузить не выгруженные заказы"
   route: "Маршрут"
+  send_to_ftp: "Отправить на FTP"
+  orders_sent_to_ftp: "Заказы отправлены на FTP-сервер"
+  no_not_exported_orders: "Нет не выгруженных заказов"

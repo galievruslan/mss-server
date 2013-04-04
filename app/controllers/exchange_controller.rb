@@ -1,5 +1,6 @@
 class ExchangeController < ApplicationController
-  require 'rexml/document'
+  require 'rexml/document'  
+  require 'net/ftp'
     
   def index
     authorize! :exchange , :view     
@@ -307,17 +308,39 @@ class ExchangeController < ApplicationController
     
   end
    
-  def get_orders
+  def download_zip
+    @not_exported_orders = get_not_exported_orders    
+    if @not_exported_orders.count > 0
+      files = {}
+      @not_exported_orders.each do |not_exported_order|
+        current_date_time = Time.now.strftime("%d-%m-%y %H-%M")
+        file_path = "#{Rails.root.to_s}/tmp/orders/#{current_date_time} order-#{not_exported_order.id}-#{not_exported_order.date}.xml"
+        file_name = generate_xml_file(file_path, not_exported_order)
+        files[file_name] = file_path
+        not_exported_order.update_attributes(exported_at: Time.now)      
+      end
+      send_zip_arhive(files)
+    else
+      redirect_to exchange_path, notice: t(:no_not_exported_orders)
+    end    
+  end
+  
+  def send_to_ftp
     @not_exported_orders = get_not_exported_orders
-    files = {}
-    @not_exported_orders.each do |not_exported_order|
-      current_date_time = Time.now.strftime("%m-%e-%y %H:%M")
-      file_path = "#{Rails.root.to_s}/tmp/orders/#{current_date_time}_order_#{not_exported_order.id}_#{not_exported_order.date}.xml"
-      file_name = generate_xml_file(file_path, not_exported_order)
-      files[file_name] = file_path
-      not_exported_order.update_attributes(exported_at: Time.now)      
-    end
-    download_zip_arhive(files)
+    if @not_exported_orders.count > 0
+      files = {}
+      @not_exported_orders.each do |not_exported_order|
+        current_date_time = Time.now.strftime("%d-%m-%y %H-%M")
+        file_path = "#{Rails.root.to_s}/tmp/orders/#{current_date_time} order-#{not_exported_order.id}-#{not_exported_order.date}.xml"
+        file_name = generate_xml_file(file_path, not_exported_order)
+        files[file_name] = file_path
+        not_exported_order.update_attributes(exported_at: Time.now)      
+      end
+      upload_file_to_ftp(files)
+      redirect_to exchange_path, notice: t(:orders_sent_to_ftp)
+    else
+      redirect_to exchange_path, notice: t(:no_not_exported_orders)
+    end    
   end
   
   def get_not_exported_orders    
@@ -374,7 +397,7 @@ class ExchangeController < ApplicationController
          
   end
   
-  def download_zip_arhive(files)
+  def send_zip_arhive(files)
     temp_arhive = Tempfile.new("orders.zip")
     
     Zip::ZipOutputStream.open(temp_arhive.path) do |z|
@@ -386,4 +409,13 @@ class ExchangeController < ApplicationController
     send_file(temp_arhive.path, :type => 'application/zip', :disposition => 'attachment', :filename => "orders.zip", :stream => false)
         
   end
+  def upload_file_to_ftp(files)
+    files.each do |file_name,file_path|
+      file = File.open(file_path, 'r')
+      ftp = Net::FTP.new('192.168.3.98', 's30', '123')
+      ftp.chdir('obmen')
+      ftp.putbinaryfile(file, file_name)
+      ftp.close
+    end
+  end  
 end
