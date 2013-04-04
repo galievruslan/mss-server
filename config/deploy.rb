@@ -1,5 +1,6 @@
 require 'rvm/capistrano'
 require 'bundler/capistrano'
+require "whenever/capistrano"
 
 # APPLICATION DETAILS #######################################
 set :application, "mss"
