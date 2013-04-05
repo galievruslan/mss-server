@@ -50,6 +50,6 @@ namespace :deploy do
   end
   desc "Create tmp orders folder"
   task :create_tmp_orders do
-    run "mkdir #{current_release}/tmp/orders"
+    run "mkdir #{release_path}/tmp/orders"
   end
 end
