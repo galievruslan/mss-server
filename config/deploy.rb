@@ -25,7 +25,7 @@ set :branch, "master"
 set :scm_command, "/usr/bin/git"
 set :deploy_via, :remote_cache
 
-before 'deploy:assets:precompile', 'deploy:symlink_db', 'deploy:symlink_config','create_tmp_orders'
+before 'deploy:assets:precompile', 'deploy:symlink_db', 'deploy:symlink_config','deploy:create_tmp_orders'
 after "deploy:restart", "deploy:cleanup"
 
 # TASKS #####################################################
