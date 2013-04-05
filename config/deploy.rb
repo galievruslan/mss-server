@@ -25,7 +25,7 @@ set :branch, "master"
 set :scm_command, "/usr/bin/git"
 set :deploy_via, :remote_cache
 
-before 'deploy:assets:precompile', 'deploy:symlink_db'
+before 'deploy:assets:precompile', 'deploy:symlink_db', 'deploy:symlink_config'
 after "deploy:restart", "deploy:cleanup"
 
 # TASKS #####################################################
@@ -42,5 +42,10 @@ namespace :deploy do
   task :symlink_db do
     run "rm -f #{current_release}/config/database.yml"
     run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
+  end
+  desc "Symlinks the config.yml"
+  task :symlink_config do
+    run "rm -f #{current_release}/config/config.yml"
+    run "ln -nfs #{deploy_to}/shared/config/config.yml #{release_path}/config/config.yml"
   end
 end
