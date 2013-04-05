@@ -13,5 +13,10 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ignore config files
 config/database.yml
 config/config.yml
+
+# Ignore assets precompile files
+public/assets

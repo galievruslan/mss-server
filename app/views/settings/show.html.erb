@@ -1,0 +1,39 @@
+<h4><%= t(:settings)%></h4>
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:ftp_settings)%></a></li>
+    <li><a href="#tab2" data-toggle="tab"><%= t(:settings)%></a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+			<%= form_tag settings_path	, :method => :put do  %> 
+			
+			  <div class="field">
+			    <%= label_tag :ftp_server, t(:ftp_server) %>
+			    <%= text_field_tag :ftp_server, @config['ftp_server'], placeholder: t(:ftp_server) %>
+			  </div>
+			  <div class="field">
+			    <%= label_tag :ftp_user, t(:ftp_user) %>
+			    <%= text_field_tag :ftp_user, @config['ftp_user'], placeholder: t(:ftp_user) %>
+			  </div>
+			  <div class="field">
+			    <%= label_tag :ftp_password, t(:ftp_password) %>
+			    <%= password_field_tag :ftp_password, @config['ftp_password'], placeholder: t(:ftp_password) %>
+			  </div>
+			  <div class="field">
+			    <%= label_tag :ftp_inbox_directory, t(:ftp_inbox_directory) %>
+			    <%= text_field_tag :ftp_inbox_directory, @config['ftp_inbox_directory'], placeholder: t(:ftp_inbox_directory) %>
+			  </div>
+			  <div class="field">
+			    <%= label_tag :ftp_outbox_directory, t(:ftp_outbox_directory) %>
+			    <%= text_field_tag :ftp_outbox_directory, @config['ftp_outbox_directory'], placeholder: t(:ftp_outbox_directory) %>
+			  </div>
+			  <div class="actions">
+			    <%= submit_tag(t(:save), :class =>'btn') %>
+			  </div>
+			<% end %>
+		</div>
+		<div class="tab-pane" id="tab2">
+		</div>
+	</div>
+</div>

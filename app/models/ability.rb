@@ -9,6 +9,7 @@ class Ability
     if user.role? :admin
       can :manage, :all
       can :exchange , :view
+      can :settings , :view
     elsif user.role? :supervisor
       can :read, :all           
       can :manage, [TemplateRoute, TemplateRoutePoint]

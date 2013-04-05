@@ -1,9 +1,11 @@
-  Mss::Application.routes.draw do 
-  
+  Mss::Application.routes.draw do
+
   root :to => 'pages#index'
   
   devise_for :users
   
+  get 'settings', :to => 'settings#show'
+  put 'settings', :to => 'settings#update'
   get 'exchange', :to => 'exchange#index'
   get 'exchange/download_zip', :to => 'exchange#download_zip'
   get 'exchange/send_to_ftp', :to => 'exchange#send_to_ftp'

@@ -70,6 +70,11 @@
               <%= link_to t(:exchange), exchange_path %>
             </li>
             <% end %>
+            <% if can? :view, :settings %>  
+            <li <%= 'class=active' if @current_controller =='settings'%>>
+              <%= link_to t(:settings), settings_path %>
+            </li>
+            <% end %>            
             <% if can? :read, User %>    
             <li <%= 'class=active' if @current_controller =='users'%>>
               <%= link_to t(:users), users_path %>
