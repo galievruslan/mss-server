@@ -333,11 +333,15 @@ class ExchangeController < ApplicationController
         current_date_time = Time.now.strftime("%d-%m-%y %H-%M")
         file_path = "#{Rails.root.to_s}/tmp/orders/#{current_date_time} order-#{not_exported_order.id}-#{not_exported_order.date}.xml"
         file_name = generate_xml_file(file_path, not_exported_order)
-        files[file_name] = file_path
-        not_exported_order.update_attributes(exported_at: Time.now)      
+        files[file_name] = file_path              
       end
-      upload_file_to_ftp(files)
-      redirect_to exchange_path, notice: t(:orders_sent_to_ftp)
+      upload_files_to_ftp(files)
+      
+      @not_exported_orders.each do |not_exported_order|
+        not_exported_order.update_attributes(exported_at: Time.now) 
+      end
+      
+      redirect_to exchange_path, notice: t(:orders_sent_to_ftp, count: @not_exported_orders.count)
     else
       redirect_to exchange_path, notice: t(:no_not_exported_orders)
     end    
@@ -409,11 +413,15 @@ class ExchangeController < ApplicationController
     send_file(temp_arhive.path, :type => 'application/zip', :disposition => 'attachment', :filename => "orders.zip", :stream => false)
         
   end
-  def upload_file_to_ftp(files)
+  def upload_files_to_ftp(files)
     files.each do |file_name,file_path|
       file = File.open(file_path, 'r')
-      ftp = Net::FTP.new('192.168.3.98', 's30', '123')
-      ftp.chdir('obmen')
+      ftp_server = APP_CONFIG['ftp_server']
+      ftp_user = APP_CONFIG['ftp_user']
+      ftp_password = APP_CONFIG['ftp_password']
+      ftp_directory = APP_CONFIG['ftp_outbox_directory']
+      ftp = Net::FTP.new(ftp_server, ftp_user, ftp_password)
+      ftp.chdir(ftp_directory)
       ftp.putbinaryfile(file, file_name)
       ftp.close
     end

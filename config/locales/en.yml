@@ -280,5 +280,5 @@ en:
   export_not_exported_orders: "Export not exported orders"
   route: "Route"
   send_to_ftp: "Send to FTP"
-  orders_sent_to_ftp: "Orders are sent to the FTP-server"
+  orders_sent_to_ftp: "%{count} orders are sent to the FTP-server"
   no_not_exported_orders: "No orders are not exported"
