@@ -9,7 +9,7 @@ class RoutesController < ApplicationController
     end
     @day_of_week = Date.today.wday
     @today = Date.today
-    @status = Status.find_by_name('not visited')
+    @status = Status.find_by_name(APP_CONFIG['default_route_point_status'])
     if @manager
       @template_route = TemplateRoute.find_by_manager_id_and_day_of_week(@manager.id, @day_of_week)
       if !@template_route
@@ -30,10 +30,12 @@ class RoutesController < ApplicationController
       else
         @route = Route.find_by_manager_id_and_date(@manager.id, @today)        
         if !@route
-          @route = Route.create(manager_id: @manager.id, date: @today)
+          @route = Route.new(manager_id: @manager.id, date: @today)
           @template_route.template_route_points.each do |template_route_point|
-            @route_point = RoutePoint.create(route_id: @route.id, shipping_address_id: template_route_point.shipping_address.id, status_id: @status.id) 
+            @route_point = RoutePoint.new(shipping_address_id: template_route_point.shipping_address.id, status_id: @status.id)
+            @route.route_points << @route_point
           end
+          @route.save
           respond_to do |format|      
             format.html { redirect_to @route, notice: t(:route_created) }
             format.json { render json: @route.to_json(:include => [:route_points]), status: :created, location: @route }      

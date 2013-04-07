@@ -289,3 +289,4 @@ en:
   ftp_inbox_directory: "FTP inbox directory"
   ftp_outbox_directory: "FTP outbox directory"
   ftp_settings: "FTP settigns"
+  default_route_point_status: "Default route point status"

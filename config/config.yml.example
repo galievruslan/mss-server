@@ -4,9 +4,11 @@ development:
 	ftp_password: "password"
 	ftp_outbox_directory: "directory"
 	ftp_inbox_directory: "directory"
+	default_route_point_status: "Не посетил"
 production:
 	ftp_server: "server_name"
 	ftp_user: "user"
 	ftp_password: "password"
 	ftp_outbox_directory: "directory"
 	ftp_inbox_directory: "directory"
+	default_route_point_status: "Не посетил"

@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-@status1 = Status.create(name: 'Посетил')
-@status2 = Status.create(name: 'Не посятил')
+@status1 = Status.create(name: 'Не посетил')
+@status2 = Status.create(name: 'Посетил')
 @status3 = Status.create(name: 'Учет')
 @status4 = Status.create(name: 'Отказ')
 

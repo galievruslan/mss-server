@@ -289,3 +289,4 @@ ru:
   ftp_inbox_directory: "Входящая директория"
   ftp_outbox_directory: "Исходящая директория"
   ftp_settings: "Настройки FTP"
+  default_route_point_status: "Статус маршрута по-умолчанию"
