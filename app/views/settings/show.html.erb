@@ -31,8 +31,8 @@
 		</div>
 	<div class="tab-pane" id="tab2">
 		<div class="field">
-		    <%= label_tag :default_route_point_status, t(:default_route_point_status) %>
-		    <%= text_field_tag :default_route_point_status, @config['default_route_point_status'], placeholder: t(:default_route_point_status) %>
+		    <%= label_tag :default_route_point_status_id, t(:default_route_point_status) %>
+		    <%= select_tag :default_route_point_status_id, options_from_collection_for_select(@statuses, :id, :name, @config['default_route_point_status_id']), :prompt => t(:select_status) %>
 		  </div>
 	</div>
 		<div class="actions">

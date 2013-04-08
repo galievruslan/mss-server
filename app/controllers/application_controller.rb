@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  require 'ostruct'
+  require 'yaml'
   before_filter :authenticate_user!
   before_filter :set_language_from_current_user
   #check_authorization
@@ -35,6 +37,6 @@ class ApplicationController < ActionController::Base
     else
       "application"
     end
-  end  
+  end   
    
 end

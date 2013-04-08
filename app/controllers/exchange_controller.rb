@@ -416,10 +416,10 @@ class ExchangeController < ApplicationController
   def upload_files_to_ftp(files)
     files.each do |file_name,file_path|
       file = File.open(file_path, 'r')
-      ftp_server = APP_CONFIG['ftp_server']
-      ftp_user = APP_CONFIG['ftp_user']
-      ftp_password = APP_CONFIG['ftp_password']
-      ftp_directory = APP_CONFIG['ftp_outbox_directory']
+      ftp_server = AppConfig.ftp_server
+      ftp_user = AppConfig.ftp_user
+      ftp_password = AppConfig.ftp_password
+      ftp_directory = AppConfig.ftp_outbox_directory
       ftp = Net::FTP.new(ftp_server, ftp_user, ftp_password)
       ftp.chdir(ftp_directory)
       ftp.putbinaryfile(file, file_name)

@@ -6,9 +6,22 @@ class TemplateRoutesController < ApplicationController
     @search = TemplateRoute.search(params[:q])
     @template_routes = @search.result.page(params[:page]).per(current_user.list_page_size)
     @managers = Manager.all
+    if params[:updated_at]
+      if params[:manager_id]
+        @template_routes_json = TemplateRoute.where("updated_at >= #{params[:updated_at]} and manager_id = #{params[:manager_id]}").includes(:template_route_points)
+      else
+        @template_routes_json = TemplateRoute.where("updated_at >= #{params[:updated_at]}").includes(:template_route_points)
+      end      
+    else
+      if params[:manager_id]
+        @template_routes_json = TemplateRoute.where("manager_id = #{params[:manager_id]}").includes(:template_route_points)
+      else
+        @template_routes_json = TemplateRoute.all.includes(:template_route_points)
+      end      
+    end 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @template_routes }
+      format.json { render json: @template_routes_json.to_json(:include => [:template_route_points]) }
     end
   end
 

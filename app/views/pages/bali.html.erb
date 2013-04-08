@@ -1,7 +1,6 @@
 <%= image_tag("bali.png") %><br />
 Language: <%= I18n.default_locale %><br />
-FTP server: <%= APP_CONFIG['ftp_server'] %><br />
-FTP user: <%= APP_CONFIG['ftp_user'] %><br />
-FTP password: <%= APP_CONFIG['ftp_password'] %><br />
-FTP inbox directory: <%= APP_CONFIG['ftp_inbox_directory'] %><br />
-FTP outbox directory: <%= APP_CONFIG['ftp_outbox_directory'] %><br />
+FTP server: <%= AppConfig.ftp_server %><br />
+FTP user: <%= AppConfig.ftp_user %><br />
+FTP password: <%= AppConfig.ftp_inbox_directory %><br />
+FTP outbox directory: <%= AppConfig.ftp_outbox_directory %><br />
