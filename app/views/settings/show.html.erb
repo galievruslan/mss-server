@@ -1,4 +1,15 @@
 <h4><%= t(:settings)%></h4>
+<% if @errors %>
+    <div class="alert alert-error">
+    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4><%=t('errors.title')%></h4>
+      <ul>
+      <% @errors.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+<% end %>
 <div class="tabbable">
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:ftp_settings)%></a></li>
@@ -10,29 +21,29 @@
 		
 		  <div class="field">
 		    <%= label_tag :ftp_server, t(:ftp_server) %>
-		    <%= text_field_tag :ftp_server, @config['ftp_server'], placeholder: t(:ftp_server) %>
+		    <%= text_field_tag :ftp_server, Settings.ftp_server, placeholder: t(:ftp_server) %>
 		  </div>
 		  <div class="field">
 		    <%= label_tag :ftp_user, t(:ftp_user) %>
-		    <%= text_field_tag :ftp_user, @config['ftp_user'], placeholder: t(:ftp_user) %>
+		    <%= text_field_tag :ftp_user, Settings.ftp_user, placeholder: t(:ftp_user) %>
 		  </div>
 		  <div class="field">
 		    <%= label_tag :ftp_password, t(:ftp_password) %>
-		    <%= password_field_tag :ftp_password, @config['ftp_password'], placeholder: t(:ftp_password) %>
+		    <%= password_field_tag :ftp_password, Settings.ftp_password, placeholder: t(:ftp_password) %>
 		  </div>
 		  <div class="field">
 		    <%= label_tag :ftp_inbox_directory, t(:ftp_inbox_directory) %>
-		    <%= text_field_tag :ftp_inbox_directory, @config['ftp_inbox_directory'], placeholder: t(:ftp_inbox_directory) %>
+		    <%= text_field_tag :ftp_inbox_directory, Settings.ftp_inbox_directory, placeholder: t(:ftp_inbox_directory) %>
 		  </div>
 		  <div class="field">
 		    <%= label_tag :ftp_outbox_directory, t(:ftp_outbox_directory) %>
-		    <%= text_field_tag :ftp_outbox_directory, @config['ftp_outbox_directory'], placeholder: t(:ftp_outbox_directory) %>
+		    <%= text_field_tag :ftp_outbox_directory, Settings.ftp_outbox_directory, placeholder: t(:ftp_outbox_directory) %>
 		  </div>			  
 		</div>
 	<div class="tab-pane" id="tab2">
 		<div class="field">
 		    <%= label_tag :default_route_point_status_id, t(:default_route_point_status) %>
-		    <%= select_tag :default_route_point_status_id, options_from_collection_for_select(@statuses, :id, :name, @config['default_route_point_status_id']), :prompt => t(:select_status) %>
+		    <%= select_tag :default_route_point_status_id, options_from_collection_for_select(@statuses, :id, :name, Settings.default_route_point_status_id), :prompt => t(:select_status) %>
 		  </div>
 	</div>
 		<div class="actions">

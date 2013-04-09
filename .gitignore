@@ -16,7 +16,10 @@
 
 # Ignore config files
 config/database.yml
-config/config.yml
 
 # Ignore assets precompile files
 public/assets
+
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml
