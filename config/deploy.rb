@@ -25,7 +25,7 @@ set :branch, "master"
 set :scm_command, "/usr/bin/git"
 set :deploy_via, :remote_cache
 
-before 'deploy:assets:precompile', 'deploy:symlink_db','deploy:create_tmp_orders'
+before 'deploy:assets:precompile', 'deploy:symlink_db', 'deploy:symlink_config','deploy:create_tmp_orders'
 after "deploy:restart", "deploy:cleanup"
 
 # TASKS #####################################################
@@ -42,6 +42,11 @@ namespace :deploy do
   task :symlink_db do
     run "rm -f #{current_release}/config/database.yml"
     run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
+  end  
+  desc "Symlinks the settings.local.yml"
+  task :symlink_config do
+    run "rm -f #{current_release}/config/settings.local.yml"
+    run "ln -nfs #{deploy_to}/shared/config/settings.local.yml #{release_path}/config/settings.local.yml"
   end
   desc "Create tmp orders folder"
   task :create_tmp_orders do
