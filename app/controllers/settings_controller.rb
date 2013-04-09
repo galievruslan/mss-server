@@ -57,6 +57,7 @@ class SettingsController < ApplicationController
     
     if @errors.count == 0
       File.open("#{Rails.root}/config/settings.local.yml", 'w') { |f| YAML.dump(config, f) }
+      Settings.reload!
       redirect_to settings_path, notice: t(:settings_updated)   
     else
       render action: "show"       
