@@ -9,7 +9,7 @@ class RoutesController < ApplicationController
     end
     @day_of_week = Date.today.wday
     @today = Date.today
-    @status = Status.find_by_name(APP_CONFIG['default_route_point_status'])
+    @status = Status.find_by_name(Settings.default_route_point_status)
     if @manager
       @template_route = TemplateRoute.find_by_manager_id_and_day_of_week(@manager.id, @day_of_week)
       if !@template_route
