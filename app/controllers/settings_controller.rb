@@ -8,6 +8,7 @@ class SettingsController < ApplicationController
   
   # PUT /settings
   def update
+    authorize! :settings , :manage
     @statuses = Status.all    
     @errors = []
     # Settings.ftp_server = params[:ftp_server]

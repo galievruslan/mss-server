@@ -64,8 +64,10 @@
             <li <%= 'class=active' if @current_controller =='price_lists'%>>
               <%= link_to t(:price_lists), price_lists_path %>
             </li>
-            <% if can? :view, :exchange %>            
-            <li class="nav-header"><%= t(:settings)%></li>
+            <% if can? :view, :settings %>          
+            	<li class="nav-header"><%= t(:settings)%></li>
+            <% end %>
+            <% if can? :view, :exchange %>
             <li <%= 'class=active' if @current_controller =='exchange'%>>
               <%= link_to t(:exchange), exchange_path %>
             </li>

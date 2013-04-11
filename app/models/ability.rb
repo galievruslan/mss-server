@@ -10,13 +10,16 @@ class Ability
       can :manage, :all
       can :exchange , :view
       can :settings , :view
+      can :settings , :manage
     elsif user.role? :supervisor
       can :read, :all           
       can :manage, [TemplateRoute, TemplateRoutePoint]
       cannot :read, [User, Role]
     elsif user.role? :manager       
       can :read, :all
-      can :manage, [Order, OrderItem, Route, RoutePoint]  
+      can :manage, [Order, Route], :manager_id => user.manager_id 
+      can :manage, OrderItem , :order => { :id => Manager.find(user.manager_id).order_ids}
+      can :manage, RoutePoint , :route => { :id => Manager.find(user.manager_id).route_ids}
       can :route , :current
       cannot :read, [User, Role]                    
     end

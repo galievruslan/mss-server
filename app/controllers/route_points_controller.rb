@@ -69,8 +69,14 @@ class RoutePointsController < ApplicationController
   # PUT /route_points/1
   # PUT /route_points/1.json
   def update
-    @route = Route.find(params[:route_id])
-    @route_point = RoutePoint.find(params[:id])
+    if params[:external_key]
+      @route = Route.find(params[:route_external_key])
+      @route_point = RoutePoint.find(params[:external_key])
+    else
+      @route = Route.find(params[:route_id])
+      @route_point = RoutePoint.find(params[:id])
+    end
+    
 
     respond_to do |format|
       if @route_point.update_attributes(params[:route_point])

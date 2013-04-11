@@ -81,13 +81,19 @@ class OrdersController < ApplicationController
   # PUT /orders/1
   # PUT /orders/1.json
   def update
-    @order = Order.find(params[:id])
+    if params[:external_key]
+      @order = Order.find_by_external_key(params[:external_key])
+    else
+      @order = Order.find(params[:id])
+    end
+    
     @shipping_addresses = ShippingAddress.all
     @managers = Manager.all
     @price_lists = PriceList.all
     @warehouses = Warehouse.all
     @products = Product.all
     @unit_of_measures = UnitOfMeasure.all
+    
     respond_to do |format|
       if @order.update_attributes(params[:order])
         format.html { redirect_to @order, notice: t(:order_updated) }

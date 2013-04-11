@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130411050254) do
+ActiveRecord::Schema.define(:version => 20130411114308) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -71,6 +71,8 @@ ActiveRecord::Schema.define(:version => 20130411050254) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.datetime "exported_at"
+    t.string   "external_key"
+    t.integer  "route_point_id"
   end
 
   create_table "price_lists", :force => true do |t|
@@ -128,13 +130,15 @@ ActiveRecord::Schema.define(:version => 20130411050254) do
     t.integer  "route_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.string   "external_key"
   end
 
   create_table "routes", :force => true do |t|
     t.date     "date"
     t.integer  "manager_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "external_key"
   end
 
   create_table "shipping_addresses", :force => true do |t|

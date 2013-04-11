@@ -122,7 +122,12 @@ class RoutesController < ApplicationController
   # PUT /routes/1
   # PUT /routes/1.json
   def update
-    @route = Route.find(params[:id])
+    if params[:external_key]
+      @route = Route.find_by_external_key(params[:external_key])
+    else
+      @route = Route.find(params[:id])
+    end
+    
     @managers = Manager.all
     @shipping_addresses = ShippingAddress.all
     @statuses = Status.all
