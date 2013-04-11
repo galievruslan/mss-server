@@ -1,4 +1,6 @@
+# config = YAML.load_file("#{Whenever.path}/config/settings.local.yml")
+# period = config['export_orders_ftp_period']
 set :output, "/var/log/cron.log"
-every 1.minutes do
-  command "wget http://192.168.3.108:3000/exchange/send_to_ftp"
+every 15.minutes do
+  rake "exchange:send_orders_ftp"
 end

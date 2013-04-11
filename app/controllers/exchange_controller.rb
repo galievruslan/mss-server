@@ -1,7 +1,10 @@
 class ExchangeController < ApplicationController
   require 'rexml/document'  
   require 'net/ftp'
-    
+  public
+  def test
+    return 'test'
+  end  
   def index
     authorize! :exchange , :view     
   end
@@ -323,6 +326,24 @@ class ExchangeController < ApplicationController
     else
       redirect_to exchange_path, notice: t(:no_not_exported_orders)
     end    
+  end
+  
+  def send_to_ftp_cron
+    @not_exported_orders = get_not_exported_orders
+    if @not_exported_orders.count > 0
+      files = {}
+      @not_exported_orders.each do |not_exported_order|
+        current_date_time = Time.now.strftime("%d-%m-%y %H-%M")
+        file_path = "#{Rails.root.to_s}/tmp/orders/#{current_date_time} order-#{not_exported_order.id}-#{not_exported_order.date}.xml"
+        file_name = generate_xml_file(file_path, not_exported_order)
+        files[file_name] = file_path              
+      end
+      upload_files_to_ftp(files)
+      
+      @not_exported_orders.each do |not_exported_order|
+        not_exported_order.update_attributes(exported_at: Time.now) 
+      end      
+    end
   end
   
   def send_to_ftp

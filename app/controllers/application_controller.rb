@@ -1,10 +1,11 @@
 class ApplicationController < ActionController::Base
-  require 'ostruct'
-  require 'yaml'
-  before_filter :authenticate_user!
-  before_filter :set_language_from_current_user
+  
   #check_authorization
   protect_from_forgery
+  before_filter :set_language_from_current_user
+  before_filter :banned?
+  before_filter :authenticate_user!
+  
   
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
@@ -37,6 +38,13 @@ class ApplicationController < ActionController::Base
     else
       "application"
     end
+  end    
+
+  def banned?
+    if current_user.present? && current_user.banned?
+      sign_out current_user
+      flash[:error] = t(:user_banned)
+      root_path
+    end
   end   
-   
 end

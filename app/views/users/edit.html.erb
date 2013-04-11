@@ -29,6 +29,10 @@
     <%= f.label :manager_id, t(:manager) %>
     <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}, :include_blank => "Select a manager") %>
   </div>
+  <div class="field form-inline">    
+    <%= f.check_box :banned%>
+    <%= f.label :banned, t(:ban) %>
+  </div>
   <table class="table table-striped table-hover">
   	<thead>
   		<tr>

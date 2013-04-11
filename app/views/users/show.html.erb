@@ -26,6 +26,10 @@
   <b><%= t(:list_page_size)%>:</b>
   <%= @user.list_page_size ? @user.list_page_size : '25'%>
 </p>
+<p>
+  <b><%= t(:status)%>:</b>
+  <%= @user.banned ? t(:banned) : t(:not_banned) %>
+</p>
 <table class="table table-striped table-hover">
   <thead>
     <tr>

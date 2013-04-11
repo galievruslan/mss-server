@@ -13,7 +13,8 @@
 <div class="tabbable">
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:ftp_settings)%></a></li>
-    <li><a href="#tab2" data-toggle="tab"><%= t(:settings)%></a></li>
+    <li><a href="#tab2" data-toggle="tab"><%= t(:cron_settings)%></a></li>
+    <li><a href="#tab3" data-toggle="tab"><%= t(:other_settings)%></a></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
@@ -41,6 +42,9 @@
 		  </div>			  
 		</div>
 	<div class="tab-pane" id="tab2">
+		
+	</div>
+	<div class="tab-pane" id="tab3">
 		<div class="field">
 		    <%= label_tag :default_route_point_status_id, t(:default_route_point_status) %>
 		    <%= select_tag :default_route_point_status_id, options_from_collection_for_select(@statuses, :id, :name, Settings.default_route_point_status_id), :prompt => t(:select_status) %>
