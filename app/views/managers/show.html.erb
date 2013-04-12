@@ -24,7 +24,7 @@
 <div id="demo" class="collapse">
 	<br>
 	<div class='well well-small'>
-		<%= search_form_for [@manager, @search], class: "form-horizontal" do |f| %>
+		<%= search_form_for @search, :url => manager_path(@manager), class: "form-horizontal" do |f| %>
 		  <div class="control-group">
 		  	<%= f.label :shipping_address_name_cont, t(:shipping_address)+':', class: "control-label"%>
 		  	<div class="controls">

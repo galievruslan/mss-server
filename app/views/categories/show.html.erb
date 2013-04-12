@@ -18,6 +18,54 @@
   <%= @category.validity ? t(:truth) : t(:lie) %>
 </p>
 
+<h4><%=t(:products)%></h4>
+
+<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+  <i class="icon-filter icon-white"></i> <%=t(:filter)%>
+</button>
+
+<div id="demo" class="collapse">
+	<br>
+	<div class='well well-small'>
+		<%= search_form_for @search, :url => category_path(@category), class: "form-horizontal" do |f| %>
+		  <div class="control-group">
+		  	<%= f.label :name_cont, t(:product)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :name_cont, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :external_key_cont, t(:external_key)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :external_key_cont, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">	  	
+		  		<%= f.submit t(:search), class: 'btn btn-info' %>
+		  		<button type="button" class='btn btn-info' id="q_reset"><%=t(:reset)%></button>	  	
+		  </div>	
+		<%end%>
+	</div>
+</div>
+
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+    	<th><%= sort_link @search, :external_key, t(:external_key) %></th>
+      <th><%= sort_link @search, :name, t(:shipping_address) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |product| %>  
+    <tr>
+    	<td><%= product.external_key %></td>
+      <td><%= product.name %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @products %>
 
 <% if can? :manage, Category %><%= link_to t(:edit), edit_category_path(@category) %> | <%end%>
 <%= link_to t(:back), categories_path %>
