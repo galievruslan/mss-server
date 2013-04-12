@@ -30,7 +30,7 @@ class ProductUnitOfMeasuresController < ApplicationController
   def new
     @product = Product.find(params[:product_id])    
     @product_unit_of_measure = ProductUnitOfMeasure.new
-    @unit_of_measures = UnitOfMeasure.all
+    @unit_of_measures = UnitOfMeasure.where(validity: true)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,7 +40,7 @@ class ProductUnitOfMeasuresController < ApplicationController
 
   # GET /product_unit_of_measures/1/edit
   def edit    
-    @unit_of_measures = UnitOfMeasure.all
+    @unit_of_measures = UnitOfMeasure.where(validity: true)
     @product = Product.find(params[:product_id])
     @product_unit_of_measure = ProductUnitOfMeasure.find(params[:id])
   end
@@ -48,7 +48,7 @@ class ProductUnitOfMeasuresController < ApplicationController
   # POST /product_unit_of_measures
   # POST /product_unit_of_measures.json
   def create
-    @unit_of_measures = UnitOfMeasure.all
+    @unit_of_measures = UnitOfMeasure.where(validity: true)
     @product = Product.find(params[:product_id])
     @product_unit_of_measure = ProductUnitOfMeasure.new(params[:product_unit_of_measure])
     @product.product_unit_of_measures << @product_unit_of_measure
@@ -68,7 +68,7 @@ class ProductUnitOfMeasuresController < ApplicationController
   # PUT /product_unit_of_measures/1
   # PUT /product_unit_of_measures/1.json
   def update
-    @unit_of_measures = UnitOfMeasure.all
+    @unit_of_measures = UnitOfMeasure.where(validity: true)
     @product = Product.find(params[:product_id])
     @product_unit_of_measure = ProductUnitOfMeasure.find(params[:id])
 

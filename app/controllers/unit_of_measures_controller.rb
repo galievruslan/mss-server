@@ -3,8 +3,13 @@ class UnitOfMeasuresController < ApplicationController
   # GET /unit_of_measures
   # GET /unit_of_measures.json
   def index
-    @search = UnitOfMeasure.search(params[:q])
-    @unit_of_measures = @search.result.page(params[:page]).per(current_user.list_page_size)
+    if params[:q]
+      @search = UnitOfMeasure.search(params[:q])
+      @unit_of_measures = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = UnitOfMeasure.search(params[:q])    
+      @unit_of_measures = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end    
     
     if params[:page_size]
       page_size = params[:page_size]

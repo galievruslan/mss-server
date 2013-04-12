@@ -3,8 +3,13 @@ class StatusesController < ApplicationController
   # GET /statuses
   # GET /statuses.json
   def index
-    @search = Status.search(params[:q])
-    @statuses = @search.result.page(params[:page]).per(current_user.list_page_size)
+    if params[:q]
+      @search = Status.search(params[:q])
+      @statuses = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = Status.search(params[:q])    
+      @statuses = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end    
     
     if params[:page_size]
       page_size = params[:page_size]

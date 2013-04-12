@@ -27,7 +27,7 @@ class PriceListLinesController < ApplicationController
   # GET /price_list_lines/new
   # GET /price_list_lines/new.json
   def new
-    @products = Product.all
+    @products = Product.where(validity: true)
     @price_list = PriceList.find(params[:price_list_id])
     @price_list_line = ProductPrice.new
 
@@ -39,7 +39,7 @@ class PriceListLinesController < ApplicationController
 
   # GET /price_list_lines/1/edit
   def edit
-    @products = Product.all
+    @products = Product.where(validity: true)
     @price_list = PriceList.find(params[:price_list_id])
     @price_list_line = ProductPrice.find(params[:id])
   end
@@ -47,7 +47,7 @@ class PriceListLinesController < ApplicationController
   # POST /price_list_lines
   # POST /price_list_lines.json
   def create
-    @products = Product.all
+    @products = Product.where(validity: true)
     @price_list = PriceList.find(params[:price_list_id])    
     @price_list_line = ProductPrice.new(params[:product_price])
     @price_list.product_prices << @price_list_line
@@ -67,7 +67,7 @@ class PriceListLinesController < ApplicationController
   # PUT /price_list_lines/1
   # PUT /price_list_lines/1.json
   def update
-    @products = Product.all
+    @products = Product.where(validity: true)
     @price_list = PriceList.find(params[:price_list_id])
     @price_list_line = ProductPrice.find(params[:id])
 
@@ -85,7 +85,7 @@ class PriceListLinesController < ApplicationController
   # DELETE /price_list_lines/1
   # DELETE /price_list_lines/1.json
   def destroy
-    @price_list = PriceList.find(params[:product_price])
+    @price_list = PriceList.find(params[:price_list_id])
     @price_list_line = ProductPrice.find(params[:id])
     @price_list_line.destroy
 

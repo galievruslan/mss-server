@@ -24,6 +24,12 @@
 		  		<%= f.text_field :address_cont, class: 'search-field'%>
 		  	</div>
 		  </div>
+		  <div class="control-group">
+		  	<%= f.label :validity_eq, t(:validity)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.check_box :validity_eq, checked: true, class: 'search-field'%>
+		  	</div>
+		  </div>
 		  <div class="control-group">	  	
 		  		<%= f.submit t(:search), class: 'btn btn-info' %>	
 		  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>  	

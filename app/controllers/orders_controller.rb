@@ -31,12 +31,12 @@ class OrdersController < ApplicationController
   # GET /orders/new
   # GET /orders/new.json
   def new
-    @shipping_addresses = ShippingAddress.all
-    @managers = Manager.all
-    @price_lists = PriceList.all
-    @warehouses = Warehouse.all
-    @products = Product.all
-    @unit_of_measures = UnitOfMeasure.all
+    @shipping_addresses = ShippingAddress.where(validity: true)
+    @managers = Manager.where(validity: true)
+    @price_lists = PriceList.where(validity: true)
+    @warehouses = Warehouse.where(validity: true)
+    @products = Product.where(validity: true)
+    @unit_of_measures = UnitOfMeasure.where(validity: true)
     @order = Order.new
 
     respond_to do |format|
@@ -47,24 +47,24 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
-    @shipping_addresses = ShippingAddress.all
-    @managers = Manager.all
-    @price_lists = PriceList.all
-    @warehouses = Warehouse.all
-    @products = Product.all
-    @unit_of_measures = UnitOfMeasure.all
+    @shipping_addresses = ShippingAddress.where(validity: true)
+    @managers = Manager.where(validity: true)
+    @price_lists = PriceList.where(validity: true)
+    @warehouses = Warehouse.where(validity: true)
+    @products = Product.where(validity: true)
+    @unit_of_measures = UnitOfMeasure.where(validity: true)
     @order = Order.find(params[:id])
   end
 
   # POST /orders
   # POST /orders.json
   def create
-    @shipping_addresses = ShippingAddress.all
-    @managers = Manager.all
-    @price_lists = PriceList.all
-    @warehouses = Warehouse.all
-    @products = Product.all
-    @unit_of_measures = UnitOfMeasure.all
+    @shipping_addresses = ShippingAddress.where(validity: true)
+    @managers = Manager.where(validity: true)
+    @price_lists = PriceList.where(validity: true)
+    @warehouses = Warehouse.where(validity: true)
+    @products = Product.where(validity: true)
+    @unit_of_measures = UnitOfMeasure.where(validity: true)
     @order = Order.new(params[:order])
 
     respond_to do |format|
@@ -87,12 +87,12 @@ class OrdersController < ApplicationController
       @order = Order.find(params[:id])
     end
     
-    @shipping_addresses = ShippingAddress.all
-    @managers = Manager.all
-    @price_lists = PriceList.all
-    @warehouses = Warehouse.all
-    @products = Product.all
-    @unit_of_measures = UnitOfMeasure.all
+    @shipping_addresses = ShippingAddress.where(validity: true)
+    @managers = Manager.where(validity: true)
+    @price_lists = PriceList.where(validity: true)
+    @warehouses = Warehouse.where(validity: true)
+    @products = Product.where(validity: true)
+    @unit_of_measures = UnitOfMeasure.where(validity: true)
     
     respond_to do |format|
       if @order.update_attributes(params[:order])

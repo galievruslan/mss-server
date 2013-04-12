@@ -3,13 +3,13 @@ class SettingsController < ApplicationController
   # GET /settings
   def show    
     authorize! :settings , :view    
-    @statuses = Status.all
+    @statuses = Status.where(validity: true)
   end
   
   # PUT /settings
   def update
     authorize! :settings , :manage
-    @statuses = Status.all    
+    @statuses = Status.where(validity: true)    
     @errors = []
     # Settings.ftp_server = params[:ftp_server]
     config = YAML.load_file("#{Rails.root}/config/settings.local.yml")

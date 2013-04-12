@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @managers = Manager.all 
+    @managers = Manager.where(validity: true) 
     @user = User.find(params[:id])
     @user.roles.each do |role|
       case role.name
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   
   def new
     @user = User.new
-    @managers = Manager.all 
+    @managers = Manager.where(validity: true) 
     
     respond_to do |format|
       format.html # new.html.erb
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @managers = Manager.all 
+    @managers = Manager.where(validity: true) 
     @user = User.new(params[:user])
     @user.save
     
@@ -73,7 +73,7 @@ class UsersController < ApplicationController
   end
   
   def update
-    @managers = Manager.all 
+    @managers = Manager.where(validity: true) 
     @user = User.find(params[:id])
     @user.roles.delete_all
     if params[:admin]
@@ -102,7 +102,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @managers = Manager.all 
+    @managers = Manager.where(validity: true) 
     @user = User.find(params[:id])
     @user.destroy
 

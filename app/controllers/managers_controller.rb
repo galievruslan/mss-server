@@ -3,8 +3,15 @@ class ManagersController < ApplicationController
   # GET /managers
   # GET /managers.json
   def index
-    @search = Manager.search(params[:q])
-    @managers = @search.result.page(params[:page]).per(current_user.list_page_size)
+    if params[:q]
+      @search = Manager.search(params[:q])
+      @managers = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = Manager.search(params[:q])    
+      @managers = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end   
+    
+    @warehouses = Warehouse.all
     
     if params[:page_size]
       page_size = params[:page_size]
@@ -40,7 +47,7 @@ class ManagersController < ApplicationController
   # GET /managers/new.json
   def new
     @manager = Manager.new
-    @warehouses = Warehouse.all
+    @warehouses = Warehouse.where(validity: true)
     
     respond_to do |format|
       format.html # new.html.erb
@@ -51,13 +58,13 @@ class ManagersController < ApplicationController
   # GET /managers/1/edit
   def edit
     @manager = Manager.find(params[:id])
-    @warehouses = Warehouse.all
+    @warehouses = Warehouse.where(validity: true)
   end
 
   # POST /managers
   # POST /managers.json
   def create
-    @warehouses = Warehouse.all
+    @warehouses = Warehouse.where(validity: true)
     @manager = Manager.new(params[:manager])
     if @manager.name == 'Bali'
       redirect_to bali_path, notice: 'Bali best place in the World.'

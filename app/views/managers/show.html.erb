@@ -10,6 +10,10 @@
   <b><%=t(:default_warehouse)%>:</b>
   <%= @manager.default_warehouse ? @manager.default_warehouse.name : t(:no_default_warehouse) %>
 </p>
+<p>
+  <b><%= t(:validity)%>:</b>
+  <%= @manager.validity ? t(:truth) : t(:lie) %>
+</p>
 
 <h4><%=t(:shipping_addresses)%></h4>
 

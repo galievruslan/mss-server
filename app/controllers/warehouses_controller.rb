@@ -3,8 +3,13 @@ class WarehousesController < ApplicationController
   # GET /warehouses
   # GET /warehouses.json
   def index
-    @search = Warehouse.search(params[:q])
-    @warehouses = @search.result.page(params[:page]).per(current_user.list_page_size)
+    if params[:q]
+      @search = Warehouse.search(params[:q])
+      @warehouses = @search.result.page(params[:page]).per(current_user.list_page_size)    
+    else
+      @search = Warehouse.search(params[:q])    
+      @warehouses = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end
     
     if params[:page_size]
       page_size = params[:page_size]

@@ -6,7 +6,7 @@ class RoutePointsController < ApplicationController
     @route = Route.find(params[:route_id])
     @search = @route.route_points.search(params[:q])
     @route_points = @search.result.page(params[:page]).per(current_user.list_page_size)
-    @statuses = Status.all
+    @statuses = Status.where(validity: true)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @route_points }
@@ -30,8 +30,8 @@ class RoutePointsController < ApplicationController
   def new
     @route=Route.find(params[:route_id])
     @route_point = RoutePoint.new
-    @shipping_addresses = ShippingAddress.all
-    @statuses = Status.all
+    @shipping_addresses = ShippingAddress.where(validity: true)
+    @statuses = Status.where(validity: true)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,7 +44,7 @@ class RoutePointsController < ApplicationController
     @route = Route.find(params[:route_id])
     @route_point = RoutePoint.find(params[:id])
     @shipping_addresses = ShippingAddress.all
-    @statuses = Status.all
+    @statuses = Status.where(validity: true)
   end
 
   # POST /route_points

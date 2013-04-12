@@ -10,7 +10,10 @@
       </ul>
     </div>
   <% end %>
-
+	<div class="field">
+    <%= f.label :external_key, t(:external_key) %>
+    <%= f.text_field :external_key %>
+  </div>
   <div class="field">
     <%= f.label :name, t(:name) %>
     <%= f.text_field :name %>
@@ -18,11 +21,7 @@
   <div class="field">
     <%= f.label :address, t(:address) %>
     <%= f.text_field :address %>
-  </div>
-  <div class="field">
-    <%= f.label :external_key, t(:external_key) %>
-    <%= f.text_field :external_key %>
-  </div>
+  </div>  
   <div class="field form-inline">
   	<%= f.check_box :validity %>
     <%= f.label :validity, t(:validity) %>    

@@ -27,7 +27,7 @@ class ProductPricesController < ApplicationController
   # GET /product_prices/new
   # GET /product_prices/new.json
   def new
-    @price_lists = PriceList.all
+    @price_lists = PriceList.where(validity: true)
     @product = Product.find(params[:product_id])
     @product_price = ProductPrice.new
 
@@ -39,7 +39,7 @@ class ProductPricesController < ApplicationController
 
   # GET /product_prices/1/edit
   def edit
-    @price_lists = PriceList.all
+    @price_lists = PriceList.where(validity: true)
     @product = Product.find(params[:product_id])
     @product_price = ProductPrice.find(params[:id])
   end
@@ -47,7 +47,7 @@ class ProductPricesController < ApplicationController
   # POST /product_prices
   # POST /product_prices.json
   def create
-    @price_lists = PriceList.all
+    @price_lists = PriceList.where(validity: true)
     @product = Product.find(params[:product_id])     
     @product_price = ProductPrice.new(params[:product_price])
     @product.product_prices << @product_price
@@ -67,7 +67,7 @@ class ProductPricesController < ApplicationController
   # PUT /product_prices/1
   # PUT /product_prices/1.json
   def update
-    @price_lists = PriceList.all
+    @price_lists = PriceList.where(validity: true)
     @product = Product.find(params[:product_id])
     @product_price = ProductPrice.find(params[:id])
 

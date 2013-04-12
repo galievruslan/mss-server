@@ -3,8 +3,13 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
-    @search = Customer.search(params[:q])
-    @customers = @search.result.page(params[:page]).per(current_user.list_page_size)
+    if params[:q]
+      @search = Customer.search(params[:q])
+      @customers = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = Customer.search(params[:q])    
+      @customers = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end    
     
     if params[:page_size]
       page_size = params[:page_size]

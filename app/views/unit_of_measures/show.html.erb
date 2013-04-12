@@ -6,7 +6,10 @@
   <b><%= t(:name)%>:</b>
   <%= @unit_of_measure.name %>
 </p>
-
+<p>
+  <b><%= t(:validity)%>:</b>
+  <%= @unit_of_measure.validity ? t(:truth) : t(:lie) %>
+</p>
 
 <% if can? :manage, UnitOfMeasure %><%= link_to t(:edit), edit_unit_of_measure_path(@unit_of_measure) %> |<% end %>
 <%= link_to t(:back), unit_of_measures_path %>

@@ -3,9 +3,15 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @search = Product.search(params[:q])
-    @products = @search.result.page(params[:page]).per(current_user.list_page_size)
-    @categories = Category.all
+    if params[:q]
+      @search = Product.search(params[:q])
+      @products = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = Product.search(params[:q])    
+      @products = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end   
+    
+    @categories = Category.where(validity: true)
     
     if params[:page_size]
       page_size = params[:page_size]
@@ -39,7 +45,7 @@ class ProductsController < ApplicationController
   # GET /products/new
   # GET /products/new.json
   def new
-    @categories = Category.all
+    @categories = Category.where(validity: true)
     @product = Product.new
     respond_to do |format|
       format.html # new.html.erb
@@ -49,7 +55,7 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
-    @categories = Category.all
+    @categories = Category.where(validity: true)
     @product = Product.find(params[:id])
   end
 

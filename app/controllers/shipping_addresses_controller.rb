@@ -4,8 +4,14 @@ class ShippingAddressesController < ApplicationController
   # GET /shipping_addresses.json
   def index
     @customer = Customer.find(params[:customer_id])
-    @search = @customer.shipping_addresses.search(params[:q])
-    @shipping_addresses = @search.result.page(params[:page]).per(current_user.list_page_size)
+    if params[:q]
+      @search = @customer.shipping_addresses.search(params[:q])
+      @shipping_addresses = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = @customer.shipping_addresses.search(params[:q])  
+      @shipping_addresses = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end
+    
 
     respond_to do |format|
       format.html # index.html.erb

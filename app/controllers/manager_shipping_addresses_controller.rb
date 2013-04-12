@@ -27,7 +27,7 @@ class ManagerShippingAddressesController < ApplicationController
   # GET /manager_shipping_addresses/new
   # GET /manager_shipping_addresses/new.json
   def new
-    @shipping_addresses = ShippingAddress.all
+    @shipping_addresses = ShippingAddress.where(validity: true)
     @manager = Manager.find(params[:manager_id])
     @manager_shipping_address = ManagerShippingAddress.new
 
@@ -39,7 +39,7 @@ class ManagerShippingAddressesController < ApplicationController
 
   # GET /manager_shipping_addresses/1/edit
   def edit
-    @shipping_addresses = ShippingAddress.all
+    @shipping_addresses = ShippingAddress.where(validity: true)
     @manager = Manager.find(params[:manager_id])
     @manager_shipping_address = ManagerShippingAddress.find(params[:id])
   end
@@ -47,7 +47,7 @@ class ManagerShippingAddressesController < ApplicationController
   # POST /manager_shipping_addresses
   # POST /manager_shipping_addresses.json
   def create
-    @shipping_addresses = ShippingAddress.all
+    @shipping_addresses = ShippingAddress.where(validity: true)
     @manager = Manager.find(params[:manager_id])
     @manager_shipping_address = ManagerShippingAddress.new(params[:manager_shipping_address])
     @manager.manager_shipping_addresses << @manager_shipping_address

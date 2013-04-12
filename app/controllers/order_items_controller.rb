@@ -28,7 +28,7 @@ class OrderItemsController < ApplicationController
   # GET /order_items/new
   # GET /order_items/new.json
   def new
-    @products = Product.all
+    @products = Product.where(validity: true)
     @order = Order.find(params[:order_id])
     @order_item = OrderItem.new
 
@@ -40,20 +40,23 @@ class OrderItemsController < ApplicationController
 
   # GET /order_items/1/edit
   def edit
-    @products = Product.all
+    @products = Product.where(validity: true)
     @order = Order.find(params[:order_id])
     @order_item = OrderItem.find(params[:id])
     @product = @order_item.product
     @select_unit_of_measure = @order_item.unit_of_measure.id
     @product_unit_of_measures = ProductUnitOfMeasure.where(product_id: @product.id)      
-    @unit_of_measures= [] 
+    @unit_of_measures = [] 
     @product_unit_of_measures.each do |product_unit_of_measure|
-      unit_of_measure_name = UnitOfMeasure.find(product_unit_of_measure.unit_of_measure_id).name
-      unit_of_measure_id = UnitOfMeasure.find(product_unit_of_measure.unit_of_measure_id).id
-      unit_of_measure = []
-      unit_of_measure << unit_of_measure_name
-      unit_of_measure << unit_of_measure_id   
-      @unit_of_measures << unit_of_measure
+      unit_of_measure = UnitOfMeasure.find(product_unit_of_measure.unit_of_measure_id)
+      if unit_of_measure.validity
+        unit_of_measure_name = unit_of_measure.name
+        unit_of_measure_id = unit_of_measure.id
+        unit_of_measures = []
+        unit_of_measures << unit_of_measure_name
+        unit_of_measures << unit_of_measure_id   
+        @unit_of_measures << unit_of_measures
+      end      
     end   
    
   end
@@ -61,7 +64,7 @@ class OrderItemsController < ApplicationController
   # POST /order_items
   # POST /order_items.json
   def create
-    @products = Product.all
+    @products = Product.where(validity: true)
     @order = Order.find(params[:order_id])
     @order_item = OrderItem.new(params[:order_item])
     @order_item.unit_of_measure_id = params[:unit_of_measure_id]
@@ -82,7 +85,7 @@ class OrderItemsController < ApplicationController
   # PUT /order_items/1
   # PUT /order_items/1.json
   def update
-    @products = Product.all
+    @products = Product.where(validity: true)
     @order = Order.find(params[:order_id])
     @order_item = OrderItem.find(params[:id])
     @order_item.unit_of_measure_id = params[:unit_of_measure_id]
@@ -114,12 +117,15 @@ class OrderItemsController < ApplicationController
     @product_unit_of_measures = ProductUnitOfMeasure.where(product_id: params[:product_id])  
     @unit_of_measures= [] 
     @product_unit_of_measures.each do |product_unit_of_measure|
-      unit_of_measure_name = UnitOfMeasure.find(product_unit_of_measure.unit_of_measure_id).name
-      unit_of_measure_id = UnitOfMeasure.find(product_unit_of_measure.unit_of_measure_id).id
-      unit_of_measure = []
-      unit_of_measure << unit_of_measure_name
-      unit_of_measure << unit_of_measure_id   
-      @unit_of_measures << unit_of_measure
+      unit_of_measure = UnitOfMeasure.find(product_unit_of_measure.unit_of_measure_id)
+      if unit_of_measure.validity
+        unit_of_measure_name = unit_of_measure.name
+        unit_of_measure_id = unit_of_measure.id
+        unit_of_measures = []
+        unit_of_measures << unit_of_measure_name
+        unit_of_measures << unit_of_measure_id   
+        @unit_of_measures << unit_of_measures
+      end      
     end
     
     render :partial => "product_unit_of_measures", :object => @unit_of_measures  

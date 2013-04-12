@@ -3,10 +3,16 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
   def index
+    if params[:q]
+      @search = Category.search(params[:q])
+      @categories = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else  
+      @search = Category.search(params[:q])    
+      @categories = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)      
+    end
     
-    @search = Category.search(params[:q])
-    @categories = @search.result.page(params[:page]).per(current_user.list_page_size)
-    
+    @parents = Category.all
+        
     if params[:page_size]
       page_size = params[:page_size]
     else
@@ -39,7 +45,7 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   # GET /categories/new.json
   def new
-    @categories = Category.all
+    @categories = Category.where(validity: true)
     @category = Category.new
 
     respond_to do |format|
@@ -50,14 +56,14 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
-    @categories = Category.all
+    @categories = Category.where(validity: true)
     @category = Category.find(params[:id])
   end
 
   # POST /categories
   # POST /categories.json
   def create
-    @categories = Category.all
+    @categories = Category.where(validity: true)
     @category = Category.new(params[:category])
 
     respond_to do |format|

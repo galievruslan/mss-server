@@ -3,8 +3,13 @@ class PriceListsController < ApplicationController
   # GET /price_lists
   # GET /price_lists.json
   def index
-    @search = PriceList.search(params[:q])
-    @price_lists = @search.result.page(params[:page]).per(current_user.list_page_size)
+    if params[:q]    
+      @search = PriceList.search(params[:q])
+      @price_lists = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = PriceList.search(params[:q])    
+      @price_lists = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end
     
     if params[:page_size]
       page_size = params[:page_size]

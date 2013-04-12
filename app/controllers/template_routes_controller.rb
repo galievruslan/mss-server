@@ -5,7 +5,7 @@ class TemplateRoutesController < ApplicationController
     @days_of_week = [0,1,2,3,4,5,6]
     @search = TemplateRoute.search(params[:q])
     @template_routes = @search.result.page(params[:page]).per(current_user.list_page_size)
-    @managers = Manager.all
+    @managers = Manager.where(validity: true)
     if params[:updated_at]
       if params[:manager_id]
         @template_routes_json = TemplateRoute.where("updated_at >= #{params[:updated_at]} and manager_id = #{params[:manager_id]}")
@@ -41,9 +41,9 @@ class TemplateRoutesController < ApplicationController
   # GET /template_routes/new.json
   def new
     @days_of_week = [0,1,2,3,4,5,6]
-    @managers = Manager.all
+    @managers = Manager.where(validity: true)
     @template_route = TemplateRoute.new
-    @shipping_addresses = ShippingAddress.all
+    @shipping_addresses = ShippingAddress.where(validity: true)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -54,16 +54,18 @@ class TemplateRoutesController < ApplicationController
   # GET /template_routes/1/edit
   def edit
     @days_of_week = [0,1,2,3,4,5,6]
-    @managers = Manager.all
+    @managers = Manager.where(validity: true)
     @template_route = TemplateRoute.find(params[:id])
-    @shipping_addresses = ShippingAddress.all
+    @shipping_addresses = ShippingAddress.where(validity: true)
   end
 
   # POST /template_routes
   # POST /template_routes.json
   def create
+    @days_of_week = [0,1,2,3,4,5,6]
+    @managers = Manager.where(validity: true)
     @template_route = TemplateRoute.new(params[:template_route])
-    @shipping_addresses = ShippingAddress.all
+    @shipping_addresses = ShippingAddress.where(validity: true)
 
     respond_to do |format|
       if @template_route.save
@@ -79,8 +81,10 @@ class TemplateRoutesController < ApplicationController
   # PUT /template_routes/1
   # PUT /template_routes/1.json
   def update
+    @days_of_week = [0,1,2,3,4,5,6]
+    @managers = Manager.where(validity: true)
     @template_route = TemplateRoute.find(params[:id])
-    @shipping_addresses = ShippingAddress.all
+    @shipping_addresses = ShippingAddress.where(validity: true)
 
     respond_to do |format|
       if @template_route.update_attributes(params[:template_route])
