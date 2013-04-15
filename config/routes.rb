@@ -15,8 +15,21 @@
   put 'profile/update', :to => 'profiles#update'
   match 'profile/edit_password', :to => 'profiles#edit_password'
   put 'profile/update_password', :to => 'profiles#update_password'
-  get 'bali', :to => 'pages#bali'    
-
+  get 'bali', :to => 'pages#bali'
+  
+  # MobileSynchronization routes
+  get 'synchronization/customers', :to => 'mobile_synchronization#customers'
+  get 'synchronization/managers', :to => 'mobile_synchronization#managers'
+  get 'synchronization/categories', :to => 'mobile_synchronization#categories'    
+  get 'synchronization/products', :to => 'mobile_synchronization#croducts'
+  get 'synchronization/warehouses', :to => 'mobile_synchronization#warehouses'
+  get 'synchronization/statuses', :to => 'mobile_synchronization#statuses'
+  get 'synchronization/price_lists', :to => 'mobile_synchronization#price_lists'
+  get 'synchronization/unit_of_measures', :to => 'mobile_synchronization#unit_of_measures'
+  get 'synchronization/template_routes', :to => 'mobile_synchronization#template_routes'
+  post 'synchronization/routes', :to => 'mobile_synchronization#routes'
+  post 'synchronization/orders', :to => 'mobile_synchronization#orders'
+  
   resources :orders do
     member do
         put :export_again

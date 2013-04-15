@@ -121,16 +121,13 @@ class RoutesController < ApplicationController
 
   # PUT /routes/1
   # PUT /routes/1.json
-  def update
-    if params[:external_key]
-      @route = Route.find_by_external_key(params[:external_key])
-    else
-      @route = Route.find(params[:id])
-    end
+  def update   
     
+    @route = Route.find(params[:id])   
     @managers = Manager.where(validity: true)
     @shipping_addresses = ShippingAddress.where(validity: true)
     @statuses = Status.where(validity: true)
+    
     respond_to do |format|
       if @route.update_attributes(params[:route])
         format.html { redirect_to @route, notice: t(:route_updated) }

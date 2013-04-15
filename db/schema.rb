@@ -71,7 +71,6 @@ ActiveRecord::Schema.define(:version => 20130411114308) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.datetime "exported_at"
-    t.string   "external_key"
     t.integer  "route_point_id"
   end
 
@@ -130,15 +129,13 @@ ActiveRecord::Schema.define(:version => 20130411114308) do
     t.integer  "route_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
-    t.string   "external_key"
   end
 
   create_table "routes", :force => true do |t|
     t.date     "date"
     t.integer  "manager_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-    t.string   "external_key"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "shipping_addresses", :force => true do |t|

@@ -8,7 +8,7 @@ class TemplateRoutesController < ApplicationController
     @managers = Manager.where(validity: true)
     if params[:updated_at]
       if params[:manager_id]
-        @template_routes_json = TemplateRoute.where("updated_at >= #{params[:updated_at]} and manager_id = #{params[:manager_id]}")
+        @template_routes_json = TemplateRoute.where("updated_at >= #{params[:updated_at]} and manager_id = #{params[:manager_id]}").includes(:template_route_points)
       else
         @template_routes_json = TemplateRoute.where("updated_at >= #{params[:updated_at]}").includes(:template_route_points)
       end      

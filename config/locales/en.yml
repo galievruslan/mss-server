@@ -296,3 +296,4 @@ en:
   banned: "Banned"
   not_banned: "Not banned"
   ban: "Ban?"
+  one_route_per_date: "already has a route for the day"

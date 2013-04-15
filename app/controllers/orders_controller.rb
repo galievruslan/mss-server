@@ -80,13 +80,8 @@ class OrdersController < ApplicationController
 
   # PUT /orders/1
   # PUT /orders/1.json
-  def update
-    if params[:external_key]
-      @order = Order.find_by_external_key(params[:external_key])
-    else
-      @order = Order.find(params[:id])
-    end
-    
+  def update    
+    @order = Order.find(params[:id])    
     @shipping_addresses = ShippingAddress.where(validity: true)
     @managers = Manager.where(validity: true)
     @price_lists = PriceList.where(validity: true)
