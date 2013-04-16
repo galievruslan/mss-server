@@ -317,7 +317,8 @@ class ExchangeController < ApplicationController
       files = {}
       @not_exported_orders.each do |not_exported_order|
         current_date_time = Time.now.strftime("%d-%m-%y %H-%M")
-        file_path = "#{Rails.root.to_s}/tmp/orders/#{current_date_time} order-#{not_exported_order.id}-#{not_exported_order.date}.xml"
+        order_datetime = not_exported_order.date.strftime("%d-%m-%y %H-%M")
+        file_path = "#{Rails.root.to_s}/tmp/orders/#{current_date_time} order-#{not_exported_order.id}-#{order_datetime}.xml"
         file_name = generate_xml_file(file_path, not_exported_order)
         files[file_name] = file_path
         not_exported_order.update_attributes(exported_at: Time.now)      
@@ -334,7 +335,8 @@ class ExchangeController < ApplicationController
       files = {}
       @not_exported_orders.each do |not_exported_order|
         current_date_time = Time.now.strftime("%d-%m-%y %H-%M")
-        file_path = "#{Rails.root.to_s}/tmp/orders/#{current_date_time} order-#{not_exported_order.id}-#{not_exported_order.date}.xml"
+        order_datetime = not_exported_order.date.strftime("%d-%m-%y %H-%M")
+        file_path = "#{Rails.root.to_s}/tmp/orders/#{current_date_time} order-#{not_exported_order.id}-#{order_datetime}.xml"
         file_name = generate_xml_file(file_path, not_exported_order)
         files[file_name] = file_path              
       end
@@ -352,7 +354,8 @@ class ExchangeController < ApplicationController
       files = {}
       @not_exported_orders.each do |not_exported_order|
         current_date_time = Time.now.strftime("%d-%m-%y %H-%M")
-        file_path = "#{Rails.root.to_s}/tmp/orders/#{current_date_time} order-#{not_exported_order.id}-#{not_exported_order.date}.xml"
+        order_datetime = not_exported_order.date.strftime("%d-%m-%y %H-%M")
+        file_path = "#{Rails.root.to_s}/tmp/orders/#{current_date_time} order-#{not_exported_order.id}-#{order_datetime}.xml"
         file_name = generate_xml_file(file_path, not_exported_order)
         files[file_name] = file_path              
       end
@@ -380,6 +383,7 @@ class ExchangeController < ApplicationController
     data.order do
       data.id(order.id)
       data.date(order.date)
+      data.shipping_date(order.shipping_date)
       data.customer_id(order.shipping_address.customer.id)
       data.customer_name(order.shipping_address.customer.name)
       data.customer_external_key(order.shipping_address.customer.external_key)

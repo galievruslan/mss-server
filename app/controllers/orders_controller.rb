@@ -119,6 +119,7 @@ class OrdersController < ApplicationController
     data.order do        
       data.id(order.id)
       data.date(order.date)
+      data.shipping_date(order.shipping_date)
       data.customer_id(order.shipping_address.customer.id)
       data.customer_name(order.shipping_address.customer.name)
       data.customer_external_key(order.shipping_address.customer.external_key)

@@ -62,7 +62,8 @@ ActiveRecord::Schema.define(:version => 20130411114308) do
   end
 
   create_table "orders", :force => true do |t|
-    t.date     "date"
+    t.datetime "date"
+    t.datetime "shipping_date"
     t.text     "comment"
     t.integer  "shipping_address_id"
     t.integer  "manager_id"

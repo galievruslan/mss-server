@@ -20,6 +20,13 @@
 		  	</div>
 		  </div>
 		  <div class="control-group">
+		  	<%= f.label :shipping_date_gt, t(:shipping_date_period)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :shipping_date_gt, id: 'shipping_date_gt' , class: 'input-small search-field'%>
+		  		- <%= f.text_field :shipping_date_lt, id: 'shipping_date_lt' , class: 'input-small search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
 		  	<%= f.label :shipping_address_name_cont, t(:shipping_address)+':', class: "control-label"%>
 		  	<div class="controls">
 		  		<%= f.text_field :shipping_address_name_cont, class: 'search-field'%>
@@ -60,6 +67,7 @@
 	<thead>
 	  <tr>
 	    <th><%= sort_link @search, :date, t(:date) %></th>
+	    <th><%= sort_link @search, :shipping_date, t(:shipping_date) %></th>
 	    <th><%= sort_link @search, :shipping_address_name, t(:shipping_address) %></th>
 	    <th><%= sort_link @search, :manager_name, t(:manager) %></th>
 	    <th><%= sort_link @search, :warehouse_name, t(:warehouse) %></th>
@@ -71,7 +79,8 @@
 	<tbody>
 		<% @orders.each do |order| %>
 	  <tr <%='class=success' if order.exported_at %>>
-	    <td><%= order.date %></td>
+	    <td><%= order.date.strftime("%T %d-%m-%y") %></td>
+	    <td><%= order.shipping_date.strftime("%T %d-%m-%y") %></td>
 	    <td><%= order.shipping_address.name %></td>
 	    <td><%= order.manager.name %></td>
 	    <td><%= order.warehouse.name %></td>

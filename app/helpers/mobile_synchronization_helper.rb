@@ -7,4 +7,10 @@ module MobileSynchronizationHelper
     end
     return page_size
   end
+  def page
+    if params[:page]
+      page = params[:page]
+    end
+    return page
+  end
 end

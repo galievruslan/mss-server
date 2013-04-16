@@ -24,7 +24,11 @@
 		    <div class="field">
 		    <%= f.label :date, t(:date) %>
 		    <%= f.text_field :date, id: 'date_gt'%>
-			  </div>  
+			  </div>
+			  <div class="field">
+		    <%= f.label :shipping_date, t(:shipping_date) %>
+		    <%= f.text_field :shipping_date, id: 'date_lt'%>
+			  </div>
 			  <div class="field">
 			    <%= f.label :shipping_address_id, t(:shipping_address) %>
 			    <%= f.select(:shipping_address_id, @shipping_addresses.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_shipping_address)) %>

@@ -297,3 +297,5 @@ ru:
   not_banned: "Не заблокирован"
   ban: "Заблокировать?"
   one_route_per_date: "уже имеет маршрут на этот день"
+  shipping_date: "Дата отгрузки"
+  shipping_date_period: "Период отгрузки"

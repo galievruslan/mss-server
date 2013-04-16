@@ -21,7 +21,7 @@
   get 'synchronization/customers', :to => 'mobile_synchronization#customers'
   get 'synchronization/managers', :to => 'mobile_synchronization#managers'
   get 'synchronization/categories', :to => 'mobile_synchronization#categories'    
-  get 'synchronization/products', :to => 'mobile_synchronization#croducts'
+  get 'synchronization/products', :to => 'mobile_synchronization#products'
   get 'synchronization/warehouses', :to => 'mobile_synchronization#warehouses'
   get 'synchronization/statuses', :to => 'mobile_synchronization#statuses'
   get 'synchronization/price_lists', :to => 'mobile_synchronization#price_lists'
