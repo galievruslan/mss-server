@@ -32,9 +32,10 @@ class ExchangeController < ApplicationController
           new_customer = Customer.create(name: customer_name, external_key: customer_external_key)
         else 
           if !customer_db.validity
-            customer_db.validity = true            
-          end
-          customer_db.update_attributes(name: customer_name)        
+            customer_db.update_attributes(name: customer_name, validity: true)            
+          else
+            customer_db.update_attributes(name: customer_name)
+          end        
         end
       end   
     end
@@ -56,9 +57,10 @@ class ExchangeController < ApplicationController
           new_shipping_address = ShippingAddress.create(name: shipping_address_name, external_key: shipping_address_external_key, address: shipping_address_address, customer: shipping_address_customer)
         else
           if !shipping_address_db.validity
-            shipping_address_db.validity = true
-          end
-          shipping_address_db.update_attributes(name: shipping_address_name, address: shipping_address_address)
+            shipping_address_db.update_attributes(validity: true, name: shipping_address_name, address: shipping_address_address)
+          else
+            shipping_address_db.update_attributes(name: shipping_address_name, address: shipping_address_address)
+          end 
         end
       end   
     end
@@ -74,9 +76,10 @@ class ExchangeController < ApplicationController
           new_warehouse = Warehouse.create(name: warehouse_name, external_key: warehouse_external_key, address: warehouse_address)
         else
           if !warehouse_db.validity
-            warehouse_db.validity = true
+            warehouse_db.update_attributes(validity: true, name: warehouse_name, address: warehouse_address)
+          else
+            warehouse_db.update_attributes(name: warehouse_name, address: warehouse_address)
           end
-          warehouse_db.update_attributes(name: warehouse_name, address: warehouse_address)
         end        
       end   
     end
@@ -99,9 +102,10 @@ class ExchangeController < ApplicationController
           new_manager = Manager.create(name: manager_name, external_key: manager_external_key, default_warehouse: default_warehouse_db)
         else
           if !manager_db.validity
-            manager_db.validity = true
+            manager_db.update_attributes(validity: true, name: manager_name, default_warehouse: default_warehouse_db)
+          else
+            manager_db.update_attributes(name: manager_name, default_warehouse: default_warehouse_db)
           end
-          manager_db.update_attributes(name: manager_name, default_warehouse: default_warehouse_db)
         end        
       end   
     end
@@ -112,17 +116,26 @@ class ExchangeController < ApplicationController
         manager_external_key = manager_shipping_address.elements['manager_external_key'].text
         shipping_address_external_key = manager_shipping_address.elements['shipping_address_external_key'].text
         manager_db = Manager.find_by_external_key(manager_external_key)
+        shipping_address_db = ShippingAddress.find_by_external_key(shipping_address_external_key)
         
         if !manager_db
           error = I18n.t('errors.not_found_manager', external_key: manager_external_key) 
           @errors << error
           next          
         end
+        if !shipping_address_db
+          error = I18n.t('errors.not_found_shipping_address', external_key: shipping_address_external_key) 
+          @errors << error
+          next          
+        end        
         
-        shipping_address_db = ShippingAddress.find_by_external_key(shipping_address_external_key)
         manager_shipping_address_db = ManagerShippingAddress.find_by_manager_id_and_shipping_address_id(manager_db.id, shipping_address_db.id)
         if !manager_shipping_address_db
-          manager_shipping_address = ManagerShippingAddress.create(manager: manager_db, shipping_address: shipping_address_db)          
+          new_manager_shipping_address = ManagerShippingAddress.create(manager: manager_db, shipping_address: shipping_address_db)          
+        else
+          if !manager_shipping_address_db.validity
+            manager_shipping_address_db.update_attributes(validity: true)
+          end
         end        
       end   
     end
@@ -137,9 +150,10 @@ class ExchangeController < ApplicationController
           new_unit_of_measure = UnitOfMeasure.create(name: unit_of_measure_name, external_key: unit_of_measure_external_key)
         else
           if !unit_of_measure_db.validity
-            unit_of_measure_db.validity = true 
+            unit_of_measure_db.update_attributes(validity: true, name: unit_of_measure_name)
+          else
+            unit_of_measure_db.update_attributes(name: unit_of_measure_name)
           end
-          unit_of_measure_db.update_attributes(name: unit_of_measure_name)
         end          
       end   
     end
@@ -154,28 +168,30 @@ class ExchangeController < ApplicationController
           new_price_list = PriceList.create(name: price_list_name, external_key: price_list_external_key)
         else
           if !price_list_db.validity
-            price_list_db.validity = true 
+            price_list_db.update_attributes(validity: true, name: price_list_name)
+          else
+            price_list_db.update_attributes(name: price_list_name)
           end
-          price_list_db.update_attributes(name: price_list_name)
         end          
       end   
     end
     
     if params[:categories]
       categories = xml.elements.to_a("//category")
-      categories.each do |category| 
-        category_name = category.elements['name'].text
-        category_external_key = category.elements['external_key'].text
-        category_db = Category.find_by_external_key(category_external_key)        
-        if !category_db             
-            new_category = Category.create(name: category_name, external_key: category_external_key)
-        else
-          if !category_db.validity
-            category_db.validity = true 
-          end
-          category_db.update_attributes(name: category_name)          
-        end
-      end
+      # categories.each do |category| 
+        # category_name = category.elements['name'].text
+        # category_external_key = category.elements['external_key'].text
+        # category_db = Category.find_by_external_key(category_external_key)        
+        # if !category_db             
+            # new_category = Category.create(name: category_name, external_key: category_external_key)
+        # else
+          # if !category_db.validity
+            # category_db.update_attributes(validity: true, name: category_name)
+          # else
+            # category_db.update_attributes(name: category_name)
+          # end          
+        # end
+      # end
       
       categories.each do |category| 
         category_name = category.elements['name'].text
@@ -186,9 +202,10 @@ class ExchangeController < ApplicationController
             new_category = Category.create(name: category_name, external_key: category_external_key)
           else
             if !category_db.validity
-              category_db.validity = true 
+              category_db.update_attributes(validity: true, name: category_name, parent: nil)
+            else
+              category_db.update_attributes(name: category_name, parent: nil)
             end
-            category_db.update_attributes(name: category_name, parent: nil)
           end 
               
         else
@@ -205,9 +222,10 @@ class ExchangeController < ApplicationController
             new_category = Category.create(name: category_name, external_key: category_external_key, parent: category_parent)
           else
             if !category_db.validity
-              category_db.validity = true 
+              category_db.update_attributes(validity: true, name: category_name, parent: category_parent)
+            else
+              category_db.update_attributes(name: category_name, parent: category_parent)
             end
-            category_db.update_attributes(name: category_name, parent: category_parent)
           end
             
         end
@@ -233,9 +251,10 @@ class ExchangeController < ApplicationController
           new_product = Product.create(name: product_name, external_key: product_external_key, category: product_category)
         else
           if !product_db.validity
-            product_db.validity = true 
+            product_db.update_attributes(validity: true, name: product_name, category: product_category)
+          else
+            product_db.update_attributes(name: product_name, category: product_category)
           end
-          product_db.update_attributes(name: product_name, category: product_category)
         end          
       end   
     end
@@ -267,7 +286,11 @@ class ExchangeController < ApplicationController
         if !product_unit_of_measure_db
           new_product_unit_of_measure = ProductUnitOfMeasure.create(product: product, unit_of_measure: unit_of_measure, count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
         else
-          product_unit_of_measure_db.update_attributes(count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
+          if !product_unit_of_measure_db.validity
+            product_unit_of_measure_db.update_attributes(validity: true, count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
+          else
+            product_unit_of_measure_db.update_attributes(count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
+          end
         end          
       end   
     end
@@ -297,8 +320,12 @@ class ExchangeController < ApplicationController
         product_price_db = ProductPrice.find_by_product_id_and_price_list_id(product.id, price_list.id)
         if !product_price_db
           new_product_price = ProductPrice.create(product: product, price_list: price_list, price: price)
-        else          
-          product_price_db.update_attributes(price: price)
+        else
+          if !product_price_db.validity
+            product_price_db.update_attributes(validity: true, price: price)
+          else      
+            product_price_db.update_attributes(price: price)
+          end
         end          
       end   
     end        

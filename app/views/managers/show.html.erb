@@ -64,6 +64,7 @@
     	<th><%= sort_link @search, :shipping_address_external_key, t(:external_key) %></th>
       <th><%= sort_link @search, :shipping_address_name, t(:shipping_address) %></th>
       <th><%= sort_link @search, :shipping_address_address, t(:address) %></th>
+      <th><%= sort_link @search, :validity, t(:validity) %></th>
     </tr>
   </thead>
   <tbody>
@@ -72,6 +73,7 @@
     	<td><%= manager_shipping_address.shipping_address.external_key %></td>
       <td><%= manager_shipping_address.shipping_address.name %></td>
       <td><%= manager_shipping_address.shipping_address.address %></td>
+      <td><i class=<%= manager_shipping_address.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
     </tr>
     <% end %>
   </tbody>

@@ -16,3 +16,11 @@
  });
   });
 }(window.jQuery);
+/* ===================================================
+ Select all checkboxes on page
+* ===================================================*/
+function selectAll(status) {
+	$(".checkbox").each( function() {
+		$(this).attr("checked",status);
+	})
+}
