@@ -96,7 +96,24 @@ class ShippingAddressesController < ApplicationController
     end  
 
     respond_to do |format|
-      format.html { redirect_to customer_shipping_addresses_path(@customer) }
+      format.html { redirect_to customer_shipping_addresses_path(@customer), notice: t(:validity_changed) }
+      format.json { head :no_content }
+    end
+  end
+  
+    # POST /customer/1/shipping_addresses/multiple_change_validity
+  def multiple_change_validity
+    @customer = Customer.find(params[:customer_id])
+    params[:shipping_address_ids].each do |shipping_address_id|
+      @shipping_address = ShippingAddress.find(shipping_address_id)
+      if @shipping_address.validity
+        @shipping_address.update_attributes(validity: false)
+      else
+        @shipping_address.update_attributes(validity: true)
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to customer_shipping_addresses_path(@customer), notice: t(:validity_changed) }
       format.json { head :no_content }
     end
   end

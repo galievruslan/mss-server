@@ -106,7 +106,23 @@ class CustomersController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to customers_url }
+      format.html { redirect_to customers_url, notice: t(:validity_changed) }
+      format.json { head :no_content }
+    end
+  end
+  
+  # POST /customers/multiple_change_validity
+  def multiple_change_validity
+    params[:customer_ids].each do |customer_id|
+      @customer = Customer.find(customer_id)
+      if @customer.validity
+        @customer.update_attributes(validity: false)
+      else
+        @customer.update_attributes(validity: true)
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to customers_url, notice: t(:validity_changed) }
       format.json { head :no_content }
     end
   end

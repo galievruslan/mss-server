@@ -99,7 +99,24 @@ class ManagerShippingAddressesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to manager_manager_shipping_addresses_path(@manager) }
+      format.html { redirect_to manager_manager_shipping_addresses_path(@manager), notice: t(:validity_changed) }
+      format.json { head :no_content }
+    end
+  end
+  
+  # POST /manager/:id/manager_shipping_addresses/multiple_change_validity
+  def multiple_change_validity
+    @manager = Manager.find(params[:manager_id])
+    params[:manager_shipping_address_ids].each do |manager_shipping_address_id|
+      @manager_shipping_address = ManagerShippingAddress.find(manager_shipping_address_id)
+      if @manager_shipping_address.validity
+        @manager_shipping_address.update_attributes(validity: false)
+      else
+        @manager_shipping_address.update_attributes(validity: true)
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to manager_manager_shipping_addresses_path(@manager), notice: t(:validity_changed) }
       format.json { head :no_content }
     end
   end

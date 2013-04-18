@@ -103,7 +103,22 @@ class ManagersController < ApplicationController
     end  
 
     respond_to do |format|
-      format.html { redirect_to managers_url }
+      format.html { redirect_to managers_url, notice: t(:validity_changed) }
+      format.json { head :no_content }
+    end
+  end
+    # POST /managers/multiple_change_validity
+  def multiple_change_validity
+    params[:manager_ids].each do |manager_id|
+      @manager = Manager.find(manager_id)
+      if @manager.validity
+        @manager.update_attributes(validity: false)
+      else
+        @manager.update_attributes(validity: true)
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to managers_url, notice: t(:validity_changed) }
       format.json { head :no_content }
     end
   end

@@ -97,4 +97,20 @@ class CategoriesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  # POST /categories/multiple_change_validity
+  def multiple_change_validity
+    params[:category_ids].each do |category_id|
+      @category = Category.find(category_id)
+      if @category.validity
+        @category.update_attributes(validity: false)
+      else
+        @category.update_attributes(validity: true)
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to categories_url, notice: t(:validity_changed) }
+      format.json { head :no_content }
+    end
+  end
 end

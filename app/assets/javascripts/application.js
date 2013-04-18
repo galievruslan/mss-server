@@ -5,7 +5,6 @@
 //= require twitter/bootstrap
 //= require bootstrap-datetimepicker
 //= require locales/bootstrap-datetimepicker.ru.js
-
 /* ===================================================
  Reset button for filter form
 * ===================================================*/
@@ -17,10 +16,10 @@
   });
 }(window.jQuery);
 /* ===================================================
- Select all checkboxes on page
+ Select all checkboxes on tbody
 * ===================================================*/
-function selectAll(status) {
-	$(".checkbox").each( function() {
-		$(this).attr("checked",status);
-	})
+function toggleChecked(status) {
+	$("tbody input").each( function() {
+	$(this).attr("checked",status);
+})
 }

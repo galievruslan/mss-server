@@ -99,7 +99,24 @@ class ProductPricesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to product_product_prices_path(@product)}
+      format.html { redirect_to product_product_prices_path(@product), notice: t(:validity_changed)}
+      format.json { head :no_content }
+    end
+  end
+  
+    # POST /product/1/product_prices/multiple_change_validity
+  def multiple_change_validity
+    @product = Product.find(params[:product_id])
+    params[:product_price_ids].each do |product_price_id|
+      @product_price = ProductPrice.find(product_price_id)
+      if @product_price.validity
+        @product_price.update_attributes(validity: false)
+      else
+        @product_price.update_attributes(validity: true)
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to product_product_prices_path(@product), notice: t(:validity_changed) }
       format.json { head :no_content }
     end
   end

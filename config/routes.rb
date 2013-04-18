@@ -56,28 +56,79 @@
   resources :template_routes do
     resources :template_route_points
   end
-  resources :unit_of_measures   
-  resources :products do      
-    resources :product_prices    
-    resources :product_unit_of_measures
+  resources :unit_of_measures do
+    collection do
+      post :multiple_change_validity
+    end
+  end  
+  resources :products do 
+    collection do
+      post :multiple_change_validity
+    end     
+    resources :product_prices do
+      collection do
+        post :multiple_change_validity
+      end
+    end    
+    resources :product_unit_of_measures do
+      collection do
+        post :multiple_change_validity
+      end
+    end
   end
   resources :managers do
-    resources :manager_shipping_addresses    
+    collection do
+      post :multiple_change_validity
+    end
+    resources :manager_shipping_addresses do
+      collection do
+        post :multiple_change_validity
+      end
+    end
   end
-  resources :statuses
+  resources :statuses do
+    collection do
+      post :multiple_change_validity
+    end
+  end
   resources :customers do
-    resources  :shipping_addresses
+    collection do
+      post :multiple_change_validity
+    end
+    resources  :shipping_addresses do
+      collection do
+        post :multiple_change_validity
+      end
+    end
   end
   resources :users do
+    collection do
+      post :multiple_change
+    end
     member do
       match :edit_password
       put :update_password
     end
   end
   resources :price_lists do
-    resources :price_list_lines
+    collection do
+      post :multiple_change_validity
+    end
+    resources :price_list_lines do
+      collection do
+        post :multiple_change_validity
+      end
+    end
   end
-  resources :warehouses
-  resources :categories
+  resources :warehouses do
+    collection do
+      post :multiple_change_validity
+    end
+  end
+  resources :categories do
+    collection do
+      post :multiple_change_validity
+    end
+  end
   
 end

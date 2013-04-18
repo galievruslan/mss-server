@@ -87,7 +87,23 @@ class WarehousesController < ApplicationController
     end
         
     respond_to do |format|
-      format.html { redirect_to warehouses_url }
+      format.html { redirect_to warehouses_url, notice: t(:validity_changed) }
+      format.json { head :no_content }
+    end
+  end
+  
+    # POST /warehouses/multiple_change_validity
+  def multiple_change_validity
+    params[:warehouse_ids].each do |warehouse_id|
+      @warehouse = Warehouse.find(warehouse_id)
+      if @warehouse.validity
+        @warehouse.update_attributes(validity: false)
+      else
+        @warehouse.update_attributes(validity: true)
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to warehouses_url, notice: t(:validity_changed) }
       format.json { head :no_content }
     end
   end

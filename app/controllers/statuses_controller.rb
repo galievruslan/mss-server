@@ -87,7 +87,23 @@ class StatusesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to statuses_url }
+      format.html { redirect_to statuses_url, notice: t(:validity_changed) }
+      format.json { head :no_content }
+    end
+  end
+  
+    # POST /statuses/multiple_change_validity
+  def multiple_change_validity
+    params[:status_ids].each do |status_id|
+      @status = Status.find(status_id)
+      if @status.validity
+        @status.update_attributes(validity: false)
+      else
+        @status.update_attributes(validity: true)
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to statuses_url, notice: t(:validity_changed) }
       format.json { head :no_content }
     end
   end
