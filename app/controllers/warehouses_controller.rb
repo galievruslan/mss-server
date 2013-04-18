@@ -10,22 +10,10 @@ class WarehousesController < ApplicationController
       @search = Warehouse.search(params[:q])    
       @warehouses = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
     end
-    
-    if params[:page_size]
-      page_size = params[:page_size]
-    else
-      page_size = 100
-    end
-    
-    if params[:updated_at]
-      @warehouses_json = Warehouse.where("updated_at >= #{params[:updated_at]}").page(params[:page]).per(page_size)
-    else
-      @warehouses_json = Warehouse.page(params[:page]).per(page_size)
-    end 
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @warehouses_json }
+      format.json { render json: @warehouses }
     end
   end
 

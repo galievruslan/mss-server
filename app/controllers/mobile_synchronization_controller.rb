@@ -5,35 +5,67 @@ class MobileSynchronizationController < ApplicationController
   # GET /customers.json
   def customers    
     if params[:updated_at]
-      @customers = Customer.where("updated_at >= #{params[:updated_at]}").page(page).per(page_size).includes(:shipping_addresses)
+      @customers = Customer.where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
     else
-      @customers = Customer.page(page).per(page_size).includes(:shipping_addresses)
+      @customers = Customer.page(page).per(page_size)
     end
     respond_to do |format|
-      format.json { render json: @customers.to_json(:include => [:shipping_addresses]) }
+      format.json { render json: @customers }
+    end 
+  end 
+  
+  # GET /shipping_addresses.json
+  def shipping_addresses    
+    if params[:updated_at]
+      @shipping_addresses = ShippingAddress.where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
+    else
+      @shipping_addresses = ShippingAddress.page(page).per(page_size)
+    end
+    respond_to do |format|
+      format.json { render json: @shipping_addresses }
     end 
   end 
   
   # GET /managers.json
   def managers
     if params[:updated_at]
-      @managers = Manager.where("updated_at >= #{params[:updated_at]}").page(page).per(page_size).includes(:shipping_addresses)
+      @managers = Manager.where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
     else
-      @managers = Manager.page(page).per(page_size).includes(:manager_shipping_addresses)
+      @managers = Manager.page(page).per(page_size)
     end
     respond_to do |format|
-      format.json { render json: @managers.to_json(:include => [:manager_shipping_addresses]) }
+      format.json { render json: @managers }
     end 
+  end
+  
+  # GET /manager_shipping_addresses.json
+  def manager_shipping_addresses
+    @manager_id = current_user.manager_id
+    if @manager_id
+      if params[:updated_at]
+        @manager_shipping_addresses = ManagerShippingAddress.where("updated_at >= ? and manager_id = ?", params[:updated_at], @manager_id).page(page).per(page_size)
+      else
+        @manager_shipping_addresses = ManagerShippingAddress.where(manager_id: @manager_id).page(page).per(page_size)
+      end
+      respond_to do |format|
+        format.json { render json: @manager_shipping_addresses }
+      end 
+    else
+      respond_to do |format|
+        @responce = JSON code: 210, description: 'manager is not defined for the current user'
+        format.json { render json: @responce }
+      end 
+    end
   end
   
   # GET /categories.json
   def categories
     if params[:updated_at]
-      @categories = Category.where("updated_at >= #{params[:updated_at]}").page(page).per(page_size)
+      @categories = Category.where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
     else
       @categories = Category.page(page).per(page_size)
     end 
-    respond_to do |format|
+    respond_to do |format|      
       format.json { render json: @categories }
     end 
   end
@@ -41,19 +73,43 @@ class MobileSynchronizationController < ApplicationController
   # GET /products.json
   def products
     if params[:updated_at]
-      @products = Product.where("updated_at >= #{params[:updated_at]}").page(page).per(page_size).includes(:product_unit_of_measures, :product_prices)
+      @products = Product.where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
     else
-      @products = Product.page(page).per(page_size).includes(:product_unit_of_measures, :product_prices)
+      @products = Product.page(page).per(page_size)
     end 
     respond_to do |format|
-      format.json { render json: @products.to_json(:include => [:product_unit_of_measures, :product_prices]) }
+      format.json { render json: @products }
+    end 
+  end
+  
+  # GET /product_unit_of_measures.json
+  def product_unit_of_measures
+    if params[:updated_at]
+      @product_unit_of_measures = ProductUnitOfMeasure.where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
+    else
+      @product_unit_of_measures = ProductUnitOfMeasure.page(page).per(page_size)
+    end 
+    respond_to do |format|
+      format.json { render json: @product_unit_of_measures }
+    end 
+  end
+  
+  # GET /product_prices.json
+  def product_prices
+    if params[:updated_at]
+      @product_prices = ProductPrice.where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
+    else
+      @product_prices = ProductPrice.page(page).per(page_size)
+    end 
+    respond_to do |format|
+      format.json { render json: @product_prices }
     end 
   end
   
   # GET /warehouses.json
   def warehouses
     if params[:updated_at]
-      @warehouses = Warehouse.where("updated_at >= #{params[:updated_at]}").page(page).per(page_size)
+      @warehouses = Warehouse.where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
     else
       @warehouses = Warehouse.page(page).per(page_size)
     end 
@@ -65,7 +121,7 @@ class MobileSynchronizationController < ApplicationController
   # GET /statuses.json
   def statuses
     if params[:updated_at]
-      @statuses = Status.where("updated_at >= #{params[:updated_at]}").page(page).per(page_size)
+      @statuses = Status.where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
     else
       @statuses = Status.page(page).per(page_size)
     end 
@@ -77,7 +133,7 @@ class MobileSynchronizationController < ApplicationController
   # GET /price_lists.json
   def price_lists
     if params[:updated_at]
-      @price_lists = PriceList.where("updated_at >= #{params[:updated_at]}").page(page).per(page_size)
+      @price_lists = PriceList.where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
     else
       @price_lists = PriceList.page(page).per(page_size)
     end 
@@ -89,7 +145,7 @@ class MobileSynchronizationController < ApplicationController
   # GET /unit_of_measures.json
   def unit_of_measures
     if params[:updated_at]
-      @unit_of_measures = UnitOfMeasure.where("updated_at >= #{params[:updated_at]}").page(page).per(page_size)
+      @unit_of_measures = UnitOfMeasure.where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
     else
       @unit_of_measures = UnitOfMeasure.page(page).per(page_size)
     end 
@@ -100,23 +156,47 @@ class MobileSynchronizationController < ApplicationController
   
   # GET /template_routes.json
   def template_routes
-    if params[:updated_at]
-      if params[:manager_id]
-        @template_routes = TemplateRoute.where("updated_at >= #{params[:updated_at]} and manager_id = #{params[:manager_id]}").page(page).per(page_size).includes(:template_route_points)
-      else
-        @template_routes = TemplateRoute.where("updated_at >= #{params[:updated_at]}").page(page).per(page_size).includes(:template_route_points)
-      end      
+    @manager_id = current_user.manager_id
+    if @manager_id
+      if params[:updated_at]        
+          @template_routes = TemplateRoute.where("updated_at >= ? and manager_id = ?", params[:updated_at], @manager_id).page(page).per(page_size)             
+      else        
+          @template_routes = TemplateRoute.where(manager_id: @manager_id).page(page).per(page_size)           
+      end
+      
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @template_routes }
+      end
     else
-      if params[:manager_id]
-        @template_routes = TemplateRoute.where("manager_id = #{params[:manager_id]}").page(page).per(page_size).includes(:template_route_points)
-      else
-        @template_routes = TemplateRoute.page(page).per(page_size).includes(:template_route_points)
-      end      
+      respond_to do |format|
+        @responce = JSON code: 210, description: 'manager is not defined for the current user'
+        format.json { render json: @responce }
+      end 
     end 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @template_routes.to_json(:include => [:template_route_points]) }
-    end
+  end
+  
+  # GET /template_route_points.json
+  def template_route_points
+    @manager_id = current_user.manager_id
+    if @manager_id
+      @template_route_ids = TemplateRoute.where(manager_id: @manager_id).collect(&:id)
+      if params[:updated_at]        
+          @template_route_points = TemplateRoutePoint.where(template_route_id: @template_route_ids,).where("updated_at >= ?",params[:updated_at]).page(page).per(page_size)             
+      else        
+          @template_route_points = TemplateRoutePoint.where(template_route_id: @template_route_ids).page(page).per(page_size)           
+      end
+      
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @template_route_points }
+      end
+    else
+      respond_to do |format|
+        @responce = JSON code: 210, description: 'manager is not defined for the current user'
+        format.json { render json: @responce }
+      end 
+    end    
   end
   
   # POST /routes.json

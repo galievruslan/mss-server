@@ -7,6 +7,7 @@ class ProductUnitOfMeasuresController < ApplicationController
     @search = @product.product_unit_of_measures.search(params[:q])
     @product_unit_of_measures = @search.result.page(params[:page]).per(current_user.list_page_size)
     @unit_of_measures = UnitOfMeasure.all
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @product_unit_of_measures }

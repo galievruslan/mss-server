@@ -1,4 +1,12 @@
-$(function(){
-    $('#date_gt').datepicker({format: 'yyyy-mm-dd'});
-    $('#date_lt').datepicker({format: 'yyyy-mm-dd'});
+  $(function() {
+    $('#datetimepicker1').datetimepicker({    	
+    	format: 'yyyy-MM-dd',
+    	pickTime: false,
+    	language: 'ru'
+    })
+    $('#datetimepicker2').datetimepicker({    	
+    	format: 'yyyy-MM-dd',
+    	pickTime: false,
+    	language: 'ru'    	    	    	
+    });
   });

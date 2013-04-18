@@ -11,23 +11,11 @@ class CategoriesController < ApplicationController
       @categories = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)      
     end
     
-    @parents = Category.all
-        
-    if params[:page_size]
-      page_size = params[:page_size]
-    else
-      page_size = 100
-    end
-    
-    if params[:updated_at]
-      @categories_json = Category.where("updated_at >= #{params[:updated_at]}").page(params[:page]).per(page_size)
-    else
-      @categories_json = Category.page(params[:page]).per(page_size)
-    end 
+    @parents = Category.all    
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @categories_json }
+      format.json { render json: @categories }
     end
   end
 

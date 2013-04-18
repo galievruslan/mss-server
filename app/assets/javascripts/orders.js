@@ -1,8 +1,26 @@
-$(function(){
-    $('#date_gt').datepicker({format: 'yyyy-mm-dd'});
-    $('#date_lt').datepicker({format: 'yyyy-mm-dd'});
-    $('#exported_at_gt').datepicker({format: 'yyyy-mm-dd'});
-    $('#exported_at_lt').datepicker({format: 'yyyy-mm-dd'});
-    $('#shipping_date_gt').datepicker({format: 'yyyy-mm-dd'});
-    $('#shipping_date_lt').datepicker({format: 'yyyy-mm-dd'});
+  $(function() {
+    $('#datetimepicker1').datetimepicker({    	
+    	format: 'yyyy-MM-dd hh:mm:ss UTC',
+    	language: 'ru'
+    })
+    $('#datetimepicker2').datetimepicker({    	
+    	format: 'yyyy-MM-dd hh:mm:ss UTC',
+    	language: 'ru'    	    	    	
+    });
+    $('#datetimepicker3').datetimepicker({    	
+    	format: 'yyyy-MM-dd hh:mm:ss UTC',
+    	language: 'ru'    	    	    	
+    });
+    $('#datetimepicker4').datetimepicker({    	
+    	format: 'yyyy-MM-dd hh:mm:ss UTC',
+    	language: 'ru'    	    	    	
+    });
+    $('#datetimepicker5').datetimepicker({    	
+    	format: 'yyyy-MM-dd hh:mm:ss UTC',
+    	language: 'ru'    	    	    	
+    });
+    $('#datetimepicker6').datetimepicker({    	
+    	format: 'yyyy-MM-dd hh:mm:ss UTC',
+    	language: 'ru'    	    	    	
+    });
   });

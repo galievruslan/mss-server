@@ -27,7 +27,7 @@
   </div>
   <div class="field">
     <%= f.label :manager_id, t(:manager) %>
-    <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}, :include_blank => "Select a manager") %>
+    <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}, :include_blank => t(:select_manager)) %>
   </div>
   <div class="field form-inline">    
     <%= f.check_box :banned%>

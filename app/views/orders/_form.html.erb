@@ -22,12 +22,24 @@
 	  <div class="tab-content">
 	    <div class="tab-pane active" id="tab1">	    
 		    <div class="field">
-		    <%= f.label :date, t(:date) %>
-		    <%= f.text_field :date, id: 'date_gt'%>
+			    <%= f.label :date, t(:date) %>
+			    <div id="datetimepicker1" class="input-append date">
+				    <%= f.text_field :date, class: "input-medium"%>
+				    <span class="add-on">
+				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				      </i>
+				    </span>
+				  </div>
 			  </div>
 			  <div class="field">
-		    <%= f.label :shipping_date, t(:shipping_date) %>
-		    <%= f.text_field :shipping_date, id: 'date_lt'%>
+			    <%= f.label :shipping_date, t(:shipping_date) %>
+			    <div id="datetimepicker2" class="input-append date">
+				    <%= f.text_field :shipping_date, class: "input-medium"%>
+				    <span class="add-on">
+				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				      </i>
+				    </span>
+				  </div>
 			  </div>
 			  <div class="field">
 			    <%= f.label :shipping_address_id, t(:shipping_address) %>

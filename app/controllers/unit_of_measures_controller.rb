@@ -9,23 +9,11 @@ class UnitOfMeasuresController < ApplicationController
     else
       @search = UnitOfMeasure.search(params[:q])    
       @unit_of_measures = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
-    end    
-    
-    if params[:page_size]
-      page_size = params[:page_size]
-    else
-      page_size = 100
     end
-    
-    if params[:updated_at]
-      @unit_of_measures_json = UnitOfMeasure.where("updated_at >= #{params[:updated_at]}").page(params[:page]).per(page_size)
-    else
-      @unit_of_measures_json = UnitOfMeasure.page(params[:page]).per(page_size)
-    end 
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @unit_of_measures_json }
+      format.json { render json: @unit_of_measures }
     end
   end
 

@@ -15,15 +15,61 @@
 		  <div class="control-group">
 		  	<%= f.label :date_gt, t(:date_period)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :date_gt, id: 'date_gt' , class: 'input-small search-field'%>
-		  		- <%= f.text_field :date_lt, id: 'date_lt' , class: 'input-small search-field'%>
+		  		<div id="datetimepicker1" class="input-append date">
+				    <%= f.text_field :date_gt, class: "input-medium search-field"%>
+				    <span class="add-on">
+				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				      </i>
+				    </span>
+				  </div>
+		  		- 
+		  		<div id="datetimepicker2" class="input-append date">
+				    <%= f.text_field :date_lt, class: "input-medium search-field"%>
+				    <span class="add-on">
+				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				      </i>
+				    </span>
+				  </div>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :shipping_date_gt, t(:shipping_date_period)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :shipping_date_gt, id: 'shipping_date_gt' , class: 'input-small search-field'%>
-		  		- <%= f.text_field :shipping_date_lt, id: 'shipping_date_lt' , class: 'input-small search-field'%>
+		  		<div id="datetimepicker3" class="input-append date">
+				    <%= f.text_field :shipping_date_gt, class: "input-medium search-field"%>
+				    <span class="add-on">
+				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				      </i>
+				    </span>
+				  </div>		  		
+		  		- 
+		  		<div id="datetimepicker4" class="input-append date">
+				    <%= f.text_field :shipping_date_lt, class: "input-medium search-field"%>
+				    <span class="add-on">
+				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				      </i>
+				    </span>
+				  </div>				  
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :exported_at_gt, t(:exported_period)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<div id="datetimepicker5" class="input-append date">
+				    <%= f.text_field :exported_at_gt, class: "input-medium search-field"%>
+				    <span class="add-on">
+				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				      </i>
+				    </span>
+				  </div>
+				  -
+		  		<div id="datetimepicker6" class="input-append date">
+				    <%= f.text_field :exported_at_lt, class: "input-medium search-field"%>
+				    <span class="add-on">
+				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				      </i>
+				    </span>
+				  </div>		  		
 		  	</div>
 		  </div>
 		  <div class="control-group">
@@ -50,13 +96,8 @@
 		  		<%= f.select :price_list_id_eq, @price_lists.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_price_list)}, {:class => 'search-field'} %>
 		  	</div>
 		  </div>
+		  
 		  <div class="control-group">
-		  	<%= f.label :exported_at_gt, t(:exported_period)+':', class: "control-label"%>
-		  	<div class="controls">
-		  		<%= f.text_field :exported_at_gt, id: 'exported_at_gt' , class: 'input-small search-field'%>
-		  		- <%= f.text_field :exported_at_lt, id: 'exported_at_lt' , class: 'input-small search-field'%></div>
-		  	</div>
-		  <div class="control-group">	  	
 		  		<%= f.submit t(:search), class: 'btn btn-info' %>	
 		  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>  	
 		  </div>	

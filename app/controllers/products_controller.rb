@@ -12,22 +12,10 @@ class ProductsController < ApplicationController
     end   
     
     @categories = Category.where(validity: true)
-    
-    if params[:page_size]
-      page_size = params[:page_size]
-    else
-      page_size = 100
-    end
-    
-    if params[:updated_at]
-      @products_json = Product.where("updated_at >= #{params[:updated_at]}").page(params[:page]).per(page_size).includes(:product_unit_of_measures)
-    else
-      @products_json = Product.page(params[:page]).per(page_size).includes(:product_unit_of_measures, :product_prices)
-    end
-    
+        
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @products_json.to_json(:include => [:product_unit_of_measures, :product_prices]) }
+      format.json { render json: @products }
     end
   end
 

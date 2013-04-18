@@ -19,14 +19,19 @@
   
   # MobileSynchronization routes
   get 'synchronization/customers', :to => 'mobile_synchronization#customers'
+  get 'synchronization/shipping_addresses', :to => 'mobile_synchronization#shipping_addresses'
   get 'synchronization/managers', :to => 'mobile_synchronization#managers'
+  get 'synchronization/manager_shipping_addresses', :to => 'mobile_synchronization#manager_shipping_addresses'
   get 'synchronization/categories', :to => 'mobile_synchronization#categories'    
   get 'synchronization/products', :to => 'mobile_synchronization#products'
+  get 'synchronization/product_unit_of_measures', :to => 'mobile_synchronization#product_unit_of_measures'
+  get 'synchronization/product_prices', :to => 'mobile_synchronization#product_prices'
   get 'synchronization/warehouses', :to => 'mobile_synchronization#warehouses'
   get 'synchronization/statuses', :to => 'mobile_synchronization#statuses'
   get 'synchronization/price_lists', :to => 'mobile_synchronization#price_lists'
   get 'synchronization/unit_of_measures', :to => 'mobile_synchronization#unit_of_measures'
   get 'synchronization/template_routes', :to => 'mobile_synchronization#template_routes'
+  get 'synchronization/template_route_points', :to => 'mobile_synchronization#template_route_points'
   post 'synchronization/routes', :to => 'mobile_synchronization#routes'
   post 'synchronization/orders', :to => 'mobile_synchronization#orders'
   

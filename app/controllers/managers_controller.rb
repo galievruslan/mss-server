@@ -13,21 +13,9 @@ class ManagersController < ApplicationController
     
     @warehouses = Warehouse.all
     
-    if params[:page_size]
-      page_size = params[:page_size]
-    else
-      page_size = 100
-    end
-    
-    if params[:updated_at]
-      @managers_json = Manager.where("updated_at >= #{params[:updated_at]}").page(params[:page]).per(page_size)
-    else
-      @managers_json = Manager.page(params[:page]).per(page_size)
-    end 
-    
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @managers_json }
+      format.json { render json: @managers }
     end
   end
 
