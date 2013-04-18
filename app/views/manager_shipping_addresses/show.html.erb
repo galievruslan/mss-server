@@ -12,6 +12,10 @@
   <b><%= t(:address)%>:</b>
   <%= @manager_shipping_address.shipping_address.address %>
 </p>
+<p>
+  <b><%= t(:validity)%>:</b>
+  <%= @manager_shipping_address.validity ? t(:truth) : t(:lie) %>
+</p>
 
 <% if can? :manage, ManagerShippingAddress %><%= link_to t(:edit), edit_manager_manager_shipping_address_path(@manager, @manager_shipping_address) %> |<% end %>
 <%= link_to t(:back), manager_manager_shipping_addresses_path(@manager) %>

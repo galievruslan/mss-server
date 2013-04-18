@@ -19,6 +19,10 @@
     <%= f.label :price, t(:price) %>
     <%= f.text_field :price %>
   </div>
+  <div class="field form-inline">    
+    <%= f.check_box :validity %>
+    <%= f.label :validity, t(:validity) %><br /><br />
+  </div>
   <div class="actions">
     <%= f.submit(t(:save), class: 'btn') %>
   </div>

@@ -3,8 +3,13 @@ class ProductPricesController < ApplicationController
   # GET /product_prices.json
   def index
     @product = Product.find(params[:product_id])
-    @search = @product.product_prices.search(params[:q])
-    @product_prices = @search.result.page(params[:page]).per(current_user.list_page_size)
+    if params[:q]
+      @search = @product.product_prices.search(params[:q])
+      @product_prices = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = @product.product_prices.search(params[:q])
+      @product_prices = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end   
 
     respond_to do |format|
       format.html # index.html.erb
@@ -87,10 +92,14 @@ class ProductPricesController < ApplicationController
   def destroy
     @product = Product.find(params[:product_id])
     @product_price = ProductPrice.find(params[:id])
-    @product_price.destroy
+    if @product_price.validity
+      @product_price.update_attributes(validity: false)
+    else
+      @product_price.update_attributes(validity: true)
+    end
 
     respond_to do |format|
-      format.html { redirect_to product_product_prices_path(@product), notice: t(:product_price_destroyed) }
+      format.html { redirect_to product_product_prices_path(@product)}
       format.json { head :no_content }
     end
   end

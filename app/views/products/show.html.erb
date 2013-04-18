@@ -24,7 +24,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @product.product_unit_of_measures.each do |product_unit_of_measure| %>  
+    <% @product.product_unit_of_measures.where(validity: true).each do |product_unit_of_measure| %>  
     <tr <%='class=success' if product_unit_of_measure.base %>>
       <td><%= product_unit_of_measure.unit_of_measure.name %></td>
       <td><%= product_unit_of_measure.count_in_base_unit %></td>
@@ -42,7 +42,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @product.product_prices.each do |product_price| %>  
+    <% @product.product_prices.where(validity: true).each do |product_price| %>  
     <tr>
       <td><%= product_price.price_list.name %></td>
       <td><%= product_price.price %></td>

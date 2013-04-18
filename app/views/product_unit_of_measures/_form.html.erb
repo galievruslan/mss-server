@@ -19,7 +19,11 @@
     <%= f.label :count_in_base_unit, t(:count_in_base_unit) %>
     <%= f.number_field :count_in_base_unit, :min => 0, :step => 0.01 %>
   </div>
-    <div class="field form-inline">    
+  <div class="field form-inline">    
+    <%= f.check_box :validity %>
+    <%= f.label :validity, t(:validity) %><br /><br />
+  </div>  
+  <div class="field form-inline">    
     <%= f.check_box :base %>
     <%= f.label :base , t(:base)%><br /><br />
   </div>

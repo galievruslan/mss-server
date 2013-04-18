@@ -20,6 +20,12 @@
 		  		<%= f.text_field :count_in_base_unit_eq, class: 'search-field'%>
 		  	</div>
 		  </div>
+		  <div class="control-group">
+		  	<%= f.label :validity_eq, t(:validity)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.check_box :validity_eq, checked: true, class: 'search-field'%>
+		  	</div>
+		  </div>
 		  <div class="control-group">	  	
 		  		<%= f.submit t(:search), class: 'btn btn-info' %>
 		  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>   	
@@ -34,6 +40,7 @@
 	    <th><%= sort_link @search, :product_name, t(:product) %></th>
 	    <th><%= sort_link @search, :unit_of_measure_name, t(:unit_of_measure) %></th>
 	    <th><%= sort_link @search, :count_in_base_unit, t(:count_in_base_unit) %></th>
+	    <th><%= sort_link @search, :validity, t(:validity) %></th>
 	    <th colspan="3"><%= t(:actions)%></th>
 	  </tr>
 	</thead>
@@ -43,10 +50,11 @@
 		    <td><%= product_unit_of_measure.product.name %></td>
 		    <td><%= product_unit_of_measure.unit_of_measure.name %></td>
 		    <td><%= product_unit_of_measure.count_in_base_unit %></td>
+		    <td><i class=<%=product_unit_of_measure.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
 		    <td><%= link_to(product_product_unit_of_measure_path(@product, product_unit_of_measure)) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
 		    <% if can? :manage, ProductUnitOfMeasure %>
 			    <td><%= link_to(edit_product_product_unit_of_measure_path(@product, product_unit_of_measure)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-			    <td><%= link_to(product_product_unit_of_measure_path(@product, product_unit_of_measure), method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>
+			    <td><%= link_to(product_product_unit_of_measure_path(@product, product_unit_of_measure), method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=product_unit_of_measure.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
 			  <% end %>
 		  </tr>
 		<% end %>

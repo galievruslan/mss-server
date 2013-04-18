@@ -19,6 +19,12 @@
 		  		<%= f.text_field :price_eq, class: 'search-field'%>
 		  	</div>
 		  </div>
+		  <div class="control-group">
+		  	<%= f.label :validity_eq, t(:validity)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.check_box :validity_eq, checked: true, class: 'search-field'%>
+		  	</div>
+		  </div>
 		  <div class="control-group">	  	
 		  		<%= f.submit t(:search), class: 'btn btn-info' %>
 		  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>	  	
@@ -33,6 +39,7 @@
 	    <th><%= sort_link @search, :product_name, t(:product) %></th>
 	    <th><%= sort_link @search, :price_list_name, t(:price_list) %></th>
 	    <th><%= sort_link @search, :price, t(:price) %></th>
+	    <th><%= sort_link @search, :validity, t(:validity) %></th>
 	    <th colspan="3"><%= t(:actions)%></th>
 	  </tr>
   </thead>
@@ -42,10 +49,11 @@
 		    <td><%= product_price.product.name %></td>
 		    <td><%= product_price.price_list.name %></td>
 		    <td><%= product_price.price %></td>
+		    <td><i class=<%= product_price.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
 		    <td><%= link_to(product_product_price_path(@product, product_price)) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
 		    <% if can? :manage, ProductPrice %>
 			    <td><%= link_to(edit_product_product_price_path(@product, product_price)) do%><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-			    <td><%= link_to(product_product_price_path(@product, product_price), method: :delete, data: { confirm: t(:are_you_sure) }) do%><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>
+			    <td><%= link_to(product_product_price_path(@product, product_price), method: :delete, data: { confirm: t(:are_you_sure) }) do%><i class='icon-remove' title="<%= product_price.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
 			  <% end %>
 		  </tr>
 		<% end %>

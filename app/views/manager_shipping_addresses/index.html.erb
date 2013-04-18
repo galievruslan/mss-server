@@ -20,6 +20,12 @@
 		  		<%= f.text_field :shipping_address_address_cont, class: 'search-field'%>
 		  	</div>
 		  </div>
+		  <div class="control-group">
+		  	<%= f.label :validity_eq, t(:validity)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.check_box :validity_eq, checked: true, class: 'search-field'%>
+		  	</div>
+		  </div>
 		  <div class="control-group">	  	
 		  		<%= f.submit t(:search), class: 'btn btn-info' %>
 		  		<button type="button" class='btn btn-info' id="q_reset"><%=t(:reset)%></button>   	
@@ -33,6 +39,7 @@
 	  <tr>
 	    <th><%= sort_link @search, :shipping_address_name, t(:shipping_address) %></th>
 	    <th><%= sort_link @search, :shipping_address_address, t(:address) %></th>
+	    <th><%= sort_link @search, :validity, t(:validity) %></th>
 	    <th colspan="3"><%=t(:actions)%></th>
 	  </tr>
 	</thead>
@@ -40,11 +47,12 @@
 		<% @manager_shipping_addresses.each do |manager_shipping_address| %>
 		  <tr>
 		    <td><%= manager_shipping_address.shipping_address.name %></td>
-		    <td><%= manager_shipping_address.shipping_address.address %></td>
+		    <td><%= manager_shipping_address.shipping_address.address %></td>		    
+		    <td><i class=<%=manager_shipping_address.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
 		    <td><%= link_to(manager_manager_shipping_address_path(@manager, manager_shipping_address)) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
 		    <% if can? :manage, ManagerShippingAddress %>
 			    <td><%= link_to(edit_manager_manager_shipping_address_path(@manager, manager_shipping_address)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-			    <td><%= link_to(manager_manager_shipping_address_path(@manager, manager_shipping_address), method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>
+			    <td><%= link_to(manager_manager_shipping_address_path(@manager, manager_shipping_address), method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=manager_shipping_address.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
 		  	<% end %>
 		  </tr>
 		<% end %>

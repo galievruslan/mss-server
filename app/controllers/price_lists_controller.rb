@@ -21,8 +21,15 @@ class PriceListsController < ApplicationController
   # GET /price_lists/1.json
   def show
     @price_list = PriceList.find(params[:id])
-    @search = @price_list.product_prices.search(params[:q])
-    @product_prices = @search.result.page(params[:page]).per(current_user.list_page_size)
+    
+    if params[:q]
+      @search = @price_list.product_prices.search(params[:q])
+      @product_prices = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = @price_list.product_prices.search(params[:q])
+      @product_prices = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end
+    
 
     respond_to do |format|
       format.html # show.html.erb

@@ -16,6 +16,10 @@
   <b><%= t(:count_in_base_unit)%>:</b>
   <%= @product_unit_of_measure.count_in_base_unit %>
 </p>
+<p>
+  <b><%= t(:validity)%>:</b>
+  <%= @product_unit_of_measure.validity ? t(:truth) : t(:lie) %>
+</p>
 
 
 <% if can? :manage, ProductUnitOfMeasure %><%= link_to t(:edit), edit_product_product_unit_of_measure_path(@product, @product_unit_of_measure) %> |<% end %>

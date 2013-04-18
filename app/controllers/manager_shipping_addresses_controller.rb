@@ -3,8 +3,14 @@ class ManagerShippingAddressesController < ApplicationController
   # GET /manager_shipping_addresses.json
   def index
     @manager = Manager.find(params[:manager_id])
-    @search = @manager.manager_shipping_addresses.search(params[:q])
-    @manager_shipping_addresses = @search.result.page(params[:page]).per(current_user.list_page_size)
+    
+    if params[:q]
+      @search = @manager.manager_shipping_addresses.search(params[:q])
+      @manager_shipping_addresses = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = @manager.manager_shipping_addresses.search(params[:q])
+      @manager_shipping_addresses = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -84,11 +90,16 @@ class ManagerShippingAddressesController < ApplicationController
   # DELETE /manager_shipping_addresses/1.json
   def destroy
     @manager = Manager.find(params[:manager_id])
-    @manager_shipping_address = ManagerShippingAddress.find(params[:id])
-    @manager_shipping_address.destroy
+    @manager_shipping_address = ManagerShippingAddress.find(params[:id]) 
+       
+    if @manager_shipping_address.validity 
+      @manager_shipping_address.update_attributes(validity: false)
+    else
+      @manager_shipping_address.update_attributes(validity: true)
+    end
 
     respond_to do |format|
-      format.html { redirect_to manager_manager_shipping_addresses_path(@manager), notice: t(:manager_shipping_address_destroyed) }
+      format.html { redirect_to manager_manager_shipping_addresses_path(@manager) }
       format.json { head :no_content }
     end
   end

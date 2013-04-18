@@ -29,6 +29,12 @@
 		  		<%= f.text_field :price_eq, class: 'search-field'%>
 		  	</div>
 		  </div>
+		  <div class="control-group">
+		  	<%= f.label :validity_eq, t(:validity)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.check_box :validity_eq, checked: true, class: 'search-field'%>
+		  	</div>
+		  </div>
 		  <div class="control-group">	  	
 		  		<%= f.submit t(:search), class: 'btn btn-info' %>
 		  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>	  	
@@ -42,12 +48,14 @@
     <tr>
       <th><%= sort_link @search, :product_name, t(:product) %></th>
       <th><%= sort_link @search, :price, t(:price) %></th>
+      <th><%= sort_link @search, :validity, t(:validity) %></th>
     </tr>
   </thead>
   <tbody>
     <% @product_prices.each do |product_price| %>
       <td><%= product_price.product.name %></td>
       <td><%= product_price.price %></td>
+      <td><i class=<%= product_price.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
     </tr>
     <% end %>
   </tbody>

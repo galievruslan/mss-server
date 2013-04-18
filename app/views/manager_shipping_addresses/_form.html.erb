@@ -15,6 +15,10 @@
     <%= f.label :shipping_address_id, t(:shipping_address)%>
     <%= f.select(:shipping_address_id, @shipping_addresses.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_shipping_address)) %>
   </div>
+  <div class="field form-inline">    
+    <%= f.check_box :validity %>
+    <%= f.label :validity, t(:validity) %><br /><br />
+  </div>
   <div class="actions">
     <%= f.submit(t(:save), class: 'btn') %>
   </div>

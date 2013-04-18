@@ -3,8 +3,13 @@ class PriceListLinesController < ApplicationController
   # GET /price_list_lines.json
   def index
     @price_list = PriceList.find(params[:price_list_id])
-    @search = @price_list.product_prices.search(params[:q])
-    @price_list_lines = @search.result.page(params[:page]).per(current_user.list_page_size)
+    if params[:q]
+      @search = @price_list.product_prices.search(params[:q])
+      @price_list_lines = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = @price_list.product_prices.search(params[:q])
+      @price_list_lines = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end   
 
     respond_to do |format|
       format.html # index.html.erb
@@ -87,10 +92,14 @@ class PriceListLinesController < ApplicationController
   def destroy
     @price_list = PriceList.find(params[:price_list_id])
     @price_list_line = ProductPrice.find(params[:id])
-    @price_list_line.destroy
+    if @price_list_line.validity
+      @price_list_line.update_attributes(validity: false)
+    else
+      @price_list_line.update_attributes(validity: true)
+    end
 
     respond_to do |format|
-      format.html { redirect_to price_list_price_list_lines_path(@price_list), notice: t(:product_price_destroyed) }
+      format.html { redirect_to price_list_price_list_lines_path(@price_list)}
       format.json { head :no_content }
     end
   end

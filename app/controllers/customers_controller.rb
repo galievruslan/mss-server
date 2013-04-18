@@ -33,8 +33,14 @@ class CustomersController < ApplicationController
   # GET /customers/1.json
   def show
     @customer = Customer.find(params[:id])
-    @search = @customer.shipping_addresses.search(params[:q])
-    @shipping_addresses = @search.result.page(params[:page]).per(current_user.list_page_size)
+    
+    if params[:q] 
+      @search = @customer.shipping_addresses.search(params[:q])
+      @shipping_addresses = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else       
+      @search = @customer.shipping_addresses.search(params[:q])
+      @shipping_addresses = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @customer }

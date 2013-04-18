@@ -1,5 +1,5 @@
 class ProductPrice < ActiveRecord::Base
-  attr_accessible :price, :price_list_id, :product_id, :price_list, :product
+  attr_accessible :price, :price_list_id, :product_id, :price_list, :product, :validity
   belongs_to :price_list
   belongs_to :product
   validates :price, :price_list_id, :product_id ,:presence => true

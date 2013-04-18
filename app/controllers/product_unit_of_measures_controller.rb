@@ -4,8 +4,14 @@ class ProductUnitOfMeasuresController < ApplicationController
   # GET /product_unit_of_measures.json
   def index
     @product = Product.find(params[:product_id])
-    @search = @product.product_unit_of_measures.search(params[:q])
-    @product_unit_of_measures = @search.result.page(params[:page]).per(current_user.list_page_size)
+    if params[:q]
+      @search = @product.product_unit_of_measures.search(params[:q])
+      @product_unit_of_measures = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = @product.product_unit_of_measures.search(params[:q])
+      @product_unit_of_measures = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end
+    
     @unit_of_measures = UnitOfMeasure.all
     
     respond_to do |format|
@@ -89,10 +95,14 @@ class ProductUnitOfMeasuresController < ApplicationController
   def destroy
     @product = Product.find(params[:product_id])
     @product_unit_of_measure = ProductUnitOfMeasure.find(params[:id])
-    @product_unit_of_measure.destroy
+    if @product_unit_of_measure.validity
+      @product_unit_of_measure.update_attributes(validity: false)
+    else
+      @product_unit_of_measure.update_attributes(validity: true)
+    end
 
     respond_to do |format|
-      format.html { redirect_to product_product_unit_of_measures_path(@product), notice: t(:product_unit_of_measure_destroyed) }
+      format.html { redirect_to product_product_unit_of_measures_path(@product) }
       format.json { head :no_content }
     end
   end
