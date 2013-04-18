@@ -11,7 +11,7 @@ class ProductsController < ApplicationController
       @products = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
     end   
     
-    @categories = Category.where(validity: true)
+    @categories = Category.all
         
     respond_to do |format|
       format.html # index.html.erb

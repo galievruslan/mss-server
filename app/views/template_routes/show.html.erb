@@ -7,7 +7,10 @@
   <b><%= t(:day_of_week)%>:</b>
   <%= t(day_name(@template_route.day_of_week)) %>
 </p>
-
+<p>
+  <b><%= t(:validity)%>:</b>
+  <%= @template_route.validity ? t(:truth) : t(:lie) %>
+</p>
 <h4><%= t(:listing_template_route_points)%></h4>
 <table class="table table-striped table-hover">
   <thead>

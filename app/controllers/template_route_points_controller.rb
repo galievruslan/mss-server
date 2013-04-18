@@ -3,8 +3,13 @@ class TemplateRoutePointsController < ApplicationController
   # GET /template_route_points.json
   def index
     @template_route = TemplateRoute.find(params[:template_route_id])
-    @search = @template_route.template_route_points.search(params[:q])
-    @template_route_points = @search.result.page(params[:page]).per(current_user.list_page_size)
+    if params[:q]
+      @search = @template_route.template_route_points.search(params[:q])
+      @template_route_points = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = @template_route.template_route_points.search(params[:q])
+      @template_route_points = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end    
 
     respond_to do |format|
       format.html # index.html.erb
@@ -86,10 +91,31 @@ class TemplateRoutePointsController < ApplicationController
   def destroy
     @template_route = TemplateRoute.find(params[:template_route_id])
     @template_route_point = TemplateRoutePoint.find(params[:id])
-    @template_route_point.destroy
+    if @template_route_point.validity
+      @template_route_point.update_attributes(validity: false)
+    else
+      @template_route_point.update_attributes(validity: true)
+    end
 
     respond_to do |format|
-      format.html { redirect_to template_route_template_route_points_path(@template_route), notice: t(:template_route_point_destroyed) }
+      format.html { redirect_to template_route_template_route_points_path(@template_route), notice: t(:validity_changed) }
+      format.json { head :no_content }
+    end
+  end
+  
+  # POST /template_routes/1/template_route_points/multiple_change_validity
+  def multiple_change_validity
+    @template_route = TemplateRoute.find(params[:template_route_id])
+    params[:template_route_point_ids].each do |template_route_point_id|
+      @template_route_point = TemplateRoutePoint.find(template_route_point_id)
+      if @template_route_point.validity
+        @template_route_point.update_attributes(validity: false)
+      else
+        @template_route_point.update_attributes(validity: true)
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to template_route_template_route_points_path(@template_route), notice: t(:validity_changed) }
       format.json { head :no_content }
     end
   end

@@ -3,9 +3,15 @@ class TemplateRoutesController < ApplicationController
   # GET /template_routes.json
   def index
     @days_of_week = [0,1,2,3,4,5,6]
-    @search = TemplateRoute.search(params[:q])
-    @template_routes = @search.result.page(params[:page]).per(current_user.list_page_size)
-    @managers = Manager.where(validity: true)
+    if params[:q]
+      @search = TemplateRoute.search(params[:q])
+      @template_routes = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = TemplateRoute.search(params[:q])
+      @template_routes = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end
+    
+    @managers = Manager.all
     
     respond_to do |format|
       format.html # index.html.erb
@@ -89,10 +95,30 @@ class TemplateRoutesController < ApplicationController
   # DELETE /template_routes/1.json
   def destroy
     @template_route = TemplateRoute.find(params[:id])
-    @template_route.destroy
-
+    if @template_route.validity
+      @template_route.update_attributes(validity: false)
+    else
+      @template_route.update_attributes(validity: true)
+    end
+    
     respond_to do |format|
-      format.html { redirect_to template_routes_url, notice: t(:template_route_destroyed) }
+      format.html { redirect_to template_routes_url, notice: t(:validity_changed) }
+      format.json { head :no_content }
+    end
+  end
+  
+  # POST /template_routes/multiple_change_validity
+  def multiple_change_validity
+    params[:template_route_ids].each do |template_route_id|
+      @template_route = TemplateRoute.find(template_route_id)
+      if @template_route.validity
+        @template_route.update_attributes(validity: false)
+      else
+        @template_route.update_attributes(validity: true)
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to template_routes_url, notice: t(:validity_changed) }
       format.json { head :no_content }
     end
   end

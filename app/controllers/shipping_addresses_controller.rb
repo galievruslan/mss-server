@@ -10,8 +10,7 @@ class ShippingAddressesController < ApplicationController
     else
       @search = @customer.shipping_addresses.search(params[:q])  
       @shipping_addresses = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
-    end
-    
+    end    
 
     respond_to do |format|
       format.html # index.html.erb

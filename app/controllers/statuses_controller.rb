@@ -92,7 +92,7 @@ class StatusesController < ApplicationController
     end
   end
   
-    # POST /statuses/multiple_change_validity
+  # POST /statuses/multiple_change_validity
   def multiple_change_validity
     params[:status_ids].each do |status_id|
       @status = Status.find(status_id)

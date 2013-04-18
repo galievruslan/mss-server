@@ -54,7 +54,14 @@
     resources :route_points
   end
   resources :template_routes do
-    resources :template_route_points
+    collection do
+      post :multiple_change_validity
+    end
+    resources :template_route_points do
+      collection do
+        post :multiple_change_validity
+      end
+    end
   end
   resources :unit_of_measures do
     collection do

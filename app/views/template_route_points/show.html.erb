@@ -6,7 +6,10 @@
   <b><%= t(:address)%>:</b>
   <%= @template_route_point.shipping_address.address %>
 </p>
-
+<p>
+  <b><%= t(:validity)%>:</b>
+  <%= @template_route_point.validity ? t(:truth) : t(:lie) %>
+</p>
 
 <% if can? :manage, TemplateRoutePoint %><%= link_to t(:edit), edit_template_route_template_route_point_path(@template_route, @template_route_point) %> |<% end %>
 <%= link_to t(:back), template_route_template_route_points_path %>
