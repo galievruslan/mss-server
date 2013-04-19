@@ -113,6 +113,7 @@ class OrderItemsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
   def update_product_unit_of_measures
     @product_unit_of_measures = ProductUnitOfMeasure.where(product_id: params[:product_id])  
     @unit_of_measures= [] 
@@ -126,8 +127,7 @@ class OrderItemsController < ApplicationController
         unit_of_measures << unit_of_measure_id   
         @unit_of_measures << unit_of_measures
       end      
-    end
-    
+    end    
     render :partial => "product_unit_of_measures", :object => @unit_of_measures  
   end
 end

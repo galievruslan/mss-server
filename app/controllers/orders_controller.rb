@@ -31,7 +31,7 @@ class OrdersController < ApplicationController
   # GET /orders/new
   # GET /orders/new.json
   def new
-    @shipping_addresses = ShippingAddress.where(validity: true)
+    @customers = Customer.where(validity: true)    
     @managers = Manager.where(validity: true)
     @price_lists = PriceList.where(validity: true)
     @warehouses = Warehouse.where(validity: true)
@@ -47,19 +47,30 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
-    @shipping_addresses = ShippingAddress.where(validity: true)
+    @order = Order.find(params[:id])    
+    @select_customer = @order.shipping_address.customer
+    @select_customer_id = @select_customer.id
+    @select_shipping_address_id = @order.shipping_address.id
+    @shipping_addresses = @select_customer.shipping_addresses
+    @customers = Customer.where(validity: true)    
     @managers = Manager.where(validity: true)
     @price_lists = PriceList.where(validity: true)
     @warehouses = Warehouse.where(validity: true)
     @products = Product.where(validity: true)
-    @unit_of_measures = UnitOfMeasure.where(validity: true)
-    @order = Order.find(params[:id])
+    @unit_of_measures = UnitOfMeasure.where(validity: true)    
   end
 
   # POST /orders
   # POST /orders.json
   def create
-    @shipping_addresses = ShippingAddress.where(validity: true)
+    @customers = Customer.where(validity: true)
+    if params[:customer_id] != ""
+      @select_customer_id = params[:customer_id]
+      @shipping_addresses = Customer.find(params[:customer_id]).shipping_addresses
+    end
+    if params[:order][:shipping_address_id] !=""
+      @select_shipping_address_id = params[:order][:shipping_address_id]
+    end
     @managers = Manager.where(validity: true)
     @price_lists = PriceList.where(validity: true)
     @warehouses = Warehouse.where(validity: true)
@@ -80,9 +91,22 @@ class OrdersController < ApplicationController
 
   # PUT /orders/1
   # PUT /orders/1.json
-  def update    
-    @order = Order.find(params[:id])    
-    @shipping_addresses = ShippingAddress.where(validity: true)
+  def update
+    @order = Order.find(params[:id]) 
+    
+    if params[:customer_id] != ""
+      @select_customer_id = params[:customer_id]
+      @shipping_addresses = Customer.find(params[:customer_id]).shipping_addresses
+    else
+      @select_customer = @order.shipping_address.customer
+      @select_customer_id = @select_customer.id
+      @shipping_addresses = @select_customer.shipping_addresses
+    end
+    if params[:order][:shipping_address_id] !=""
+      @select_shipping_address_id = params[:order][:shipping_address_id]
+    end    
+    
+    @customers = Customer.where(validity: true)    
     @managers = Manager.where(validity: true)
     @price_lists = PriceList.where(validity: true)
     @warehouses = Warehouse.where(validity: true)
@@ -159,5 +183,10 @@ class OrdersController < ApplicationController
         format.html { redirect_to orders_path, notice: t(:order_export_again) }
         format.json { head :no_content }      
     end
+  end
+  
+  def update_shipping_addresses
+    @shipping_addresses = ShippingAddress.where(customer_id: params[:customer_id]) 
+    render :partial => "shipping_addresses", :object => @shipping_addresses  
   end  
 end

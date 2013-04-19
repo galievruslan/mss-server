@@ -1,4 +1,7 @@
 en:
+  unauthorized:
+    manage:
+      all: "You do not have access to %{action} %{subject}!"
   views:
     pagination:
         next: "Next"
@@ -303,4 +306,6 @@ en:
   delete: "Delete"
   back_to_price_lists: "Back to price lists"
   listing_products: "Listing products"
-  users_banned: "Users banned"
+  users_banned: "Users banned" 
+  select_customer: "Select customer"
+  select_datetime: "Select date and time"

@@ -24,7 +24,7 @@
 		    <div class="field">
 			    <%= f.label :date, t(:date) %>
 			    <div id="datetimepicker1" class="input-append date">
-				    <%= f.text_field :date, class: "input-medium"%>
+				    <%= f.text_field :date, :placeholder => t(:select_datetime)%>
 				    <span class="add-on">
 				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
 				      </i>
@@ -34,7 +34,7 @@
 			  <div class="field">
 			    <%= f.label :shipping_date, t(:shipping_date) %>
 			    <div id="datetimepicker2" class="input-append date">
-				    <%= f.text_field :shipping_date, class: "input-medium"%>
+				    <%= f.text_field :shipping_date, :placeholder => t(:select_datetime)%>
 				    <span class="add-on">
 				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
 				      </i>
@@ -42,9 +42,13 @@
 				  </div>
 			  </div>
 			  <div class="field">
-			    <%= f.label :shipping_address_id, t(:shipping_address) %>
-			    <%= f.select(:shipping_address_id, @shipping_addresses.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_shipping_address)) %>
+			    <%= label_tag :customer_id, t(:customer) %>
+			    <%= select_tag(:customer_id, options_from_collection_for_select(@customers, "id", "name", @select_customer_id), {:prompt => t(:select_customer), :onchange => "update_shipping_addresses(this.value)"}) %>
 			  </div>
+			  <div id="shipping_addresses" class="field">
+			  	<%= f.label :shipping_address_id, t(:shipping_address) if @shipping_addresses %>
+			  	<%= select_tag("order[shipping_address_id]", options_from_collection_for_select(@shipping_addresses, "id", "name", @select_shipping_address_id), :prompt => t(:select_shipping_address)) if @shipping_addresses %>	  
+				</div>
 			  <div class="field">
 			    <%= f.label :warehouse_id, t(:warehouse) %>
 			    <%= f.select(:warehouse_id, @warehouses.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_warehouse)) %>

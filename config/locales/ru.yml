@@ -1,4 +1,7 @@
 ru:
+  unauthorized:
+    manage:
+      all: "У вас нет доступа!"
   views:
     pagination:
         next: "Следующая"
@@ -304,3 +307,5 @@ ru:
   back_to_price_lists: "Назад к прайс-листам"
   listing_products: "Список номенклатуры" 
   users_banned: "Пользователи заблокированы"
+  select_customer: "Выберите клиента"
+  select_datetime: "Выберите дату и время"

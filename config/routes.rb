@@ -38,8 +38,11 @@
   resources :orders do
     member do
         put :export_again
-        get :generate_xml        
+        get :generate_xml       
       end
+    collection do
+      get :update_shipping_addresses
+    end  
     resources :order_items do      
         get :update_product_unit_of_measures
         collection do
