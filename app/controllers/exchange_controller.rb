@@ -25,314 +25,347 @@ class ExchangeController < ApplicationController
     
     if params[:customers]
       Customer.transaction do
-        customers = xml.elements.to_a("//customer")
-        customers.each do |customer| 
-          customer_name = customer.elements['name'].text
-          customer_external_key = customer.elements['external_key'].text
-          customer_db = Customer.find_by_external_key(customer_external_key)
-          if !customer_db
-            new_customer = Customer.create(name: customer_name, external_key: customer_external_key)
-          else 
-            if !customer_db.validity
-              customer_db.update_attributes(name: customer_name, validity: true)            
-            else
-              customer_db.update_attributes(name: customer_name)
-            end        
+        begin
+          customers = xml.elements.to_a("//customer")
+          customers.each do |customer| 
+            customer_name = customer.elements['name'].text
+            customer_external_key = customer.elements['external_key'].text
+            customer_db = Customer.find_by_external_key(customer_external_key)
+            if !customer_db
+              new_customer = Customer.create(name: customer_name, external_key: customer_external_key)
+            else 
+              if !customer_db.validity
+                customer_db.update_attributes(name: customer_name, validity: true)            
+              else
+                customer_db.update_attributes(name: customer_name)
+              end        
+            end
           end
-        end 
+        rescue ActiveRecord::StatementInvalid
+        end         
       end  
     end
     if params[:shipping_addresses]
       ShippingAddress.transaction do
-        shipping_addresses = xml.elements.to_a("//shipping_address")
-        shipping_addresses.each do |shipping_address| 
-          shipping_address_name = shipping_address.elements['name'].text
-          shipping_address_external_key = shipping_address.elements['external_key'].text
-          shipping_address_address = shipping_address.elements['address'].text
-          shipping_address_customer_external_key = shipping_address.elements['customer_external_key'].text
-          shipping_address_customer = Customer.find_by_external_key(shipping_address_customer_external_key)
-          if !shipping_address_customer
-            error = I18n.t('errors.not_found_customer', external_key: shipping_address_customer_external_key) 
-            @errors << error
-            next          
-          end
-          shipping_address_db = ShippingAddress.find_by_external_key(shipping_address_external_key)
-          if !shipping_address_db       
-            new_shipping_address = ShippingAddress.create(name: shipping_address_name, external_key: shipping_address_external_key, address: shipping_address_address, customer: shipping_address_customer)
-          else
-            if !shipping_address_db.validity
-              shipping_address_db.update_attributes(validity: true, name: shipping_address_name, address: shipping_address_address)
+        begin
+          shipping_addresses = xml.elements.to_a("//shipping_address")
+          shipping_addresses.each do |shipping_address| 
+            shipping_address_name = shipping_address.elements['name'].text
+            shipping_address_external_key = shipping_address.elements['external_key'].text
+            shipping_address_address = shipping_address.elements['address'].text
+            shipping_address_customer_external_key = shipping_address.elements['customer_external_key'].text
+            shipping_address_customer = Customer.find_by_external_key(shipping_address_customer_external_key)
+            if !shipping_address_customer
+              error = I18n.t('errors.not_found_customer', external_key: shipping_address_customer_external_key) 
+              @errors << error
+              next          
+            end
+            shipping_address_db = ShippingAddress.find_by_external_key(shipping_address_external_key)
+            if !shipping_address_db       
+              new_shipping_address = ShippingAddress.create(name: shipping_address_name, external_key: shipping_address_external_key, address: shipping_address_address, customer: shipping_address_customer)
             else
-              shipping_address_db.update_attributes(name: shipping_address_name, address: shipping_address_address)
-            end 
+              if !shipping_address_db.validity
+                shipping_address_db.update_attributes(validity: true, name: shipping_address_name, address: shipping_address_address)
+              else
+                shipping_address_db.update_attributes(name: shipping_address_name, address: shipping_address_address)
+              end 
+            end
           end
+        rescue ActiveRecord::StatementInvalid
         end
       end   
     end
     
     if params[:warehouses]
       Warehouse.transaction do
-        warehouses = xml.elements.to_a("//warehouse")
-        warehouses.each do |warehouse| 
-          warehouse_name = warehouse.elements['name'].text
-          warehouse_external_key = warehouse.elements['external_key'].text
-          warehouse_address = warehouse.elements['address'].text
-          warehouse_db = Warehouse.find_by_external_key(warehouse_external_key)   
-          if !warehouse_db
-            new_warehouse = Warehouse.create(name: warehouse_name, external_key: warehouse_external_key, address: warehouse_address)
-          else
-            if !warehouse_db.validity
-              warehouse_db.update_attributes(validity: true, name: warehouse_name, address: warehouse_address)
+        begin
+          warehouses = xml.elements.to_a("//warehouse")
+          warehouses.each do |warehouse| 
+            warehouse_name = warehouse.elements['name'].text
+            warehouse_external_key = warehouse.elements['external_key'].text
+            warehouse_address = warehouse.elements['address'].text
+            warehouse_db = Warehouse.find_by_external_key(warehouse_external_key)   
+            if !warehouse_db
+              new_warehouse = Warehouse.create(name: warehouse_name, external_key: warehouse_external_key, address: warehouse_address)
             else
-              warehouse_db.update_attributes(name: warehouse_name, address: warehouse_address)
-            end
-          end        
+              if !warehouse_db.validity
+                warehouse_db.update_attributes(validity: true, name: warehouse_name, address: warehouse_address)
+              else
+                warehouse_db.update_attributes(name: warehouse_name, address: warehouse_address)
+              end
+            end        
+          end
+        rescue ActiveRecord::StatementInvalid
         end
       end
     end
     
     if params[:managers]
       Manager.transaction do
-        managers = xml.elements.to_a("//manager")
-        managers.each do |manager| 
-          manager_name = manager.elements['name'].text
-          manager_external_key = manager.elements['external_key'].text
-          
-          if manager.elements['default_warehouse']
-            manager_default_warehouse_external_key = manager.elements['default_warehouse'].text
-            default_warehouse_db = Warehouse.find_by_external_key(manager_default_warehouse_external_key)
-          else
-            default_warehouse_db = nil
-          end
-          
-          manager_db = Manager.find_by_external_key(manager_external_key)   
-          if !manager_db
-            new_manager = Manager.create(name: manager_name, external_key: manager_external_key, default_warehouse: default_warehouse_db)
-          else
-            if !manager_db.validity
-              manager_db.update_attributes(validity: true, name: manager_name, default_warehouse: default_warehouse_db)
+        begin
+          managers = xml.elements.to_a("//manager")
+          managers.each do |manager| 
+            manager_name = manager.elements['name'].text
+            manager_external_key = manager.elements['external_key'].text
+            
+            if manager.elements['default_warehouse']
+              manager_default_warehouse_external_key = manager.elements['default_warehouse'].text
+              default_warehouse_db = Warehouse.find_by_external_key(manager_default_warehouse_external_key)
             else
-              manager_db.update_attributes(name: manager_name, default_warehouse: default_warehouse_db)
+              default_warehouse_db = nil
             end
-          end        
+            
+            manager_db = Manager.find_by_external_key(manager_external_key)   
+            if !manager_db
+              new_manager = Manager.create(name: manager_name, external_key: manager_external_key, default_warehouse: default_warehouse_db)
+            else
+              if !manager_db.validity
+                manager_db.update_attributes(validity: true, name: manager_name, default_warehouse: default_warehouse_db)
+              else
+                manager_db.update_attributes(name: manager_name, default_warehouse: default_warehouse_db)
+              end
+            end        
+          end
+        rescue ActiveRecord::StatementInvalid
         end
       end
     end
     
     if params[:managers_shipping_addresses]
       ManagerShippingAddress.transaction do
-        manager_shipping_addresses = xml.elements.to_a("//manager_shipping_address")
-        manager_shipping_addresses.each do |manager_shipping_address|
-          manager_external_key = manager_shipping_address.elements['manager_external_key'].text
-          shipping_address_external_key = manager_shipping_address.elements['shipping_address_external_key'].text
-          manager_db = Manager.find_by_external_key(manager_external_key)
-          shipping_address_db = ShippingAddress.find_by_external_key(shipping_address_external_key)
-          
-          if !manager_db
-            error = I18n.t('errors.not_found_manager', external_key: manager_external_key) 
-            @errors << error
-            next          
-          end
-          if !shipping_address_db
-            error = I18n.t('errors.not_found_shipping_address', external_key: shipping_address_external_key) 
-            @errors << error
-            next          
-          end        
-          
-          manager_shipping_address_db = ManagerShippingAddress.find_by_manager_id_and_shipping_address_id(manager_db.id, shipping_address_db.id)
-          if !manager_shipping_address_db
-            new_manager_shipping_address = ManagerShippingAddress.create(manager: manager_db, shipping_address: shipping_address_db)          
-          else
-            if !manager_shipping_address_db.validity
-              manager_shipping_address_db.update_attributes(validity: true)
+        begin
+          manager_shipping_addresses = xml.elements.to_a("//manager_shipping_address")
+          manager_shipping_addresses.each do |manager_shipping_address|
+            manager_external_key = manager_shipping_address.elements['manager_external_key'].text
+            shipping_address_external_key = manager_shipping_address.elements['shipping_address_external_key'].text
+            manager_db = Manager.find_by_external_key(manager_external_key)
+            shipping_address_db = ShippingAddress.find_by_external_key(shipping_address_external_key)
+            
+            if !manager_db
+              error = I18n.t('errors.not_found_manager', external_key: manager_external_key) 
+              @errors << error
+              next          
             end
-          end        
+            if !shipping_address_db
+              error = I18n.t('errors.not_found_shipping_address', external_key: shipping_address_external_key) 
+              @errors << error
+              next          
+            end        
+            
+            manager_shipping_address_db = ManagerShippingAddress.find_by_manager_id_and_shipping_address_id(manager_db.id, shipping_address_db.id)
+            if !manager_shipping_address_db
+              new_manager_shipping_address = ManagerShippingAddress.create(manager: manager_db, shipping_address: shipping_address_db)          
+            else
+              if !manager_shipping_address_db.validity
+                manager_shipping_address_db.update_attributes(validity: true)
+              end
+            end        
+          end
+        rescue ActiveRecord::StatementInvalid
         end
       end
     end
     
     if params[:unit_of_measures]
       UnitOfMeasure.transaction do
-        unit_of_measures = xml.elements.to_a("//unit_of_measure")
-        unit_of_measures.each do |unit_of_measure| 
-          unit_of_measure_name = unit_of_measure.elements['name'].text
-          unit_of_measure_external_key = unit_of_measure.elements['external_key'].text
-          unit_of_measure_db = UnitOfMeasure.find_by_external_key(unit_of_measure_external_key)
-          if !unit_of_measure_db
-            new_unit_of_measure = UnitOfMeasure.create(name: unit_of_measure_name, external_key: unit_of_measure_external_key)
-          else
-            if !unit_of_measure_db.validity
-              unit_of_measure_db.update_attributes(validity: true, name: unit_of_measure_name)
+        begin
+          unit_of_measures = xml.elements.to_a("//unit_of_measure")
+          unit_of_measures.each do |unit_of_measure| 
+            unit_of_measure_name = unit_of_measure.elements['name'].text
+            unit_of_measure_external_key = unit_of_measure.elements['external_key'].text
+            unit_of_measure_db = UnitOfMeasure.find_by_external_key(unit_of_measure_external_key)
+            if !unit_of_measure_db
+              new_unit_of_measure = UnitOfMeasure.create(name: unit_of_measure_name, external_key: unit_of_measure_external_key)
             else
-              unit_of_measure_db.update_attributes(name: unit_of_measure_name)
-            end
-          end          
+              if !unit_of_measure_db.validity
+                unit_of_measure_db.update_attributes(validity: true, name: unit_of_measure_name)
+              else
+                unit_of_measure_db.update_attributes(name: unit_of_measure_name)
+              end
+            end          
+          end
+        rescue ActiveRecord::StatementInvalid
         end
       end
     end
     
     if params[:price_lists]
       PriceList.transaction do
-        price_lists = xml.elements.to_a("//price_list")
-        price_lists.each do |price_list| 
-          price_list_name = price_list.elements['name'].text
-          price_list_external_key = price_list.elements['external_key'].text
-          price_list_db = PriceList.find_by_external_key(price_list_external_key)
-          if !price_list_db
-            new_price_list = PriceList.create(name: price_list_name, external_key: price_list_external_key)
-          else
-            if !price_list_db.validity
-              price_list_db.update_attributes(validity: true, name: price_list_name)
+        begin
+          price_lists = xml.elements.to_a("//price_list")
+          price_lists.each do |price_list| 
+            price_list_name = price_list.elements['name'].text
+            price_list_external_key = price_list.elements['external_key'].text
+            price_list_db = PriceList.find_by_external_key(price_list_external_key)
+            if !price_list_db
+              new_price_list = PriceList.create(name: price_list_name, external_key: price_list_external_key)
             else
-              price_list_db.update_attributes(name: price_list_name)
-            end
-          end          
+              if !price_list_db.validity
+                price_list_db.update_attributes(validity: true, name: price_list_name)
+              else
+                price_list_db.update_attributes(name: price_list_name)
+              end
+            end          
+          end
+        rescue ActiveRecord::StatementInvalid
         end
       end
     end
     
     if params[:categories]
       Category.transaction do
-        categories = xml.elements.to_a("//category")      
-        categories.each do |category| 
-          category_name = category.elements['name'].text
-          category_external_key = category.elements['external_key'].text
-          category_db = Category.find_by_external_key(category_external_key)  
-          if category.attributes['type'] =='root'          
-            if !category_db             
-              new_category = Category.create(name: category_name, external_key: category_external_key)
-            else
-              if !category_db.validity
-                category_db.update_attributes(validity: true, name: category_name, parent: nil)
+        begin
+          categories = xml.elements.to_a("//category")      
+          categories.each do |category| 
+            category_name = category.elements['name'].text
+            category_external_key = category.elements['external_key'].text
+            category_db = Category.find_by_external_key(category_external_key)  
+            if category.attributes['type'] =='root'          
+              if !category_db             
+                new_category = Category.create(name: category_name, external_key: category_external_key)
               else
-                category_db.update_attributes(name: category_name, parent: nil)
+                if !category_db.validity
+                  category_db.update_attributes(validity: true, name: category_name, parent: nil)
+                else
+                  category_db.update_attributes(name: category_name, parent: nil)
+                end
+              end 
+                  
+            else
+              category_parent_ext_key = category.elements['parent_category_external_key'].text
+              category_parent = Category.find_by_external_key(category_parent_ext_key)
+              
+              if !category_parent
+                error = I18n.t('errors.not_found_category', external_key: category_parent_ext_key) 
+                @errors << error
+                next         
               end
-            end 
-                
-          else
-            category_parent_ext_key = category.elements['parent_category_external_key'].text
-            category_parent = Category.find_by_external_key(category_parent_ext_key)
-            
-            if !category_parent
-              error = I18n.t('errors.not_found_category', external_key: category_parent_ext_key) 
-              @errors << error
-              next         
+              
+              if !category_db             
+                new_category = Category.create(name: category_name, external_key: category_external_key, parent: category_parent)
+              else
+                if !category_db.validity
+                  category_db.update_attributes(validity: true, name: category_name, parent: category_parent)
+                else
+                  category_db.update_attributes(name: category_name, parent: category_parent)
+                end
+              end            
             end
-            
-            if !category_db             
-              new_category = Category.create(name: category_name, external_key: category_external_key, parent: category_parent)
-            else
-              if !category_db.validity
-                category_db.update_attributes(validity: true, name: category_name, parent: category_parent)
-              else
-                category_db.update_attributes(name: category_name, parent: category_parent)
-              end
-            end            
           end
+        rescue ActiveRecord::StatementInvalid
         end
       end
     end
     
     if params[:products]
       Product.transaction do
-        products = xml.elements.to_a("//product")
-        products.each do |product| 
-          product_name = product.elements['name'].text
-          product_external_key = product.elements['external_key'].text
-          product_category_external_key = product.elements['category_external_key'].text
-          product_category = Category.find_by_external_key(product_category_external_key)
-          
-          if !product_category
-            error = I18n.t('errors.not_found_category', external_key: product_category_external_key) 
-            @errors << error
-            next          
-          end
-          
-          product_db = Product.find_by_external_key(product_external_key)
-          if !product_db
-            new_product = Product.create(name: product_name, external_key: product_external_key, category: product_category)
-          else
-            if !product_db.validity
-              product_db.update_attributes(validity: true, name: product_name, category: product_category)
-            else
-              product_db.update_attributes(name: product_name, category: product_category)
+        begin
+          products = xml.elements.to_a("//product")
+          products.each do |product| 
+            product_name = product.elements['name'].text
+            product_external_key = product.elements['external_key'].text
+            product_category_external_key = product.elements['category_external_key'].text
+            product_category = Category.find_by_external_key(product_category_external_key)
+            
+            if !product_category
+              error = I18n.t('errors.not_found_category', external_key: product_category_external_key) 
+              @errors << error
+              next          
             end
-          end          
-        end   
+            
+            product_db = Product.find_by_external_key(product_external_key)
+            if !product_db
+              new_product = Product.create(name: product_name, external_key: product_external_key, category: product_category)
+            else
+              if !product_db.validity
+                product_db.update_attributes(validity: true, name: product_name, category: product_category)
+              else
+                product_db.update_attributes(name: product_name, category: product_category)
+              end
+            end          
+          end  
+        rescue ActiveRecord::StatementInvalid
+        end 
       end
     end
     
     if params[:product_unit_of_measures]
       ProductUnitOfMeasure.transaction do
-        product_unit_of_measures = xml.elements.to_a("//product_unit_of_measure")
-        product_unit_of_measures.each do |product_unit_of_measure|        
-          product_unit_of_measure.attributes['type'] =='base' ? base_product_unit_of_measure = true : base_product_unit_of_measure = false        
-          product_unit_of_measure_product_external_key = product_unit_of_measure.elements['product_external_key'].text
-          product_unit_of_measure_external_key = product_unit_of_measure.elements['unit_of_measure_external_key'].text
-          product_unit_of_measure_count_in_base_unit = product_unit_of_measure.elements['count_in_base_unit'].text
-          product = Product.find_by_external_key(product_unit_of_measure_product_external_key)
-          
-          if !product
-            error = I18n.t('errors.not_found_product', external_key: product_unit_of_measure_product_external_key) 
-            @errors << error
-            next          
-          end
-          
-          unit_of_measure = UnitOfMeasure.find_by_external_key(product_unit_of_measure_external_key)
-          
-          if !unit_of_measure
-            error = I18n.t('errors.not_found_unit_of_measure', external_key: product_unit_of_measure_external_key) 
-            @errors << error
-            next          
-          end
-          
-          product_unit_of_measure_db = ProductUnitOfMeasure.find_by_product_id_and_unit_of_measure_id(product.id, unit_of_measure.id)
-          if !product_unit_of_measure_db
-            new_product_unit_of_measure = ProductUnitOfMeasure.create(product: product, unit_of_measure: unit_of_measure, count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
-          else
-            if !product_unit_of_measure_db.validity
-              product_unit_of_measure_db.update_attributes(validity: true, count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
-            else
-              product_unit_of_measure_db.update_attributes(count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
+        begin
+          product_unit_of_measures = xml.elements.to_a("//product_unit_of_measure")
+          product_unit_of_measures.each do |product_unit_of_measure|        
+            product_unit_of_measure.attributes['type'] =='base' ? base_product_unit_of_measure = true : base_product_unit_of_measure = false        
+            product_unit_of_measure_product_external_key = product_unit_of_measure.elements['product_external_key'].text
+            product_unit_of_measure_external_key = product_unit_of_measure.elements['unit_of_measure_external_key'].text
+            product_unit_of_measure_count_in_base_unit = product_unit_of_measure.elements['count_in_base_unit'].text
+            product = Product.find_by_external_key(product_unit_of_measure_product_external_key)
+            
+            if !product
+              error = I18n.t('errors.not_found_product', external_key: product_unit_of_measure_product_external_key) 
+              @errors << error
+              next          
             end
-          end          
-        end 
+            
+            unit_of_measure = UnitOfMeasure.find_by_external_key(product_unit_of_measure_external_key)
+            
+            if !unit_of_measure
+              error = I18n.t('errors.not_found_unit_of_measure', external_key: product_unit_of_measure_external_key) 
+              @errors << error
+              next          
+            end
+            
+            product_unit_of_measure_db = ProductUnitOfMeasure.find_by_product_id_and_unit_of_measure_id(product.id, unit_of_measure.id)
+            if !product_unit_of_measure_db
+              new_product_unit_of_measure = ProductUnitOfMeasure.create(product: product, unit_of_measure: unit_of_measure, count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
+            else
+              if !product_unit_of_measure_db.validity
+                product_unit_of_measure_db.update_attributes(validity: true, count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
+              else
+                product_unit_of_measure_db.update_attributes(count_in_base_unit: product_unit_of_measure_count_in_base_unit, base: base_product_unit_of_measure)
+              end
+            end          
+          end 
+        rescue ActiveRecord::StatementInvalid
+        end
       end  
     end
     
     if params[:product_prices]
       ProductPrice.transaction do
-        product_prices = xml.elements.to_a("//product_price")
-        product_prices.each do |product_price| 
-          product_external_key = product_price.elements['product_external_key'].text
-          price_list_external_key = product_price.elements['price_list_external_key'].text
-          price = product_price.elements['price'].text
-          product = Product.find_by_external_key(product_external_key)
-          
-          if !product
-            error = I18n.t('errors.not_found_product', external_key: product_external_key) 
-            @errors << error
-            next          
-          end
-          
-          price_list = PriceList.find_by_external_key(price_list_external_key)
-          
-          if !price_list
-            error = I18n.t('errors.not_found_price_list', external_key: price_list_external_key) 
-            @errors << error
-            next          
-          end
-          
-          product_price_db = ProductPrice.find_by_product_id_and_price_list_id(product.id, price_list.id)
-          if !product_price_db
-            new_product_price = ProductPrice.create(product: product, price_list: price_list, price: price)
-          else
-            if !product_price_db.validity
-              product_price_db.update_attributes(validity: true, price: price)
-            else      
-              product_price_db.update_attributes(price: price)
+        begin
+          product_prices = xml.elements.to_a("//product_price")
+          product_prices.each do |product_price| 
+            product_external_key = product_price.elements['product_external_key'].text
+            price_list_external_key = product_price.elements['price_list_external_key'].text
+            price = product_price.elements['price'].text
+            product = Product.find_by_external_key(product_external_key)
+            
+            if !product
+              error = I18n.t('errors.not_found_product', external_key: product_external_key) 
+              @errors << error
+              next          
             end
-          end          
+            
+            price_list = PriceList.find_by_external_key(price_list_external_key)
+            
+            if !price_list
+              error = I18n.t('errors.not_found_price_list', external_key: price_list_external_key) 
+              @errors << error
+              next          
+            end
+            
+            product_price_db = ProductPrice.find_by_product_id_and_price_list_id(product.id, price_list.id)
+            if !product_price_db
+              new_product_price = ProductPrice.create(product: product, price_list: price_list, price: price)
+            else
+              if !product_price_db.validity
+                product_price_db.update_attributes(validity: true, price: price)
+              else      
+                product_price_db.update_attributes(price: price)
+              end
+            end          
+          end
+        rescue ActiveRecord::StatementInvalid
         end
       end
     end        

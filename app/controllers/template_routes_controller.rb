@@ -12,6 +12,7 @@ class TemplateRoutesController < ApplicationController
     end
     
     @managers = Manager.all
+    @template_route_points_count = TemplateRoutePoint.count(:group=>:template_route_id)
     
     respond_to do |format|
       format.html # index.html.erb

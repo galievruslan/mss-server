@@ -57,7 +57,7 @@
 				<td><%= manager.external_key %></td>
 		    <td><%= manager.name %></td>
 		    <td><%= manager.default_warehouse ? manager.default_warehouse.name : t(:no_default_warehouse) %></td>
-		    <td><%= link_to(manager_manager_shipping_addresses_path(manager)) do%><%= manager.manager_shipping_addresses.count%><%end%></td>
+		    <td><%= link_to(manager_manager_shipping_addresses_path(manager)) do%><%= @manager_shipping_addresses_count[manager.id] ? @manager_shipping_addresses_count[manager.id] : '0' %><%end%></td>
 		    <td><i class=<%=manager.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
 		    <td><%= link_to(manager) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
 		    <% if can? :manage, Manager %>

@@ -10,7 +10,7 @@ class CustomersController < ApplicationController
       @search = Customer.search(params[:q])    
       @customers = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
     end          
-    
+    @shipping_addresses_count = ShippingAddress.where(validity: true).count(:group=>:customer_id)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @customers }

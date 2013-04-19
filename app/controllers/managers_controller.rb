@@ -12,6 +12,7 @@ class ManagersController < ApplicationController
     end   
     
     @warehouses = Warehouse.all
+    @manager_shipping_addresses_count = ManagerShippingAddress.where(validity: true).count(:group=>:manager_id)
     
     respond_to do |format|
       format.html # index.html.erb

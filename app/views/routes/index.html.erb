@@ -60,7 +60,7 @@
 	  <tr>
 	    <td><%= route.date %></td>
 	    <td><%= route.manager.name%></td>
-	    <td><%= link_to(route_route_points_path(route)) do%><%= route.route_points.count%><% end %></td>
+	    <td><%= link_to(route_route_points_path(route)) do%><%= @route_points_count[route.id] ? @route_points_count[route.id] : '0' %><% end %></td>
 	    <td><%= link_to(route) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
 	    <% if can? :manage, Route %>
 			  <td><%= link_to(edit_route_path(route)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
