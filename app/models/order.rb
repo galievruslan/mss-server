@@ -6,6 +6,6 @@ class Order < ActiveRecord::Base
   belongs_to :price_list
   belongs_to :route_point
   has_many :order_items, :dependent => :destroy
-  validates :date, :shipping_date, :manager_id, :shipping_address_id, :warehouse_id,:price_list_id, :presence => true
+  validates :date, :shipping_date, :manager, :shipping_address, :warehouse, :price_list, :presence => true
   accepts_nested_attributes_for :order_items, :allow_destroy => true  
 end

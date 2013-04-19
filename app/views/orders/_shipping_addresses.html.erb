@@ -1,0 +1,2 @@
+<%= label_tag "order[shipping_address_id]", t(:shipping_address) %>
+<%= select_tag "order[shipping_address_id]", options_from_collection_for_select(@shipping_addresses, "id", "name"), :prompt => t(:select_shipping_address) %>

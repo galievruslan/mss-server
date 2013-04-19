@@ -3,7 +3,7 @@ class Product < ActiveRecord::Base
   has_many :order_items, :dependent => :destroy
   has_many :product_unit_of_measures, :dependent => :destroy
   has_many :product_prices , :dependent => :destroy
-  validates :name, :external_key, :category_id, :presence => true
+  validates :name, :external_key, :category, :presence => true
   validates :external_key, :uniqueness => { :case_sensitive => false }
   belongs_to :category
 end

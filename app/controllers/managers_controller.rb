@@ -81,6 +81,7 @@ class ManagersController < ApplicationController
   # PUT /managers/1.json
   def update
     @manager = Manager.find(params[:id])
+    @warehouses = Warehouse.where(validity: true)
 
     respond_to do |format|
       if @manager.update_attributes(params[:manager])

@@ -1,4 +1,113 @@
 ru:
+  activerecord:
+    models:
+      ability: "Привилегия"
+      category: "Категория"
+      customer: "Клиент"
+      manager_shipping_address: "Адрес поставки менеджера"      
+      manager: "Менеджер"
+      order_item: "Строка заказа"
+      order: "Заказ"
+      price_list: "Прайс-лист"
+      product_price: "Цена номенклатуры"
+      product_unit_of_measure: "Единица измерения номенклатуры"
+      product: "Номенклатура"
+      role: "Роль"
+      route_point: "Точка маршрута"
+      route: "Маршрут"
+      shipping_address: "Адрес доставки"
+      status: "Статус"
+      template_route_point: "Точка шаблона маршрута"
+      template_route: "Шаблон маршрута"
+      unit_of_measure: "Единица измерения"
+      user: "Пользователь"
+      warehouse: "Склад"
+    attributes:
+      category:
+        name: "Наименование"
+        external_key: "Внешний ключ"
+        validity: "Доступность"
+        parent: "Родитель"
+      customer:
+        name: "Наименование"
+        external_key: "Внешний ключ"
+        validity: "Доступность"
+      manager_shipping_address:
+        validity: "Доступность"
+        shipping_address: "Адрес поставки"
+        manager: "Менеджер"
+      manager:      
+        name: "Наименование"
+        external_key: "Внешний ключ"
+        default_warehouse: "Склад по-умолчанию"
+        validity: "Доступность"
+      order_item:      
+        product: "Номенклатура"
+        unit_of_measure: "Единица измерения"
+        quantity: "Количество"
+      order:
+        date: "Дата заказа"
+        shipping_date: "Дата доставки"
+        manager: "Менеджер"
+        warehouse: "Склад"
+        shipping_address: "Адрес доставки"
+        price_list: "Прайс-лист"
+        route_point: "Точка маршрута"
+      price_list:
+        name: "Наименование"
+        external_key: "Внешний ключ"
+        validity: "Доступность"
+      product_price:
+        price: "Цена"
+        product: "Номенкларута"
+        price_list: "Прайс-лист"
+      product_unit_of_measure:
+        unit_of_measure: "Единица измерения"
+        product: "Номенклатура"
+        count_in_base_unit: "Количество в базовых единицах" 
+        validity: "Доступность"
+        base: "Базовая"
+      product:
+        name: "Наименование"
+        external_key: "Внешний ключ"
+        validity: "Доступность"
+        category: "Категория"
+      role:
+        name: "Наименование"
+      route_point:
+        shipping_address: "Адрес доставки"
+        status: "Статус"
+      route:
+        date: "Дата"
+        manager: "Менеджер"
+      shipping_address:
+        customer: "Клиент"
+        name: "Наименование"
+        address: "Адрес"
+        external_key: "Внешний ключ"
+        validity: "Доступность"
+      status:
+        name: "Наименование"
+        validity: "Доступность"
+      template_route_point:
+        shipping_address: "Адрес доставки"
+        validity: "Доступность"
+      template_route:
+        day_of_week: "День недели"
+        manager: "Менеджер"
+        validity: "Доступность"
+      unit_of_measure:
+        name: "Наименование"
+        external_key: "Внешний ключ"
+        validity: "Доступность"
+      user:
+        username: "Имя пользователя"
+        email: "E-mail"
+        password: "Пароль"
+        password_confirmation: "Подтверждение пароля"
+        language: "Язык"
+        list_page_size: "Количество элементов на странице"
+        manager_id: "Менеджер"        
   unauthorized:
     manage:
       all: "У вас нет доступа!"
