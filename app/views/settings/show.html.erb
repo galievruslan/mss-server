@@ -46,9 +46,13 @@
 	</div>
 	<div class="tab-pane" id="tab3">
 		<div class="field">
-		    <%= label_tag :default_route_point_status_id, t(:default_route_point_status) %>
-		    <%= select_tag :default_route_point_status_id, options_from_collection_for_select(@statuses, :id, :name, Settings.default_route_point_status_id), :prompt => t(:select_status) %>
-		  </div>
+	    <%= label_tag :default_route_point_status_id, t(:default_route_point_status) %>
+	    <%= select_tag :default_route_point_status_id, options_from_collection_for_select(@statuses, :id, :name, Settings.default_route_point_status_id), :prompt => t(:select_status) %>
+	  </div>
+	  <div class="field">
+	    <%= label_tag :order_filename, t(:order_filename) %>
+	    <%= text_field_tag :order_filename, Settings.order_filename, placeholder: t(:order_filename) %>
+	  </div>
 	</div>
 		<div class="actions">
 		  <%= submit_tag(t(:save), :class =>'btn') %>

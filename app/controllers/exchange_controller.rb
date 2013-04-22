@@ -1,10 +1,7 @@
 class ExchangeController < ApplicationController
   require 'rexml/document'  
   require 'net/ftp'
-  public
-  def test
-    return 'test'
-  end  
+  include ExchangeHelper
   def index
     authorize! :exchange , :view     
   end
@@ -394,9 +391,8 @@ class ExchangeController < ApplicationController
     if @not_exported_orders.count > 0
       files = {}
       @not_exported_orders.each do |not_exported_order|
-        current_date_time = Time.now.strftime("%d-%m-%y %H-%M")
-        order_datetime = not_exported_order.date.strftime("%d-%m-%y %H-%M")
-        file_path = "#{Rails.root.to_s}/tmp/orders/#{current_date_time} order-#{not_exported_order.id}-#{order_datetime}.xml"
+        filename = make_order_filename(not_exported_order)
+        file_path = "#{Rails.root.to_s}/tmp/orders/#{filename}.xml"
         file_name = generate_xml_file(file_path, not_exported_order)
         files[file_name] = file_path
         not_exported_order.update_attributes(exported_at: Time.now)      
@@ -412,9 +408,8 @@ class ExchangeController < ApplicationController
     if @not_exported_orders.count > 0
       files = {}
       @not_exported_orders.each do |not_exported_order|
-        current_date_time = Time.now.strftime("%d-%m-%y %H-%M")
-        order_datetime = not_exported_order.date.strftime("%d-%m-%y %H-%M")
-        file_path = "#{Rails.root.to_s}/tmp/orders/#{current_date_time} order-#{not_exported_order.id}-#{order_datetime}.xml"
+        filename = make_order_filename(not_exported_order)      
+        file_path = "#{Rails.root.to_s}/tmp/orders/#{filename}.xml"
         file_name = generate_xml_file(file_path, not_exported_order)
         files[file_name] = file_path              
       end
@@ -430,10 +425,9 @@ class ExchangeController < ApplicationController
     @not_exported_orders = get_not_exported_orders
     if @not_exported_orders.count > 0
       files = {}
-      @not_exported_orders.each do |not_exported_order|
-        current_date_time = Time.now.strftime("%d-%m-%y %H-%M")
-        order_datetime = not_exported_order.date.strftime("%d-%m-%y %H-%M")
-        file_path = "#{Rails.root.to_s}/tmp/orders/#{current_date_time} order-#{not_exported_order.id}-#{order_datetime}.xml"
+      @not_exported_orders.each do |not_exported_order|        
+        filename = make_order_filename(not_exported_order)
+        file_path = "#{Rails.root.to_s}/tmp/orders/#{filename}.xml"
         file_name = generate_xml_file(file_path, not_exported_order)
         files[file_name] = file_path              
       end

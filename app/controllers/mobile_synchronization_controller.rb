@@ -2,6 +2,15 @@ class MobileSynchronizationController < ApplicationController
   
   include MobileSynchronizationHelper
   
+  # GET /datetime.json
+  def datetime
+    current_date_time = Time.now
+    @responce = JSON datetime: current_date_time
+    respond_to do |format|      
+      format.json { render json: @responce }
+    end
+  end
+  
   # GET /customers.json
   def customers    
     if params[:updated_at]

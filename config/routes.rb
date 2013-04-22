@@ -18,6 +18,7 @@
   get 'bali', :to => 'pages#bali'
   
   # MobileSynchronization routes
+  get 'synchronization/datetime', :to => 'mobile_synchronization#datetime'
   get 'synchronization/customers', :to => 'mobile_synchronization#customers'
   get 'synchronization/shipping_addresses', :to => 'mobile_synchronization#shipping_addresses'
   get 'synchronization/managers', :to => 'mobile_synchronization#managers'

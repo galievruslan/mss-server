@@ -54,7 +54,14 @@ class SettingsController < ApplicationController
     else
       error = t(:default_route_point_status) + ' ' + t('errors.messages.blank') 
       @errors << error
-    end       
+    end     
+     
+    unless params[:order_filename].empty?
+      config['order_filename'] = params[:order_filename]
+    else
+      error = t(:order_filename) + ' ' + t('errors.messages.blank') 
+      @errors << error
+    end   
     
     if @errors.count == 0
       File.open("#{Rails.root}/config/settings.local.yml", 'w') { |f| YAML.dump(config, f) }
