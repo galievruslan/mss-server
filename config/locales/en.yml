@@ -46,6 +46,7 @@ en:
         unit_of_measure: "Unit of measure"
         quantity: "Quantity"
       order:
+        order_items: "Order items"
         date: "Date"
         shipping_date: "Shipping date"
         manager: "Manager"
@@ -53,6 +54,10 @@ en:
         shipping_address: "Shipping address"
         price_list: "Price list"
         route_point: "Route point"
+      order/order_items:
+        product: "Product in order item"
+        unit_of_measure: "unit of measure in order item"
+        quantity: "Quantity in order item"
       price_list:
         name: "Name"
         external_key: "External key"
@@ -78,8 +83,12 @@ en:
         shipping_address: "Shipping address"
         status: "Status"
       route:
+        route_points: "Route points"
         date: "Date"
         manager: "Manager"
+      route/route_points:
+        shipping_address: "Shipping address in route point"
+        status: "Status in route point"
       shipping_address:
         customer: "Customer"
         name: "Name"
@@ -93,9 +102,12 @@ en:
         shipping_address: "Shipping address"
         validity: "Validity"
       template_route:
+        template_route_points: "Template route points"
         day_of_week: "Day of week"
         manager: "Manager"
         validity: "Validity"
+      template_route/template_route_points:
+        shipping_address: "Shipping address in template route point"
       unit_of_measure:
         name: "Name"
         external_key: "External key"

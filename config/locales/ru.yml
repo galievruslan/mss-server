@@ -46,6 +46,7 @@ ru:
         unit_of_measure: "Единица измерения"
         quantity: "Количество"
       order:
+        order_items: "Строки заказа"      
         date: "Дата заказа"
         shipping_date: "Дата доставки"
         manager: "Менеджер"
@@ -53,6 +54,10 @@ ru:
         shipping_address: "Адрес доставки"
         price_list: "Прайс-лист"
         route_point: "Точка маршрута"
+      order/order_items:
+        product: "Номенклатура в строке заказа"
+        unit_of_measure: "Единица измерения в строке заказа"
+        quantity: "Количество в строке заказа"
       price_list:
         name: "Наименование"
         external_key: "Внешний ключ"
@@ -80,6 +85,10 @@ ru:
       route:
         date: "Дата"
         manager: "Менеджер"
+        route_points: "Точки маршрута"
+      route/route_points:
+        shipping_address: "Адрес доставки у точки маршрута"
+        status: "Статус у точки маршрута"
       shipping_address:
         customer: "Клиент"
         name: "Наименование"
@@ -96,6 +105,9 @@ ru:
         day_of_week: "День недели"
         manager: "Менеджер"
         validity: "Доступность"
+        template_route_points: "Точки шаблона маршрута"
+      template_route/template_route_points:
+        shipping_address: "Адрес доставки у точки шаблона маршрута"
       unit_of_measure:
         name: "Наименование"
         external_key: "Внешний ключ"

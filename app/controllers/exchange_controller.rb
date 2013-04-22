@@ -24,8 +24,9 @@ class ExchangeController < ApplicationController
     xml = REXML::Document.new(xml_data)
     
     if params[:customers]
-      Customer.transaction do
+      Customer.transaction do        
         begin
+          Customer.update_all(validity: false)
           customers = xml.elements.to_a("//customer")
           customers.each do |customer| 
             customer_name = customer.elements['name'].text
@@ -46,8 +47,9 @@ class ExchangeController < ApplicationController
       end  
     end
     if params[:shipping_addresses]
-      ShippingAddress.transaction do
+      ShippingAddress.transaction do        
         begin
+          ShippingAddress.update_all(validity: false)
           shipping_addresses = xml.elements.to_a("//shipping_address")
           shipping_addresses.each do |shipping_address| 
             shipping_address_name = shipping_address.elements['name'].text
@@ -77,8 +79,9 @@ class ExchangeController < ApplicationController
     end
     
     if params[:warehouses]
-      Warehouse.transaction do
+      Warehouse.transaction do        
         begin
+          Warehouse.update_all(validity: false)
           warehouses = xml.elements.to_a("//warehouse")
           warehouses.each do |warehouse| 
             warehouse_name = warehouse.elements['name'].text
@@ -101,8 +104,9 @@ class ExchangeController < ApplicationController
     end
     
     if params[:managers]
-      Manager.transaction do
+      Manager.transaction do        
         begin
+          Manager.update_all(validity: false)
           managers = xml.elements.to_a("//manager")
           managers.each do |manager| 
             manager_name = manager.elements['name'].text
@@ -134,6 +138,7 @@ class ExchangeController < ApplicationController
     if params[:managers_shipping_addresses]
       ManagerShippingAddress.transaction do
         begin
+          ManagerShippingAddress.update_all(validity: false)
           manager_shipping_addresses = xml.elements.to_a("//manager_shipping_address")
           manager_shipping_addresses.each do |manager_shipping_address|
             manager_external_key = manager_shipping_address.elements['manager_external_key'].text
@@ -169,6 +174,7 @@ class ExchangeController < ApplicationController
     if params[:unit_of_measures]
       UnitOfMeasure.transaction do
         begin
+          UnitOfMeasure.update_all(validity: false)
           unit_of_measures = xml.elements.to_a("//unit_of_measure")
           unit_of_measures.each do |unit_of_measure| 
             unit_of_measure_name = unit_of_measure.elements['name'].text
@@ -192,6 +198,7 @@ class ExchangeController < ApplicationController
     if params[:price_lists]
       PriceList.transaction do
         begin
+          PriceList.update_all(validity: false)
           price_lists = xml.elements.to_a("//price_list")
           price_lists.each do |price_list| 
             price_list_name = price_list.elements['name'].text
@@ -215,6 +222,7 @@ class ExchangeController < ApplicationController
     if params[:categories]
       Category.transaction do
         begin
+          Category.update_all(validity: false)
           categories = xml.elements.to_a("//category")      
           categories.each do |category| 
             category_name = category.elements['name'].text
@@ -260,6 +268,7 @@ class ExchangeController < ApplicationController
     if params[:products]
       Product.transaction do
         begin
+          Product.update_all(validity: false)
           products = xml.elements.to_a("//product")
           products.each do |product| 
             product_name = product.elements['name'].text
@@ -292,6 +301,7 @@ class ExchangeController < ApplicationController
     if params[:product_unit_of_measures]
       ProductUnitOfMeasure.transaction do
         begin
+          ProductUnitOfMeasure.update_all(validity: false)
           product_unit_of_measures = xml.elements.to_a("//product_unit_of_measure")
           product_unit_of_measures.each do |product_unit_of_measure|        
             product_unit_of_measure.attributes['type'] =='base' ? base_product_unit_of_measure = true : base_product_unit_of_measure = false        
@@ -333,6 +343,7 @@ class ExchangeController < ApplicationController
     if params[:product_prices]
       ProductPrice.transaction do
         begin
+          ProductPrice.update_all(validity: false)
           product_prices = xml.elements.to_a("//product_price")
           product_prices.each do |product_price| 
             product_external_key = product_price.elements['product_external_key'].text
