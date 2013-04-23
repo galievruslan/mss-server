@@ -127,15 +127,16 @@ class UsersController < ApplicationController
   
   # POST /users/multiple_change
   def multiple_change
-    params[:user_ids].each do |user_id|
-      @user = User.find(user_id)
-      if !@user.banned
-        @user.update_attributes(banned: true)
+    if params[:user_ids]
+      params[:user_ids].each do |user_id|
+        @user = User.find(user_id)
+        if !@user.banned
+          @user.update_attributes(banned: true)
+        end
       end
-    end
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: t(:users_banned) }
-      format.json { head :no_content }
+      redirect_to users_url, notice: t(:users_banned)
+    else
+      redirect_to users_url
     end
   end
 end

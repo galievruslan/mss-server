@@ -104,20 +104,21 @@ class PriceListLinesController < ApplicationController
     end
   end
   
-  # POST /price_list/1/price_list_lines/multiple_change_validity
-  def multiple_change_validity
+  # POST /price_list/1/price_list_lines/multiple_change
+  def multiple_change
     @price_list = PriceList.find(params[:price_list_id])
-    params[:price_list_line_ids].each do |price_list_line_id|
-      @price_list_line = ProductPrice.find(price_list_line_id)
-      if @price_list_line.validity
-        @price_list_line.update_attributes(validity: false)
-      else
-        @price_list_line.update_attributes(validity: true)
+    if params[:price_list_line_ids]
+      params[:price_list_line_ids].each do |price_list_line_id|
+        @price_list_line = ProductPrice.find(price_list_line_id)
+        if @price_list_line.validity
+          @price_list_line.update_attributes(validity: false)
+        else
+          @price_list_line.update_attributes(validity: true)
+        end
       end
-    end
-    respond_to do |format|
-      format.html { redirect_to price_list_price_list_lines_path(@price_list), notice: t(:validity_changed) }
-      format.json { head :no_content }
+      redirect_to price_list_price_list_lines_path(@price_list), notice: t(:validity_changed)
+    else
+      redirect_to price_list_price_list_lines_path(@price_list)
     end
   end
 end

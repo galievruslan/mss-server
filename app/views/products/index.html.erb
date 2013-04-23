@@ -37,7 +37,7 @@
 		<%end%>
 	</div>
 </div>
-<%= form_tag multiple_change_validity_products_path do%>
+<%= form_tag multiple_change_products_path do%>
 	<table class="table table-striped table-hover">
 		<thead>
 		  <tr>
@@ -71,6 +71,6 @@
 		<%= link_to t(:new_product), new_product_path, :class =>'btn' %>
 	<% end %>
 	<% if can? :manage, Product %>
-		<%= submit_tag t(:change_validity), class: 'btn'%>
+		<%= submit_tag t(:change_validity), class: 'btn', data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>

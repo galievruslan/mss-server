@@ -37,7 +37,7 @@
 		<%end%>
 	</div>
 </div>
-<%= form_tag multiple_change_validity_customer_shipping_addresses_path(@customer) do%>
+<%= form_tag multiple_change_customer_shipping_addresses_path(@customer) do%>
 	<table class="table table-striped table-hover">
 		<thead>
 		  <tr>
@@ -75,7 +75,7 @@
 		<%= link_to t(:new_shipping_address), new_customer_shipping_address_path(@customer), :class =>'btn' %>
 	<% end %>
 	<% if can? :manage, ShippingAddress %>
-		<%= submit_tag t(:change_validity), class: 'btn'%>
+		<%= submit_tag t(:change_validity), class: 'btn', data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>
 <%= link_to t(:back), customer_path(@customer) %> | <%= link_to t(:back_customers), customers_path %>

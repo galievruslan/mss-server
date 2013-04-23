@@ -92,19 +92,20 @@ class UnitOfMeasuresController < ApplicationController
     end
   end
   
-  # POST /unit_of_measures/multiple_change_validity
-  def multiple_change_validity
-    params[:unit_of_measure_ids].each do |unit_of_measure_id|
-      @unit_of_measure = UnitOfMeasure.find(unit_of_measure_id)
-      if @unit_of_measure.validity
-        @unit_of_measure.update_attributes(validity: false)
-      else
-        @unit_of_measure.update_attributes(validity: true)
+  # POST /unit_of_measures/multiple_change
+  def multiple_change
+    if params[:unit_of_measure_ids]
+      params[:unit_of_measure_ids].each do |unit_of_measure_id|
+        @unit_of_measure = UnitOfMeasure.find(unit_of_measure_id)
+        if @unit_of_measure.validity
+          @unit_of_measure.update_attributes(validity: false)
+        else
+          @unit_of_measure.update_attributes(validity: true)
+        end
       end
-    end
-    respond_to do |format|
-      format.html { redirect_to unit_of_measures_url, notice: t(:validity_changed) }
-      format.json { head :no_content }
+      redirect_to unit_of_measures_url, notice: t(:validity_changed)
+    else
+      redirect_to unit_of_measures_url
     end
   end
 end

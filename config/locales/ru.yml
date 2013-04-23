@@ -431,3 +431,6 @@ ru:
   select_customer: "Выберите клиента"
   select_datetime: "Выберите дату и время"
   order_filename: "Наименование файла выгруженного заказа"
+  order_items_destroyed: "Элементы заказа удалены"
+  orders_export_again: "Дата и время выгрузки заказов успешно удалены"
+  route_points_destroyed: "Точки маршрута удалены"

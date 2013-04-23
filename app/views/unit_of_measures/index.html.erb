@@ -31,7 +31,7 @@
 		<%end%>
 	</div>
 </div>
-<%= form_tag multiple_change_validity_unit_of_measures_path do%>
+<%= form_tag multiple_change_unit_of_measures_path do%>
 	<table class="table table-striped table-hover">
 		<thead>
 		  <tr>
@@ -64,6 +64,6 @@
 		<%= link_to t(:new_unit_of_measure), new_unit_of_measure_path, class: 'btn' %>
 	<% end %>
 	<% if can? :manage, UnitOfMeasure %>
-		<%= submit_tag t(:change_validity), class: 'btn'%>
+		<%= submit_tag t(:change_validity), class: 'btn', data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>

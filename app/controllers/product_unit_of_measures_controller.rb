@@ -110,17 +110,18 @@ class ProductUnitOfMeasuresController < ApplicationController
     # POST /product/1/product_unit_of_measures/multiple_change_validity
   def multiple_change_validity
     @product = Product.find(params[:product_id])
-    params[:product_unit_of_measure_ids].each do |product_unit_of_measure_id|
-      @product_unit_of_measure = ProductUnitOfMeasure.find(product_unit_of_measure_id)
-      if @product_unit_of_measure.validity
-        @product_unit_of_measure.update_attributes(validity: false)
-      else
-        @product_unit_of_measure.update_attributes(validity: true)
+    if params[:product_unit_of_measure_ids]
+      params[:product_unit_of_measure_ids].each do |product_unit_of_measure_id|
+        @product_unit_of_measure = ProductUnitOfMeasure.find(product_unit_of_measure_id)
+        if @product_unit_of_measure.validity
+          @product_unit_of_measure.update_attributes(validity: false)
+        else
+          @product_unit_of_measure.update_attributes(validity: true)
+        end
       end
-    end
-    respond_to do |format|
-      format.html { redirect_to product_product_unit_of_measures_path(@product), notice: t(:validity_changed)  }
-      format.json { head :no_content }
+      redirect_to product_product_unit_of_measures_path(@product), notice: t(:validity_changed)
+    else
+      redirect_to product_product_unit_of_measures_path(@product)
     end
   end
 end

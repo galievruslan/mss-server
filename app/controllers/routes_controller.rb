@@ -151,4 +151,21 @@ class RoutesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  # POST /routes/multiple_change
+  def multiple_change
+    if params[:route_ids]
+      params[:route_ids].each do |route_id|
+        @route = Route.find(route_id)
+        if @route.validity
+          @route.update_attributes(validity: false)
+        else
+          @route.update_attributes(validity: true)
+        end
+      end
+      redirect_to routes_url, notice: t(:validity_changed)
+    else
+      redirect_to routes_url
+    end
+  end
 end

@@ -28,7 +28,7 @@ class RoutePointsController < ApplicationController
   # GET /route_points/new
   # GET /route_points/new.json
   def new
-    @route=Route.find(params[:route_id])
+    @route = Route.find(params[:route_id])
     @route_point = RoutePoint.new
     @shipping_addresses = ShippingAddress.where(validity: true)
     @statuses = Status.where(validity: true)
@@ -50,7 +50,7 @@ class RoutePointsController < ApplicationController
   # POST /route_points
   # POST /route_points.json
   def create
-    @route = sRoute.find(params[:route_id])
+    @route = Route.find(params[:route_id])
     @route_point = RoutePoint.new(params[:route_point])
     @route.route_points << @route_point
     @route.save
@@ -93,6 +93,20 @@ class RoutePointsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to route_route_points_path(@route), notice: t(:route_point_destroyed) }
       format.json { head :no_content }
+    end
+  end
+  
+  # POST /routes/1/route_points/multiple_change
+  def multiple_change
+    @route = Route.find(params[:route_id])
+    if params[:route_point_ids]
+      params[:route_point_ids].each do |route_point_id|
+        @route_point = RoutePoint.find(route_point_id)
+        @route_point.destroy
+      end
+      redirect_to route_route_points_path(@route), notice: t(:route_points_destroyed)
+    else
+      redirect_to route_route_points_path(@route)
     end
   end
 end

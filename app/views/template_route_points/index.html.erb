@@ -33,7 +33,7 @@
 		<%end%>
 	</div>
 </div>
-<%= form_tag multiple_change_validity_template_route_template_route_points_path(@template_route) do%>
+<%= form_tag multiple_change_template_route_template_route_points_path(@template_route) do%>
 	<table class="table table-striped table-hover">
 		<thead>
 	  <tr>
@@ -65,7 +65,7 @@
 		<%= link_to t(:new_template_route_point), new_template_route_template_route_point_path, class: 'btn' %>
 	<% end %>
 	<% if can? :manage, TemplateRoutePoint %>
-		<%= submit_tag t(:change_validity), class: 'btn'%>
+		<%= submit_tag t(:change_validity), class: 'btn', data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>
 <%= link_to t(:back), template_route_path(@template_route) %> | <%= link_to t(:back_template_routes), template_routes_path %>

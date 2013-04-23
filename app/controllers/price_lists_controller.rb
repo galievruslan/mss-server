@@ -101,19 +101,20 @@ class PriceListsController < ApplicationController
     end
   end
   
-  # POST /price_lists/multiple_change_validity
-  def multiple_change_validity
-    params[:price_list_ids].each do |price_list_id|
-      @price_list = PriceList.find(price_list_id)
-      if @price_list.validity
-        @price_list.update_attributes(validity: false)
-      else
-        @price_list.update_attributes(validity: true)
+  # POST /price_lists/multiple_change
+  def multiple_change
+    if params[:price_list_ids]
+      params[:price_list_ids].each do |price_list_id|
+        @price_list = PriceList.find(price_list_id)
+        if @price_list.validity
+          @price_list.update_attributes(validity: false)
+        else
+          @price_list.update_attributes(validity: true)
+        end
       end
-    end
-    respond_to do |format|
-      format.html { redirect_to price_lists_url, notice: t(:validity_changed) }
-      format.json { head :no_content }
+      redirect_to price_lists_url, notice: t(:validity_changed)
+    else
+      redirect_to price_lists_url
     end
   end
 end

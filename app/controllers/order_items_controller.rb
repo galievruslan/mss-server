@@ -130,4 +130,18 @@ class OrderItemsController < ApplicationController
     end    
     render :partial => "product_unit_of_measures", :object => @unit_of_measures  
   end
+  
+  # POST /order/1/order_items/multiple_change
+  def multiple_change
+    @order = Order.find(params[:order_id])
+    if params[:order_item_ids]
+      params[:order_item_ids].each do |order_item_id|
+        @order_item = OrderItem.find(order_item_id)
+        @order_item.destroy          
+      end
+      redirect_to order_order_items_path(@order), notice: t(:order_items_destroyed)
+    else
+      redirect_to order_order_items_path(@order)
+    end
+  end
 end

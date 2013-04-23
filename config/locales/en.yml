@@ -431,3 +431,6 @@ en:
   select_customer: "Select customer"
   select_datetime: "Select date and time"
   order_filename: "Exported order filename"
+  order_items_destroyed: "Order items destroyed"
+  orders_export_again: "Orders exported datetime removed"
+  route_points_destroyed: "Route points destroyed"

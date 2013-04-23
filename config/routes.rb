@@ -43,72 +43,79 @@
       end
     collection do
       get :update_shipping_addresses
+      post :multiple_change
     end  
     resources :order_items do      
         get :update_product_unit_of_measures
         collection do
           get :update_product_unit_of_measures
+          post :multiple_change
         end               
     end    
   end 
   resources :routes do
     collection do
       get :current
+      post :multiple_change
     end       
-    resources :route_points
+    resources :route_points do
+      collection do
+        post :multiple_change
+      end 
+    end
   end
   resources :template_routes do
     collection do
-      post :multiple_change_validity
+      post :multiple_change
     end
     resources :template_route_points do
       collection do
-        post :multiple_change_validity
+        post :multiple_change
       end
     end
   end
   resources :unit_of_measures do
     collection do
-      post :multiple_change_validity
+      post :multiple_change
     end
   end  
   resources :products do 
     collection do
-      post :multiple_change_validity
+      post :multiple_change
     end     
     resources :product_prices do
       collection do
-        post :multiple_change_validity
+        post :multiple_change
       end
     end    
     resources :product_unit_of_measures do
       collection do
-        post :multiple_change_validity
+        post :multiple_change
       end
     end
   end
   resources :managers do
     collection do
-      post :multiple_change_validity
+      post :multiple_change
     end
     resources :manager_shipping_addresses do
       collection do
-        post :multiple_change_validity
+        post :multiple_change
       end
     end
   end
   resources :statuses do
     collection do
-      post :multiple_change_validity
+      post :multiple_change
     end
   end
   resources :customers do
     collection do
-      post :multiple_change_validity
+      post :multiple_change
     end
     resources  :shipping_addresses do
       collection do
-        post :multiple_change_validity
+        post :multiple_change
       end
     end
   end
@@ -123,22 +130,22 @@
   end
   resources :price_lists do
     collection do
-      post :multiple_change_validity
+      post :multiple_change
     end
     resources :price_list_lines do
       collection do
-        post :multiple_change_validity
+        post :multiple_change
       end
     end
   end
   resources :warehouses do
     collection do
-      post :multiple_change_validity
+      post :multiple_change
     end
   end
   resources :categories do
     collection do
-      post :multiple_change_validity
+      post :multiple_change
     end
   end
   

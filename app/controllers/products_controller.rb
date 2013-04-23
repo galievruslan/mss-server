@@ -97,17 +97,18 @@ class ProductsController < ApplicationController
   
     # POST /products/multiple_change_validity
   def multiple_change_validity
-    params[:product_ids].each do |product_id|
-      @product = Product.find(product_id)
-      if @product.validity
-        @product.update_attributes(validity: false)
-      else
-        @product.update_attributes(validity: true)
+    if params[:product_ids]
+      params[:product_ids].each do |product_id|
+        @product = Product.find(product_id)
+        if @product.validity
+          @product.update_attributes(validity: false)
+        else
+          @product.update_attributes(validity: true)
+        end
       end
-    end
-    respond_to do |format|
-      format.html { redirect_to products_url, notice: t(:validity_changed) }
-      format.json { head :no_content }
+      redirect_to products_url, notice: t(:validity_changed)
+    else
+      redirect_to products_url
     end
   end
 end

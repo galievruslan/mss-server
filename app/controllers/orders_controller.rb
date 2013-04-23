@@ -188,5 +188,18 @@ class OrdersController < ApplicationController
   def update_shipping_addresses
     @shipping_addresses = ShippingAddress.where(customer_id: params[:customer_id]) 
     render :partial => "shipping_addresses", :object => @shipping_addresses  
+  end
+  
+  # POST /orders/multiple_change
+  def multiple_change
+    if params[:order_ids]
+      params[:order_ids].each do |order_id|
+        @order = Order.find(order_id)
+        @order.update_attributes(exported_at: nil)
+      end
+      redirect_to orders_url, notice: t(:orders_export_again)
+    else
+      redirect_to orders_url
+    end  
   end  
 end

@@ -17,11 +17,11 @@ module ExchangeHelper
       order_filename_string = order_filename_string.gsub("id", order.id.to_s)
     end
     if order_filename_string.scan("datetime")
-      current_date_time = Time.now.strftime("%d-%m-%y %H-%M")
+      current_date_time = Time.now.strftime("%d-%m-%y %H-%M-%S")
       order_filename_string = order_filename_string.gsub("datetime", current_date_time)
     end
     if order_filename_string.scan("order_datetime")
-      order_datetime = order.date.strftime("%d-%m-%y %H-%M")
+      order_datetime = order.date.strftime("%d-%m-%y %H-%M-%S")
       order_filename_string = order_filename_string.gsub("order_datetime", order_datetime)
     end
     return order_filename_string    

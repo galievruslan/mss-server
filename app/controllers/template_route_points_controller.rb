@@ -103,20 +103,21 @@ class TemplateRoutePointsController < ApplicationController
     end
   end
   
-  # POST /template_routes/1/template_route_points/multiple_change_validity
-  def multiple_change_validity
+  # POST /template_routes/1/template_route_points/multiple_change
+  def multiple_change
     @template_route = TemplateRoute.find(params[:template_route_id])
-    params[:template_route_point_ids].each do |template_route_point_id|
-      @template_route_point = TemplateRoutePoint.find(template_route_point_id)
-      if @template_route_point.validity
-        @template_route_point.update_attributes(validity: false)
-      else
-        @template_route_point.update_attributes(validity: true)
+    if params[:template_route_point_ids]
+      params[:template_route_point_ids].each do |template_route_point_id|
+        @template_route_point = TemplateRoutePoint.find(template_route_point_id)
+        if @template_route_point.validity
+          @template_route_point.update_attributes(validity: false)
+        else
+          @template_route_point.update_attributes(validity: true)
+        end
       end
-    end
-    respond_to do |format|
-      format.html { redirect_to template_route_template_route_points_path(@template_route), notice: t(:validity_changed) }
-      format.json { head :no_content }
+      redirect_to template_route_template_route_points_path(@template_route), notice: t(:validity_changed)
+    else
+      redirect_to template_route_template_route_points_path(@template_route)
     end
   end
 end
