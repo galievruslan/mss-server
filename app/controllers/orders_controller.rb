@@ -32,7 +32,11 @@ class OrdersController < ApplicationController
   # GET /orders/new.json
   def new
     @customers = Customer.where(validity: true)    
-    @managers = Manager.where(validity: true)
+    if current_user.manager_id
+      @managers = Manager.where(id: current_user.manager_id)
+    else
+      @managers = Manager.where(validity: true)
+    end
     @price_lists = PriceList.where(validity: true)
     @warehouses = Warehouse.where(validity: true)
     @products = Product.where(validity: true)
@@ -53,7 +57,11 @@ class OrdersController < ApplicationController
     @select_shipping_address_id = @order.shipping_address.id
     @shipping_addresses = @select_customer.shipping_addresses
     @customers = Customer.where(validity: true)    
-    @managers = Manager.where(validity: true)
+    if current_user.manager_id
+      @managers = Manager.where(id: current_user.manager_id)
+    else
+      @managers = Manager.where(validity: true)
+    end
     @price_lists = PriceList.where(validity: true)
     @warehouses = Warehouse.where(validity: true)
     @products = Product.where(validity: true)
@@ -71,7 +79,11 @@ class OrdersController < ApplicationController
     if params[:order][:shipping_address_id] !=""
       @select_shipping_address_id = params[:order][:shipping_address_id]
     end
-    @managers = Manager.where(validity: true)
+    if current_user.manager_id
+      @managers = Manager.where(id: current_user.manager_id)
+    else
+      @managers = Manager.where(validity: true)
+    end
     @price_lists = PriceList.where(validity: true)
     @warehouses = Warehouse.where(validity: true)
     @products = Product.where(validity: true)
@@ -107,7 +119,11 @@ class OrdersController < ApplicationController
     end    
     
     @customers = Customer.where(validity: true)    
-    @managers = Manager.where(validity: true)
+    if current_user.manager_id
+      @managers = Manager.where(id: current_user.manager_id)
+    else
+      @managers = Manager.where(validity: true)
+    end
     @price_lists = PriceList.where(validity: true)
     @warehouses = Warehouse.where(validity: true)
     @products = Product.where(validity: true)
@@ -136,6 +152,7 @@ class OrdersController < ApplicationController
     end
   end
   
+  # GET /orders/generate_xml
   def generate_xml
     data = Builder::XmlMarkup.new( :target => out_data = "", :indent => 2 )
     data.instruct!
@@ -175,6 +192,7 @@ class OrdersController < ApplicationController
     send_data( out_data, :type => "text/xml", :filename => "order-#{order.id}-#{order.date}.xml" )  
   end
   
+  # GET /orders/export_again
   def export_again
     @order = Order.find(params[:id])
     @order.update_attributes(exported_at: nil)    

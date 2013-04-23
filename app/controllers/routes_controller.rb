@@ -1,6 +1,8 @@
 class RoutesController < ApplicationController
   load_and_authorize_resource
   
+  # GET /routes/current
+  # GET /routes/current.json
   def current
     authorize! :route , :current
     @user = current_user
@@ -85,7 +87,12 @@ class RoutesController < ApplicationController
   # GET /routes/new.json
   def new
     @route = Route.new
-    @managers = Manager.where(validity: true)
+    if current_user.manager_id
+      @managers = Manager.where(id: current_user.manager_id)
+    else
+      @managers = Manager.where(validity: true)
+    end
+    
     @shipping_addresses = ShippingAddress.where(validity: true)
     @statuses = Status.where(validity: true)    
     respond_to do |format|
@@ -97,7 +104,11 @@ class RoutesController < ApplicationController
   # GET /routes/1/edit
   def edit
     @route = Route.find(params[:id])
-    @managers = Manager.where(validity: true)
+    if current_user.manager_id
+      @managers = Manager.where(id: current_user.manager_id)
+    else
+      @managers = Manager.where(validity: true)
+    end
     @shipping_addresses = ShippingAddress.where(validity: true)
     @statuses = Status.where(validity: true)
   end
@@ -106,7 +117,11 @@ class RoutesController < ApplicationController
   # POST /routes.json
   def create
     @route = Route.new(params[:route])
-    @managers = Manager.where(validity: true)
+    if current_user.manager_id
+      @managers = Manager.where(id: current_user.manager_id)
+    else
+      @managers = Manager.where(validity: true)
+    end
     @shipping_addresses = ShippingAddress.where(validity: true)
     @statuses = Status.where(validity: true)
     respond_to do |format|
@@ -122,10 +137,13 @@ class RoutesController < ApplicationController
 
   # PUT /routes/1
   # PUT /routes/1.json
-  def update   
-    
+  def update    
     @route = Route.find(params[:id])   
-    @managers = Manager.where(validity: true)
+    if current_user.manager_id
+      @managers = Manager.where(id: current_user.manager_id)
+    else
+      @managers = Manager.where(validity: true)
+    end
     @shipping_addresses = ShippingAddress.where(validity: true)
     @statuses = Status.where(validity: true)
     

@@ -17,14 +17,12 @@ class Ability
       cannot :read, [User, Role]
     elsif user.role? :manager       
       can :read, :all
-      # can :create, [Order, Route]
-      # can :create, OrderItem , :order => { :id => Manager.find(user.manager_id).order_ids
+      can :manage, Order, :manager_id => user.manager_id 
+      can :manage, OrderItem , :order => { :id => Manager.find(user.manager_id).order_ids}
       can :manage, Route, :manager_id => user.manager_id 
       can :manage, RoutePoint, :route => { :id => Manager.find(user.manager_id).route_ids}
       can :route , :current
-      cannot :read, [User, Role] 
-      cannot :create, OrderItem
-      cannot :update, [Order, OrderItem]                
+      cannot :read, [User, Role]            
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.
