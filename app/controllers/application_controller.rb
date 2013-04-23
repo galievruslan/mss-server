@@ -27,8 +27,8 @@ class ApplicationController < ActionController::Base
       I18n.default_locale = :ru
       I18n.locale = :ru   
     else
-      I18n.default_locale = :en
-      I18n.locale = :en
+      I18n.default_locale = :ru
+      I18n.locale = :ru
     end   
   end
     

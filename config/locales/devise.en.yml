@@ -1,8 +1,9 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
 
 en:
-  sign_in: "Sign in"
-  forgot_passwors: "Forgot your password?"
+  sign_in: "Sign in" 
+  remember_me: "Remamber me"
+  forgot_your_password: "Forgot your password?"
   send_reset_password_instructions: "Send me reset password instructions"
   errors:
     messages:

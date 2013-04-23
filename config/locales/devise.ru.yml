@@ -2,7 +2,8 @@
 
 ru:
   sign_in: "Войти"
-  forgot_passwors: "Забыли пароль?"
+  remember_me: "Запомни меня"
+  forgot_your_password: "Забыли пароль?"
   send_reset_password_instructions: "Отправить инстукцию по смене пароля"
   errors:
     messages:
