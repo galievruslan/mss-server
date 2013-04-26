@@ -434,3 +434,4 @@ ru:
   order_items_destroyed: "Элементы заказа удалены"
   orders_export_again: "Дата и время выгрузки заказов успешно удалены"
   route_points_destroyed: "Точки маршрута удалены"
+  is_tied_to_the_user_manager: "уже привязан к другому пользователю"

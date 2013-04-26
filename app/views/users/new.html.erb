@@ -46,15 +46,15 @@
   	<tbody>
   		<tr>
   			<td><%= t(:admin)%></td>
-  			<td><%= check_box_tag("admin") %></td>
+  			<td><%= check_box_tag "admin", true, @role_admin %></td>
   		</tr>
   		<tr>
   			<td><%= t(:supervisor)%></td>
-  			<td><%= check_box_tag("supervisor") %></td>
+  			<td><%= check_box_tag "supervisor", true, @role_supervisor %></td>
   		</tr>
   		<tr>
   			<td><%= t(:manager)%></td>
-  			<td><%= check_box_tag("manager") %></td>
+  			<td><%= check_box_tag "manager", true, @role_manager %></td>
   		</tr>
   	</tbody>
   </table>

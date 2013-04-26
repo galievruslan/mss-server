@@ -21,6 +21,18 @@ class UsersController < ApplicationController
       @manager = Manager.find(@user.manager_id)
     end    
   end
+  
+  # GET /users/new
+  # GET /users/new.json  
+  def new
+    @user = User.new
+    @managers = Manager.where(validity: true) 
+    
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @user }
+    end
+  end
 
   # GET /users/1/edit
   def edit
@@ -38,40 +50,43 @@ class UsersController < ApplicationController
     end
   end
   
-  # GET /users/new
-  # GET /users/new.json  
-  def new
-    @user = User.new
-    @managers = Manager.where(validity: true) 
-    
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @user }
-    end
-  end
-
   # POST /users
   # POST /users.json
   def create
-    @managers = Manager.where(validity: true) 
+    @managers = Manager.where(validity: true)     
     @user = User.new(params[:user])
-    @user.save
     
     if params[:admin]
-      role = Role.find_by_name('admin')
-      @user.roles << role
+      @role_admin = true
     end
     if params[:supervisor]
-      role = Role.find_by_name('supervisor')
-      @user.roles << role
+      @role_supervisor = true
     end
     if params[:manager]
-      role = Role.find_by_name('manager')
-      @user.roles << role
-    end
-             
+      @role_manager = true
+    end 
+    
+    if params[:manager] and params[:user][:manager_id] == ""
+      @user.errors.add(:manager_id, t('errors.messages.blank'))
+      render action: "new" 
+      return
+    end     
+         
     respond_to do |format|
       if @user.save
+        if params[:admin]
+          role = Role.find_by_name('admin')
+          @user.roles << role
+        end
+        if params[:supervisor]
+          role = Role.find_by_name('supervisor')
+          @user.roles << role
+        end
+        if params[:manager]
+          role = Role.find_by_name('manager')
+          @user.roles << role
+        end
+        @user.save
         format.html { redirect_to users_path, notice: t(:user_created) }
         format.json { render json: @user, status: :created, location: @user }
       else
@@ -86,28 +101,44 @@ class UsersController < ApplicationController
   def update
     @managers = Manager.where(validity: true) 
     @user = User.find(params[:id])
-    @user.roles.delete_all
+    
     if params[:admin]
-      role = Role.find_by_name('admin')
-      @user.roles << role
+      @role_admin = true
     end
     if params[:supervisor]
-      role = Role.find_by_name('supervisor')
-      @user.roles << role
+      @role_supervisor = true
     end
     if params[:manager]
-      role = Role.find_by_name('manager')
-      @user.roles << role
+      @role_manager = true
     end
-    @user.save
+    
+    if params[:manager] and params[:user][:manager_id] == ""
+      @user.errors.add(:manager_id, t('errors.messages.blank'))
+      render action: "edit" 
+      return
+    end     
     
     respond_to do |format|
       if @user.update_attributes(params[:user])
+        @user.roles.delete_all
+        if params[:admin]
+          role = Role.find_by_name('admin')
+          @user.roles << role
+        end
+        if params[:supervisor]
+          role = Role.find_by_name('supervisor')
+          @user.roles << role
+        end
+        if params[:manager]
+          role = Role.find_by_name('manager')
+          @user.roles << role
+        end
+        @user.save
         format.html { redirect_to users_path, notice: t(:user_updated) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @user1.errors, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
