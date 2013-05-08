@@ -22,10 +22,15 @@ class TemplateRoutesController < ApplicationController
 
   # GET /template_routes/1
   # GET /template_routes/1.json
-  def show
+  def show    
     @template_route = TemplateRoute.find(params[:id])
-    @search = @template_route.template_route_points.search(params[:q])
-    @template_route_points = @search.result.page(params[:page]).per(current_user.list_page_size)
+    if params[:q]
+      @search = @template_route.template_route_points.search(params[:q])
+      @template_route_points = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = @template_route.template_route_points.search(params[:q])
+      @template_route_points = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @template_route }
@@ -47,7 +52,7 @@ class TemplateRoutesController < ApplicationController
   end
 
   # GET /template_routes/1/edit
-  def edit
+  def edit    
     @days_of_week = [0,1,2,3,4,5,6]
     @managers = Manager.where(validity: true)
     @template_route = TemplateRoute.find(params[:id])
@@ -80,7 +85,13 @@ class TemplateRoutesController < ApplicationController
     @managers = Manager.where(validity: true)
     @template_route = TemplateRoute.find(params[:id])
     @shipping_addresses = ShippingAddress.where(validity: true)
-
+    
+    params[:template_route][:template_route_points_attributes].values.each do |template_route_point|
+      if template_route_point[:_destroy] = 1
+        template_route_point[:_destroy] = 0
+      end
+    end
+    
     respond_to do |format|
       if @template_route.update_attributes(params[:template_route])
         format.html { redirect_to @template_route, notice: t(:template_route_updated) }

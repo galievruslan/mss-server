@@ -31,19 +31,19 @@
 			    <%= f.label :validity, t(:validity) %><br /><br />
 			  </div>
 			</div>
-			<div class="tab-pane" id="tab2">
+			<div class="tab-pane" id="tab2">				
 				<table id="table" class="table table-striped table-hover">
 					<thead>
 						<tr>
 							<th><%= t(:shipping_address)%></th>
-							<th><%= t(:actions) %></th>
+							<th><%= t(:validity) %></th>						
 						</tr>
 					</thead>
 					<tbody>
 						<%= f.fields_for :template_route_points, :wrapper => false do |template_route_point| %>
 							<tr class="fields">
 								<td><%= template_route_point.select :shipping_address_id , @shipping_addresses.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_shipping_address)} %></td>
-								<td><%= template_route_point.link_to_remove do %><i class='icon-remove' title="<%= t(:remove)%>"></i><% end %></td>
+								<td><%= template_route_point.check_box :validity%></td>
 							</tr>	
 						<% end %>
 					</tbody>
