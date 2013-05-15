@@ -10,6 +10,27 @@ class MobileSynchronizationController < ApplicationController
       format.json { render json: @responce }
     end
   end
+    
+  # GET /settings.json
+  def settings
+    if Settings.default_route_point_status_id
+      @default_route_point_status_id = Settings.default_route_point_status_id      
+    else
+      @default_route_point_status_id = nil
+    end
+    
+    if Settings.default_route_point_attended_status_id
+      @default_route_point_attended_status_id = Settings.default_route_point_attended_status_id      
+    else
+      @default_route_point_attended_status_id = nil
+    end
+    
+    respond_to do |format|
+      @responce = JSON default_route_point_status_id: @default_route_point_status_id,
+        default_route_point_attended_status_id: @default_route_point_attended_status_id
+      format.json { render json: @responce }
+    end 
+  end
   
   # GET /customers.json
   def customers    
@@ -35,16 +56,20 @@ class MobileSynchronizationController < ApplicationController
     end 
   end 
   
-  # GET /managers.json
-  def managers
-    if params[:updated_at]
-      @managers = Manager.where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
+  # GET /manager.json
+  def manager
+    @manager_id = current_user.manager_id
+    if @manager_id   
+      @manager = Manager.find(@manager_id)
+      respond_to do |format|
+        format.json { render json: @manager }
+      end 
     else
-      @managers = Manager.page(page).per(page_size)
-    end
-    respond_to do |format|
-      format.json { render json: @managers }
-    end 
+      respond_to do |format|
+        @responce = JSON code: 210, description: 'manager is not defined for the current user'
+        format.json { render json: @responce }
+      end 
+    end    
   end
   
   # GET /manager_shipping_addresses.json

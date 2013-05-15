@@ -19,9 +19,10 @@
   
   # MobileSynchronization routes
   get 'synchronization/datetime', :to => 'mobile_synchronization#datetime'
+  get 'synchronization/settings', :to => 'mobile_synchronization#settings'
   get 'synchronization/customers', :to => 'mobile_synchronization#customers'
   get 'synchronization/shipping_addresses', :to => 'mobile_synchronization#shipping_addresses'
-  get 'synchronization/managers', :to => 'mobile_synchronization#managers'
+  get 'synchronization/manager', :to => 'mobile_synchronization#manager'
   get 'synchronization/manager_shipping_addresses', :to => 'mobile_synchronization#manager_shipping_addresses'
   get 'synchronization/categories', :to => 'mobile_synchronization#categories'    
   get 'synchronization/products', :to => 'mobile_synchronization#products'
