@@ -4,4 +4,5 @@ ftp_password: PASSWORD
 ftp_outbox_directory: DIRECTORY
 ftp_inbox_directory: DIRECTORY
 default_route_point_status_id: ID
+default_route_point_attended_status_id: ID
 order_filename: 'ORDER.xml'

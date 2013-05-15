@@ -54,7 +54,14 @@ class SettingsController < ApplicationController
     else
       error = t(:default_route_point_status) + ' ' + t('errors.messages.blank') 
       @errors << error
-    end     
+    end
+    
+    unless params[:default_route_point_attended_status_id].empty?
+      config['default_route_point_attended_status_id'] = params[:default_route_point_attended_status_id]
+    else
+      error = t(:default_route_point_attended_status) + ' ' + t('errors.messages.blank') 
+      @errors << error
+    end      
      
     unless params[:order_filename].empty?
       config['order_filename'] = params[:order_filename]

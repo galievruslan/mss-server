@@ -413,7 +413,7 @@ ru:
   ftp_inbox_directory: "Входящая директория"
   ftp_outbox_directory: "Исходящая директория"
   ftp_settings: "Настройки FTP"
-  default_route_point_status: "Статус маршрута по-умолчанию"
+  default_route_point_status: "Статус точки маршрута по-умолчанию"
   other_settings: "Другие наcтройки"
   cron_settings: "Планировщик"
   user_banned: "Этот пользователь заблокирован...."
@@ -435,3 +435,4 @@ ru:
   orders_export_again: "Дата и время выгрузки заказов успешно удалены"
   route_points_destroyed: "Точки маршрута удалены"
   is_tied_to_the_user_manager: "уже привязан к другому пользователю"
+  default_route_point_attended_status: "Статус посещенной точки маршрута по-умолчанию"

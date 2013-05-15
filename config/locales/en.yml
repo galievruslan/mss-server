@@ -435,3 +435,4 @@ en:
   orders_export_again: "Orders exported datetime removed"
   route_points_destroyed: "Route points destroyed"
   is_tied_to_the_user_manager: "is tied to the user"
+  default_route_point_attended_status: "Default attended route point status"
