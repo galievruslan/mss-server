@@ -175,13 +175,9 @@ class RoutesController < ApplicationController
     if params[:route_ids]
       params[:route_ids].each do |route_id|
         @route = Route.find(route_id)
-        if @route.validity
-          @route.update_attributes(validity: false)
-        else
-          @route.update_attributes(validity: true)
-        end
+        @route.destroy         
       end
-      redirect_to routes_url, notice: t(:validity_changed)
+      redirect_to routes_url, notice: t(:routes_destroyed)
     else
       redirect_to routes_url
     end

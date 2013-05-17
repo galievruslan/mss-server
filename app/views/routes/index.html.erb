@@ -81,6 +81,6 @@
 		<%= link_to t(:current_route), current_routes_path, :class =>'btn' %>
 	<% end %>
 	<% if can? :manage, Route %>
-		<%= submit_tag t(:change_validity), class: 'btn', data: { confirm: t(:are_you_sure) }%>
+		<%= submit_tag t(:remove), class: 'btn', data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>

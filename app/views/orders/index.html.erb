@@ -130,11 +130,15 @@
 		    <td><%= order.warehouse.name %></td>
 		    <td><%= order.price_list.name %></td>
 		    <td><%= order.exported_at ? order.exported_at.strftime("%T %d-%m-%y") : t(:not_exported)%></td>
-		    <td><%= link_to(export_again_order_path(order), :method => :put) do %><i class='icon-download-alt' title="<%= t(:export_again)%>"></i><%end%></td>
+		    <% if can? :export_again, Order %>
+		    	<td><%= link_to(export_again_order_path(order), :method => :put) do %><i class='icon-download-alt' title="<%= t(:export_again)%>"></i><%end%></td>
+		    <% end %>
 		    <td><%= link_to(generate_xml_order_path(order)) do %><i class='icon-download' title="<%= t(:download_xml)%>"></i><% end %></td>
 		    <td><%= link_to(order) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
-			  <% if can? :manage, Order %>
+			  <% if can? :update, Order %>
 				  <td><%= link_to(edit_order_path(order)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+				<% end %>
+				<% if can? :destroy, Order %>
 				  <td><%= link_to(order, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%= t(:remove)%>"></i><%end%></td>
 				<% end %>
 		  </tr>
@@ -145,7 +149,10 @@
 	<% if can? :create, Order %>
 		<%= link_to t(:new_order), new_order_path, class: 'btn' %>
 	<% end %>
-	<% if can? :manage, Order %>
-		<%= submit_tag t(:export_again), class: 'btn', data: { confirm: t(:are_you_sure) }%>
+	<% if can? :export_again, Order %>
+		<%= button_tag t(:export_again), class: 'btn', value: 'export_again', data: { confirm: t(:are_you_sure) }%>
+	<%end%>
+	<% if can? :destroy, Order %>
+		<%= button_tag t(:remove), class: 'btn', value: 'remove', data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>

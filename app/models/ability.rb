@@ -11,6 +11,7 @@ class Ability
       can :exchange , :view
       can :settings , :view
       can :settings , :manage
+      can :export_again, Order
     elsif user.role? :supervisor
       can :read, :all           
       can :manage, [TemplateRoute, TemplateRoutePoint]
@@ -22,7 +23,9 @@ class Ability
       can :manage, Route, :manager_id => user.manager_id 
       can :manage, RoutePoint, :route => { :id => Manager.find(user.manager_id).route_ids}
       can :route , :current
-      cannot :read, [User, Role]            
+      cannot :read, [User, Role] 
+      cannot :export_again, Order
+      cannot :destroy, Order
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.
