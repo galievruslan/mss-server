@@ -25,7 +25,10 @@ class ApplicationController < ActionController::Base
   def set_language_from_current_user
     if current_user and current_user.language == 'RU'
       I18n.default_locale = :ru
-      I18n.locale = :ru   
+      I18n.locale = :ru 
+    elsif current_user and current_user.language == 'EN'
+      I18n.default_locale = :en
+      I18n.locale = :en 
     else
       I18n.default_locale = :ru
       I18n.locale = :ru
