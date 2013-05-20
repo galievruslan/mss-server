@@ -62,10 +62,10 @@
 	
 	<%= paginate @order_items %>
 	<% if can? :create, OrderItem %>
-		<%= link_to t(:new_order_item), new_order_order_item_path(@order), class: 'btn' %>
+		<%= link_to t(:new_order_item), new_order_order_item_path(@order), class: 'btn', :disable_with => t(:please_wait) %>
 	<% end %>
 	<% if can? :manage, OrderItem %>
-		<%= submit_tag t(:remove), class: 'btn', data: { confirm: t(:are_you_sure) }%>
+		<%= submit_tag t(:remove), class: 'btn', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>
 <%= link_to t(:back), order_path(@order) %> | <%= link_to t(:back_to_orders), orders_path %>

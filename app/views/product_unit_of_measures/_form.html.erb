@@ -28,6 +28,6 @@
     <%= f.label :base , t(:base)%><br /><br />
   </div>
   <div class="actions">
-    <%= f.submit(t(:save), class: 'btn') %>
+    <%= f.submit(t(:save), class: 'btn', :disable_with => t(:please_wait)) %>
   </div>
 <% end %>

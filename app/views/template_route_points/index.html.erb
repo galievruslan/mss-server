@@ -62,10 +62,10 @@
 	
 	<%= paginate @template_route_points %>
 	<% if can? :create, TemplateRoutePoint %>
-		<%= link_to t(:new_template_route_point), new_template_route_template_route_point_path, class: 'btn' %>
+		<%= link_to t(:new_template_route_point), new_template_route_template_route_point_path, class: 'btn', :disable_with => t(:please_wait) %>
 	<% end %>
 	<% if can? :manage, TemplateRoutePoint %>
-		<%= submit_tag t(:change_validity), class: 'btn', data: { confirm: t(:are_you_sure) }%>
+		<%= submit_tag t(:change_validity), class: 'btn', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>
 <%= link_to t(:back), template_route_path(@template_route) %> | <%= link_to t(:back_template_routes), template_routes_path %>

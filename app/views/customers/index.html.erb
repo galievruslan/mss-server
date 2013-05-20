@@ -63,9 +63,9 @@
 	</table>
 	<%= paginate @customers %>
 	<% if can? :create, Customer %>
-		<%= link_to t(:new_customer), new_customer_path, :class =>'btn' %>
+		<%= link_to t(:new_customer), new_customer_path, :class =>'btn', :disable_with => t(:please_wait) %>
 	<% end %>
 	<% if can? :manage, Customer %>
-		<%= submit_tag t(:change_validity), class: 'btn', data: { confirm: t(:are_you_sure) }%>
+		<%= submit_tag t(:change_validity), class: 'btn', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>

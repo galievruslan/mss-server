@@ -29,7 +29,7 @@
     <%= f.select(:list_page_size, [5,10,15,20,25,30], :include_blank => t(:select_list_page_size)) %>
   </div>
   <div class="actions">
-    <%= f.submit(t(:save),class: 'btn') %>
+    <%= f.submit(t(:save),class: 'btn', :disable_with => t(:please_wait)) %>
   </div>
 <% end %>
 <%= link_to t(:back), profile_show_path %>

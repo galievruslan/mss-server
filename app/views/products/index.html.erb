@@ -68,9 +68,9 @@
 	</table>
 	<%= paginate @products%>
 	<% if can? :manage, Product %>
-		<%= link_to t(:new_product), new_product_path, :class =>'btn' %>
+		<%= link_to t(:new_product), new_product_path, :class =>'btn', :disable_with => t(:please_wait) %>
 	<% end %>
 	<% if can? :manage, Product %>
-		<%= submit_tag t(:change_validity), class: 'btn', data: { confirm: t(:are_you_sure) }%>
+		<%= submit_tag t(:change_validity), class: 'btn', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>

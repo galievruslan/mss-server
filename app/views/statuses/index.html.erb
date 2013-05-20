@@ -53,9 +53,9 @@
 
 <%= paginate @statuses %>
 <% if can? :create, Status %>
-	<%= link_to t(:new_status), new_status_path, :class =>'btn' %>
+	<%= link_to t(:new_status), new_status_path, :class =>'btn', :disable_with => t(:please_wait) %>
 <% end %>
 <% if can? :manage, Status %>
-		<%= submit_tag t(:change_validity), class: 'btn', data: { confirm: t(:are_you_sure) }%>
+		<%= submit_tag t(:change_validity), class: 'btn', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>

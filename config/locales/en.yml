@@ -438,3 +438,4 @@ en:
   default_route_point_attended_status: "Default attended route point status"
   routes_destroyed: "Routes was successfully destroyed."
   orders_removed: "Orders was successfully destroyed."
+  please_wait: "Please wait..."

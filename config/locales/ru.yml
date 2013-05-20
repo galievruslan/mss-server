@@ -438,3 +438,4 @@ ru:
   default_route_point_attended_status: "Статус посещенной точки маршрута по-умолчанию"
   routes_destroyed: "Маршруты успешно удалены"
   orders_removed: "Заказы успешно удалены"
+  please_wait: "Пожалуйста ждите..."

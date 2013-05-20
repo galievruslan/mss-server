@@ -61,9 +61,9 @@
 	
 	<%= paginate @unit_of_measures %>
 	<% if can? :create, UnitOfMeasure %>
-		<%= link_to t(:new_unit_of_measure), new_unit_of_measure_path, class: 'btn' %>
+		<%= link_to t(:new_unit_of_measure), new_unit_of_measure_path, class: 'btn', :disable_with => t(:please_wait) %>
 	<% end %>
 	<% if can? :manage, UnitOfMeasure %>
-		<%= submit_tag t(:change_validity), class: 'btn', data: { confirm: t(:are_you_sure) }%>
+		<%= submit_tag t(:change_validity), class: 'btn', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>

@@ -65,10 +65,10 @@
 	<%= paginate @product_prices %>
 	
 	<% if can? :create, ProductPrice %>
-		<%= link_to t(:new_product_price), new_product_product_price_path(@product), class: 'btn' %>
+		<%= link_to t(:new_product_price), new_product_product_price_path(@product), class: 'btn', :disable_with => t(:please_wait) %>
 	<% end %>
 	<% if can? :manage, ProductPrice %>
-		<%= submit_tag t(:change_validity), class: 'btn', data: { confirm: t(:are_you_sure) }%>
+		<%= submit_tag t(:change_validity), class: 'btn', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>
 <%= link_to t(:back), product_path(@product) %> | <%= link_to t(:back_to_products), products_path %>

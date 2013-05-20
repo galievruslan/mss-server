@@ -75,6 +75,6 @@
 	
 	<%= paginate @users %>
 	
-	<%= link_to t(:new_user), new_user_path, :class =>'btn'%>
-	<%= submit_tag t(:ban), class: 'btn', data: { confirm: t(:are_you_sure) } %>
+	<%= link_to t(:new_user), new_user_path, :class =>'btn', :disable_with => t(:please_wait) %>
+	<%= submit_tag t(:ban), class: 'btn', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) } %>
 <%end%>

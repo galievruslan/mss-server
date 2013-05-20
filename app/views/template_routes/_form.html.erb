@@ -51,7 +51,7 @@
 				<p><%= f.link_to_add t(:add), :template_route_points, :class =>'btn', :data => { :target => "#table" } %></p>	
 			</div>
 			<div class="actions">
-		    <%= f.submit(t(:save), :class =>'btn') %>
+		    <%= f.submit(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>
 		  </div>
 		</div>
 	</div>

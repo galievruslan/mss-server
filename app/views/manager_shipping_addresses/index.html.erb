@@ -63,10 +63,10 @@
 	
 	<%= paginate @manager_shipping_addresses %>
 	<% if can? :create, ManagerShippingAddress %>
-		<%= link_to t(:new_manager_shipping_address), new_manager_manager_shipping_address_path(@manager), class: 'btn' %>
+		<%= link_to t(:new_manager_shipping_address), new_manager_manager_shipping_address_path(@manager), class: 'btn', :disable_with => t(:please_wait) %>
 	<% end %>
 	<% if can? :manage, ManagerShippingAddress %>
-		<%= submit_tag t(:change_validity), class: 'btn', data: { confirm: t(:are_you_sure) }%>
+		<%= submit_tag t(:change_validity), class: 'btn', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>
 <%= link_to t(:back), manager_path(@manager) %> | <%= link_to t(:back_to_managers), managers_path %>

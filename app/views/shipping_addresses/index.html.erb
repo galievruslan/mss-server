@@ -72,10 +72,10 @@
 	<%= paginate @shipping_addresses %>
 	
 	<% if can? :create, ShippingAddress %>
-		<%= link_to t(:new_shipping_address), new_customer_shipping_address_path(@customer), :class =>'btn' %>
+		<%= link_to t(:new_shipping_address), new_customer_shipping_address_path(@customer), :class =>'btn', :disable_with => t(:please_wait) %>
 	<% end %>
 	<% if can? :manage, ShippingAddress %>
-		<%= submit_tag t(:change_validity), class: 'btn', data: { confirm: t(:are_you_sure) }%>
+		<%= submit_tag t(:change_validity), class: 'btn', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>
 <%= link_to t(:back), customer_path(@customer) %> | <%= link_to t(:back_customers), customers_path %>

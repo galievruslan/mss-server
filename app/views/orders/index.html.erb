@@ -147,12 +147,12 @@
 	</table>
 	<%= paginate @orders %> 
 	<% if can? :create, Order %>
-		<%= link_to t(:new_order), new_order_path, class: 'btn' %>
+		<%= link_to t(:new_order), new_order_path, class: 'btn', :disable_with => t(:please_wait) %>
 	<% end %>
 	<% if can? :export_again, Order %>
-		<%= button_tag t(:export_again), class: 'btn', value: 'export_again', data: { confirm: t(:are_you_sure) }%>
+		<%= button_tag t(:export_again), class: 'btn', value: 'export_again', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 	<% if can? :destroy, Order %>
-		<%= button_tag t(:remove), class: 'btn', value: 'remove', data: { confirm: t(:are_you_sure) }%>
+		<%= button_tag t(:remove), class: 'btn', value: 'remove', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>

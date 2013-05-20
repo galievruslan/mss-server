@@ -71,9 +71,9 @@
 	
 	<%= paginate @managers %>
 	<% if can? :create, Manager %>
-		<%= link_to t(:new_manager), new_manager_path, :class =>'btn' %>
+		<%= link_to t(:new_manager), new_manager_path, :class =>'btn', :disable_with => t(:please_wait) %>
 	<% end %>
 	<% if can? :manage, Manager %>
-		<%= submit_tag t(:change_validity), class: 'btn', data: { confirm: t(:are_you_sure) }%>
+		<%= submit_tag t(:change_validity), class: 'btn', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
 	<%end%>
 <%end%>
