@@ -21,16 +21,6 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])    
     
-    @order_amount = 0    
-    @order.order_items.each do |order_item|
-      product = order_item.product
-      price = order_item.price_base_unit(@order.price_list)
-        
-      product_count_in_base_unit = product.product_unit_of_measures.find_by_unit_of_measure_id(order_item.unit_of_measure.id).count_in_base_unit
-      order_item_amount = order_item.quantity * product_count_in_base_unit * price
-      @order_amount = @order_amount + order_item_amount
-    end
-    
     @search = @order.order_items.search(params[:q])
     @order_items = @search.result.page(params[:page]).per(current_user.list_page_size)
     respond_to do |format|
