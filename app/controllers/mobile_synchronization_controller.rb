@@ -33,27 +33,46 @@ class MobileSynchronizationController < ApplicationController
   end
   
   # GET /customers.json
-  def customers    
-    if params[:updated_at]
-      @customers = Customer.where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
+  def customers
+    @manager_id = current_user.manager_id
+    if @manager_id
+      @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+      @manager_customer_ids = ShippingAddress.where(id: @manager_shipping_address_ids).select('customer_id').map {|x| x.customer_id} 
+      if params[:updated_at]
+        @customers = Customer.where(id: @manager_customer_ids).where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
+      else
+        @customers = Customer.where(id: @manager_customer_ids).page(page).per(page_size)
+      end
+      respond_to do |format|
+        format.json { render json: @customers }
+      end
     else
-      @customers = Customer.page(page).per(page_size)
-    end
-    respond_to do |format|
-      format.json { render json: @customers }
-    end 
+      respond_to do |format|
+        @responce = JSON code: 210, description: 'manager is not defined for the current user'
+        format.json { render json: @responce }
+      end
+    end    
   end 
   
   # GET /shipping_addresses.json
-  def shipping_addresses    
-    if params[:updated_at]
-      @shipping_addresses = ShippingAddress.where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
+  def shipping_addresses
+    @manager_id = current_user.manager_id
+    if @manager_id
+      @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}    
+      if params[:updated_at]        
+        @shipping_addresses = ShippingAddress.where(id: @manager_shipping_address_ids).where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
+      else
+        @shipping_addresses = ShippingAddress.where(id: @manager_shipping_address_ids).page(page).per(page_size)
+      end
+      respond_to do |format|
+        format.json { render json: @shipping_addresses }
+      end 
     else
-      @shipping_addresses = ShippingAddress.page(page).per(page_size)
+      respond_to do |format|
+        @responce = JSON code: 210, description: 'manager is not defined for the current user'
+        format.json { render json: @responce }
+      end
     end
-    respond_to do |format|
-      format.json { render json: @shipping_addresses }
-    end 
   end 
   
   # GET /manager.json
