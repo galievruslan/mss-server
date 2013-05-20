@@ -439,3 +439,4 @@ en:
   routes_destroyed: "Routes was successfully destroyed."
   orders_removed: "Orders was successfully destroyed."
   please_wait: "Please wait..."
+  orders_count: "Orders count"

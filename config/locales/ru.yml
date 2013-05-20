@@ -439,3 +439,4 @@ ru:
   routes_destroyed: "Маршруты успешно удалены"
   orders_removed: "Заказы успешно удалены"
   please_wait: "Пожалуйста ждите..."
+  orders_count: "Количество заказов"
