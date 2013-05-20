@@ -31,11 +31,11 @@ class TemplateRoutePointsController < ApplicationController
 
   # GET /template_route_points/new
   # GET /template_route_points/new.json
-  def new
-    @shipping_addresses = ShippingAddress.where(validity: true)
+  def new    
     @template_route = TemplateRoute.find(params[:template_route_id])
     @template_route_point = TemplateRoutePoint.new
-
+    @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @template_route.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+    @shipping_addresses = ShippingAddress.where(validity: true).where(id: @manager_shipping_address_ids)
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @template_route_point }
@@ -44,17 +44,19 @@ class TemplateRoutePointsController < ApplicationController
 
   # GET /template_route_points/1/edit
   def edit
-    @shipping_addresses = ShippingAddress.where(validity: true)
     @template_route = TemplateRoute.find(params[:template_route_id])
     @template_route_point = TemplateRoutePoint.find(params[:id])
+    @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @template_route.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+    @shipping_addresses = ShippingAddress.where(validity: true).where(id: @manager_shipping_address_ids)
   end
 
   # POST /template_route_points
   # POST /template_route_points.json
   def create
-    @shipping_addresses = ShippingAddress.where(validity: true)
     @template_route = TemplateRoute.find(params[:template_route_id])
     @template_route_point = TemplateRoutePoint.new(params[:template_route_point])
+    @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @template_route.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+    @shipping_addresses = ShippingAddress.where(validity: true).where(id: @manager_shipping_address_ids)
     @template_route.template_route_points << @template_route_point
     
     respond_to do |format|
@@ -71,9 +73,10 @@ class TemplateRoutePointsController < ApplicationController
   # PUT /template_route_points/1
   # PUT /template_route_points/1.json
   def update
-    @shipping_addresses = ShippingAddress.where(validity: true)
     @template_route = TemplateRoute.find(params[:template_route_id])
     @template_route_point = TemplateRoutePoint.find(params[:id])
+    @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @template_route.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+    @shipping_addresses = ShippingAddress.where(validity: true).where(id: @manager_shipping_address_ids)
 
     respond_to do |format|
       if @template_route_point.update_attributes(params[:template_route_point])

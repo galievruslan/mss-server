@@ -20,8 +20,10 @@ class Ability
       can :read, :all
       can :manage, Order, :manager_id => user.manager_id 
       can :manage, OrderItem , :order => { :id => Manager.find(user.manager_id).order_ids}
-      can :manage, Route, :manager_id => user.manager_id 
+      can :create, OrderItem
+      can :manage, Route, :manager_id => user.manager_id
       can :manage, RoutePoint, :route => { :id => Manager.find(user.manager_id).route_ids}
+      can :create, RoutePoint
       can :route , :current
       cannot :read, [User, Role] 
       cannot :export_again, Order

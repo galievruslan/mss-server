@@ -21,13 +21,13 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])    
     
-    order_price = @order.price_list
     @order_amount = 0    
     @order.order_items.each do |order_item|
       product = order_item.product
-      product_price = ProductPrice.find_by_price_list_id_and_product_id(order_price.id,product.id).price
-      product_count_in_base_unit = ProductUnitOfMeasure.find_by_unit_of_measure_id_and_product_id(order_item.unit_of_measure.id, product.id).count_in_base_unit
-      order_item_amount = order_item.quantity * product_count_in_base_unit * product_price
+      price = order_item.price_base_unit(@order.price_list)
+        
+      product_count_in_base_unit = product.product_unit_of_measures.find_by_unit_of_measure_id(order_item.unit_of_measure.id).count_in_base_unit
+      order_item_amount = order_item.quantity * product_count_in_base_unit * price
       @order_amount = @order_amount + order_item_amount
     end
     

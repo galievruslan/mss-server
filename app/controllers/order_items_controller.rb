@@ -27,11 +27,11 @@ class OrderItemsController < ApplicationController
 
   # GET /order_items/new
   # GET /order_items/new.json
-  def new
-    @products = Product.where(validity: true)
+  def new    
     @order = Order.find(params[:order_id])
     @order_item = OrderItem.new
-
+    @product_ids = ProductPrice.where(price_list_id: @order.price_list_id).select('product_id').map {|x| x.product_id}
+    @products = Product.where(validity: true).where(id: @product_ids)
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @order_item }
@@ -39,10 +39,11 @@ class OrderItemsController < ApplicationController
   end
 
   # GET /order_items/1/edit
-  def edit
-    @products = Product.where(validity: true)
+  def edit    
     @order = Order.find(params[:order_id])
     @order_item = OrderItem.find(params[:id])
+    @product_ids = ProductPrice.where(price_list_id: @order.price_list_id).select('product_id').map {|x| x.product_id}
+    @products = Product.where(validity: true).where(id: @product_ids)
     @product = @order_item.product
     @select_unit_of_measure = @order_item.unit_of_measure.id
     @product_unit_of_measures = ProductUnitOfMeasure.where(product_id: @product.id)      
@@ -64,9 +65,10 @@ class OrderItemsController < ApplicationController
   # POST /order_items
   # POST /order_items.json
   def create
-    @products = Product.where(validity: true)
     @order = Order.find(params[:order_id])
     @order_item = OrderItem.new(params[:order_item])
+    @product_ids = ProductPrice.where(price_list_id: @order.price_list_id).select('product_id').map {|x| x.product_id}
+    @products = Product.where(validity: true).where(id: @product_ids)
     @order_item.unit_of_measure_id = params[:unit_of_measure_id]
     @order.order_items << @order_item
     @order.save
@@ -85,9 +87,10 @@ class OrderItemsController < ApplicationController
   # PUT /order_items/1
   # PUT /order_items/1.json
   def update
-    @products = Product.where(validity: true)
     @order = Order.find(params[:order_id])
     @order_item = OrderItem.find(params[:id])
+    @product_ids = ProductPrice.where(price_list_id: @order.price_list_id).select('product_id').map {|x| x.product_id}
+    @products = Product.where(validity: true).where(id: @product_ids)
     @order_item.unit_of_measure_id = params[:unit_of_measure_id]
 
     respond_to do |format|

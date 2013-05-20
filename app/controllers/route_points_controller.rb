@@ -30,7 +30,8 @@ class RoutePointsController < ApplicationController
   def new
     @route = Route.find(params[:route_id])
     @route_point = RoutePoint.new
-    @shipping_addresses = ShippingAddress.where(validity: true)
+    @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @route.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+    @shipping_addresses = ShippingAddress.where(validity: true).where(id: @manager_shipping_address_ids)
     @statuses = Status.where(validity: true)
 
     respond_to do |format|
@@ -43,7 +44,8 @@ class RoutePointsController < ApplicationController
   def edit
     @route = Route.find(params[:route_id])
     @route_point = RoutePoint.find(params[:id])
-    @shipping_addresses = ShippingAddress.all
+    @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @route.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+    @shipping_addresses = ShippingAddress.where(validity: true).where(id: @manager_shipping_address_ids)
     @statuses = Status.where(validity: true)
   end
 
@@ -52,6 +54,10 @@ class RoutePointsController < ApplicationController
   def create
     @route = Route.find(params[:route_id])
     @route_point = RoutePoint.new(params[:route_point])
+    @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @route.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+    @shipping_addresses = ShippingAddress.where(validity: true).where(id: @manager_shipping_address_ids)
+    @statuses = Status.where(validity: true)
+    
     @route.route_points << @route_point
     @route.save
     
@@ -70,7 +76,10 @@ class RoutePointsController < ApplicationController
   # PUT /route_points/1.json
   def update    
     @route = Route.find(params[:route_id])
-    @route_point = RoutePoint.find(params[:id])   
+    @route_point = RoutePoint.find(params[:id])
+    @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @route.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+    @shipping_addresses = ShippingAddress.where(validity: true).where(id: @manager_shipping_address_ids)
+    @statuses = Status.where(validity: true)
 
     respond_to do |format|
       if @route_point.update_attributes(params[:route_point])

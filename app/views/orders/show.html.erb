@@ -80,7 +80,7 @@
       <td><%= order_item.product.name %></td>
       <td><%= order_item.unit_of_measure.name %></td>
       <td><%= order_item.quantity %></td>
-      <td><%= ProductPrice.find_by_price_list_id_and_product_id(@order.price_list.id,order_item.product.id).price %></td>
+      <td><%= order_item.price_base_unit(@order.price_list) %></td>
     </tr>
     <%end%>
   </tbody>
