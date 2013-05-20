@@ -287,6 +287,17 @@ class MobileSynchronizationController < ApplicationController
   # POST /orders.json
   def orders
     @manager_id = current_user.manager_id
+    
+    @route = Route.find_by_date_and_manager_id(params[:order][:date], @manager_id)
+    if @route
+      @route_point = @route.route_points.find_by_shipping_address_id(params[:order][:shipping_address_id])
+      unless @route_point
+        @route_point = nil
+      end
+    else
+      @route_point = nil
+    end 
+    
     @order = Order.find_by_shipping_address_id_and_manager_id_and_date(params[:order][:shipping_address_id], @manager_id, params[:order][:date])
     if @order      
       respond_to do |format|
@@ -295,6 +306,7 @@ class MobileSynchronizationController < ApplicationController
       end
     else
       params[:order][:manager_id] = @manager_id
+      params[:order][:route_point_id] = @route_point
       @order = Order.new(params[:order])
       respond_to do |format|
         if @order.save

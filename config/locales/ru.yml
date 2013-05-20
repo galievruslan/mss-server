@@ -440,3 +440,5 @@ ru:
   orders_removed: "Заказы успешно удалены"
   please_wait: "Пожалуйста ждите..."
   orders_count: "Количество заказов"
+  order_amount: "Сумма заказа" 
+  price_base_unit: "Цена базовой единицы"
