@@ -5,4 +5,6 @@ class RoutePoint < ActiveRecord::Base
   belongs_to :route
   belongs_to :status
   validates :shipping_address,:status, :presence => true
+  validates :shipping_address_id, :uniqueness => { :scope => :route_id,
+    :message => I18n.t(:one_shipping_address_per_route) }
 end

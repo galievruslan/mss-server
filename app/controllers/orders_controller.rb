@@ -212,19 +212,19 @@ class OrdersController < ApplicationController
   # POST /orders/multiple_change
   def multiple_change
     if params[:order_ids]
-      if params[:button]=='export_again'
+      if params[:operation]=='export_again'
         params[:order_ids].each do |order_id|
           @order = Order.find(order_id)        
           @order.update_attributes(exported_at: nil)        
         end
         redirect_to orders_url, notice: t(:orders_export_again)
-      elsif params[:button]=='remove'
+      elsif params[:operation]=='remove'
         params[:order_ids].each do |order_id|
           @order = Order.find(order_id)        
           @order.destroy
         end
         redirect_to orders_url, notice: t(:orders_removed)
-      end      
+      end
     else
       redirect_to orders_url
     end  

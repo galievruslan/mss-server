@@ -12,7 +12,7 @@
     </ul>
   </div>
 <% end %>
-<%= nested_form_for(@route) do |f| %>
+<%= form_for(@route) do |f| %>
 	<div class="tabbable">
 	  <ul class="nav nav-tabs">
 	    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:route)%></a></li>
@@ -36,7 +36,7 @@
 			  </div>			  			
 	    </div>	
 			<div class="tab-pane" id="tab2">
-				<table id="table" class="table table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
 							<th><%= t(:shipping_address)%></th>
@@ -44,17 +44,13 @@
 							<th><%= t(:actions) %></th>
 						</tr>
 					</thead>
-					<tbody>
-						<%= f.fields_for :route_points, :wrapper => false do |route_point| %>
-							<tr class="fields">
-								<td><%= route_point.select :shipping_address_id , @shipping_addresses.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_shipping_address)} %></td>
-								<td><%= route_point.select :status_id , @statuses.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_status)} %></td>
-								<td><%= route_point.link_to_remove do %><i class='icon-remove' title="<%= t(:remove)%>"></i><% end %></td>
-							</tr>	
+					<tbody id="table">
+						<%= f.fields_for :route_points do |route_point| %>
+							<%= render 'route_point_fields', :f => route_point %>	
 						<% end %>
 					</tbody>
 				</table>
-				<p><%= f.link_to_add t(:add), :route_points, :class =>'btn', :data => { :target => "#table" } %></p>	
+				<p><%= link_to_add_association t(:add), f, :route_points, :class =>'btn' %></p>	
 			</div>
 			<div class="actions">
 		    <%= f.submit(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>

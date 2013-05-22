@@ -5,6 +5,8 @@ class OrderItem < ActiveRecord::Base
   belongs_to :unit_of_measure
   validates :product, :quantity, :unit_of_measure, :presence => true
   validates :quantity, :numericality => {:greater_than => 0 }
+  validates :product_id, :uniqueness => { :scope => :order_id,
+    :message => I18n.t(:one_product_per_order) }
   
   def price_base_unit(price_list)
     product_price = ProductPrice.find_by_price_list_id_and_product_id(price_list.id, self.product.id)

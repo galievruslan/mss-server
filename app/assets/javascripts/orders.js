@@ -34,4 +34,9 @@ function update_shipping_addresses(customer_id) {
       jQuery("#shipping_addresses").html(data);
     }
   });
-}
+};
+$(document).ready(function() {
+	$("a.add_fields").
+	  data("association-insertion-position", 'append').
+	  data("association-insertion-node", '#table');
+});

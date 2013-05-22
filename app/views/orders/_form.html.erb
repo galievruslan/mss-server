@@ -13,7 +13,7 @@
       </ul>
     </div>
   <% end %>
-<%= nested_form_for(@order) do |f| %>
+<%= form_for(@order) do |f| %>
 	<div class="tabbable">
 	  <ul class="nav nav-tabs">
 	    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:details)%></a></li>
@@ -77,17 +77,12 @@
 					  </tr>
 					</thead>
 					<tbody>      
-						<%= f.fields_for :order_items, :wrapper => false do |order_item| %>
-							<tr class="fields">
-							  <td><%= order_item.select :product_id , @products.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_product)} %></td>
-							  <td><%= order_item.select :unit_of_measure_id , @unit_of_measures.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_unit_of_measure)} %></td>
-							  <td><%= order_item.number_field :quantity, min: 1, step: 1 %></td>
-							  <td><%= order_item.link_to_remove do%><i class='icon-remove' title="<%= t(:remove)%>"></i><%end%></td>
-						  </tr>
+						<%= f.fields_for :order_items do |order_item| %>
+							<%= render 'order_item_fields', :f => order_item %>
 						<% end %>
 					</tbody>
 				</table>
-				<p><%= f.link_to_add t(:add), :order_items, :class =>'btn', :data => { :target => "#table" } %></p>			  
+				<p><%= link_to_add_association t(:add), f, :order_items, :class =>'btn' %></p>			  
 	    </div>
 	  </div>
 	  <div class="actions">

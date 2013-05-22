@@ -2,17 +2,17 @@ source 'https://rubygems.org'
 
 
 gem 'rails', '3.2.11'
-gem 'sqlite3'
-gem 'mysql2'
-gem 'kaminari'
-gem 'builder'
-gem 'devise'
-gem 'cancan'
-gem 'ransack'
-gem 'nested_form', :github => 'ryanb/nested_form'
-gem 'rubyzip', :require => 'zip/zip'
-gem 'whenever', :require => false
-gem 'rails_config'
+gem 'sqlite3' # SQLite DB
+gem 'mysql2' # MySQL DB
+gem 'kaminari' # Pagination 
+gem 'builder' # Work with XML 
+gem 'devise' # Users authentication
+gem 'cancan' # Users roles and abilities 
+gem 'ransack' # Searching and sorting
+gem 'rubyzip', :require => 'zip/zip' # Work with zip archive 
+gem 'whenever', :require => false # Create cron jobs
+gem 'rails_config' # add configuration file
+gem 'cocoon' # nested forms
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -42,8 +42,8 @@ gem 'jquery-rails'
 
 # Deploy with Capistrano 
 group :development do
-  gem 'capistrano' 
-  gem 'rvm-capistrano' # нужен для корректной работы с rvm 
+  gem 'capistrano' # Deploy
+  gem 'rvm-capistrano' # Need for correct work capistrano with rvm 
 end
 
 

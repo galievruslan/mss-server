@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'template_routes' %>
+<% end %>
 <% if @template_route.errors.any? %>
     <div class="alert alert-error">
     	<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -10,7 +13,7 @@
     </div>
   <% end %>
 
-<%= nested_form_for(@template_route) do |f| %>
+<%= form_for(@template_route) do |f| %>
 	<div class="tabbable">
 	  <ul class="nav nav-tabs">
 	    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:route)%></a></li>
@@ -32,23 +35,20 @@
 			  </div>
 			</div>
 			<div class="tab-pane" id="tab2">				
-				<table id="table" class="table table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
 							<th><%= t(:shipping_address)%></th>
 							<th><%= t(:validity) %></th>						
 						</tr>
 					</thead>
-					<tbody>
-						<%= f.fields_for :template_route_points, :wrapper => false do |template_route_point| %>
-							<tr class="fields">
-								<td><%= template_route_point.select :shipping_address_id , @shipping_addresses.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_shipping_address)} %></td>
-								<td><%= template_route_point.check_box :validity%></td>
-							</tr>	
+					<tbody id="table">
+						<%= f.fields_for :template_route_points do |template_route_point| %>
+							<%= render 'template_route_point_fields', :f => template_route_point %>	
 						<% end %>
 					</tbody>
 				</table>
-				<p><%= f.link_to_add t(:add), :template_route_points, :class =>'btn', :data => { :target => "#table" } %></p>	
+				<p><%= link_to_add_association t(:add), f, :template_route_points, :class =>'btn' %></p>	
 			</div>
 			<div class="actions">
 		    <%= f.submit(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>

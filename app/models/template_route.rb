@@ -4,4 +4,6 @@ class TemplateRoute < ActiveRecord::Base
   belongs_to :manager
   validates :day_of_week, :manager, :presence => true
   accepts_nested_attributes_for :template_route_points, :allow_destroy => true
+    validates :manager_id, :uniqueness => { :scope => :day_of_week,
+    :message => I18n.t(:one_template_route_per_day_of_week) }
 end

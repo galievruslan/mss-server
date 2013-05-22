@@ -2,6 +2,7 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require jquery_nested_form
+//= require cocoon
 //= require twitter/bootstrap
 //= require bootstrap-datetimepicker
 //= require locales/bootstrap-datetimepicker.ru.js

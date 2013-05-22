@@ -104,7 +104,7 @@
 		<%end%>
 	</div>
 </div>
-<%= form_tag multiple_change_orders_path do%>
+<%= form_tag multiple_change_orders_path, :class => "multiple_change_form" do%>
 	<table class="table table-striped table-hover">
 		<thead>
 		  <tr>
@@ -151,10 +151,23 @@
 	<% if can? :create, Order %>
 		<%= link_to t(:new_order), new_order_path, class: 'btn', :disable_with => t(:please_wait) %>
 	<% end %>
-	<% if can? :export_again, Order %>
-		<%= button_tag t(:export_again), class: 'btn', value: 'export_again', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
-	<%end%>
-	<% if can? :destroy, Order %>
-		<%= button_tag t(:remove), class: 'btn', value: 'remove', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
-	<%end%>
+	
+	<input id="operation" name="operation" type="hidden" />
+	<div class="btn-group">
+	  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+	    <%=t(:selected)%>
+	    <span class="caret"></span>
+	  </a>
+	  <ul class="dropdown-menu">
+	    <li>
+	    	<% if can? :export_again, Order %>
+	    		<%= link_to t(:export_again), '#', :onclick=>"jQuery('#operation').val('export_again'); $('.multiple_change_form').submit(); return false;", data: { confirm: t(:are_you_sure)} %>
+	    	<%end%>
+	    	<% if can? :destroy, Order %>
+	    		<%= link_to t(:remove), '#', :onclick=>"jQuery('#operation').val('remove'); $('.multiple_change_form').submit(); return false;", data: { confirm: t(:are_you_sure)} %>
+	    	<%end%>
+	    </li>
+	  </ul>
+	</div>
+	
 <%end%>

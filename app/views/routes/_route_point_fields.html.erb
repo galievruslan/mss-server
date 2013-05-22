@@ -1,0 +1,5 @@
+<tr class="nested-fields">
+	<td><%= f.select :shipping_address_id , @shipping_addresses.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_shipping_address)} %></td>
+	<td><%= f.select :status_id , @statuses.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_status)} %></td>
+	<td><%= link_to_remove_association t(:remove), f %></td>
+</tr>
