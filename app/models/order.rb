@@ -8,7 +8,12 @@ class Order < ActiveRecord::Base
   has_many :order_items, :dependent => :destroy
   validates :date, :shipping_date, :manager, :shipping_address, :warehouse, :price_list, :presence => true
   accepts_nested_attributes_for :order_items, :allow_destroy => true  
-  
+  validate :validate_unique_order_items
+    
+  def validate_unique_order_items
+    validate_uniqueness_of_in_memory(
+      order_items, [:product_id], I18n.t(:dublicate_order_item))
+  end
   def order_amount    
     order_amount = 0    
     self.order_items.each do |order_item|
@@ -20,6 +25,26 @@ class Order < ActiveRecord::Base
       order_amount = order_amount + order_item_amount
     end
     return order_amount
+  end  
+end
+
+module ActiveRecord
+  class Base
+    # Validate that the the objects in +collection+ are unique
+    # when compared against all their non-blank +attrs+. If not
+    # add +message+ to the base errors.
+    def validate_uniqueness_of_in_memory(collection, attrs, message)
+      hashes = collection.inject({}) do |hash, record|
+        key = attrs.map {|a| record.send(a).to_s }.join
+        if key.blank? || record.marked_for_destruction?
+          key = record.object_id
+        end
+        hash[key] = record unless hash[key]
+        hash
+      end
+      if collection.length > hashes.length
+        self.errors.add(:base, message)
+      end
+    end
   end
-  
 end

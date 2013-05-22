@@ -448,3 +448,6 @@ ru:
   one_product_per_order: "уже имеет данную номенклатуру в заказе"
   one_manager_shipping_address_per_manager: "уме имеется данный адрес поставки у менеджера"
   selected: "Выбранные"
+  dublicate_route_point: "Есть задублированные точки в маршруте"
+  dublicate_template_route_point: "Есть задублированные точки в шаблоне маршрута"
+  dublicate_order_item: "Есть задублированная номенклатура в заказе"

@@ -44,22 +44,9 @@ class OrderItemsController < ApplicationController
     @order_item = OrderItem.find(params[:id])
     @product_ids = ProductPrice.where(price_list_id: @order.price_list_id).select('product_id').map {|x| x.product_id}
     @products = Product.where(validity: true).where(id: @product_ids)
-    @product = @order_item.product
     @select_unit_of_measure = @order_item.unit_of_measure.id
-    @product_unit_of_measures = ProductUnitOfMeasure.where(product_id: @product.id)      
-    @unit_of_measures = [] 
-    @product_unit_of_measures.each do |product_unit_of_measure|
-      unit_of_measure = UnitOfMeasure.find(product_unit_of_measure.unit_of_measure_id)
-      if unit_of_measure.validity
-        unit_of_measure_name = unit_of_measure.name
-        unit_of_measure_id = unit_of_measure.id
-        unit_of_measures = []
-        unit_of_measures << unit_of_measure_name
-        unit_of_measures << unit_of_measure_id   
-        @unit_of_measures << unit_of_measures
-      end      
-    end   
-   
+    @unit_of_measure_ids = ProductUnitOfMeasure.where(product_id: @order_item.product_id).select('unit_of_measure_id').map {|x| x.unit_of_measure_id}
+    @unit_of_measures = UnitOfMeasure.where(id: @unit_of_measure_ids)   
   end
 
   # POST /order_items
@@ -68,10 +55,12 @@ class OrderItemsController < ApplicationController
     @order = Order.find(params[:order_id])
     @order_item = OrderItem.new(params[:order_item])
     @product_ids = ProductPrice.where(price_list_id: @order.price_list_id).select('product_id').map {|x| x.product_id}
-    @products = Product.where(validity: true).where(id: @product_ids)
-    @order_item.unit_of_measure_id = params[:unit_of_measure_id]
+    @products = Product.where(validity: true).where(id: @product_ids) 
+    @select_unit_of_measure = params[:order_item][:unit_of_measure_id]    
+    @unit_of_measure_ids = ProductUnitOfMeasure.where(product_id: params[:order_item][:product_id]).select('unit_of_measure_id').map {|x| x.unit_of_measure_id}
+    @unit_of_measures = UnitOfMeasure.where(id: @unit_of_measure_ids)           
+    
     @order.order_items << @order_item
-    @order.save
 
     respond_to do |format|
       if @order_item.save
@@ -91,7 +80,10 @@ class OrderItemsController < ApplicationController
     @order_item = OrderItem.find(params[:id])
     @product_ids = ProductPrice.where(price_list_id: @order.price_list_id).select('product_id').map {|x| x.product_id}
     @products = Product.where(validity: true).where(id: @product_ids)
-    @order_item.unit_of_measure_id = params[:unit_of_measure_id]
+    @select_unit_of_measure = params[:order_item][:unit_of_measure_id]
+    @unit_of_measure_ids = ProductUnitOfMeasure.where(product_id: params[:order_item][:product_id]).select('unit_of_measure_id').map {|x| x.unit_of_measure_id}
+    @unit_of_measures = UnitOfMeasure.where(id: @unit_of_measure_ids)         
+    
 
     respond_to do |format|
       if @order_item.update_attributes(params[:order_item])
@@ -117,20 +109,10 @@ class OrderItemsController < ApplicationController
     end
   end
   
+  # GET /update_product_unit_of_measures  
   def update_product_unit_of_measures
-    @product_unit_of_measures = ProductUnitOfMeasure.where(product_id: params[:product_id])  
-    @unit_of_measures= [] 
-    @product_unit_of_measures.each do |product_unit_of_measure|
-      unit_of_measure = UnitOfMeasure.find(product_unit_of_measure.unit_of_measure_id)
-      if unit_of_measure.validity
-        unit_of_measure_name = unit_of_measure.name
-        unit_of_measure_id = unit_of_measure.id
-        unit_of_measures = []
-        unit_of_measures << unit_of_measure_name
-        unit_of_measures << unit_of_measure_id   
-        @unit_of_measures << unit_of_measures
-      end      
-    end    
+    @unit_of_measure_ids = ProductUnitOfMeasure.where(product_id: params[:product_id]).select('unit_of_measure_id').map {|x| x.unit_of_measure_id}
+    @unit_of_measures = UnitOfMeasure.where(validity: true).where(id: @unit_of_measure_ids)
     render :partial => "product_unit_of_measures", :object => @unit_of_measures  
   end
   

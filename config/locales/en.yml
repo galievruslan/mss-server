@@ -42,7 +42,7 @@ en:
         default_warehouse: "Default warehouse"
         validity: "Validity"
       order_item:      
-        product: "Product"
+        product: Product"
         unit_of_measure: "Unit of measure"
         quantity: "Quantity"
       order:
@@ -448,3 +448,6 @@ en:
   one_product_per_order: "already has a product for the order"
   one_manager_shipping_address_per_manager: "already has a shipping address for the manager"
   selected: "Selected"
+  dublicate_route_point: "Dublicate route points in route"
+  dublicate_template_route_point: "Dublicate template route points in template route"
+  dublicate_order_item: "Dublicate order items in order"

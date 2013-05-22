@@ -1,1 +1,2 @@
-<%= select_tag "unit_of_measure_id", options_for_select(@unit_of_measures), :prompt => t(:select_unit_of_measure) %>
+<%= label_tag "order_item[unit_of_measure_id]", t(:unit_of_measure) %>
+<%= select_tag "order_item[unit_of_measure_id]", options_from_collection_for_select(@unit_of_measures, 'id', 'name') , :prompt => t(:select_unit_of_measure) %>

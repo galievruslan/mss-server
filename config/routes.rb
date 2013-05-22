@@ -16,6 +16,7 @@
   match 'profile/edit_password', :to => 'profiles#edit_password'
   put 'profile/update_password', :to => 'profiles#update_password'
   get 'bali', :to => 'pages#bali'
+  get 'orders/order_items/update_product_unit_of_measures', :to => 'order_items#update_product_unit_of_measures'
   
   # MobileSynchronization routes
   get 'synchronization/datetime', :to => 'mobile_synchronization#datetime'
@@ -46,10 +47,8 @@
       get :update_shipping_addresses
       post :multiple_change
     end  
-    resources :order_items do      
-        get :update_product_unit_of_measures
+    resources :order_items do
         collection do
-          get :update_product_unit_of_measures
           post :multiple_change
         end               
     end    
