@@ -24,7 +24,7 @@ class Order < ActiveRecord::Base
       order_item_amount = order_item.quantity * product_count_in_base_unit * price
       order_amount = order_amount + order_item_amount
     end
-    return order_amount
+    return order_amount.round(2)
   end  
 end
 
