@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Styles>
+    <Style ss:ID="bold">
+      <Font ss:Bold="1" />
+      <Borders>
+		    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+		  </Borders>
+    </Style>
+    <Style ss:ID="default">
+	  	<Borders>
+	    	<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+	 		</Borders>
+		</Style>
+  </Styles>
+  <Worksheet ss:Name="<%= t(:routes) %>">
+    <Table>
+    <Column ss:Width="60"/>
+		<Column ss:Width="100"/>
+		<Column ss:Width="200"/>
+		<Column ss:Width="300"/>
+      <Row>
+      	<Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:day_of_week) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:manager) %></Data></Cell>        
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:customer) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:shipping_address) %></Data></Cell>
+      </Row>
+    <% @template_route_points.each do |template_route_point| %>
+      <Row>
+      	<Cell ss:StyleID="default"><Data ss:Type="String"><%= t(day_name(template_route_point.template_route.day_of_week)) %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= template_route_point.template_route.manager.name %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= template_route_point.shipping_address.customer.name %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= template_route_point.shipping_address.name %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

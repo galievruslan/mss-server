@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Styles>
+    <Style ss:ID="bold">
+      <Font ss:Bold="1" />
+      <Borders>
+		    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+		  </Borders>
+    </Style>
+    <Style ss:ID="default">
+	  	<Borders>
+	    	<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+	 		</Borders>
+		</Style>
+  </Styles>
+  <Worksheet ss:Name="<%= t(:orders) %>">
+    <Table>
+    <Column ss:Width="60"/>
+		<Column ss:Width="80"/>
+		<Column ss:Width="100"/>
+		<Column ss:Width="150"/>
+		<Column ss:Width="150"/>
+		<Column ss:Width="80"/>
+		<Column ss:Width="150"/>
+		<Column ss:Width="80"/>
+      <Row>
+      	<Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:date) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:shipping_date) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:manager) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:customer) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:shipping_address) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:price_list) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:warehouse) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:order_amount) %></Data></Cell>
+      </Row>
+    <% @orders.each do |order| %>
+      <Row>
+      	<Cell ss:StyleID="default"><Data ss:Type="String"><%= order.date.strftime("%d-%m-%Y") %></Data></Cell>
+      	<Cell ss:StyleID="default"><Data ss:Type="String"><%= order.shipping_date.strftime("%d-%m-%Y") %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order.manager.name %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order.shipping_address.customer.name %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order.shipping_address.name %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order.price_list.name %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order.warehouse.name %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="Number"><%= order.order_amount %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

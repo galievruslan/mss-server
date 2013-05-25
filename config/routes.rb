@@ -17,6 +17,10 @@
   put 'profile/update_password', :to => 'profiles#update_password'
   get 'bali', :to => 'pages#bali'
   get 'orders/order_items/update_product_unit_of_measures', :to => 'order_items#update_product_unit_of_measures'
+  get 'reports', :to => 'reports#index'
+  get 'reports/orders', :to => 'reports#orders'
+  get 'reports/routes', :to => 'reports#routes'
+  get 'reports/template_routes', :to => 'reports#template_routes'
   
   # MobileSynchronization routes
   get 'synchronization/datetime', :to => 'mobile_synchronization#datetime'

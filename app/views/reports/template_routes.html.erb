@@ -1,0 +1,37 @@
+<h3><%= t(:reports)%></h3>
+<ul class="nav nav-tabs">
+  <li><%= link_to t(:reports), reports_path %></li>
+  <li><%= link_to t(:order_report), reports_orders_path%></li>
+  <li><%= link_to t(:route_report), reports_routes_path%></li>
+  <li class="active"><%= link_to t(:template_route_report), reports_template_routes_path%></li>
+</ul>
+<%= search_form_for @search, :url => reports_template_routes_path(format: "xls"), class: "form-horizontal" do |f| %>
+  <div class="control-group">
+  	<%= f.label :template_route_day_of_week_eq, t(:day_of_week)+':', class: "control-label"%>
+  	<div class="controls">
+  		<%= f.select :template_route_day_of_week_eq, @days_of_week.collect  {|p| [ t(day_name(p)), p ]},{:include_blank => t(:select_day_of_week)},{:class => 'search-field'} %>
+  	</div>
+  </div>
+  <div class="control-group">
+  	<%= f.label :shipping_address_customer_id_eq, t(:shipping_address)+':', class: "control-label"%>
+  	<div class="controls">
+  		<%= f.select :shipping_address_customer_id_eq, @customers.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_customer)}, {:class => 'search-field'} %>
+  	</div>
+  </div>
+  <div class="control-group">
+  	<%= f.label :shipping_address_id_eq, t(:shipping_address)+':', class: "control-label"%>
+  	<div class="controls">
+  		<%= f.select :shipping_address_id_eq, @shipping_addresses.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_shipping_address)}, {:class => 'search-field'} %>
+  	</div>
+  </div>
+  <div class="control-group">
+  	<%= f.label :template_route_manager_id_eq, t(:manager)+':', class: "control-label"%>
+  	<div class="controls">
+  		<%= f.select :template_route_manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_manager)}, {:class => 'search-field'} %>
+  	</div>
+  </div>
+  <div class="control-group">	  	
+  		<%= f.submit t(:download_xls), class: 'btn btn-info' %>
+  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>	  	
+  </div>	
+<%end%>

@@ -124,14 +124,14 @@
 			<% @orders.each do |order| %>
 		  <tr <%='class=success' if order.exported_at %>>
 		  	<td><%= check_box_tag 'order_ids[]', order.id %></td>
-		    <td><%= order.date.strftime("%T %d-%m-%y") %></td>
-		    <td><%= order.shipping_date.strftime("%T %d-%m-%y") %></td>
+		    <td><%= order.date.strftime("%d-%m-%y") %></td>
+		    <td><%= order.shipping_date.strftime("%d-%m-%y") %></td>
 		    <td><%= order.shipping_address.name %></td>
 		    <td><%= order.manager.name %></td>
 		    <td><%= order.warehouse.name %></td>
 		    <td><%= order.price_list.name %></td>
 		    <td><%= order.order_amount %></td>
-		    <td><%= order.exported_at ? order.exported_at.strftime("%T %d-%m-%y") : t(:not_exported)%></td>
+		    <td><%= order.exported_at ? order.exported_at.strftime("%d-%m-%y") : t(:not_exported)%></td>
 		    <% if can? :export_again, Order %>
 		    	<td><%= link_to(export_again_order_path(order), :method => :put) do %><i class='icon-download-alt' title="<%= t(:export_again)%>"></i><%end%></td>
 		    <% end %>

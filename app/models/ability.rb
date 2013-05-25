@@ -10,9 +10,11 @@ class Ability
       can :manage, :all
       can :exchange , :view
       can :settings , :view
+      can :reports, :view
       can :settings , :manage
       can :export_again, Order
     elsif user.role? :supervisor
+      can :reports, :view
       can :read, :all           
       can :manage, [TemplateRoute, TemplateRoutePoint]
       cannot :read, [User, Role]
