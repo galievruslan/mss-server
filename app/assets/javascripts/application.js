@@ -10,12 +10,14 @@
  Reset button for filter form
 * ===================================================*/
 !function($) {
- $(window).on('load', function(){
-   $('#q_reset').click(function(){
-   $('.search-field').val('');
-   $("select.search-field").select2("val", "");
- });
-  });
+	$(window).on('load', function(){
+		$('#q_reset').click(function(){
+			$('.search-field').val('');
+			$("select.search-field").each(function() {
+				$(this).select2("val", "");
+			});
+		});
+	});
 }(window.jQuery);
 /* ===================================================
  Select all checkboxes on tbody
@@ -25,21 +27,3 @@ function toggleChecked(status) {
 		$(this).attr("checked",status);
 	})
 };
-
-
-// $(document).ready(function() {
-	// $('.select2').each(function(i, e){
-	  // var select = $(e)
-	  // options = {}
-	  // if (select.hasClass('ajax')) {
-	    // options.ajax = {
-	      // url: select.data('source'),
-	      // dataType: 'json',
-	      // data: function(term, page) { return { q: term, page: page, per: 10 } },
-	      // results: function(data, page) { return { results: data } }
-	    // }
-	    // options.dropdownCssClass = "bigdrop"
-	  // }
-	  // select.select2(options)
-	// });
-// });

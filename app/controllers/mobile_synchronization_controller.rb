@@ -256,32 +256,37 @@ class MobileSynchronizationController < ApplicationController
   def routes
     @manager_id = current_user.manager_id
     @route = Route.find_by_manager_id_and_date(@manager_id, params[:route][:date])
-    if @route
-      params[:route][:route_points_attributes].values.each do |route_point|
-        @route_point = @route.route_points.find_by_shipping_address_id(route_point[:shipping_address_id])
-        if @route_point
-          @route_point.update_attributes(route_point)
+    Route.transaction do        
+      begin
+        if @route
+          params[:route][:route_points_attributes].values.each do |route_point|
+            @route_point = @route.route_points.find_by_shipping_address_id(route_point[:shipping_address_id])
+            if @route_point
+              @route_point.update_attributes(route_point)
+            else
+              @route.route_points.create(route_point)
+            end        
+          end      
+          respond_to do |format|
+            @responce = JSON code: 101, description: 'updated successfully'
+            format.json { render json: @responce, status: :ok, location: @route }
+          end
         else
-          @route.route_points.create(route_point)
-        end        
-      end      
-      respond_to do |format|
-        @responce = JSON code: 101, description: 'updated successfully'
-        format.json { render json: @responce, status: :ok, location: @route }
+          params[:route][:manager_id] = @manager_id
+          @route = Route.new(params[:route])
+          respond_to do |format|
+            if @route.save
+              @responce = JSON code: 100, description: 'created successfully'
+              format.json { render json: @responce, status: :created, location: @route }
+            else
+              @responce = JSON code: 200, description: 'the data format is not valid'
+              format.json { render json: @responce, status: :unprocessable_entity }
+            end
+          end
+        end      
+        rescue ActiveRecord::StatementInvalid
       end
-    else
-      params[:route][:manager_id] = @manager_id
-      @route = Route.new(params[:route])
-      respond_to do |format|
-        if @route.save
-          @responce = JSON code: 100, description: 'created successfully'
-          format.json { render json: @responce, status: :created, location: @route }
-        else
-          @responce = JSON code: 200, description: 'the data format is not valid'
-          format.json { render json: @responce, status: :unprocessable_entity }
-        end
-      end
-    end    
+    end
   end
   
   # POST /orders.json
@@ -301,24 +306,29 @@ class MobileSynchronizationController < ApplicationController
     end 
     
     @order = Order.find_by_shipping_address_id_and_manager_id_and_date(params[:order][:shipping_address_id], @manager_id, params[:order][:date])
-    if @order      
-      respond_to do |format|
-        @responce = JSON code: 102, description: 'already exists'
-        format.json { render json: @responce, status: :ok, location: @order }
-      end
-    else
-      params[:order][:manager_id] = @manager_id
-      params[:order][:route_point_id] = @route_point_id
-      @order = Order.new(params[:order])
-      respond_to do |format|
-        if @order.save
-          @responce = JSON code: 100, description: 'created successfully'
-          format.json { render json: @responce, status: :created, location: @order }
+    Order.transaction do
+      begin
+        if @order      
+          respond_to do |format|
+            @responce = JSON code: 102, description: 'already exists'
+            format.json { render json: @responce, status: :ok, location: @order }
+          end
         else
-          @responce = JSON code: 200, description: 'the data format is not valid'
-          format.json { render json: @responce, status: :unprocessable_entity }
+          params[:order][:manager_id] = @manager_id
+          params[:order][:route_point_id] = @route_point_id
+          @order = Order.new(params[:order])
+          respond_to do |format|
+            if @order.save
+              @responce = JSON code: 100, description: 'created successfully'
+              format.json { render json: @responce, status: :created, location: @order }
+            else
+              @responce = JSON code: 200, description: 'the data format is not valid'
+              format.json { render json: @responce, status: :unprocessable_entity }
+            end
+          end
         end
+        rescue ActiveRecord::StatementInvalid
       end
-    end    
+    end   
   end   
 end

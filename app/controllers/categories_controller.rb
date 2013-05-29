@@ -10,7 +10,7 @@ class CategoriesController < ApplicationController
       @search = Category.search(params[:q])    
       @categories = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)      
     end
-    
+    @products_count = Product.where(validity: true).count(:group=>:category_id)
     @parents = Category.all    
 
     respond_to do |format|

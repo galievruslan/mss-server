@@ -10,7 +10,7 @@ class PriceListsController < ApplicationController
       @search = PriceList.search(params[:q])    
       @price_lists = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
     end
-    @price_list_lines_count = ProductPrice.count(:group=>:price_list_id)
+    @price_list_lines_count = ProductPrice.where(validity: true).count(:group=>:price_list_id)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @price_lists }

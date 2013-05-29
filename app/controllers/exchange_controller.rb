@@ -23,8 +23,19 @@ class ExchangeController < ApplicationController
     if params[:customers]
       Customer.transaction do        
         begin
-          Customer.update_all(validity: false)
           customers = xml.elements.to_a("//customer")
+          
+          customers_external_keys = []
+          customers.each do |customer| 
+            customers_external_keys << customer.elements['external_key'].text
+          end          
+          customers_false = Customer.where("external_key NOT IN (?)", customers_external_keys)
+          customers_false.each do |customer_false|
+            if customer_false.validity
+              customer_false.update_attributes(validity: false)
+            end
+          end
+          
           customers.each do |customer| 
             customer_name = customer.elements['name'].text
             customer_external_key = customer.elements['external_key'].text
@@ -39,15 +50,26 @@ class ExchangeController < ApplicationController
               end        
             end
           end
-        rescue ActiveRecord::StatementInvalid
+          rescue ActiveRecord::StatementInvalid
         end         
       end  
     end
     if params[:shipping_addresses]
       ShippingAddress.transaction do        
         begin
-          ShippingAddress.update_all(validity: false)
           shipping_addresses = xml.elements.to_a("//shipping_address")
+          
+          shipping_addresses_external_keys = []
+          shipping_addresses.each do |shipping_address| 
+            shipping_addresses_external_keys << shipping_address.elements['external_key'].text
+          end          
+          shipping_addresses_false = ShippingAddress.where("external_key NOT IN (?)", shipping_addresses_external_keys)
+          shipping_addresses_false.each do |shipping_address_false|
+            if shipping_address_false.validity
+              shipping_address_false.update_attributes(validity: false)
+            end
+          end
+          
           shipping_addresses.each do |shipping_address| 
             shipping_address_name = shipping_address.elements['name'].text
             shipping_address_external_key = shipping_address.elements['external_key'].text
@@ -70,7 +92,7 @@ class ExchangeController < ApplicationController
               end 
             end
           end
-        rescue ActiveRecord::StatementInvalid
+          rescue ActiveRecord::StatementInvalid
         end
       end   
     end
@@ -78,8 +100,19 @@ class ExchangeController < ApplicationController
     if params[:warehouses]
       Warehouse.transaction do        
         begin
-          Warehouse.update_all(validity: false)
           warehouses = xml.elements.to_a("//warehouse")
+          
+          warehouses_external_keys = []
+          warehouses.each do |warehouse| 
+            warehouses_external_keys << warehouse.elements['external_key'].text
+          end          
+          warehouses_false = Warehouse.where("external_key NOT IN (?)", warehouses_external_keys)
+          warehouses_false.each do |warehouse_false|
+            if warehouse_false.validity
+              warehouse_false.update_attributes(validity: false)
+            end
+          end
+          
           warehouses.each do |warehouse| 
             warehouse_name = warehouse.elements['name'].text
             warehouse_external_key = warehouse.elements['external_key'].text
@@ -95,7 +128,7 @@ class ExchangeController < ApplicationController
               end
             end        
           end
-        rescue ActiveRecord::StatementInvalid
+          rescue ActiveRecord::StatementInvalid
         end
       end
     end
@@ -103,8 +136,19 @@ class ExchangeController < ApplicationController
     if params[:managers]
       Manager.transaction do        
         begin
-          Manager.update_all(validity: false)
           managers = xml.elements.to_a("//manager")
+          
+          managers_external_keys = []
+          managers.each do |manager| 
+            managers_external_keys << manager.elements['external_key'].text
+          end          
+          managers_false = Manager.where("external_key NOT IN (?)", managers_external_keys)
+          managers_false.each do |manager_false|
+            if manager_false.validity
+              manager_false.update_attributes(validity: false)
+            end
+          end
+          
           managers.each do |manager| 
             manager_name = manager.elements['name'].text
             manager_external_key = manager.elements['external_key'].text
@@ -127,7 +171,7 @@ class ExchangeController < ApplicationController
               end
             end        
           end
-        rescue ActiveRecord::StatementInvalid
+          rescue ActiveRecord::StatementInvalid
         end
       end
     end
@@ -135,8 +179,24 @@ class ExchangeController < ApplicationController
     if params[:managers_shipping_addresses]
       ManagerShippingAddress.transaction do
         begin
-          ManagerShippingAddress.update_all(validity: false)
           manager_shipping_addresses = xml.elements.to_a("//manager_shipping_address")
+          
+          manager_external_keys = []
+          shipping_address_external_keys = []
+          manager_shipping_addresses.each do |manager_shipping_address|
+            manager_external_keys << manager_shipping_address.elements['manager_external_key'].text
+            shipping_address_external_keys << manager_shipping_address.elements['shipping_address_external_key'].text         
+          end
+          manager_ids = Manager.where("external_key IN (?)", manager_external_keys).select('id').map {|x| x.id}
+          shipping_address_ids = ShippingAddress.where("external_key IN (?)", shipping_address_external_keys).select('id').map {|x| x.id}
+          manager_shipping_addresses_true_ids = ManagerShippingAddress.where("manager_id IN (?) AND shipping_address_id IN (?)", manager_ids, shipping_address_ids).select('id').map {|x| x.id}
+          manager_shipping_addresses_false = ManagerShippingAddress.where("id NOT IN (?)", manager_shipping_addresses_true_ids)
+          manager_shipping_addresses_false.each do |manager_shipping_address_false|
+            if manager_shipping_address_false.validity
+              manager_shipping_address_false.update_attributes(validity: false)
+            end
+          end
+          
           manager_shipping_addresses.each do |manager_shipping_address|
             manager_external_key = manager_shipping_address.elements['manager_external_key'].text
             shipping_address_external_key = manager_shipping_address.elements['shipping_address_external_key'].text
@@ -163,7 +223,7 @@ class ExchangeController < ApplicationController
               end
             end        
           end
-        rescue ActiveRecord::StatementInvalid
+          rescue ActiveRecord::StatementInvalid
         end
       end
     end
@@ -171,8 +231,19 @@ class ExchangeController < ApplicationController
     if params[:unit_of_measures]
       UnitOfMeasure.transaction do
         begin
-          UnitOfMeasure.update_all(validity: false)
           unit_of_measures = xml.elements.to_a("//unit_of_measure")
+          
+          unit_of_measures_external_keys = []
+          unit_of_measures.each do |unit_of_measure| 
+            unit_of_measures_external_keys << unit_of_measure.elements['external_key'].text
+          end          
+          unit_of_measures_false = UnitOfMeasure.where("external_key NOT IN (?)", unit_of_measures_external_keys)
+          unit_of_measures_false.each do |unit_of_measure_false|
+            if unit_of_measure_false.validity
+              unit_of_measure_false.update_attributes(validity: false)
+            end
+          end
+          
           unit_of_measures.each do |unit_of_measure| 
             unit_of_measure_name = unit_of_measure.elements['name'].text
             unit_of_measure_external_key = unit_of_measure.elements['external_key'].text
@@ -187,7 +258,7 @@ class ExchangeController < ApplicationController
               end
             end          
           end
-        rescue ActiveRecord::StatementInvalid
+          rescue ActiveRecord::StatementInvalid
         end
       end
     end
@@ -195,8 +266,19 @@ class ExchangeController < ApplicationController
     if params[:price_lists]
       PriceList.transaction do
         begin
-          PriceList.update_all(validity: false)
           price_lists = xml.elements.to_a("//price_list")
+          
+          price_lists_external_keys = []
+          price_lists.each do |price_list| 
+            price_lists_external_keys << price_list.elements['external_key'].text
+          end          
+          price_lists_false = PriceList.where("external_key NOT IN (?)", price_lists_external_keys)
+          price_lists_false.each do |price_list_false|
+            if price_list_false.validity
+              price_list_false.update_attributes(validity: false)
+            end
+          end
+          
           price_lists.each do |price_list| 
             price_list_name = price_list.elements['name'].text
             price_list_external_key = price_list.elements['external_key'].text
@@ -211,7 +293,7 @@ class ExchangeController < ApplicationController
               end
             end          
           end
-        rescue ActiveRecord::StatementInvalid
+          rescue ActiveRecord::StatementInvalid
         end
       end
     end
@@ -219,8 +301,19 @@ class ExchangeController < ApplicationController
     if params[:categories]
       Category.transaction do
         begin
-          Category.update_all(validity: false)
-          categories = xml.elements.to_a("//category")      
+          categories = xml.elements.to_a("//category")
+          
+          categories_external_keys = []
+          categories.each do |category| 
+            categories_external_keys << category.elements['external_key'].text
+          end          
+          categories_false = Category.where("external_key NOT IN (?)", categories_external_keys)
+          categories_false.each do |category_false|
+            if category_false.validity
+              category_false.update_attributes(validity: false)
+            end
+          end
+          
           categories.each do |category| 
             category_name = category.elements['name'].text
             category_external_key = category.elements['external_key'].text
@@ -257,7 +350,7 @@ class ExchangeController < ApplicationController
               end            
             end
           end
-        rescue ActiveRecord::StatementInvalid
+          rescue ActiveRecord::StatementInvalid
         end
       end
     end
@@ -265,8 +358,19 @@ class ExchangeController < ApplicationController
     if params[:products]
       Product.transaction do
         begin
-          Product.update_all(validity: false)
           products = xml.elements.to_a("//product")
+          
+          products_external_keys = []
+          products.each do |product| 
+            products_external_keys << product.elements['external_key'].text
+          end          
+          products_false = Product.where("external_key NOT IN (?)", products_external_keys)
+          products_false.each do |product_false|
+            if product_false.validity
+              product_false.update_attributes(validity: false)
+            end
+          end
+          
           products.each do |product| 
             product_name = product.elements['name'].text
             product_external_key = product.elements['external_key'].text
@@ -290,7 +394,7 @@ class ExchangeController < ApplicationController
               end
             end          
           end  
-        rescue ActiveRecord::StatementInvalid
+          rescue ActiveRecord::StatementInvalid
         end 
       end
     end
@@ -298,8 +402,24 @@ class ExchangeController < ApplicationController
     if params[:product_unit_of_measures]
       ProductUnitOfMeasure.transaction do
         begin
-          ProductUnitOfMeasure.update_all(validity: false)
           product_unit_of_measures = xml.elements.to_a("//product_unit_of_measure")
+          
+          product_external_keys = []
+          unit_of_measure_external_keys = []
+          product_unit_of_measures.each do |product_unit_of_measure|
+            product_external_keys << product_unit_of_measure.elements['product_external_key'].text
+            unit_of_measure_external_keys << product_unit_of_measure.elements['unit_of_measure_external_key'].text         
+          end
+          product_ids = Product.where("external_key IN (?)", product_external_keys).select('id').map {|x| x.id}
+          unit_of_measure_ids = UnitOfMeasure.where("external_key IN (?)", unit_of_measure_external_keys).select('id').map {|x| x.id}
+          product_unit_of_measures_true_ids = ProductUnitOfMeasure.where("product_id IN (?) AND unit_of_measure_id IN (?)", product_ids, unit_of_measure_ids).select('id').map {|x| x.id}
+          product_unit_of_measures_false = ProductUnitOfMeasure.where("id NOT IN (?)", product_unit_of_measures_true_ids)
+          product_unit_of_measures_false.each do |product_unit_of_measure_false|
+            if product_unit_of_measure_false.validity
+              product_unit_of_measure_false.update_attributes(validity: false)
+            end
+          end
+          
           product_unit_of_measures.each do |product_unit_of_measure|        
             product_unit_of_measure.attributes['type'] =='base' ? base_product_unit_of_measure = true : base_product_unit_of_measure = false        
             product_unit_of_measure_product_external_key = product_unit_of_measure.elements['product_external_key'].text
@@ -332,7 +452,7 @@ class ExchangeController < ApplicationController
               end
             end          
           end 
-        rescue ActiveRecord::StatementInvalid
+          rescue ActiveRecord::StatementInvalid
         end
       end  
     end
@@ -340,8 +460,24 @@ class ExchangeController < ApplicationController
     if params[:product_prices]
       ProductPrice.transaction do
         begin
-          ProductPrice.update_all(validity: false)
           product_prices = xml.elements.to_a("//product_price")
+          
+          product_external_keys = []
+          price_list_external_keys = []
+          product_prices.each do |product_price|
+            product_external_keys << product_price.elements['product_external_key'].text
+            price_list_external_keys << product_price.elements['price_list_external_key'].text         
+          end
+          product_ids = Product.where("external_key IN (?)", product_external_keys).select('id').map {|x| x.id}
+          price_list_ids = PriceList.where("external_key IN (?)", price_list_external_keys).select('id').map {|x| x.id}
+          product_prices_true_ids = ProductPrice.where("product_id IN (?) AND price_list_id IN (?)", product_ids, price_list_ids).select('id').map {|x| x.id}
+          product_prices_false = ProductPrice.where("id NOT IN (?)", product_prices_true_ids)
+          product_prices_false.each do |product_price_false|
+            if product_price_false.validity
+              product_price_false.update_attributes(validity: false)
+            end
+          end
+          
           product_prices.each do |product_price| 
             product_external_key = product_price.elements['product_external_key'].text
             price_list_external_key = product_price.elements['price_list_external_key'].text
@@ -373,7 +509,7 @@ class ExchangeController < ApplicationController
               end
             end          
           end
-        rescue ActiveRecord::StatementInvalid
+          rescue ActiveRecord::StatementInvalid
         end
       end
     end        
