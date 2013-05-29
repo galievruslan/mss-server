@@ -81,19 +81,19 @@
 		  <div class="control-group">
 		  	<%= f.label :manager_id_eq, t(:manager)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.select :manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_manager)}, {:class => 'search-field'} %>
+		  		<%= f.select :manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_manager), :class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :warehouse_id_eq, t(:warehouse)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.select :warehouse_id_eq, @warehouses.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_warehouse)}, {:class => 'search-field'} %>
+		  		<%= f.select :warehouse_id_eq, @warehouses.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_warehouse), :class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :price_list_id_eq, t(:price_list)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.select :price_list_id_eq, @price_lists.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_price_list)}, {:class => 'search-field'} %>
+		  		<%= f.select :price_list_id_eq, @price_lists.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_price_list), :class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  

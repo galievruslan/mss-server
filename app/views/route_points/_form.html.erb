@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'route_points' %>
+<% end %>
 <%= form_for([@route, @route_point]) do |f| %>
   <% if @route_point.errors.any? %>
     <div class="alert alert-error">
@@ -13,12 +16,13 @@
 
   <div class="field">
     <%= f.label :shipping_address_id, t(:shipping_address) %>
-    <%= f.select(:shipping_address_id, @shipping_addresses.collect {|p| [p.name, p.id]}, :include_blank => t(:select_shipping_address)) %>
+    <%= f.select(:shipping_address_id, @shipping_addresses.collect {|p| [p.name, p.id]}, {:include_blank => true}, {'data-placeholder' => t(:select_shipping_address)}) %>
   </div>
   <div class="field">
     <%= f.label :status_id, t(:status) %>
-    <%= f.select(:status_id, @statuses.collect {|p| [p.name, p.id]}, :include_blank => t(:select_status)) %>
+    <%= f.select(:status_id, @statuses.collect {|p| [p.name, p.id]}, {:include_blank => true}, {'data-placeholder' => t(:select_status)}) %>
   </div>
+  <br />
   <div class="actions">
     <%= f.submit(t(:save), class: 'btn', :disable_with => t(:please_wait)) %>
   </div>

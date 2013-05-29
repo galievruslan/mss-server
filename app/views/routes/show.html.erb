@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'routes' %>
+<% end %>
 <p>
   <b><%= t(:date)%>:</b>
   <%= @route.date %>
@@ -7,7 +10,39 @@
   <%= @route.manager.name %>
 </p>
 <h4><%= t(:route_points)%></h4>
+<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+  <i class="icon-filter icon-white"></i> <%=t(:filter)%>
+</button>
 
+<div id="demo" class="collapse">
+	<br>
+	<div class='well well-small'>
+		<%= search_form_for @search, :url => route_path(@route), class: "form-horizontal" do |f| %>
+		  <div class="control-group">
+		  	<%= f.label :shipping_address_name_cont, t(:shipping_address)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :shipping_address_name_cont, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :shipping_address_address_cont, t(:address)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :shipping_address_address_cont, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :status_eq, t(:validity)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.select :status_id_eq, @statuses.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_status), :class => 'search-field'} %>
+		  	</div>
+		  </div>
+		  <div class="control-group">	  	
+		  		<%= f.submit t(:search), class: 'btn btn-info' %>
+		  		<button type="button" class='btn btn-info' id="q_reset"><%=t(:reset)%></button>	  	
+		  </div>	
+		<%end%>
+	</div>
+</div>
 <table class="table table-striped table-hover">
   <thead>
     <tr>

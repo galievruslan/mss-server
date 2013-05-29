@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'template_routes' %>
+<% end %>
 <h3><%= t(:listing_template_routes)%></h3>
 
 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
@@ -11,13 +14,13 @@
 		  <div class="control-group">
 		  	<%= f.label :manager_id_eq, t(:manager)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.select :manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_manager)}, {:class => 'search-field'} %>
+		  		<%= f.select :manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_manager), :class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  <div class="control-group">
 		  	<%= f.label :day_of_week_eq, t(:day_of_week)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.select :day_of_week_eq, @days_of_week.collect  {|p| [ t(day_name(p)), p ]},{:include_blank => t(:select_day_of_week)},{:class => 'search-field'} %>
+		  		<%= f.select :day_of_week_eq, @days_of_week.collect  {|p| [ t(day_name(p)), p ]}, {:include_blank => true}, {'data-placeholder' => t(:select_day_of_week), :class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  <div class="control-group">

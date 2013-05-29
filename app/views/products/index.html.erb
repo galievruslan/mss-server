@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'products' %>
+<% end %>
 <h3><%= t(:listing_products)%></h3>
 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
   <i class="icon-filter icon-white"></i> <%= t(:filter)%>
@@ -21,7 +24,7 @@
 		  <div class="control-group">
 		  	<%= f.label :category_id_eq, t(:category)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.select:category_id_eq, @categories.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_category)}, {:class => 'search-field'} %>
+		  		<%= f.select:category_id_eq, @categories.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_category), :class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  <div class="control-group">

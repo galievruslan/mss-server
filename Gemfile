@@ -13,6 +13,7 @@ gem 'rubyzip', :require => 'zip/zip' # Work with zip archive
 gem 'whenever', :require => false # Create cron jobs
 gem 'rails_config' # add configuration file
 gem 'cocoon' # nested forms
+gem "select2-rails" # Autocomplete select_tag 
 
 # Gems used only for assets and not required
 # in production environments by default.

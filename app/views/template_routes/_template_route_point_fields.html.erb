@@ -1,4 +1,4 @@
 <tr class="nested-fields">
-	<td><%= f.select :shipping_address_id , @shipping_addresses.collect  {|p| [ p.name, p.id ] }, {:include_blank => t(:select_shipping_address)} %></td>
+	<td><%= f.select :shipping_address_id , @shipping_addresses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_shipping_address), :class => 'shipping-address-field'} %></td>
 	<td><%= f.check_box :validity%></td>
 </tr>

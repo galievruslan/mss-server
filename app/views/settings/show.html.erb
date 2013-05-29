@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'settings' %>
+<% end %>
 <h4><%= t(:settings)%></h4>
 <% if @errors %>
     <div class="alert alert-error">
@@ -47,11 +50,11 @@
 	<div class="tab-pane" id="tab3">
 		<div class="field">
 	    <%= label_tag :default_route_point_status_id, t(:default_route_point_status) %>
-	    <%= select_tag :default_route_point_status_id, options_from_collection_for_select(@statuses, :id, :name, Settings.default_route_point_status_id), :prompt => t(:select_status) %>
+	    <%= select_tag :default_route_point_status_id, options_from_collection_for_select(@statuses, :id, :name, Settings.default_route_point_status_id), {:include_blank => true, 'data-placeholder' => t(:select_status)} %>
 	  </div>
 	  <div class="field">
 	    <%= label_tag :default_route_point_attended_status_id, t(:default_route_point_attended_status) %>
-	    <%= select_tag :default_route_point_attended_status_id, options_from_collection_for_select(@statuses, :id, :name, Settings.default_route_point_attended_status_id), :prompt => t(:select_status) %>
+	    <%= select_tag :default_route_point_attended_status_id, options_from_collection_for_select(@statuses, :id, :name, Settings.default_route_point_attended_status_id), {:include_blank => true, 'data-placeholder' => t(:select_status)} %>
 	  </div>
 	  <div class="field">
 	    <%= label_tag :order_filename, t(:order_filename) %>

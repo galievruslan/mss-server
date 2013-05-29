@@ -61,7 +61,7 @@
 	    	<% end %>
 	    </td>
 	    <td><%= Manager.find(user.manager_id).name if user.manager_id%></td>    
-	    <td><%= user.current_sign_in_at %></td>
+	    <td><%= user.current_sign_in_at.strftime("%T %d-%m-%y") %></td>
 	    <td><%= user.current_sign_in_ip %></td>
 	    <td><i class=<%= user.banned ? 'icon-remove-circle' : 'icon-ok-sign'%>></i></td>
 	    <td><%= link_to(user) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>

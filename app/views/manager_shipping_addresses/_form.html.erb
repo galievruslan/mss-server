@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'manager_shipping_addresses' %>
+<% end %>
 <%= form_for([@manager, @manager_shipping_address]) do |f| %>
   <% if @manager_shipping_address.errors.any? %>
     <div class="alert alert-error">
@@ -10,10 +13,9 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= f.label :shipping_address_id, t(:shipping_address)%>
-    <%= f.select(:shipping_address_id, @shipping_addresses.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_shipping_address)) %>
+    <%= f.select(:shipping_address_id, @shipping_addresses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_shipping_address)}) %>
   </div>
   <div class="field form-inline">    
     <%= f.check_box :validity %>

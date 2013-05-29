@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'managers' %>
+<% end %>
 <%= form_for(@manager) do |f| %>
   <% if @manager.errors.any? %>
     <div class="alert alert-error">
@@ -9,7 +12,7 @@
       <% end %>
       </ul>
     </div>
-  <% end %>
+  <% end %>	
   <div class="field">
     <%= f.label :external_key, t(:external_key) %>
     <%= f.text_field :external_key %>
@@ -20,7 +23,7 @@
   </div>
   <div class="field">
     <%= f.label :default_warehouse_id, t(:default_warehouse) %>
-    <%= f.select(:default_warehouse_id, @warehouses.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_warehouse)) %>
+    <%= f.select(:default_warehouse_id, @warehouses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_warehouse)}) %>
   </div>
   <div class="field form-inline">    
     <%= f.check_box :validity %>

@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'price_list_lines' %>
+<% end %>
 <h3><%= t(:new_product_price)%></h3>
 
 <%= form_for @price_list_line, :url => price_list_price_list_lines_path(@price_list) do |f| %>
@@ -15,7 +18,7 @@
   
   <div class="field">
     <%= f.label :product_id, t(:product) %>
-    <%= f.select(:product_id, @products.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_product)) %>
+    <%= f.select(:product_id, @products.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_product)}) %>
   </div>
   <div class="field">
     <%= f.label :price, t(:price) %>

@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'route_points' %>
+<% end %>
 <h3><%= t(:listing_route_points)%></h3>
 
 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
@@ -23,7 +26,7 @@
 		  <div class="control-group">
 		  	<%= f.label :status_id_eq, t(:status)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.select :status_id_eq, @statuses.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_status)}, {:class => 'search-field'} %>
+		  		<%= f.select :status_id_eq, @statuses.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_status), :class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  <div class="control-group">	  	

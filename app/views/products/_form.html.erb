@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'products' %>
+<% end %>
 <%= form_for(@product) do |f| %>
   <% if @product.errors.any? %>
     <div class="alert alert-error">
@@ -16,7 +19,7 @@
   </div>
   <div class="field">
     <%= f.label :category_id, t(:category) %>
-    <%= f.select(:category_id, @categories.collect  {|p| [ p.name, p.id ] }, :include_blank => t(:select_category)) %>
+    <%= f.select(:category_id, @categories.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_category)}) %>
   </div>
   <div class="field">
     <%= f.label :name, t(:name) %>

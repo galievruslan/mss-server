@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'users' %>
+<% end %>
 <h3><%= t(:edit_user)%></h3>
 
 <%= form_for(@user) do |f| %>
@@ -23,11 +26,11 @@
   </div>
   <div class="field">
     <%= f.label :language, t(:language) %>
-    <%= f.select(:language, ['EN','RU'], :include_blank => t(:select_language)) %>
+    <%= f.select(:language, ['EN','RU'], {:include_blank => true}, {'data-placeholder' => t(:select_language)}) %>
   </div>
   <div class="field">
     <%= f.label :manager_id, t(:manager) %>
-    <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}, :include_blank => t(:select_manager)) %>
+    <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_manager)}) %>
   </div>
   <div class="field form-inline">    
     <%= f.check_box :banned%>

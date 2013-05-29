@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'product_unit_of_measures' %>
+<% end %>
 <%= form_for([@product, @product_unit_of_measure]) do |f| %>
   <% if @product_unit_of_measure.errors.any? %>
     <div class="alert alert-error">
@@ -13,7 +16,7 @@
 
   <div class="field">
     <%= f.label :unit_of_measure_id, t(:unit_of_measure) %>
-    <%= f.select(:unit_of_measure_id, @unit_of_measures.collect {|p| [p.name, p.id]}, :include_blank => t(:select_unit_of_measure)) %>
+    <%= f.select(:unit_of_measure_id, @unit_of_measures.collect {|p| [p.name, p.id]}, {:include_blank => true}, {'data-placeholder' => t(:select_unit_of_measure)}) %>
   </div>
   <div class="field">
     <%= f.label :count_in_base_unit, t(:count_in_base_unit) %>

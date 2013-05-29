@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'reports' %>
+<% end %>
 <h3><%= t(:reports)%></h3>
 <ul class="nav nav-tabs">
   <li><%= link_to t(:reports), reports_path %></li>
@@ -9,25 +12,25 @@
   <div class="control-group">
   	<%= f.label :template_route_day_of_week_eq, t(:day_of_week)+':', class: "control-label"%>
   	<div class="controls">
-  		<%= f.select :template_route_day_of_week_eq, @days_of_week.collect  {|p| [ t(day_name(p)), p ]},{:include_blank => t(:select_day_of_week)},{:class => 'search-field'} %>
+  		<%= f.select :template_route_day_of_week_eq, @days_of_week.collect  {|p| [ t(day_name(p)), p ]}, {:include_blank => true}, {'data-placeholder' => t(:select_day_of_week), :class => 'search-field'} %>
   	</div>
   </div>
   <div class="control-group">
-  	<%= f.label :shipping_address_customer_id_eq, t(:shipping_address)+':', class: "control-label"%>
+  	<%= f.label :shipping_address_customer_id_eq, t(:customer)+':', class: "control-label"%>
   	<div class="controls">
-  		<%= f.select :shipping_address_customer_id_eq, @customers.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_customer)}, {:class => 'search-field'} %>
+  		<%= f.select :shipping_address_customer_id_eq, @customers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_customer), :class => 'search-field'} %>
   	</div>
   </div>
   <div class="control-group">
   	<%= f.label :shipping_address_id_eq, t(:shipping_address)+':', class: "control-label"%>
   	<div class="controls">
-  		<%= f.select :shipping_address_id_eq, @shipping_addresses.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_shipping_address)}, {:class => 'search-field'} %>
+  		<%= f.select :shipping_address_id_eq, @shipping_addresses.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_shipping_address), :class => 'search-field'} %>
   	</div>
   </div>
   <div class="control-group">
   	<%= f.label :template_route_manager_id_eq, t(:manager)+':', class: "control-label"%>
   	<div class="controls">
-  		<%= f.select :template_route_manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_manager)}, {:class => 'search-field'} %>
+  		<%= f.select :template_route_manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_manager), :class => 'search-field'} %>
   	</div>
   </div>
   <div class="control-group">	  	

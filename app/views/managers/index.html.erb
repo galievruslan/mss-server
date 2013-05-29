@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'managers' %>
+<% end %>
 <h3><%=t(:listing_managers)%></h3>
 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
   <i class="icon-filter icon-white"></i> <%=t(:filter)%>
@@ -21,7 +24,7 @@
 		  <div class="control-group">
 		  	<%= f.label :default_warehouse_name_cont, t(:default_warehouse)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.select :default_warehouse_id_eq, @warehouses.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_warehouse)}, {:class => 'search-field'} %>		  		
+		  		<%= f.select :default_warehouse_id_eq, @warehouses.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_warehouse), :class => 'search-field'} %>		  		
 		  	</div>
 		  </div>
 		  <div class="control-group">
