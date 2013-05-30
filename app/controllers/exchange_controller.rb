@@ -525,7 +525,7 @@ class ExchangeController < ApplicationController
         end
       end
     end        
-    if !parse_ftp 
+    if !from_ftp 
       if @errors.count == 0
         redirect_to exchange_path, notice: t(:handbook_imported)
       else
