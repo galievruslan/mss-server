@@ -2,7 +2,7 @@
   <%= javascript_include_tag 'profiles' %>
 <% end %>
 <h3><%= t(:edit_profile)%></h3>
-<%= form_for @user, :url => profile_update_path do |f| %>
+<%= form_for @user, :url => profile_update_path, :html => { :class => "form-horizontal"} do |f| %>
   <% if @user.errors.any? %>
     <div class="alert alert-error">
     	<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -15,23 +15,32 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :username, t(:username) %>
-    <%= f.text_field :username %>
+  <div class="control-group">
+    <%= f.label :username, t(:username), class: "control-label" %>
+    <div class="controls">
+    	<%= f.text_field :username %>
+		</div>
   </div>
-  <div class="field">
-    <%= f.label :email, t(:email) %>
-    <%= f.text_field :email %>
+  <div class="control-group">
+    <%= f.label :email, t(:email), class: "control-label" %>
+    <div class="controls">
+    	<%= f.text_field :email %>
+    </div>
   </div>
   <h4><%= t(:settings)%></h4>
-  <div class="field">
-    <%= f.label :language, t(:language) %>
-    <%= f.select(:language, ['EN','RU'], {:include_blank => true}, {'data-placeholder' => t(:select_language)}) %>
+  <div class="control-group">
+    <%= f.label :language, t(:language), class: "control-label" %>
+    <div class="controls">
+    	<%= f.select(:language, ['EN','RU'], {:include_blank => true}, {'data-placeholder' => t(:select_language)}) %>
+    </div>
   </div>
-  <div><%= f.label :list_page_size, t(:list_page_size) %>
-    <%= f.select(:list_page_size, [5,10,15,20,25,30], {:include_blank => true}, {'data-placeholder' => t(:select_list_page_size)}) %>
+  <div class="control-group">
+  	<%= f.label :list_page_size, t(:list_page_size), class: "control-label" %>
+  	<div class="controls">
+    	<%= f.select(:list_page_size, [5,10,15,20,25,30], {:include_blank => true}, {'data-placeholder' => t(:select_list_page_size)}) %>
+    </div>
   </div>
-  <div class="actions">
+  <div class="control-group">
     <%= f.submit(t(:save),class: 'btn', :disable_with => t(:please_wait)) %>
   </div>
 <% end %>

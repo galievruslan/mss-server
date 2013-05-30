@@ -13,7 +13,7 @@
       </ul>
     </div>
   <% end %>
-<%= form_for(@order) do |f| %>
+<%= form_for @order, :html => { :class => "form-horizontal"} do |f| %>
 	<div class="tabbable">
 	  <ul class="nav nav-tabs">
 	    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:details)%></a></li>
@@ -21,48 +21,64 @@
 	  </ul>
 	  <div class="tab-content">
 	    <div class="tab-pane active" id="tab1">	    
-		    <div class="field">
-			    <%= f.label :date, t(:date) %>
-			    <div id="datetimepicker1" class="input-append date">
-				    <%= f.text_field :date, :placeholder => t(:select_datetime)%>
-				    <span class="add-on">
-				      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-				    </span>
-				  </div>
+		    <div class="control-group">
+			    <%= f.label :date, t(:date), class: "control-label" %>
+			    <div class="controls">
+				    <div id="datetimepicker1" class="input-append date">
+					    <%= f.text_field :date, :placeholder => t(:select_datetime)%>
+					    <span class="add-on">
+					      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+					    </span>
+					  </div>
+					</div>
 			  </div>
-			  <div class="field">
-			    <%= f.label :shipping_date, t(:shipping_date) %>
-			    <div id="datetimepicker2" class="input-append date">
-				    <%= f.text_field :shipping_date, :placeholder => t(:select_datetime)%>
-				    <span class="add-on">
-				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-				      </i>
-				    </span>
-				  </div>
+			  <div class="control-group">
+			    <%= f.label :shipping_date, t(:shipping_date), class: "control-label" %>
+			    <div class="controls">
+				    <div id="datetimepicker2" class="input-append date">
+					    <%= f.text_field :shipping_date, :placeholder => t(:select_datetime)%>
+					    <span class="add-on">
+					      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+					      </i>
+					    </span>
+					  </div>
+					</div>
 			  </div>
-			  <div class="field">
-			    <%= label_tag :customer_id, t(:customer) %>
-			    <%= select_tag(:customer_id, options_from_collection_for_select(@customers, "id", "name", @select_customer_id), {:include_blank => true, 'data-placeholder' => t(:select_customer), :onchange => "update_shipping_addresses(this.value)"}) %>
+			  <div class="control-group">
+			    <%= label_tag :customer_id, t(:customer), class: "control-label" %>
+			    <div class="controls">
+			    	<%= select_tag(:customer_id, options_from_collection_for_select(@customers, "id", "name", @select_customer_id), {:include_blank => true, 'data-placeholder' => t(:select_customer), :onchange => "update_shipping_addresses(this.value)"}) %>
+			    </div>
 			  </div>
-			  <div id="shipping_addresses" class="field">
-			  	<%= f.label :shipping_address_id, t(:shipping_address) if @shipping_addresses %>
-			  	<%= select_tag("order[shipping_address_id]", options_from_collection_for_select(@shipping_addresses, "id", "address", @select_shipping_address_id), {:include_blank => true, 'data-placeholder' => t(:select_shipping_address)}) if @shipping_addresses %>	  
+			  <div id="shipping_addresses" class="control-group">
+			  	<%= f.label :shipping_address_id, t(:shipping_address), class: "control-label" if @shipping_addresses %>
+			  	<div class="controls">
+			  		<%= select_tag("order[shipping_address_id]", options_from_collection_for_select(@shipping_addresses, "id", "address", @select_shipping_address_id), {:include_blank => true, 'data-placeholder' => t(:select_shipping_address)}) if @shipping_addresses %>
+			  	</div>	  
 				</div>
-			  <div class="field">
-			    <%= f.label :warehouse_id, t(:warehouse) %>
-			    <%= f.select(:warehouse_id, @warehouses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_warehouse)}) %>
+			  <div class="control-group">
+			    <%= f.label :warehouse_id, t(:warehouse), class: "control-label" %>
+			    <div class="controls">
+			    	<%= f.select(:warehouse_id, @warehouses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_warehouse)}) %>
+			    </div>
 			  </div>
-			  <div class="field">
-			    <%= f.label :price_list_id, t(:price_list) %>
-			    <%= f.select(:price_list_id, @price_lists.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_price_list)}) %>
+			  <div class="control-group">
+			    <%= f.label :price_list_id, t(:price_list), class: "control-label" %>
+			    <div class="controls">
+			    	<%= f.select(:price_list_id, @price_lists.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_price_list)}) %>
+			    </div>
 			  </div>
-			  <div class="field">
-			    <%= f.label :manager_id, t(:manager) %>
-			    <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_manager)}) %>
+			  <div class="control-group">
+			    <%= f.label :manager_id, t(:manager), class: "control-label" %>
+			    <div class="controls">
+			    	<%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_manager)}) %>
+			    </div>
 			  </div>
-			  <div class="field">
-			    <%= f.label :comment, t(:comment) %>
-			    <%= f.text_area :comment, :cols => 20, :rows => 4 %>
+			  <div class="control-group">
+			    <%= f.label :comment, t(:comment), class: "control-label" %>
+			    <div class="controls">
+			    	<%= f.text_area :comment, :cols => 20, :rows => 4 %>
+			    </div>
 			  </div>			  		  		  			   
 	    </div>	
 	    <div class="tab-pane" id="tab2">
@@ -84,7 +100,7 @@
 				<p><%= link_to_add_association t(:add), f, :order_items, :class =>'btn' %></p>			  
 	    </div>
 	  </div>
-	  <div class="actions">
+	  <div>
 	    <%= f.submit(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>
 	  </div>
 	</div>

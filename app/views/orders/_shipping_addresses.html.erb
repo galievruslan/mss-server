@@ -1,2 +1,4 @@
-<%= label_tag "order[shipping_address_id]", t(:shipping_address) %>
-<%= select_tag "order[shipping_address_id]", options_from_collection_for_select(@shipping_addresses, "id", "address"), {:include_blank => true, 'data-placeholder' => t(:select_shipping_address)} %>
+<%= label_tag "order[shipping_address_id]", t(:shipping_address), class: "control-label" %>
+<div class="controls">
+	<%= select_tag "order[shipping_address_id]", options_from_collection_for_select(@shipping_addresses, "id", "address"), {:include_blank => true, 'data-placeholder' => t(:select_shipping_address)} %>
+</div>

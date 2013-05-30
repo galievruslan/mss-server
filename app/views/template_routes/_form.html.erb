@@ -13,7 +13,7 @@
     </div>
   <% end %>
 
-<%= form_for(@template_route) do |f| %>
+<%= form_for @template_route, :html => { :class => "form-horizontal"} do |f| %>
 	<div class="tabbable">
 	  <ul class="nav nav-tabs">
 	    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:route)%></a></li>
@@ -21,17 +21,23 @@
 	  </ul>
 	  <div class="tab-content">
 	    <div class="tab-pane active" id="tab1">		
-			  <div class="field">
-			    <%= f.label :manager_id, t(:manager) %>
-			    <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_manager)}) %>
+			  <div class="control-group">
+			    <%= f.label :manager_id, t(:manager), class: "control-label" %>
+			    <div class="controls">
+			    	<%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_manager)}) %>
+			    </div>
 			  </div>
-			  <div class="field">
-			    <%= f.label :day_of_week, t(:day_of_week) %>
-			    <%= f.select(:day_of_week, @days_of_week.collect  {|p| [ t(day_name(p)), p ]}, {:include_blank => true}, {'data-placeholder' => t(:select_day_of_week)}) %>
+			  <div class="control-group">
+			    <%= f.label :day_of_week, t(:day_of_week), class: "control-label" %>
+			    <div class="controls">
+			    	<%= f.select(:day_of_week, @days_of_week.collect  {|p| [ t(day_name(p)), p ]}, {:include_blank => true}, {'data-placeholder' => t(:select_day_of_week)}) %>
+			    </div>
 			  </div>
-			  <div class="field form-inline">    
-			    <%= f.check_box :validity %>
-			    <%= f.label :validity, t(:validity) %><br /><br />
+			  <div class="control-group"> 
+			  	<%= f.label :validity, t(:validity), class: "control-label" %> 
+			  	<div class="controls">  
+			    	<%= f.check_box :validity %>
+			    </div>			    
 			  </div>
 			</div>
 			<div class="tab-pane" id="tab2">				
@@ -50,7 +56,7 @@
 				</table>
 				<p><%= link_to_add_association t(:add), f, :template_route_points, :class =>'btn' %></p>	
 			</div>
-			<div class="actions">
+			<div>
 		    <%= f.submit(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>
 		  </div>
 		</div>

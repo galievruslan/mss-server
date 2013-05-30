@@ -1,7 +1,7 @@
 <% content_for :javascripts do %>
   <%= javascript_include_tag 'product_prices' %>
 <% end %>
-<%= form_for([@product, @product_price]) do |f| %>
+<%= form_for [@product, @product_price], :html => { :class => "form-horizontal"} do |f| %>
   <% if @product_price.errors.any? %>
     <div class="alert alert-error">
     	<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -14,19 +14,25 @@
     </div>
   <% end %>
   
-  <div class="field">
-    <%= f.label :price_list_id, t(:price_list) %>
-    <%= f.select(:price_list_id, @price_lists.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_price_list)}) %>
+  <div class="control-group">
+    <%= f.label :price_list_id, t(:price_list), class: "control-label" %>
+    <div class="controls">
+    	<%= f.select(:price_list_id, @price_lists.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_price_list)}) %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :price, t(:price) %>
-    <%= f.text_field :price %>
+  <div class="control-group">
+    <%= f.label :price, t(:price), class: "control-label" %>
+    <div class="controls">
+    	<%= f.text_field :price %>
+    </div>
   </div>
-  <div class="field form-inline">    
-    <%= f.check_box :validity %>
-    <%= f.label :validity, t(:validity) %><br /><br />
+  <div class="control-group"> 
+  	<%= f.label :validity, t(:validity), class: "control-label" %>
+  	<div class="controls">
+    	<%= f.check_box :validity %>
+    </div>
   </div>
-  <div class="actions">
+  <div class="control-group">
     <%= f.submit(t(:save), class: 'btn', :disable_with => t(:please_wait)) %>
   </div>
 <% end %>

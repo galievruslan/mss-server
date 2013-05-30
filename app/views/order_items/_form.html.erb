@@ -1,7 +1,7 @@
 <% content_for :javascripts do %>
   <%= javascript_include_tag 'order_items' %>
 <% end %>
-<%= form_for([@order, @order_item]) do |f| %>
+<%= form_for [@order, @order_item], :html => { :class => "form-horizontal"} do |f| %>
   <% if @order_item.errors.any? %>
     <div class="alert alert-error">
     	<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -14,19 +14,25 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :product_id , t(:product) %>
-    <%= f.select :product_id , @products.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_product), :onchange => "update_product_unit_of_measures(this.value)"} %>
+  <div class="control-group">
+    <%= f.label :product_id , t(:product), class: "control-label" %>
+    <div class="controls">
+    	<%= f.select :product_id , @products.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_product), :onchange => "update_product_unit_of_measures(this.value)"} %>
+    </div>
   </div>  
-  <div id="product_unit_of_measures" class="field">
-  	<%= label_tag "order_item[unit_of_measure_id]", t(:unit_of_measure) if @order_item.unit_of_measure or @order_item.product %>
-  	<%= select_tag "order_item[unit_of_measure_id]", options_from_collection_for_select(@unit_of_measures, 'id', 'name', @select_unit_of_measure), {:include_blank => true, 'data-placeholder' => t(:select_unit_of_measure)} if @order_item.unit_of_measure or @order_item.product %>	  
+  <div id="product_unit_of_measures" class="control-group">
+  	<%= label_tag "order_item[unit_of_measure_id]", t(:unit_of_measure), class: "control-label" if @order_item.unit_of_measure or @order_item.product %>
+  	<div class="controls">
+  		<%= select_tag "order_item[unit_of_measure_id]", options_from_collection_for_select(@unit_of_measures, 'id', 'name', @select_unit_of_measure), {:include_blank => true, 'data-placeholder' => t(:select_unit_of_measure)} if @order_item.unit_of_measure or @order_item.product %>
+  	</div>	  
 	</div>
-  <div class="field">
-    <%= f.label :quantity, t(:quantity) %>
-    <%= f.number_field :quantity, min: 1, step: 1  %>
+  <div class="control-group">
+    <%= f.label :quantity, t(:quantity), class: "control-label" %>
+    <div class="controls">
+    	<%= f.number_field :quantity, min: 1, step: 1  %>
+    </div>
   </div>
-  <div class="actions">
+  <div class="control-group">
     <%= f.submit(t(:save), class: 'btn', :disable_with => t(:please_wait)) %>
   </div>
 <% end %>

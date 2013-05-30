@@ -12,7 +12,7 @@
     </ul>
   </div>
 <% end %>
-<%= form_for(@route) do |f| %>
+<%= form_for @route, :html => { :class => "form-horizontal"} do |f| %>
 	<div class="tabbable">
 	  <ul class="nav nav-tabs">
 	    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:route)%></a></li>
@@ -20,20 +20,23 @@
 	  </ul>
 	  <div class="tab-content">
 	    <div class="tab-pane active" id="tab1">
-	    	<div class="field">
-		    	<%= f.label :date, t(:date) %>	    	
-				  <div id="datetimepicker1" class="input-append date">
-				    <%= f.text_field :date, class: "input-medium"%>
-				    <span class="add-on">
-				      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-				    </span>
-				  </div>
+	    	<div class="control-group">
+		    	<%= f.label :date, t(:date), class: "control-label" %>
+		    	<div class="controls">
+					  <div id="datetimepicker1" class="input-append date">
+					    <%= f.text_field :date, class: "input-medium"%>
+					    <span class="add-on">
+					      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+					    </span>
+					  </div>
+					</div>
 			  </div>
-			  <div class="field">
-			    <%= f.label :manager, t(:manager) %>
-			    <%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}, :include_blank => t(:select_manager)) %>
+			  <div class="control-group">
+			    <%= f.label :manager, t(:manager), class: "control-label" %>
+			    <div class="controls">
+			    	<%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}, :include_blank => t(:select_manager)) %>
+			    </div>
 			  </div>
-			  <br />
 	    </div>	
 			<div class="tab-pane" id="tab2">
 				<table class="table table-striped table-hover">
@@ -51,8 +54,8 @@
 					</tbody>
 				</table>
 				<p><%= link_to_add_association t(:add), f, :route_points, :class =>'btn' %></p>	
-			</div>			
-			<div class="actions">
+			</div>
+			<div>
 	    	<%= f.submit(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>
 	  	</div>	
 		</div>			

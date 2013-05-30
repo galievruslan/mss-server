@@ -13,57 +13,72 @@
       </ul>
     </div>
 <% end %>
-<div class="tabbable">
-  <ul class="nav nav-tabs">
-    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:ftp_settings)%></a></li>
-    <li><a href="#tab2" data-toggle="tab"><%= t(:cron_settings)%></a></li>
-    <li><a href="#tab3" data-toggle="tab"><%= t(:other_settings)%></a></li>
-  </ul>
-  <div class="tab-content">
-    <div class="tab-pane active" id="tab1">
-		<%= form_tag settings_path	, :method => :put do  %> 
-		
-		  <div class="field">
-		    <%= label_tag :ftp_server, t(:ftp_server) %>
-		    <%= text_field_tag :ftp_server, Settings.ftp_server, placeholder: t(:ftp_server) %>
-		  </div>
-		  <div class="field">
-		    <%= label_tag :ftp_user, t(:ftp_user) %>
-		    <%= text_field_tag :ftp_user, Settings.ftp_user, placeholder: t(:ftp_user) %>
-		  </div>
-		  <div class="field">
-		    <%= label_tag :ftp_password, t(:ftp_password) %>
-		    <%= password_field_tag :ftp_password, Settings.ftp_password, placeholder: t(:ftp_password) %>
-		  </div>
-		  <div class="field">
-		    <%= label_tag :ftp_inbox_directory, t(:ftp_inbox_directory) %>
-		    <%= text_field_tag :ftp_inbox_directory, Settings.ftp_inbox_directory, placeholder: t(:ftp_inbox_directory) %>
-		  </div>
-		  <div class="field">
-		    <%= label_tag :ftp_outbox_directory, t(:ftp_outbox_directory) %>
-		    <%= text_field_tag :ftp_outbox_directory, Settings.ftp_outbox_directory, placeholder: t(:ftp_outbox_directory) %>
-		  </div>			  
+<%= form_tag settings_path, :method => :put, :class => "form-horizontal" do  %> 
+	<div class="tabbable">
+	  <ul class="nav nav-tabs">
+	    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:ftp_settings)%></a></li>
+	    <li><a href="#tab2" data-toggle="tab"><%= t(:cron_settings)%></a></li>
+	    <li><a href="#tab3" data-toggle="tab"><%= t(:other_settings)%></a></li>
+	  </ul>
+	  <div class="tab-content">
+	    <div class="tab-pane active" id="tab1">		
+			  <div class="control-group">
+			    <%= label_tag :ftp_server, t(:ftp_server), class: "control-label" %>
+			    <div class="controls">
+			    	<%= text_field_tag :ftp_server, Settings.ftp_server, placeholder: t(:ftp_server) %>
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <%= label_tag :ftp_user, t(:ftp_user), class: "control-label" %>
+			    <div class="controls">
+			    	<%= text_field_tag :ftp_user, Settings.ftp_user, placeholder: t(:ftp_user) %>
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <%= label_tag :ftp_password, t(:ftp_password), class: "control-label" %>
+			    <div class="controls">
+			    	<%= password_field_tag :ftp_password, Settings.ftp_password, placeholder: t(:ftp_password) %>
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <%= label_tag :ftp_inbox_directory, t(:ftp_inbox_directory), class: "control-label" %>
+			    <div class="controls">
+			    	<%= text_field_tag :ftp_inbox_directory, Settings.ftp_inbox_directory, placeholder: t(:ftp_inbox_directory) %>
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <%= label_tag :ftp_outbox_directory, t(:ftp_outbox_directory), class: "control-label" %>
+			    <div class="controls">
+			    	<%= text_field_tag :ftp_outbox_directory, Settings.ftp_outbox_directory, placeholder: t(:ftp_outbox_directory) %>
+			    </div>	
+			  </div>			  
+			</div>
+			<div class="tab-pane" id="tab2">
+				
+			</div>
+			<div class="tab-pane" id="tab3">
+				<div class="control-group">
+			    <%= label_tag :default_route_point_status_id, t(:default_route_point_status), class: "control-label" %>
+			    <div class="controls">
+			    	<%= select_tag :default_route_point_status_id, options_from_collection_for_select(@statuses, :id, :name, Settings.default_route_point_status_id), {:include_blank => true, 'data-placeholder' => t(:select_status)} %>
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <%= label_tag :default_route_point_attended_status_id, t(:default_route_point_attended_status), class: "control-label" %>
+			    <div class="controls">
+			    	<%= select_tag :default_route_point_attended_status_id, options_from_collection_for_select(@statuses, :id, :name, Settings.default_route_point_attended_status_id), {:include_blank => true, 'data-placeholder' => t(:select_status)} %>
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <%= label_tag :order_filename, t(:order_filename), class: "control-label" %>
+			   	<div class="controls">
+			    	<%= text_field_tag :order_filename, Settings.order_filename, placeholder: t(:order_filename) %>
+			    </div>
+			  </div>
+			</div>
+			<div class="control-group">
+			  <%= submit_tag(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>
+			</div>
 		</div>
-	<div class="tab-pane" id="tab2">
-		
 	</div>
-	<div class="tab-pane" id="tab3">
-		<div class="field">
-	    <%= label_tag :default_route_point_status_id, t(:default_route_point_status) %>
-	    <%= select_tag :default_route_point_status_id, options_from_collection_for_select(@statuses, :id, :name, Settings.default_route_point_status_id), {:include_blank => true, 'data-placeholder' => t(:select_status)} %>
-	  </div>
-	  <div class="field">
-	    <%= label_tag :default_route_point_attended_status_id, t(:default_route_point_attended_status) %>
-	    <%= select_tag :default_route_point_attended_status_id, options_from_collection_for_select(@statuses, :id, :name, Settings.default_route_point_attended_status_id), {:include_blank => true, 'data-placeholder' => t(:select_status)} %>
-	  </div>
-	  <div class="field">
-	    <%= label_tag :order_filename, t(:order_filename) %>
-	    <%= text_field_tag :order_filename, Settings.order_filename, placeholder: t(:order_filename) %>
-	  </div>
-	</div>
-		<div class="actions">
-		  <%= submit_tag(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>
-		</div>
-		<% end %>
-	</div>
-</div>
+<% end %>

@@ -1,7 +1,7 @@
 <% content_for :javascripts do %>
   <%= javascript_include_tag 'managers' %>
 <% end %>
-<%= form_for(@manager) do |f| %>
+<%= form_for @manager, :html => { :class => "form-horizontal"} do |f| %>
   <% if @manager.errors.any? %>
     <div class="alert alert-error">
     	<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -13,23 +13,31 @@
       </ul>
     </div>
   <% end %>	
-  <div class="field">
-    <%= f.label :external_key, t(:external_key) %>
-    <%= f.text_field :external_key %>
+  <div class="control-group">
+    <%= f.label :external_key, t(:external_key), class: "control-label" %>
+    <div class="controls">
+    	<%= f.text_field :external_key %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :name, t(:name) %>
-    <%= f.text_field :name %>
+  <div class="control-group">
+    <%= f.label :name, t(:name), class: "control-label" %>
+    <div class="controls">
+    	<%= f.text_field :name %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :default_warehouse_id, t(:default_warehouse) %>
-    <%= f.select(:default_warehouse_id, @warehouses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_warehouse)}) %>
+  <div class="control-group">
+    <%= f.label :default_warehouse_id, t(:default_warehouse), class: "control-label" %>
+    <div class="controls">
+    	<%= f.select(:default_warehouse_id, @warehouses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_warehouse)}) %>
+    </div>
   </div>
-  <div class="field form-inline">    
-    <%= f.check_box :validity %>
-    <%= f.label :validity, t(:validity) %><br /><br />
+  <div class="control-group"> 
+  	<%= f.label :validity, t(:validity), class: "control-label" %>
+  	<div class="controls">   
+    	<%= f.check_box :validity %>
+    </div>
   </div>
-  <div class="actions">
+  <div class="control-group">
     <%= f.submit(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>
   </div>
 <% end %>
