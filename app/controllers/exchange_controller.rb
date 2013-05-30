@@ -10,13 +10,25 @@ class ExchangeController < ApplicationController
     uploaded_file = params[:xml_file]
     data = uploaded_file.read if uploaded_file.respond_to? :read
     if request.post? and data
-      parse_with_rexml(data)        
+      parse_with_rexml(data, false)        
     else
       redirect_to exchange_path, notice: t(:select_file)
     end
   end
   
-  def parse_with_rexml(xml_data)
+  def upload_from_ftp    
+    downloaded_file = "#{Rails.root.to_s}/tmp/handbook/handbook.xml"
+    download_file_from_ftp('handbook.xml', downloaded_file)
+    data = File.open(downloaded_file, 'r')    
+    parse_with_rexml(data, true)      
+  end
+  
+  def parse_with_rexml(xml_data, from_ftp)
+    if from_ftp
+      params = {:customers => true, :shipping_addresses => true, :warehouses => true, :managers => true, :managers_shipping_addresses => true,
+        :unit_of_measures => true, :price_lists => true, :categories => true, :products => true, :product_unit_of_measures => true,
+        :product_prices => true}
+    end
     @errors = []
     xml = REXML::Document.new(xml_data)
     
@@ -513,13 +525,13 @@ class ExchangeController < ApplicationController
         end
       end
     end        
-     
-    if @errors.count == 0
-      redirect_to exchange_path, notice: t(:handbook_imported)
-    else
-      render action: "index"       
-    end   
-    
+    if !parse_ftp 
+      if @errors.count == 0
+        redirect_to exchange_path, notice: t(:handbook_imported)
+      else
+        render action: "index"       
+      end
+    end    
   end
    
   def download_zip
@@ -530,10 +542,13 @@ class ExchangeController < ApplicationController
         filename = make_order_filename(not_exported_order)
         file_path = "#{Rails.root.to_s}/tmp/orders/#{filename}.xml"
         file_name = generate_xml_file(file_path, not_exported_order)
-        files[file_name] = file_path
-        not_exported_order.update_attributes(exported_at: Time.now)      
+        files[file_name] = file_path 
       end
       send_zip_arhive(files)
+      
+      @not_exported_orders.each do |not_exported_order|
+        not_exported_order.update_attributes(exported_at: Time.now) 
+      end
     else
       redirect_to exchange_path, notice: t(:no_not_exported_orders)
     end    
@@ -644,9 +659,9 @@ class ExchangeController < ApplicationController
         z.print IO.read(file_path)
       end
     end
-    send_file(temp_arhive.path, :type => 'application/zip', :disposition => 'attachment', :filename => "orders.zip", :stream => false)
-        
+    send_file(temp_arhive.path, :type => 'application/zip', :disposition => 'attachment', :filename => "orders.zip", :stream => false)           
   end
+  
   def upload_files_to_ftp(files)
     files.each do |file_name,file_path|
       file = File.open(file_path, 'r')
@@ -659,5 +674,19 @@ class ExchangeController < ApplicationController
       ftp.putbinaryfile(file, file_name)
       ftp.close
     end
-  end  
+  end
+  
+  def download_file_from_ftp(daownload_file, downloaded_file)
+    ftp_server = Settings.ftp_server
+    ftp_user = Settings.ftp_user
+    ftp_password = Settings.ftp_password
+    ftp_directory = Settings.ftp_inbox_directory
+    ftp = Net::FTP.new()
+    ftp.passive = true
+    ftp.connect(ftp_server)
+    ftp.login(ftp_user, ftp_password)
+    files = ftp.chdir(ftp_directory)
+    ftp.getbinaryfile(daownload_file, downloaded_file, 1024)
+    ftp.close
+  end 
 end
