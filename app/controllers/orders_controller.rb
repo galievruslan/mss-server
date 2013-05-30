@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
   load_and_authorize_resource
+  include ExchangeHelper
+  
   # GET /orders
   # GET /orders.json
   def index
@@ -155,9 +157,9 @@ class OrdersController < ApplicationController
   
   # GET /orders/generate_xml
   def generate_xml
+    order = Order.find(params[:id])
     data = Builder::XmlMarkup.new( :target => out_data = "", :indent => 2 )
-    data.instruct!
-    order = Order.find(params[:id])        
+    data.instruct!           
     data.order do        
       data.id(order.id)
       data.date(order.date)
@@ -177,6 +179,7 @@ class OrdersController < ApplicationController
       data.price_list_id(order.price_list.id)
       data.price_list_name(order.price_list.name)
       data.price_list_external_key(order.price_list.external_key)
+      data.comment(order.comment)
       data.order_items do
         order.order_items.each do |order_item|
           data.order_item do
@@ -189,8 +192,9 @@ class OrdersController < ApplicationController
           end
         end
       end  
-    end    
-    send_data( out_data, :type => "text/xml", :filename => "order-#{order.id}-#{order.date}.xml" )  
+    end 
+    filename = make_order_filename(order)   
+    send_data( out_data, :type => "text/xml", :filename => "#{filename}.xml" )  
   end
   
   # GET /orders/export_again
