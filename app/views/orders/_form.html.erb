@@ -24,10 +24,10 @@
 		    <div class="control-group">
 			    <%= f.label :date, t(:date), class: "control-label" %>
 			    <div class="controls">
-				    <div id="datetimepicker1" class="input-append date">
-					    <%= f.text_field :date, :placeholder => t(:select_datetime)%>
+				    <div class="input-append">
+					    <%= f.text_field :date, :placeholder => t(:select_datetime), :readonly => true%>
 					    <span class="add-on">
-					      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+					      <i class="icon-calendar"></i>
 					    </span>
 					  </div>
 					</div>
@@ -44,6 +44,7 @@
 					  </div>
 					</div>
 			  </div>
+			  <%= f.hidden_field :route_point_id %>
 			  <div class="control-group">
 			    <%= label_tag :customer_id, t(:customer), class: "control-label" %>
 			    <div class="controls">

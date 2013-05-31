@@ -7,6 +7,7 @@ class RoutePointsController < ApplicationController
     @search = @route.route_points.search(params[:q])
     @route_points = @search.result.page(params[:page]).per(current_user.list_page_size)
     @statuses = Status.all
+    @orders_count = Order.count(:group=>:route_point_id)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @route_points }

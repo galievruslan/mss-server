@@ -5,8 +5,14 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @search = Order.search(params[:q])
-    @orders = @search.result.page(params[:page]).per(current_user.list_page_size)
+    if params[:route_point_id]
+      @search = Order.where(route_point_id: params[:route_point_id]).search(params[:q])
+      @orders = @search.result.page(params[:page]).per(current_user.list_page_size)
+    else
+      @search = Order.search(params[:q])
+      @orders = @search.result.page(params[:page]).per(current_user.list_page_size)
+    end
+    
     @managers = Manager.all
     @warehouses = Warehouse.all
     @price_lists = PriceList.all
@@ -34,8 +40,12 @@ class OrdersController < ApplicationController
   # GET /orders/new
   # GET /orders/new.json
   def new
+    @order = Order.new 
+    @order.date = Time.now.strftime("%T %d-%m-%y")
     @customers = Customer.where(validity: true)    
     if current_user.manager_id
+      @order.manager_id = current_user.manager_id
+      @order.warehouse_id = Manager.find(current_user.manager_id).default_warehouse_id
       @managers = Manager.where(id: current_user.manager_id)
     else
       @managers = Manager.where(validity: true)
@@ -44,8 +54,19 @@ class OrdersController < ApplicationController
     @warehouses = Warehouse.where(validity: true)
     @products = Product.where(validity: true)
     @unit_of_measures = UnitOfMeasure.where(validity: true)
-    @order = Order.new
-
+    
+    
+    if params[:route_point_id]
+      @route_point = RoutePoint.find(params[:route_point_id])
+      if @route_point
+        @select_customer = @route_point.shipping_address.customer
+        @select_customer_id = @select_customer.id      
+        @shipping_addresses = @select_customer.shipping_addresses
+        @select_shipping_address_id = @route_point.shipping_address.id
+        @order.route_point_id = params[:route_point_id]
+      end     
+    end
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @order }
@@ -74,6 +95,7 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
+    @order = Order.new(params[:order])
     @customers = Customer.where(validity: true)
     if params[:customer_id] != ""
       @select_customer_id = params[:customer_id]
@@ -90,8 +112,7 @@ class OrdersController < ApplicationController
     @price_lists = PriceList.where(validity: true)
     @warehouses = Warehouse.where(validity: true)
     @products = Product.where(validity: true)
-    @unit_of_measures = UnitOfMeasure.where(validity: true)
-    @order = Order.new(params[:order])
+    @unit_of_measures = UnitOfMeasure.where(validity: true)    
 
     respond_to do |format|
       if @order.save

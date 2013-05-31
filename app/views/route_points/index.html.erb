@@ -45,7 +45,7 @@
 		    <th><%= sort_link @search, :shipping_address_address, t(:address) %></th>
 		    <th><%= t(:orders_count) %></th>
 		    <th><%= sort_link @search, :status_name, t(:status) %></th>
-		    <th colspan="3"><%= t(:actions)%></th>
+		    <th colspan="4"><%= t(:actions)%></th>
 		  </tr>
 		</thead>
 		<tbody>
@@ -54,9 +54,11 @@
 			  	<td><%= check_box_tag 'route_point_ids[]', route_point.id %></td>	  	
 			    <td><%= route_point.shipping_address.name %></td>
 			    <td><%= route_point.shipping_address.address %></td>
+			    <td><%= link_to(orders_path(:route_point_id => route_point.id)) do%><%= @orders_count[route_point.id] ? @orders_count[route_point.id] : '0' %><%end%></td>
 			    <td><%= route_point.orders.count %></td>
-			    <td><%= route_point.status.name %></td>			    
-			    <td><%= link_to(route_route_point_path(@route, route_point)) do%><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
+			    <td><%= route_point.status.name %></td>
+			    <td><%= link_to(new_order_path(:route_point_id => route_point.id)) do%><i class='icon-list-alt' title='<%= t(:new_order) %>'></i><%end%></td>
+			    <td><%= link_to(route_route_point_path(@route, route_point)) do%><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>			    
 			    <% if can? :manage, Route %>
 				    <td><%= link_to(edit_route_route_point_path(@route, route_point)) do%><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
 				    <td><%= link_to(route_route_point_path(@route, route_point), method: :delete, data: { confirm: 'Are you sure?' }) do%><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>

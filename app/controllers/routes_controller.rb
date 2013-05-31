@@ -88,6 +88,7 @@ class RoutesController < ApplicationController
   def new
     @route = Route.new
     if current_user.manager_id
+      @route.manager_id = current_user.manager_id
       @managers = Manager.where(id: current_user.manager_id)
     else
       @managers = Manager.where(validity: true)
