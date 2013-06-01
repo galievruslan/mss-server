@@ -1,4 +1,20 @@
 en:
+  date:
+    formats:
+      default: "%d-%m-%Y"
+      short: "%b %d"
+      long: "%d %B, %Y"
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+  time:
+    formats:
+      default: "%d-%m-%Y %H:%M"
+      short: "%d %b %H:%M"
+      long: "%B %d, %Y %H:%M:%S"
+    am: "am"
+    pm: "pm"
   activerecord:
     models:
       ability: "Ability"
@@ -229,7 +245,7 @@ en:
   new_order_item: "New order item"
   listing_order_items: "Listing order items"
   back_to_orders: "Back to orders"
-  date: "Date"
+  datetime: "Date"
   price_list: "Price list"
   comment: "Comment"
   edit_order: "Edit order"

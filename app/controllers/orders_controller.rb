@@ -41,7 +41,7 @@ class OrdersController < ApplicationController
   # GET /orders/new.json
   def new
     @order = Order.new 
-    @order.date = Time.now.strftime("%T %d-%m-%y")
+    @order.date = Time.now.strftime("%d-%m-%Y %H:%M")
     @customers = Customer.where(validity: true)    
     if current_user.manager_id
       @order.manager_id = current_user.manager_id
@@ -75,7 +75,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
-    @order = Order.find(params[:id])    
+    @order = Order.find(params[:id])
     @select_customer = @order.shipping_address.customer
     @select_customer_id = @select_customer.id
     @select_shipping_address_id = @order.shipping_address.id

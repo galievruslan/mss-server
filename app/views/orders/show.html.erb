@@ -1,14 +1,14 @@
 <p>
-  <b><%= t(:date)%>:</b>
-  <%= @order.date.strftime("%T %d-%m-%y") %>
+  <b><%= t(:datetime)%>:</b>
+  <%= @order.date %>
 </p>
 <p>
   <b><%= t(:shipping_date)%>:</b>
-  <%= @order.shipping_date.strftime("%T %d-%m-%y") %>
+  <%= @order.shipping_date %>
 </p>
 <p>
   <b><%= t(:exported_date)%>:</b>
-  <%= @order.exported_at ? @order.exported_at.strftime("%T %d-%m-%y") : t(:not_exported)%>
+  <%= @order.exported_at ? @order.exported_at : t(:not_exported)%>
 </p>
 <p>
   <b><%= t(:shipping_address)%>:</b>

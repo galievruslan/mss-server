@@ -1,4 +1,20 @@
 ru:
+  date:
+    formats:
+      default: "%d-%m-%Y"
+      short: "%b %d"
+      long: "%d %B, %Y"
+    day_names: [Воскресенье, Понедельник, Вторник, Среда, Четверг, Пятница, Суббота]
+    abbr_day_names: [Вос, Пон, Вт, Ср, Чет, Пят, Суб]
+    month_names: [~, Январь, Февраль, Март, Апрель, Маи, Июнь, Июль, Август, Сентябрь, Октябрь, Ноябрь, Декабрь]
+    abbr_month_names: [~, Янв, Фев, Мар, Апр, Маи, Июн, Июл, Авг, Сен, Окт, Ноя, Дек]
+  time:
+    formats:
+      default: "%d-%m-%Y %H:%M"
+      short: "%d %b %H:%M"
+      long: "%B %d, %Y %H:%M:%S"
+    am: "утра"
+    pm: "вечера"
   activerecord:
     models:
       ability: "Привилегия"
@@ -229,7 +245,7 @@ ru:
   new_order_item: "Новый элемент заказа"
   listing_order_items: "Список элементов заказа"
   back_to_orders: "Назад к заказам"
-  date: "Дата"
+  datetime: "Дата"
   price_list: "Прайс-лист"
   comment: "Комментарий"
   edit_order: "Редактирование заказа"

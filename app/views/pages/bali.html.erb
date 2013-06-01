@@ -1,8 +1,9 @@
 <%= image_tag("bali.png") %><br />
-Language: <%= I18n.default_locale %><br />
+Language: <%= I18n.locale %><br />
 FTP server: <%= Settings.ftp_server %><br />
 FTP user: <%= Settings.ftp_user %><br />
 FTP password: <%= Settings.ftp_inbox_directory %><br />
 FTP outbox directory: <%= Settings.ftp_outbox_directory %><br />
-time now: <%= Time.now %><br />
+time now: <%= l Time.now, :format => :short %><br />
 time zone: <%= Time.zone %><br />
+time now strf: <%= Time.now.strftime("%B %Y") %><br />

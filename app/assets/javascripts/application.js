@@ -27,3 +27,19 @@ function toggleChecked(status) {
 		$(this).attr("checked",status);
 	})
 };
+/* ===================================================
+ Date and datetime pickers 
+* ===================================================*/
+$(function() {
+  $('.datepicker').datetimepicker({    	
+	format: 'dd-MM-yyyy',
+	pickTime: false,
+	language: 'ru'
+  });
+});
+$(function() {
+	$('.datetimepicker').datetimepicker({    	
+	format: 'dd-MM-yyyy hh:mm',
+	language: 'ru'
+	});
+});

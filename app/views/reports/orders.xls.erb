@@ -34,7 +34,7 @@
 		<Column ss:Width="150"/>
 		<Column ss:Width="80"/>
       <Row>
-      	<Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:date) %></Data></Cell>
+      	<Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:datetime) %></Data></Cell>
         <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:shipping_date) %></Data></Cell>
         <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:manager) %></Data></Cell>
         <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:customer) %></Data></Cell>
@@ -45,8 +45,8 @@
       </Row>
     <% @orders.each do |order| %>
       <Row>
-      	<Cell ss:StyleID="default"><Data ss:Type="String"><%= order.date.strftime("%d-%m-%Y") %></Data></Cell>
-      	<Cell ss:StyleID="default"><Data ss:Type="String"><%= order.shipping_date.strftime("%d-%m-%Y") %></Data></Cell>
+      	<Cell ss:StyleID="default"><Data ss:Type="String"><%= order.date %></Data></Cell>
+      	<Cell ss:StyleID="default"><Data ss:Type="String"><%= order.shipping_date %></Data></Cell>
         <Cell ss:StyleID="default"><Data ss:Type="String"><%= order.manager.name %></Data></Cell>
         <Cell ss:StyleID="default"><Data ss:Type="String"><%= order.shipping_address.customer.name %></Data></Cell>
         <Cell ss:StyleID="default"><Data ss:Type="String"><%= order.shipping_address.name %></Data></Cell>

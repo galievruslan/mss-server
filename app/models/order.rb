@@ -14,6 +14,7 @@ class Order < ActiveRecord::Base
     validate_uniqueness_of_in_memory(
       order_items, [:product_id], I18n.t(:dublicate_order_item))
   end
+  
   def order_amount    
     order_amount = 0    
     self.order_items.each do |order_item|
@@ -25,7 +26,7 @@ class Order < ActiveRecord::Base
       order_amount = order_amount + order_item_amount
     end
     return order_amount.round(2)
-  end  
+  end
 end
 
 module ActiveRecord

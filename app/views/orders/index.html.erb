@@ -15,7 +15,7 @@
 		  <div class="control-group">
 		  	<%= f.label :date_gt, t(:date_period)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<div id="datetimepicker1" class="input-append date">
+		  		<div class="input-append date datetimepicker">
 				    <%= f.text_field :date_gt, class: "input-medium search-field"%>
 				    <span class="add-on">
 				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -23,7 +23,7 @@
 				    </span>
 				  </div>
 		  		- 
-		  		<div id="datetimepicker2" class="input-append date">
+		  		<div class="input-append date datetimepicker">
 				    <%= f.text_field :date_lt, class: "input-medium search-field"%>
 				    <span class="add-on">
 				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -35,7 +35,7 @@
 		  <div class="control-group">
 		  	<%= f.label :shipping_date_gt, t(:shipping_date_period)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<div id="datetimepicker3" class="input-append date">
+		  		<div class="input-append date datetimepicker">
 				    <%= f.text_field :shipping_date_gt, class: "input-medium search-field"%>
 				    <span class="add-on">
 				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -43,7 +43,7 @@
 				    </span>
 				  </div>		  		
 		  		- 
-		  		<div id="datetimepicker4" class="input-append date">
+		  		<div class="input-append date datetimepicker">
 				    <%= f.text_field :shipping_date_lt, class: "input-medium search-field"%>
 				    <span class="add-on">
 				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -55,7 +55,7 @@
 		  <div class="control-group">
 		  	<%= f.label :exported_at_gt, t(:exported_period)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<div id="datetimepicker5" class="input-append date">
+		  		<div class="input-append date datetimepicker">
 				    <%= f.text_field :exported_at_gt, class: "input-medium search-field"%>
 				    <span class="add-on">
 				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -63,7 +63,7 @@
 				    </span>
 				  </div>
 				  -
-		  		<div id="datetimepicker6" class="input-append date">
+		  		<div class="input-append date datetimepicker">
 				    <%= f.text_field :exported_at_lt, class: "input-medium search-field"%>
 				    <span class="add-on">
 				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -109,7 +109,7 @@
 		<thead>
 		  <tr>
 		  	<th><input type="checkbox" onclick="toggleChecked(this.checked)"></th>
-		    <th><%= sort_link @search, :date, t(:date) %></th>
+		    <th><%= sort_link @search, :date, t(:datetime) %></th>
 		    <th><%= sort_link @search, :shipping_date, t(:shipping_date) %></th>
 		    <th><%= sort_link @search, :shipping_address_name, t(:shipping_address) %></th>
 		    <th><%= sort_link @search, :manager_name, t(:manager) %></th>
@@ -124,14 +124,14 @@
 			<% @orders.each do |order| %>
 		  <tr <%='class=success' if order.exported_at %>>
 		  	<td><%= check_box_tag 'order_ids[]', order.id %></td>
-		    <td><%= order.date.strftime("%d-%m-%y") %></td>
-		    <td><%= order.shipping_date.strftime("%d-%m-%y") %></td>
+		    <td><%= l(order.date, :format => :short) %></td>
+		    <td><%= l(order.shipping_date, :format => :short) %></td>
 		    <td><%= order.shipping_address.name %></td>
 		    <td><%= order.manager.name %></td>
 		    <td><%= order.warehouse.name %></td>
 		    <td><%= order.price_list.name %></td>
 		    <td><%= order.order_amount %></td>
-		    <td><%= order.exported_at ? order.exported_at.strftime("%d-%m-%y") : t(:not_exported)%></td>
+		    <td><%= order.exported_at ? l(order.exported_at, :format => :short) : t(:not_exported)%></td>
 		    <% if can? :export_again, Order %>
 		    	<td><%= link_to(export_again_order_path(order), :method => :put) do %><i class='icon-download-alt' title="<%= t(:export_again)%>"></i><%end%></td>
 		    <% end %>
