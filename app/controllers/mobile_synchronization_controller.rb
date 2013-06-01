@@ -293,9 +293,10 @@ class MobileSynchronizationController < ApplicationController
   def orders
     @manager_id = current_user.manager_id
     @datetime = params[:order][:date]
+    @shipping_address_id = params[:order][:shipping_address_id]
     @route = Route.find_by_date_and_manager_id(@datetime.to_date, @manager_id)
     if @route
-      @route_point = @route.route_points.find_by_shipping_address_id(params[:order][:shipping_address_id])
+      @route_point = @route.route_points.find_by_shipping_address_id(@shipping_address_id)
       if @route_point
         @route_point_id = @route_point.id        
       else
@@ -303,14 +304,15 @@ class MobileSynchronizationController < ApplicationController
       end
     else
       @route_point_id = nil
-    end 
+    end
     
-    @order = Order.find_by_shipping_address_id_and_manager_id_and_date(params[:order][:shipping_address_id], @manager_id, params[:order][:date])
+    @guid = params[:order][:guid]    
+    @order = Order.find_by_guid(@guid)
     Order.transaction do
       begin
         if @order      
           respond_to do |format|
-            @responce = JSON code: 102, description: 'already exists'
+            @responce = JSON code: 100, description: 'already exists'
             format.json { render json: @responce, status: :ok, location: @order }
           end
         else

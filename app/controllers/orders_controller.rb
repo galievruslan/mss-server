@@ -41,18 +41,21 @@ class OrdersController < ApplicationController
   # GET /orders/new.json
   def new
     @order = Order.new 
-    @order.date = Time.now.strftime("%d-%m-%Y %H:%M")
-    @customers = Customer.where(validity: true)    
+    @order.date = Time.now.strftime("%d-%m-%Y %H:%M")    
     if current_user.manager_id
       @order.manager_id = current_user.manager_id
       @order.warehouse_id = Manager.find(current_user.manager_id).default_warehouse_id
       @managers = Manager.where(id: current_user.manager_id)
+      @shipping_address_ids = ManagerShippingAddress.where(manager_id: current_user.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+      @customer_ids= ShippingAddress.where(id: @shipping_address_ids).select('customer_id').map {|x| x.customer_id}
+      @customers = Customer.where(validity: true, id: @customer_ids)
     else
       @managers = Manager.where(validity: true)
+      @customers = Customer.where(validity: true)
     end
     @price_lists = PriceList.where(validity: true)
     @warehouses = Warehouse.where(validity: true)
-    @products = Product.where(validity: true)
+    @products = []
     @unit_of_measures = UnitOfMeasure.where(validity: true)
     
     
@@ -74,8 +77,11 @@ class OrdersController < ApplicationController
   end
 
   # GET /orders/1/edit
-  def edit
+  def edit    
     @order = Order.find(params[:id])
+    if @order.exported_at
+      redirect_to orders_path, notice: t(:not_edit_exported_order) 
+    end
     @select_customer = @order.shipping_address.customer
     @select_customer_id = @select_customer.id
     @select_shipping_address_id = @order.shipping_address.id
@@ -229,9 +235,18 @@ class OrdersController < ApplicationController
     end
   end
   
+  # GET /orders/update_shipping_addresses
   def update_shipping_addresses
     @shipping_addresses = ShippingAddress.where(customer_id: params[:customer_id]) 
     render :partial => "shipping_addresses", :object => @shipping_addresses  
+  end
+  
+  # GET /orders/get_product_list
+  def get_product_list
+    @product_ids = ProductPrice.where(validity: true, price_list_id: params[:price_list_id]).select('product_id').map {|x| x.product_id}
+    @products = Product.where(validity: true, id: @product_ids) 
+    @unit_of_measures = UnitOfMeasure.where(validity: true)   
+    render :partial => "order_item_fields_dynamic", :object => @products  
   end
   
   # POST /orders/multiple_change

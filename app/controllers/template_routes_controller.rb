@@ -119,6 +119,13 @@ class TemplateRoutesController < ApplicationController
     end
   end
   
+  # GET /template_routes/get_shipping_address_list
+  def get_shipping_address_list
+    @shipping_address_ids = ManagerShippingAddress.where(validity: true, manager_id: params[:manager_id]).select('shipping_address_id').map {|x| x.shipping_address_id}
+    @shipping_addresses = ShippingAddress.where(validity: true, id: @shipping_address_ids) 
+    render :partial => "template_route_point_fields_dynamic", :object => @shipping_addresses  
+  end
+  
   # POST /template_routes/multiple_change
   def multiple_change
     if params[:template_route_ids]

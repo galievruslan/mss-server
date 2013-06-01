@@ -9,9 +9,22 @@ function update_shipping_addresses(customer_id) {
       $("#order_shipping_address_id").select2({allowClear: true});
     }
   });
-
 };
-$(document).ready(function() {
+
+function onPriceListChanged(price_list_id) {
+	jQuery.ajax({
+    url: "/orders/get_product_list",
+    type: "GET",
+    data: {"price_list_id" : price_list_id},
+    dataType: "html",
+    success: function(data) { 	
+      jQuery("#order_item_template").html(data);
+      $('#table').empty();
+      }
+  	});
+};
+
+$(document).ready(function() {	
 	// Options for cocoon 
 	$("a.add_fields").
 	  data("association-insertion-position", 'append').
@@ -26,7 +39,10 @@ $(document).ready(function() {
 	$("#q_warehouse_id_eq").select2({allowClear: true});
 	$("#q_price_list_id_eq").select2({allowClear: true});
 	$('#table').bind('cocoon:after-insert', function() {
-        $("select.select2-field").select2({allowClear: true});
+        $("#table select.select2-field").select2({allowClear: true});
     });
-    $("select.select2-field").select2({allowClear: true});
+    $('#table').bind('cocoon:before-insert', function(e, insertedItem) {
+    	insertedItem.html($("#order_item_template").html());
+    });
+    $("#table select.select2-field").select2({allowClear: true});
 });

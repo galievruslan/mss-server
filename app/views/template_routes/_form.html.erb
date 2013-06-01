@@ -24,7 +24,7 @@
 			  <div class="control-group">
 			    <%= f.label :manager_id, t(:manager), class: "control-label" %>
 			    <div class="controls">
-			    	<%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_manager)}) %>
+			    	<%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_manager), :onchange => 'onManagerChanged(this.value)'}) %>
 			    </div>
 			  </div>
 			  <div class="control-group">
@@ -41,20 +41,20 @@
 			  </div>
 			</div>
 			<div class="tab-pane" id="tab2">				
-				<table id="table" class="table table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
 							<th><%= t(:shipping_address)%></th>
 							<th><%= t(:validity) %></th>						
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="table">
 						<%= f.fields_for :template_route_points do |template_route_point| %>
 							<%= render 'template_route_point_fields', :f => template_route_point %>	
 						<% end %>
 					</tbody>
 				</table>
-				<p><%= link_to_add_association t(:add), f, :template_route_points, :class =>'btn' %></p>	
+				<p><%= link_to_add_association t(:add), f, :template_route_points, :class =>'btn' %></p>				
 			</div>
 			<div>
 		    <%= f.submit(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>
@@ -62,3 +62,4 @@
 		</div>
 	</div>
 <% end %>
+<div id="route_point_template" hidden=true></div>

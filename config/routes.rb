@@ -51,6 +51,7 @@
       end
     collection do
       get :update_shipping_addresses
+      get :get_product_list
       post :multiple_change
     end  
     resources :order_items do
@@ -72,6 +73,7 @@
   end
   resources :template_routes do
     collection do
+      get :get_shipping_address_list
       post :multiple_change
     end
     resources :template_route_points do

@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-  attr_accessible :shipping_address_id, :date, :shipping_date, :manager_id, :route_point_id, :exported_at, :manager, :shipping_address, :warehouse_id, :warehouse, :comment, :price_list_id, :price_list, :order_item_ids, :order_items_attributes
+  attr_accessible :shipping_address_id, :date, :shipping_date, :manager_id, :route_point_id, :exported_at, :manager, :shipping_address, :warehouse_id, :warehouse, :comment, :price_list_id, :price_list, :order_item_ids, :order_items_attributes, :guid
   belongs_to :shipping_address
   belongs_to :manager
   belongs_to :warehouse
@@ -9,6 +9,14 @@ class Order < ActiveRecord::Base
   validates :date, :shipping_date, :manager, :shipping_address, :warehouse, :price_list, :presence => true
   accepts_nested_attributes_for :order_items, :allow_destroy => true  
   validate :validate_unique_order_items
+  validate :validate_dates
+  validates :guid, :uniqueness => { :case_sensitive => false }, :allow_nil => true
+  
+  def validate_dates
+    if !shipping_date.blank? and !date.blank?
+      errors.add(:shipping_date , I18n.t(:not_be_less_date)) if shipping_date < date
+    end
+  end
     
   def validate_unique_order_items
     validate_uniqueness_of_in_memory(

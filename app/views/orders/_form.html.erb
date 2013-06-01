@@ -66,7 +66,7 @@
 			  <div class="control-group">
 			    <%= f.label :price_list_id, t(:price_list), class: "control-label" %>
 			    <div class="controls">
-			    	<%= f.select(:price_list_id, @price_lists.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_price_list)}) %>
+			    	<%= f.select(:price_list_id, @price_lists.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_price_list), :onchange => 'onPriceListChanged(this.value)'}) %>
 			    </div>
 			  </div>
 			  <div class="control-group">
@@ -98,7 +98,8 @@
 						<% end %>
 					</tbody>
 				</table>
-				<p><%= link_to_add_association t(:add), f, :order_items, :class =>'btn' %></p>			  
+				<p><%= link_to_add_association t(:add), f, :order_items, :class =>'btn' %></p>
+						  
 	    </div>
 	  </div>
 	  <div>
@@ -106,7 +107,7 @@
 	  </div>
 	</div>
 <% end %> 
-
+<div id="order_item_template" hidden=true></div>
   
   
 

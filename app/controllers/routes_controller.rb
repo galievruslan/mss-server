@@ -90,11 +90,12 @@ class RoutesController < ApplicationController
     if current_user.manager_id
       @route.manager_id = current_user.manager_id
       @managers = Manager.where(id: current_user.manager_id)
+      @shipping_address_ids = ManagerShippingAddress.where(validity: true, manager_id: current_user.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+      @shipping_addresses = ShippingAddress.where(validity: true, id: @shipping_address_ids)
     else
       @managers = Manager.where(validity: true)
-    end
-    
-    @shipping_addresses = ShippingAddress.where(validity: true)
+      @shipping_addresses = ShippingAddress.where(validity: true)
+    end    
     @statuses = Status.where(validity: true)
     respond_to do |format|
       format.html # new.html.erb
