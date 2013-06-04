@@ -50,6 +50,25 @@ class UsersController < ApplicationController
     end
   end
   
+  # GET /users/1/edit_password
+  def edit_password
+    @user = User.find(params[:id])
+  end
+  
+  # PUT /users/1/edit_password
+  def update_password
+    @user = User.find(params[:id])
+    respond_to do |format|
+      if @user.update_attributes(params[:user])
+        format.html { redirect_to users_path, notice: t(:password_updated) }
+        format.json { render json: @user, status: :created, location: @user }
+      else
+        format.html { render action: "edit_password" }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
   # POST /users
   # POST /users.json
   def create

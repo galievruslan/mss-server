@@ -132,7 +132,7 @@
       post :multiple_change
     end
     member do
-      match :edit_password
+      get :edit_password
       put :update_password
     end
   end
