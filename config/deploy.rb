@@ -34,10 +34,7 @@ namespace :deploy do
   task :restart do
     run "touch #{current_path}/tmp/restart.txt"
   end
-  desc "reloadthe database with seed data" 
-    task :seed do
-    run "cd # {current_path}; rake db:seed RAILS_ENV = #{rails_env}"
-  end
+  
   desc "Symlinks the database.yml"
   task :symlink_db do
     run "rm -f #{current_release}/config/database.yml"
@@ -53,3 +50,31 @@ namespace :deploy do
     run "mkdir #{release_path}/tmp/orders"
   end
 end
+
+namespace :db do
+  
+    desc "Migrate Production Database"
+    task :migrate do
+      puts "\n\n=== Migrating the Production Database! ===\n\n"
+      run "cd #{current_path}; rake db:migrate RAILS_ENV=production"
+    end
+ 
+    desc "Resets the Production Database"
+    task :migrate_reset do
+      puts "\n\n=== Resetting the Production Database! ===\n\n"
+      run "cd #{current_path}; rake db:migrate:reset RAILS_ENV=production"
+    end
+    
+    desc "Destroys Production Database"
+    task :drop do
+      puts "\n\n=== Destroying the Production Database! ===\n\n"
+      run "cd #{current_path}; rake db:drop RAILS_ENV=production"
+    end
+  
+    desc "Populates the Production Database"
+    task :seed do
+      puts "\n\n=== Populating the Production Database! ===\n\n"
+      run "cd #{current_path}; rake db:seed RAILS_ENV=production"
+    end
+  
+  end
