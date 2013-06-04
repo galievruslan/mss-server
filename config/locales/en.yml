@@ -136,6 +136,7 @@ en:
         language: "Language"
         list_page_size: "List page size"
         manager_id: "Manager"
+        role: "Role"
   unauthorized:
     manage:
       all: "You do not have access to %{action} %{subject}!"
@@ -153,6 +154,7 @@ en:
       taken: "has already been taken"
       numericality: "is not a number"
       not_a_number: "not a number"
+      must_be_selected: "must be selected"
     not_found_customer: "Not found customer with external key is %{external_key}"
     not_found_manager: "Not found manager with external key is %{external_key}"
     not_found_category: "Not found product category with external key is %{external_key}"

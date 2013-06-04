@@ -135,7 +135,8 @@ ru:
         password_confirmation: "Подтверждение пароля"
         language: "Язык"
         list_page_size: "Количество элементов на странице"
-        manager_id: "Менеджер"        
+        manager_id: "Менеджер"
+        role: "Роль"
   unauthorized:
     manage:
       all: "У вас нет доступа!"
@@ -153,6 +154,7 @@ ru:
       taken: "должно быть уникальным"
       numericality: "должен быть чилом"
       not_a_number: "не числовой"
+      must_be_selected: "должна быть выбрана"
     not_found_customer: "Не найден клиент с внешним ключом %{external_key}"
     not_found_manager: "Не найден менеджер с внешним ключом %{external_key}"
     not_found_category: "Не найдена категория номенклатуры с внешним ключом %{external_key}"

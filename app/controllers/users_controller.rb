@@ -85,6 +85,12 @@ class UsersController < ApplicationController
       @role_manager = true
     end 
     
+    if !params[:manager] and !params[:supervisor] and !params[:admin]
+      @user.errors.add(:role, t('errors.messages.must_be_selected'))
+      render action: "new" 
+      return
+    end
+    
     if params[:manager] and params[:user][:manager_id] == ""
       @user.errors.add(:manager_id, t('errors.messages.blank'))
       render action: "new" 
@@ -129,6 +135,12 @@ class UsersController < ApplicationController
     end
     if params[:manager]
       @role_manager = true
+    end
+    
+    if !params[:manager] and !params[:supervisor] and !params[:admin]
+      @user.errors.add(:role, t('errors.messages.must_be_selected'))
+      render action: "new" 
+      return
     end
     
     if params[:manager] and params[:user][:manager_id] == ""
