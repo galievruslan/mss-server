@@ -19,20 +19,42 @@ class ExchangeController < ApplicationController
   def upload_from_ftp    
     downloaded_file = "#{Rails.root.to_s}/tmp/handbook/handbook.xml"
     download_file_from_ftp('handbook.xml', downloaded_file)
-    data = File.open(downloaded_file, 'r')    
+    data = File.open(downloaded_file, 'r')
     parse_with_rexml(data, true)      
   end
   
   def parse_with_rexml(xml_data, from_ftp)
+    
     if from_ftp
-      params = {:customers => true, :shipping_addresses => true, :warehouses => true, :managers => true, :managers_shipping_addresses => true,
-        :unit_of_measures => true, :price_lists => true, :categories => true, :products => true, :product_unit_of_measures => true,
-        :product_prices => true}
+      customers_upload = true
+      shipping_addresses_upload = true
+      managers_upload = true
+      warehouses_upload = true
+      manager_shipping_addresses_upload = true
+      unit_of_measures_upload = true
+      price_lists_upload = true
+      categories_upload = true
+      products_upload = true
+      product_unit_of_measures_upload = true
+      product_prices_upload = true
+    else
+      customers_upload = params[:customers]
+      shipping_addresses_upload = params[:shipping_addresses]
+      managers_upload = params[:managers]
+      warehouses_upload = params[:warehouses]
+      manager_shipping_addresses_upload = params[:managers_shipping_addresses]
+      unit_of_measures_upload = params[:unit_of_measures]
+      price_lists_upload = params[:price_lists]
+      categories_upload = params[:categories]
+      products_upload = params[:products]
+      product_unit_of_measures_upload = params[:product_unit_of_measures]
+      product_prices_upload = params[:product_prices]
     end
+    
     @errors = []
     xml = REXML::Document.new(xml_data)
     
-    if params[:customers]
+    if customers_upload
       Customer.transaction do        
         begin
           customers = xml.elements.to_a("//customer")
@@ -66,7 +88,7 @@ class ExchangeController < ApplicationController
         end         
       end  
     end
-    if params[:shipping_addresses]
+    if shipping_addresses_upload
       ShippingAddress.transaction do        
         begin
           shipping_addresses = xml.elements.to_a("//shipping_address")
@@ -109,7 +131,7 @@ class ExchangeController < ApplicationController
       end   
     end
     
-    if params[:warehouses]
+    if warehouses_upload
       Warehouse.transaction do        
         begin
           warehouses = xml.elements.to_a("//warehouse")
@@ -145,7 +167,7 @@ class ExchangeController < ApplicationController
       end
     end
     
-    if params[:managers]
+    if managers_upload
       Manager.transaction do        
         begin
           managers = xml.elements.to_a("//manager")
@@ -191,7 +213,7 @@ class ExchangeController < ApplicationController
       end
     end
     
-    if params[:managers_shipping_addresses]
+    if manager_shipping_addresses_upload
       ManagerShippingAddress.transaction do
         begin
           manager_shipping_addresses = xml.elements.to_a("//manager_shipping_address")
@@ -243,7 +265,7 @@ class ExchangeController < ApplicationController
       end
     end
     
-    if params[:unit_of_measures]
+    if unit_of_measures_upload
       UnitOfMeasure.transaction do
         begin
           unit_of_measures = xml.elements.to_a("//unit_of_measure")
@@ -278,7 +300,7 @@ class ExchangeController < ApplicationController
       end
     end
     
-    if params[:price_lists]
+    if price_lists_upload
       PriceList.transaction do
         begin
           price_lists = xml.elements.to_a("//price_list")
@@ -313,7 +335,7 @@ class ExchangeController < ApplicationController
       end
     end
     
-    if params[:categories]
+    if categories_upload
       Category.transaction do
         begin
           categories = xml.elements.to_a("//category")
@@ -370,7 +392,7 @@ class ExchangeController < ApplicationController
       end
     end
     
-    if params[:products]
+    if products_upload
       Product.transaction do
         begin
           products = xml.elements.to_a("//product")
@@ -414,7 +436,7 @@ class ExchangeController < ApplicationController
       end
     end
     
-    if params[:product_unit_of_measures]
+    if product_unit_of_measures_upload
       ProductUnitOfMeasure.transaction do
         begin
           product_unit_of_measures = xml.elements.to_a("//product_unit_of_measure")
@@ -472,7 +494,7 @@ class ExchangeController < ApplicationController
       end  
     end
     
-    if params[:product_prices]
+    if product_prices_upload
       ProductPrice.transaction do
         begin
           product_prices = xml.elements.to_a("//product_price")
