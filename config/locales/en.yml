@@ -476,3 +476,4 @@ en:
   never: "Never"
   not_be_less_date: "not be less date"
   not_edit_exported_order: "Edit already exported order prohibited"
+  users_removed: "Users was successfully destroyed."

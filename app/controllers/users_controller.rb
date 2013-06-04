@@ -178,13 +178,21 @@ class UsersController < ApplicationController
   # POST /users/multiple_change
   def multiple_change
     if params[:user_ids]
-      params[:user_ids].each do |user_id|
-        @user = User.find(user_id)
-        if !@user.banned
-          @user.update_attributes(banned: true)
+      if params[:operation]=='ban'
+        params[:user_ids].each do |user_id|
+          @user = User.find(user_id)
+          if !@user.banned
+            @user.update_attributes(banned: true)
+          end
         end
+        redirect_to users_url, notice: t(:users_banned)
+      elsif params[:operation]=='remove'
+        params[:user_ids].each do |user_id|
+          @user = User.find(user_id)
+          @user.destroy
+        end
+        redirect_to users_url, notice: t(:users_removed)
       end
-      redirect_to users_url, notice: t(:users_banned)
     else
       redirect_to users_url
     end
