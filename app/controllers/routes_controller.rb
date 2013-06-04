@@ -77,6 +77,7 @@ class RoutesController < ApplicationController
     @search = @route.route_points.search(params[:q])
     @route_points = @search.result.page(params[:page]).per(current_user.list_page_size)
     @statuses = Status.where(validity: true)
+    @orders_count = Order.count(:group=>:route_point_id)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @route }
@@ -108,10 +109,12 @@ class RoutesController < ApplicationController
     @route = Route.find(params[:id])
     if current_user.manager_id
       @managers = Manager.where(id: current_user.manager_id)
+      @shipping_address_ids = ManagerShippingAddress.where(validity: true, manager_id: current_user.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+      @shipping_addresses = ShippingAddress.where(validity: true, id: @shipping_address_ids)
     else
       @managers = Manager.where(validity: true)
-    end
-    @shipping_addresses = ShippingAddress.where(validity: true)
+      @shipping_addresses = ShippingAddress.where(validity: true)
+    end    
     @statuses = Status.where(validity: true)
   end
 
@@ -121,11 +124,14 @@ class RoutesController < ApplicationController
     @route = Route.new(params[:route])
     if current_user.manager_id
       @managers = Manager.where(id: current_user.manager_id)
+      @shipping_address_ids = ManagerShippingAddress.where(validity: true, manager_id: current_user.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+      @shipping_addresses = ShippingAddress.where(validity: true, id: @shipping_address_ids)
     else
       @managers = Manager.where(validity: true)
-    end
-    @shipping_addresses = ShippingAddress.where(validity: true)
+      @shipping_addresses = ShippingAddress.where(validity: true)
+    end    
     @statuses = Status.where(validity: true)
+    
     respond_to do |format|
       if @route.save
         format.html { redirect_to @route, notice: t(:route_created) }
@@ -143,10 +149,12 @@ class RoutesController < ApplicationController
     @route = Route.find(params[:id])   
     if current_user.manager_id
       @managers = Manager.where(id: current_user.manager_id)
+      @shipping_address_ids = ManagerShippingAddress.where(validity: true, manager_id: current_user.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+      @shipping_addresses = ShippingAddress.where(validity: true, id: @shipping_address_ids)
     else
       @managers = Manager.where(validity: true)
-    end
-    @shipping_addresses = ShippingAddress.where(validity: true)
+      @shipping_addresses = ShippingAddress.where(validity: true)
+    end    
     @statuses = Status.where(validity: true)
     
     respond_to do |format|

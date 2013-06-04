@@ -175,11 +175,14 @@ class ExchangeController < ApplicationController
             manager_db = Manager.find_by_external_key(manager_external_key)   
             if !manager_db
               new_manager = Manager.create(name: manager_name, external_key: manager_external_key, default_warehouse: default_warehouse_db)
+              new_manager = Manager.create(name: manager_name, external_key: manager_external_key, default_warehouse: default_warehouse_db)
             else
               if !manager_db.validity
-                manager_db.update_attributes(validity: true, name: manager_name, default_warehouse: default_warehouse_db)
+                # manager_db.update_attributes(validity: true, name: manager_name, default_warehouse: default_warehouse_db)
+                manager_db.update_attributes(validity: true, name: manager_name)
               else
-                manager_db.update_attributes(name: manager_name, default_warehouse: default_warehouse_db)
+                # manager_db.update_attributes(name: manager_name, default_warehouse: default_warehouse_db)
+                manager_db.update_attributes(name: manager_name)
               end
             end        
           end

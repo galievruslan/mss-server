@@ -55,7 +55,6 @@
 			    <td><%= route_point.shipping_address.name %></td>
 			    <td><%= route_point.shipping_address.address %></td>
 			    <td><%= link_to(orders_path(:route_point_id => route_point.id)) do%><%= @orders_count[route_point.id] ? @orders_count[route_point.id] : '0' %><%end%></td>
-			    <td><%= route_point.orders.count %></td>
 			    <td><%= route_point.status.name %></td>
 			    <td><%= link_to(new_order_path(:route_point_id => route_point.id)) do%><i class='icon-list-alt' title='<%= t(:new_order) %>'></i><%end%></td>
 			    <td><%= link_to(route_route_point_path(@route, route_point)) do%><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>			    
