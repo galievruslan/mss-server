@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-  attr_accessible :shipping_address_id, :date, :shipping_date, :manager_id, :route_point_id, :exported_at, :manager, :shipping_address, :warehouse_id, :warehouse, :comment, :price_list_id, :price_list, :order_item_ids, :order_items_attributes, :guid
+  attr_accessible :shipping_address_id, :date, :shipping_date, :manager_id, :route_point_id, :exported_at, :manager, :shipping_address, :warehouse_id, :warehouse, :comment, :price_list_id, :price_list, :order_item_ids, :order_items_attributes, :guid, :complete
   belongs_to :shipping_address
   belongs_to :manager
   belongs_to :warehouse

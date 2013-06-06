@@ -479,3 +479,7 @@ en:
   not_be_less_date: "not be less date"
   not_edit_exported_order: "Edit already exported order prohibited"
   users_removed: "Users was successfully destroyed."
+  order_complete: "Order complete"
+  complete: "Complete"
+  not_complete: "Not complete"
+  orders_legend: "* - Blue color indicates the ready orders green already uploaded"

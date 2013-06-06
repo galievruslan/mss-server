@@ -122,7 +122,7 @@
 		</thead>
 		<tbody>
 			<% @orders.each do |order| %>
-		  <tr <%='class=success' if order.exported_at %>>
+		  <tr <%='class=success' if order.exported_at %>  <%='class=info' if order.complete %> >
 		  	<td><%= check_box_tag 'order_ids[]', order.id %></td>
 		    <td><%= l(order.date, :format => :short) %></td>
 		    <td><%= l(order.shipping_date, :format => :short) %></td>
@@ -147,6 +147,7 @@
 			<% end %>
 		</tbody>
 	</table>
+	<p><%= t(:orders_legend)%></p>
 	<%= paginate @orders %> 
 	<% if can? :create, Order %>
 		<%= link_to t(:new_order), new_order_path, class: 'btn', :disable_with => t(:please_wait) %>

@@ -620,7 +620,7 @@ class ExchangeController < ApplicationController
   end
   
   def get_not_exported_orders    
-    @not_exported_orders = Order.find_all_by_exported_at(nil)    
+    @not_exported_orders = Order.find_all_by_exported_at_and_complete(nil, true)    
     return @not_exported_orders
   end
   

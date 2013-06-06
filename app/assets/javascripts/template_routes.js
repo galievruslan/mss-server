@@ -1,4 +1,10 @@
 function onManagerChanged(manager_id) {
+	getShippingAddresses();
+    // $('#table').empty();  
+};
+
+function getShippingAddresses() {
+	manager_id = $('#template_route_manager_id option:selected').val();
 	jQuery.ajax({
     url: "/template_routes/get_shipping_address_list",
     type: "GET",
@@ -6,12 +12,12 @@ function onManagerChanged(manager_id) {
     dataType: "html",
     success: function(data) { 	
       jQuery("#route_point_template").html(data);
-      $('#table').empty();
-    }
-  });
-};
+    	}
+    });
+}; 
 
 $(document).ready(function() {
+	getShippingAddresses();
 	$("a.add_fields").
 	  data("association-insertion-position", 'append').
 	  data("association-insertion-node", '#table');

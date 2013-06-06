@@ -316,6 +316,7 @@ class MobileSynchronizationController < ApplicationController
             format.json { render json: @responce, status: :ok, location: @order }
           end
         else
+          params[:order][:complete] = true
           params[:order][:manager_id] = @manager_id
           params[:order][:route_point_id] = @route_point_id
           @order = Order.new(params[:order])

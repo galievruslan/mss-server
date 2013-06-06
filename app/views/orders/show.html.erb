@@ -11,6 +11,10 @@
   <%= @order.exported_at ? @order.exported_at : t(:not_exported)%>
 </p>
 <p>
+  <b><%= t(:order_complete)%>:</b>
+  <%= @order.complete ? t(:complete) : t(:not_complete)%>
+</p>
+<p>
   <b><%= t(:shipping_address)%>:</b>
   <%= @order.shipping_address.name %>
 </p>

@@ -11,20 +11,27 @@ function update_shipping_addresses(customer_id) {
   });
 };
 
-function onPriceListChanged(price_list_id) {
+function onPriceListChanged() {
+	getProducts();
+    // $('#table').empty();
+};
+
+function getProducts() {
+	price_list_id = $('#order_price_list_id option:selected').val();
 	jQuery.ajax({
     url: "/orders/get_product_list",
     type: "GET",
     data: {"price_list_id" : price_list_id},
     dataType: "html",
     success: function(data) { 	
-      jQuery("#order_item_template").html(data);
-      $('#table').empty();
+      jQuery("#order_item_template").html(data);      
       }
   	});
 };
 
-$(document).ready(function() {	
+
+$(document).ready(function() {
+	getProducts();
 	// Options for cocoon 
 	$("a.add_fields").
 	  data("association-insertion-position", 'append').
