@@ -27,4 +27,4 @@ config/environments/*.local.yml
 
 # Ignore mobile_client files
 
-# public/mobile_clients/*
+public/mobile_clients
