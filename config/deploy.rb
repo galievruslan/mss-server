@@ -49,7 +49,6 @@ namespace :deploy do
   desc "Create tmp orders folder and mobile clients folders"
   task :create_folders do
     run "mkdir #{release_path}/tmp/orders"
-    run "mkdir #{release_path}/public/mobile_clients"
     run "mkdir #{release_path}/public/mobile_clients/android"
     run "mkdir #{release_path}/public/mobile_clients/winmobile"
   end
