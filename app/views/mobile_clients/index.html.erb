@@ -1,0 +1,78 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'mobile_clients' %>
+<% end %>
+<h3><%= t(:listing_mobile_clients)%></h3>
+<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+  <i class="icon-filter icon-white"></i> <%= t(:filter)%>
+</button>
+<div id="demo" class="collapse">
+	<br />
+	<div class='well well-small'>		
+		<%= search_form_for @search, class: "form-horizontal" do |f| %>
+			<div class="control-group">
+		  	<%= f.label :created_at_gt, t(:datetime)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<div class="input-append date datetimepicker">
+				    <%= f.text_field :created_at_gt, class: "input-medium search-field"%>
+				    <span class="add-on">
+				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				      </i>
+				    </span>
+				  </div>
+		  		- 
+		  		<div class="input-append date datetimepicker">
+				    <%= f.text_field :created_at_lt, class: "input-medium search-field"%>
+				    <span class="add-on">
+				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				      </i>
+				    </span>
+				  </div>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :client_type_eq, t(:client_type)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.select(:client_type_eq, @client_types, {:include_blank => true}, {'data-placeholder' => t(:select_client_type)}) %>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :version_cont, t(:version)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :version_cont, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">	  	
+		  		<%= f.submit t(:search), class: 'btn btn-info' %>	
+		  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>  	
+		  </div>	
+		<%end%>
+	</div>
+</div>
+
+<table class="table table-striped table-hover">
+  <thead>
+  	<tr>
+    	<th><%= sort_link @search, :clinet_type, t(:client_type) %></th>
+    	<th><%= sort_link @search, :version, t(:version) %></th>
+    	<th><%= sort_link @search, :created_at, t(:datetime) %></th>
+    	<th><%= t(:file) %></th>
+    	<th colspan="3"><%= t(:actions)%></th>
+  	</tr>
+  </thead>
+	<tbody>
+		<% @mobile_clients.each do |mobile_client| %>
+	  <tr>
+	    <td><%= mobile_client.client_type %></td>
+	    <td><%= mobile_client.version %></td>
+	    <td><%= mobile_client.created_at %></td>
+	    <td><%= link_to mobile_client.file do%><i class="icon-download" title="<%=t(:download)%>"></i><%end%></td>
+	    <td><%= link_to(mobile_client) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
+	    <td><%= link_to(edit_mobile_client_path(mobile_client)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+			<td><%= link_to(mobile_client, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%></td>			
+	  </tr>
+		<% end %>
+	</tbody>
+</table>
+
+<%= paginate @mobile_clients %>
+<%= link_to t(:new_mobile_client), new_mobile_client_path, :class =>'btn', :disable_with => t(:please_wait) %>

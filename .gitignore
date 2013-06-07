@@ -20,6 +20,11 @@ config/database.yml
 # Ignore assets precompile files
 public/assets
 
+# Ignore setting files
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
+
+# Ignore mobile_client files
+
+# public/mobile_clients/*

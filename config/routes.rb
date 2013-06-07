@@ -1,5 +1,4 @@
   Mss::Application.routes.draw do
-
   root :to => 'pages#index'
   
   devise_for :users
@@ -25,6 +24,7 @@
   get 'reports/template_routes', :to => 'reports#template_routes'
   
   # MobileSynchronization routes
+  get 'synchronization/mobile_client', :to => 'mobile_synchronization#mobile_client'
   get 'synchronization/datetime', :to => 'mobile_synchronization#datetime'
   get 'synchronization/settings', :to => 'mobile_synchronization#settings'
   get 'synchronization/customers', :to => 'mobile_synchronization#customers'
@@ -156,5 +156,7 @@
       post :multiple_change
     end
   end
+  
+  resources :mobile_clients
   
 end

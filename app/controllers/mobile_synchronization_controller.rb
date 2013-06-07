@@ -2,6 +2,21 @@ class MobileSynchronizationController < ApplicationController
   
   include MobileSynchronizationHelper
   
+  # GET /mobile_client.json
+  def mobile_client
+    if params[:client_type]
+      @mobile_client = MobileClient.where(client_type: params[:client_type]).order("created_at").last    
+      respond_to do |format|      
+        format.json { render json: @mobile_client }
+      end
+    else
+      @responce = JSON code: 220, description: 'no input parameters'
+      respond_to do |format|      
+        format.json { render json: @responce }
+      end
+    end    
+  end
+    
   # GET /datetime.json
   def datetime
     current_date_time = Time.now

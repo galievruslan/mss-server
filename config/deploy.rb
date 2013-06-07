@@ -25,7 +25,7 @@ set :branch, "master"
 set :scm_command, "/usr/bin/git"
 set :deploy_via, :remote_cache
 
-before 'deploy:assets:precompile', 'deploy:symlink_db', 'deploy:symlink_config','deploy:create_tmp_orders'
+before 'deploy:assets:precompile', 'deploy:symlink_db', 'deploy:symlink_config', 'deploy:create_folders'
 after "deploy:restart", "deploy:cleanup"
 
 # TASKS #####################################################
@@ -45,9 +45,13 @@ namespace :deploy do
     run "rm -f #{current_release}/config/settings.local.yml"
     run "ln -nfs #{deploy_to}/shared/config/settings.local.yml #{release_path}/config/settings.local.yml"
   end
-  desc "Create tmp orders folder"
-  task :create_tmp_orders do
+  
+  desc "Create tmp orders folder and mobile clients folders"
+  task :create_folders do
     run "mkdir #{release_path}/tmp/orders"
+    run "mkdir #{release_path}/public/mobile_clients"
+    run "mkdir #{release_path}/public/mobile_clients/android"
+    run "mkdir #{release_path}/public/mobile_clients/winmobile"
   end
 end
 

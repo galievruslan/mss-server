@@ -18,6 +18,7 @@ class Ability
       can :read, :all           
       can :manage, [TemplateRoute, TemplateRoutePoint]
       cannot :read, [User, Role]
+      cannot :manage, MobileClient
     elsif user.role? :manager       
       can :read, :all
       can :manage, Order, :manager_id => user.manager_id 
@@ -30,6 +31,7 @@ class Ability
       cannot :read, [User, Role] 
       cannot :export_again, Order
       cannot :destroy, Order
+      cannot :manage, MobileClient
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.

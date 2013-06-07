@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130606070113) do
+ActiveRecord::Schema.define(:version => 20130606104116) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -52,6 +52,14 @@ ActiveRecord::Schema.define(:version => 20130606070113) do
   end
 
   add_index "managers", ["external_key"], :name => "index_managers_on_external_key", :unique => true
+
+  create_table "mobile_clients", :force => true do |t|
+    t.string   "client_type"
+    t.string   "version"
+    t.string   "file"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "order_items", :force => true do |t|
     t.integer  "order_id"

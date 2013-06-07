@@ -6,6 +6,7 @@
 //= require bootstrap-datetimepicker
 //= require locales/bootstrap-datetimepicker.ru.js
 //= require select2
+//= require bootstrap-fileupload
 /* ===================================================
  Reset button for filter form
 * ===================================================*/

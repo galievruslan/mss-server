@@ -27,7 +27,19 @@
 			
 			<%= form_tag( {:action => 'upload'}, {:multipart => true} ) do %>
 			  <div class="field">
-			  	<%= file_field_tag "xml_file", :accept => 'text/xml',:value => 'index.html' %>
+			  	<div class="fileupload fileupload-new" data-provides="fileupload">
+					  <div class="input-append">
+					    <div class="uneditable-input"><i class="icon-file fileupload-exists"></i>
+					    	<span class="fileupload-preview"></span>
+					    </div>
+					    <span class="btn btn-file">
+					    	<span class="fileupload-new"><%= t(:select_file)%></span>
+					    	<span class="fileupload-exists"><%=t(:change)%></span>
+					    	<%= file_field_tag "xml_file", :accept => 'text/xml' %>
+					    </span>
+					    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><%=t(:remove)%></a>
+					  </div>
+					</div>
 				</div>
 				* <%=t(:only_supported_file_format_xml)%>
 				<table class="table table-striped table-hover">

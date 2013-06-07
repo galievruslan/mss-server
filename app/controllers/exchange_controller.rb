@@ -701,7 +701,7 @@ class ExchangeController < ApplicationController
     end
   end
   
-  def download_file_from_ftp(daownload_file, downloaded_file)
+  def download_file_from_ftp(download_file, downloaded_file)
     ftp_server = Settings.ftp_server
     ftp_user = Settings.ftp_user
     ftp_password = Settings.ftp_password
@@ -711,7 +711,7 @@ class ExchangeController < ApplicationController
     ftp.connect(ftp_server)
     ftp.login(ftp_user, ftp_password)
     files = ftp.chdir(ftp_directory)
-    ftp.getbinaryfile(daownload_file, downloaded_file, 1024)
+    ftp.getbinaryfile(download_file, downloaded_file, 1024)
     ftp.close
   end 
 end
