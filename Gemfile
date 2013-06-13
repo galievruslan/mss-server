@@ -44,8 +44,8 @@ end
 
 # Deploy with Capistrano 
 group :development do
-  gem 'capistrano' # Deploy
-  gem 'rvm-capistrano' # Need for correct work capistrano with rvm 
+  gem 'capistrano' , '2.14.2' # Deploy
+  gem 'rvm-capistrano', '1.2.7' # Need for correct work capistrano with rvm 
 end
 
 
