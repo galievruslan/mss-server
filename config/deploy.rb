@@ -7,6 +7,7 @@ set :application, "mss"
 set :deploy_to, "/var/www/#{application}"
 set :rails_env, "production"
 set :rvm_ruby_string, '1.9.3'
+set :rvm_path, '/usr/local/rvm'
 set :rvm_type, :system
 set :normalize_asset_timestamps, false
 
