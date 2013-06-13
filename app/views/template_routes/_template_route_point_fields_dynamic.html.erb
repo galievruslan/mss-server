@@ -1,2 +1,0 @@
-<td><%= select_tag( 'template_route[template_route_points_attributes][new_template_route_points][shipping_address_id]', options_from_collection_for_select(@shipping_addresses, "id", "name"), {:include_blank => true, 'data-placeholder' => t(:select_shipping_address), :class => 'shipping-address-field'}) %></td>
-<td><%= check_box_tag('template_route[template_route_points_attributes][new_template_route_points][validity]', 1, true)%></td>

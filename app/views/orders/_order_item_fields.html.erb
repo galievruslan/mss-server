@@ -1,6 +1,8 @@
-<tr class="nested-fields">
+<tr>
   <td><%= f.select :product_id , @products.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_product), :class => 'select2-field'} %></td>
-  <td><%= f.select :unit_of_measure_id , @unit_of_measures.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_product), :class => 'select2-field'} %></td>
+  <td><%= f.select :unit_of_measure_id ,  @unit_of_measures.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_product), :class => 'select2-field'} %></td>
   <td><%= f.number_field :quantity, min: 1, step: 1 %></td>
-  <td><%= link_to_remove_association f do %><i class='icon-remove' title="<%= t(:remove)%>"></i><%end%></td>
+  <td>
+  	<a onclick="onDestroy(this)"><i class='icon-remove' title="<%= t(:remove)%>"></i></a>
+  </td>
 </tr>

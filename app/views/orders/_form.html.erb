@@ -99,12 +99,12 @@
 					  </tr>
 					</thead>
 					<tbody id="table">      
-						<%= f.fields_for :order_items do |order_item| %>						
+						<%= f.fields_for :order_items do |order_item| %>
 							<%= render 'order_item_fields', :f => order_item %>						
 						<% end %>
 					</tbody>
 				</table>
-				<p><%= link_to_add_association t(:add), f, :order_items, :class =>'btn' %></p>
+				<p><%= button_tag t(:add), :type => 'button', :class =>'btn', :onclick => "add_order_item()" %></p>
 						  
 	    </div>
 	  </div>
@@ -113,7 +113,7 @@
 	  </div>
 	</div>
 <% end %> 
-<div id="order_item_template" hidden=true></div>
+<div id="order_item_template" hidden="true" style="display:none;"></div>
   
   
 

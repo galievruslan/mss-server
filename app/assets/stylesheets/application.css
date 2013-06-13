@@ -1,5 +1,7 @@
 /*
- *= require bootstrap_and_overrides
- *= require select2
- *= require bootstrap-fileupload
+ = require twitter-bootstrap-static/bootstrap
+ = require bootstrap-datetimepicker
+ = require twitter-bootstrap-static/sprites
+ = require select2
+ = require bootstrap-fileupload
 */

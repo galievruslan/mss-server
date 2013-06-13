@@ -34,7 +34,7 @@
 			  <div class="control-group">
 			    <%= f.label :manager, t(:manager), class: "control-label" %>
 			    <div class="controls">
-			    	<%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]},{:include_blank => true}, {'data-placeholder' => t(:select_manager)}) %>
+			    	<%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ]},{:include_blank => true}, {'data-placeholder' => t(:select_manager), :onchange => 'onManagerChanged()'}) %>
 			    </div>
 			  </div>
 	    </div>	
@@ -53,7 +53,7 @@
 						<% end %>
 					</tbody>
 				</table>
-				<p><%= link_to_add_association t(:add), f, :route_points, :class =>'btn' %></p>	
+				<p><%= button_tag t(:add), :type => 'button', :class =>'btn', :onclick => "add_route_point()" %></p>	
 			</div>
 			<div>
 	    	<%= f.submit(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>
@@ -61,3 +61,4 @@
 		</div>			
 	</div>
 <% end %>
+<div id="route_point_template" hidden="true" style="display:none;"></div>

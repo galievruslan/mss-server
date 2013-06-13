@@ -45,7 +45,8 @@
 					<thead>
 						<tr>
 							<th><%= t(:shipping_address)%></th>
-							<th><%= t(:validity) %></th>						
+							<th><%= t(:validity) %></th>		
+							<th><%= t(:actions) %></th>				
 						</tr>
 					</thead>
 					<tbody id="table">
@@ -54,7 +55,7 @@
 						<% end %>
 					</tbody>
 				</table>
-				<p><%= link_to_add_association t(:add), f, :template_route_points, :class =>'btn' %></p>				
+				<p><%= button_tag t(:add), :type => 'button', :class =>'btn', :onclick => "add_route_point()" %></p>				
 			</div>
 			<div>
 		    <%= f.submit(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>
@@ -62,4 +63,4 @@
 		</div>
 	</div>
 <% end %>
-<div id="route_point_template" hidden=true></div>
+<div id="route_point_template" hidden="true" style="display:none;"></div>

@@ -95,7 +95,7 @@ class RoutesController < ApplicationController
       @shipping_addresses = ShippingAddress.where(validity: true, id: @shipping_address_ids)
     else
       @managers = Manager.where(validity: true)
-      @shipping_addresses = ShippingAddress.where(validity: true)
+      @shipping_addresses = []
     end    
     @statuses = Status.where(validity: true)
     respond_to do |format|
@@ -113,7 +113,7 @@ class RoutesController < ApplicationController
       @shipping_addresses = ShippingAddress.where(validity: true, id: @shipping_address_ids)
     else
       @managers = Manager.where(validity: true)
-      @shipping_addresses = ShippingAddress.where(validity: true)
+      @shipping_addresses = Manager.find(@route.manager_id).shipping_addresses.where(validity: true)
     end    
     @statuses = Status.where(validity: true)
   end
@@ -128,7 +128,9 @@ class RoutesController < ApplicationController
       @shipping_addresses = ShippingAddress.where(validity: true, id: @shipping_address_ids)
     else
       @managers = Manager.where(validity: true)
-      @shipping_addresses = ShippingAddress.where(validity: true)
+      if params[:route][:manager_id] != ""
+        @shipping_addresses = Manager.find(params[:route][:manager_id]).shipping_addresses.where(validity: true)
+      end
     end    
     @statuses = Status.where(validity: true)
     
@@ -153,7 +155,9 @@ class RoutesController < ApplicationController
       @shipping_addresses = ShippingAddress.where(validity: true, id: @shipping_address_ids)
     else
       @managers = Manager.where(validity: true)
-      @shipping_addresses = ShippingAddress.where(validity: true)
+      if params[:route][:manager_id] != ""
+        @shipping_addresses = Manager.find(params[:route][:manager_id]).shipping_addresses.where(validity: true)
+      end
     end    
     @statuses = Status.where(validity: true)
     
@@ -191,5 +195,12 @@ class RoutesController < ApplicationController
     else
       redirect_to routes_url
     end
+  end
+  
+  def get_shipping_address_list
+    @shipping_address_ids = ManagerShippingAddress.where(validity: true, manager_id: params[:manager_id]).select('shipping_address_id').map {|x| x.shipping_address_id}
+    @shipping_addresses = ShippingAddress.where(validity: true, id: @shipping_address_ids)
+    @statuses = Status.where(validity: true)
+    render :partial => "route_point_fields_new"  
   end
 end

@@ -1,5 +1,7 @@
-<tr class="nested-fields">
-	<td><%= f.select :shipping_address_id , @shipping_addresses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_shipping_address), :class => 'shipping-address-field'} %></td>
-	<td><%= f.select :status_id , @statuses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_status), :class => 'status-field'} %></td>
-	<td><%= link_to_remove_association f do %><i class='icon-remove' title="<%= t(:remove)%>"></i><%end%></td>
+<tr>
+	<td><%= f.select :shipping_address_id , @shipping_addresses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_shipping_address), :class => 'select2-field'} %></td>
+	<td><%= f.select :status_id , @statuses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_status), :class => 'select2-field'} %></td>
+	<td>
+  	<a onclick="onDestroy(this)"><i class='icon-remove' title="<%= t(:remove)%>"></i></a>
+  </td>
 </tr>

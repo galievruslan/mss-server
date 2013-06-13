@@ -7,16 +7,5 @@ FTP outbox directory: <%= Settings.ftp_outbox_directory %><br />
 time now: <%= l Time.now, :format => :short %><br />
 time zone: <%= Time.zone %><br />
 time now strf: <%= Time.now.strftime("%B %Y") %><br />
-<div class="fileupload fileupload-new" data-provides="fileupload">
-  <div class="input-append">
-    <div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i>
-    	<span class="fileupload-preview"></span>
-    </div>
-    <span class="btn btn-file">
-    	<span class="fileupload-new">Select file</span>
-    	<span class="fileupload-exists">Change</span>
-    	<input type="file" />
-    </span>
-    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-  </div>
-</div>
+Orders count: <%= Order.count %><br />
+Route count: <%= Route.count %><br />

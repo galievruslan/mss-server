@@ -4,6 +4,7 @@ class Manager < ActiveRecord::Base
   has_many :routes, :dependent => :destroy
   has_many :template_routes, :dependent => :destroy
   has_many :manager_shipping_addresses, :dependent => :destroy
+  has_many :shipping_addresses, :through => :manager_shipping_addresses
   belongs_to :default_warehouse , :class_name => "Warehouse", :foreign_key => "default_warehouse_id"
   validates :name, :external_key, :presence => true
   validates :external_key, :uniqueness => { :case_sensitive => false }

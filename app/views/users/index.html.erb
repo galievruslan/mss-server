@@ -57,7 +57,7 @@
 	    <td><%= user.email %></td>
 	    <td>
 	    	<% user.roles.each do |role| %>
-	    	<%= role.name %> <br>
+	    	<%= t(role.name) %> <br>
 	    	<% end %>
 	    </td>
 	    <td><%= Manager.find(user.manager_id).name if user.manager_id%></td>    

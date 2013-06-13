@@ -1,0 +1,8 @@
+<tr>
+	<td><%= select_tag( 'order[order_items_attributes][new_order_items][product_id]' , options_from_collection_for_select(@products, "id", "name"), {:include_blank => true, 'data-placeholder' => t(:select_product), :class => 'select2-field'}) %></td>
+	<td><%= select_tag( 'order[order_items_attributes][new_order_items][unit_of_measure_id]' , options_from_collection_for_select(@unit_of_measures, "id", "name"), {:include_blank => true, 'data-placeholder' => t(:select_unit_of_measure), :class => 'select2-field'}) %></td>
+	<td><%= number_field_tag( 'order[order_items_attributes][new_order_items][quantity]', {}, min: 1, step: 1) %></td>
+	<td>		
+		<a onclick="onDestroy(this)"><i class='icon-remove' title="<%= t(:remove)%>"></i></a>
+	</td>
+</tr>

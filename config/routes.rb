@@ -63,6 +63,7 @@
   resources :routes do
     collection do
       get :current
+      get :get_shipping_address_list
       post :multiple_change
     end       
     resources :route_points do

@@ -1,0 +1,77 @@
+<%# encoding: utf-8 %>
+$(document).ready(function() {
+	getShippingAddresses();
+	$("a.add_fields").
+	  data("association-insertion-position", 'append').
+	  data("association-insertion-node", '#table');
+	$("#template_route_manager_id").select2({allowClear: true});
+	$("#template_route_day_of_week").select2({allowClear: true});	
+    $("#q_manager_id_eq").select2({allowClear: true});
+    $("#q_day_of_week_eq").select2({allowClear: true});
+    $("#table select.select2-field").select2({allowClear: true});
+});
+
+function getShippingAddresses() {
+	manager_id = $('#template_route_manager_id option:selected').val();
+	jQuery.ajax({
+    url: "/template_routes/get_shipping_address_list",
+    type: "GET",
+    data: {"manager_id" : manager_id},
+    dataType: "html",
+    success: function(data) { 	
+      jQuery("#route_point_template").html(data);
+    	}
+    });
+}; 
+
+function onManagerChanged(manager_id) {
+	getShippingAddresses();
+	
+    jQuery('#table').find('tr').each(function(){		
+		destroy_route_point(jQuery(this))
+	});
+};
+
+function add_route_point () {
+	if (jQuery("#template_route_manager_id option:selected").val()=="") {
+		alert("<%= I18n.t(:select_manager)%>");
+	}
+	else {
+		var timestamp = new Date().getTime();
+		
+		var new_route_point_row = jQuery("#route_point_template").children().clone();
+		
+		var shipping_address_id = "#template_route_template_route_points_attributes_new_template_route_points_shipping_address_id";
+		var validity = "#template_route_template_route_points_attributes_new_template_route_points_validity";
+		
+		var shipping_address_id_field = jQuery(new_route_point_row).find(shipping_address_id);
+		shipping_address_id_field.attr("id", shipping_address_id.replace("new_template_route_points", timestamp));
+		
+		var validity_field = jQuery(new_route_point_row).find(validity);
+		validity_field.attr("id", validity.replace("new_template_route_points", timestamp));
+			
+		jQuery("#table").append(new_route_point_row);
+		jQuery("#table select.select2-field").select2({allowClear: true});
+	}
+};
+
+function onDestroy (sender) {
+  var route_point = jQuery(sender).closest('tr');
+  destroy_route_point(route_point);
+};
+
+function isSaved (sender) {
+  if (jQuery(sender).next().length > 0) {
+	var tag_name = jQuery(sender).next().get(0).tagName;
+	if (tag_name == 'INPUT') {
+  		return true;
+  	}
+  }  
+  return false;
+};
+
+function destroy_route_point(route_point) {
+	if (!isSaved(route_point)) {
+		jQuery(route_point).remove();
+	}	
+};

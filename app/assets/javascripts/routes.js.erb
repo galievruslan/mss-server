@@ -1,0 +1,89 @@
+<%# encoding: utf-8 %>
+$(document).ready(function() {
+	getShippingAddresses();
+	$("a.add_fields").
+	  data("association-insertion-position", 'append').
+	  data("association-insertion-node", '#table');
+	$("#route_manager_id").select2({allowClear: true});
+	$("#q_manager_id_eq").select2({allowClear: true});
+	$("#q_status_id_eq").select2({allowClear: true});
+	$('#table').bind('cocoon:after-insert', function() {
+        $("select.shipping-address-field").select2({minimumInputLength: 2,allowClear: true});
+        $("select.status-field").select2({allowClear: true});
+    });
+    $("select.select2-field").select2({allowClear: true});
+});
+
+function getShippingAddresses() {
+	manager_id = $('#route_manager_id option:selected').val();
+	jQuery.ajax({
+    url: "/routes/get_shipping_address_list",
+    type: "GET",
+    data: {"manager_id" : manager_id},
+    dataType: "html",
+    success: function(data) { 	
+      jQuery("#route_point_template").html(data);
+    	}
+    });
+}; 
+
+function onManagerChanged(manager_id) {
+	getShippingAddresses();
+	
+    jQuery('#table').find('tr').each(function(){		
+		destroy_route_point(jQuery(this))
+	});
+};
+
+function add_route_point () {
+	if (jQuery("#route_manager_id option:selected").val()=="") {
+		alert("<%= I18n.t(:select_manager)%>");
+	}
+	else {
+		var timestamp = new Date().getTime();
+		
+		var new_route_point_row = jQuery("#route_point_template").children().clone();
+		
+		var shipping_address_id = "#route_route_points_attributes_new_route_points_shipping_address_id";
+		var validity = "#route_route_points_attributes_new_route_points_validity";
+		
+		var shipping_address_id_field = jQuery(new_route_point_row).find(shipping_address_id);
+		shipping_address_id_field.attr("id", shipping_address_id.replace("new_route_points", timestamp));
+		
+		var validity_field = jQuery(new_route_point_row).find(validity);
+		validity_field.attr("id", validity.replace("new_route_points", timestamp));
+			
+		jQuery("#table").append(new_route_point_row);
+		jQuery("#table select.select2-field").select2({allowClear: true});
+	}
+};
+
+function onDestroy (sender) {
+  var route_point = jQuery(sender).closest('tr');
+  destroy_route_point(route_point);
+};
+
+function isSaved (sender) {
+  if (jQuery(sender).next().length > 0) {
+	var tag_name = jQuery(sender).next().get(0).tagName;
+	if (tag_name == 'INPUT') {
+  		return true;
+  	}
+  }  
+  return false;
+};
+
+function destroy_route_point(route_point) {
+	if (isSaved(route_point)) {
+		var route_point_hidden = jQuery(route_point).next('input');
+		var route_point_destroy = jQuery(route_point_hidden).clone();
+		
+		jQuery(route_point_destroy).insertAfter(route_point_hidden);
+		
+		var name = route_point_destroy.attr('name').replace("[id]", "[_destroy]");
+		
+		route_point_destroy.attr("name", name);
+		route_point_destroy.val(1);
+	}
+	jQuery(route_point).remove();
+};

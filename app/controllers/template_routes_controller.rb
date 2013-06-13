@@ -43,8 +43,8 @@ class TemplateRoutesController < ApplicationController
     @days_of_week = [0,1,2,3,4,5,6]
     @managers = Manager.where(validity: true)
     @template_route = TemplateRoute.new
-    @shipping_addresses = ShippingAddress.where(validity: true)
-
+    @shipping_addresses = []
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @template_route }
@@ -56,7 +56,7 @@ class TemplateRoutesController < ApplicationController
     @days_of_week = [0,1,2,3,4,5,6]
     @managers = Manager.where(validity: true)
     @template_route = TemplateRoute.find(params[:id])
-    @shipping_addresses = ShippingAddress.where(validity: true)
+    @shipping_addresses = Manager.find(@template_route.manager_id).shipping_addresses.where(validity: true)
   end
 
   # POST /template_routes
@@ -65,7 +65,13 @@ class TemplateRoutesController < ApplicationController
     @days_of_week = [0,1,2,3,4,5,6]
     @managers = Manager.where(validity: true)
     @template_route = TemplateRoute.new(params[:template_route])
-    @shipping_addresses = ShippingAddress.where(validity: true)
+    
+    if params[:template_route][:manager_id] != ""
+      @shipping_addresses =  Manager.find(params[:template_route][:manager_id]).shipping_addresses.where(validity: true)
+    else
+      @shipping_addresses = []
+    end
+    
 
     respond_to do |format|
       if @template_route.save
@@ -84,12 +90,11 @@ class TemplateRoutesController < ApplicationController
     @days_of_week = [0,1,2,3,4,5,6]
     @managers = Manager.where(validity: true)
     @template_route = TemplateRoute.find(params[:id])
-    @shipping_addresses = ShippingAddress.where(validity: true)
     
-    params[:template_route][:template_route_points_attributes].values.each do |template_route_point|
-      if template_route_point[:_destroy] = 1
-        template_route_point[:_destroy] = 0
-      end
+    if params[:template_route][:manager_id] != ""
+      @shipping_addresses =  Manager.find(params[:template_route][:manager_id]).shipping_addresses.where(validity: true)
+    else
+      @shipping_addresses = []
     end
     
     respond_to do |format|
@@ -123,7 +128,7 @@ class TemplateRoutesController < ApplicationController
   def get_shipping_address_list
     @shipping_address_ids = ManagerShippingAddress.where(validity: true, manager_id: params[:manager_id]).select('shipping_address_id').map {|x| x.shipping_address_id}
     @shipping_addresses = ShippingAddress.where(validity: true, id: @shipping_address_ids) 
-    render :partial => "template_route_point_fields_dynamic", :object => @shipping_addresses  
+    render :partial => "template_route_point_fields_new", :object => @shipping_addresses  
   end
   
   # POST /template_routes/multiple_change

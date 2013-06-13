@@ -1,0 +1,106 @@
+<%# encoding: utf-8 %>
+function update_shipping_addresses(customer_id) {  
+  jQuery.ajax({
+    url: "/orders/update_shipping_addresses",
+    type: "GET",
+    data: {"customer_id" : customer_id},
+    dataType: "html",
+    success: function(data) {
+      jQuery("#shipping_addresses").html(data);
+      jQuery("#order_shipping_address_id").select2({allowClear: true});
+    }
+  });
+};
+
+function onPriceListChanged() {
+	getProducts();
+	
+	jQuery('#table').find('tr').each(function(){		
+		destroy_order_item(jQuery(this))
+	});
+};
+
+function getProducts() {
+	price_list_id = jQuery('#order_price_list_id option:selected').val();
+	jQuery.ajax({
+    url: "/orders/get_product_list",
+    type: "GET",
+    data: {"price_list_id" : price_list_id},
+    dataType: "html",
+    success: function(data) { 	
+      jQuery("#order_item_template").html(data);      
+      }
+  	});
+};
+
+function add_order_item () {
+	if (jQuery("#order_price_list_id option:selected").val()=="") {
+		alert("<%= I18n.t(:select_price_list) %>");
+	}
+	else {
+		var timestamp = new Date().getTime();
+	
+		var new_order_item_row = jQuery("#order_item_template").children().clone();
+		
+		var product_template_id = "#order_order_items_attributes_new_order_items_product_id";
+		var uom_template_id = "#order_order_items_attributes_new_order_items_unit_of_measure_id";
+		var quantity_template_id = "#order_order_items_attributes_new_order_items_quantity";
+		
+		var product_id_field = jQuery(new_order_item_row).find(product_template_id);
+		product_id_field.attr("id", product_template_id.replace("new_order_items", timestamp));
+		
+		var uom_id_field = jQuery(new_order_item_row).find(uom_template_id);
+		uom_id_field.attr("id", uom_template_id.replace("new_order_items", timestamp));
+		
+		var quantity_field = jQuery(new_order_item_row).find(quantity_template_id);
+		quantity_field.attr("id", quantity_template_id.replace("new_order_items", timestamp));
+		
+		jQuery("#table").append(new_order_item_row);
+		jQuery("#table select.select2-field").select2({allowClear: true});
+	}	
+};
+
+function onDestroy (sender) {
+  var order_item = jQuery(sender).closest('tr');
+  destroy_order_item(order_item);
+};
+
+function isSaved (sender) {
+  if (jQuery(sender).next().length > 0) {
+	var tag_name = jQuery(sender).next().get(0).tagName;
+	if (tag_name == 'INPUT') {
+  		return true;
+  	}
+  }  
+  return false;
+};
+
+function destroy_order_item(order_item) {
+	if (isSaved(order_item)) {
+		var order_item_hidden = jQuery(order_item).next('input');
+		var order_item_destroy = jQuery(order_item_hidden).clone();
+		
+		jQuery(order_item_destroy).insertAfter(order_item_hidden);
+		
+		var name = order_item_destroy.attr('name').replace("[id]", "[_destroy]");
+		
+		order_item_destroy.attr("name", name);
+		order_item_destroy.val(1);
+	}
+	
+	jQuery(order_item).remove();
+};
+
+jQuery(document).ready(function() {
+	getProducts();		
+	// Add select2
+	jQuery("#customer_id").select2({minimumInputLength: 2,allowClear: true});
+	jQuery("#order_shipping_address_id").select2({allowClear: true});
+	jQuery("#order_warehouse_id").select2({allowClear: true});
+	jQuery("#order_price_list_id").select2({allowClear: true});
+	jQuery("#order_manager_id").select2({allowClear: true});
+	jQuery("#q_manager_id_eq").select2({allowClear: true});
+	jQuery("#q_warehouse_id_eq").select2({allowClear: true});
+	jQuery("#q_price_list_id_eq").select2({allowClear: true});
+    jQuery("#table select.select2-field").select2({allowClear: true});
+});

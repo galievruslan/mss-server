@@ -16,4 +16,10 @@ class OrderItem < ActiveRecord::Base
       return 0
     end    
   end
+  
+  def available_unit_of_measures
+     unit_of_measure_ids = ProductUnitOfMeasure.where(product_id: self.product.id).select('unit_of_measure_id').map {|x| x.unit_of_measure_id}
+     unit_of_measures = UnitOfMeasure.where(id: unit_of_measure_ids) 
+     return unit_of_measures
+  end
 end

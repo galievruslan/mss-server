@@ -93,8 +93,8 @@ class OrdersController < ApplicationController
       @managers = Manager.where(validity: true)
     end
     @price_lists = PriceList.where(validity: true)
-    @warehouses = Warehouse.where(validity: true)
-    @products = Product.where(validity: true)
+    @warehouses = Warehouse.where(validity: true)       
+    @products = PriceList.find(@order.price_list_id).products.where(validity: true)
     @unit_of_measures = UnitOfMeasure.where(validity: true)    
   end
 
@@ -117,7 +117,13 @@ class OrdersController < ApplicationController
     end
     @price_lists = PriceList.where(validity: true)
     @warehouses = Warehouse.where(validity: true)
-    @products = Product.where(validity: true)
+    
+    if params[:order][:price_list_id] != ""
+      @products = PriceList.find(params[:order][:price_list_id]).products.where(validity: true) 
+    else
+      @products = []
+    end    
+    
     @unit_of_measures = UnitOfMeasure.where(validity: true)    
 
     respond_to do |format|
@@ -144,7 +150,7 @@ class OrdersController < ApplicationController
       @select_customer_id = @select_customer.id
       @shipping_addresses = @select_customer.shipping_addresses
     end
-    if params[:order][:shipping_address_id] !=""
+    if params[:order][:shipping_address_id] != ""
       @select_shipping_address_id = params[:order][:shipping_address_id]
     end    
     
@@ -156,7 +162,13 @@ class OrdersController < ApplicationController
     end
     @price_lists = PriceList.where(validity: true)
     @warehouses = Warehouse.where(validity: true)
-    @products = Product.where(validity: true)
+    
+    if params[:order][:price_list_id] != ""
+      @products = PriceList.find(params[:order][:price_list_id]).products.where(validity: true) 
+    else
+      @products = []
+    end  
+    
     @unit_of_measures = UnitOfMeasure.where(validity: true)
     
     respond_to do |format|
@@ -246,7 +258,7 @@ class OrdersController < ApplicationController
     @product_ids = ProductPrice.where(validity: true, price_list_id: params[:price_list_id]).select('product_id').map {|x| x.product_id}
     @products = Product.where(validity: true, id: @product_ids) 
     @unit_of_measures = UnitOfMeasure.where(validity: true)   
-    render :partial => "order_item_fields_dynamic", :object => @products  
+    render :partial => "order_item_fields_new", :object => @products  
   end
   
   # POST /orders/multiple_change

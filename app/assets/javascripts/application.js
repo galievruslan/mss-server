@@ -1,7 +1,5 @@
 //= require jquery
-//= require jquery-ui
 //= require jquery_ujs
-//= require cocoon
 //= require twitter/bootstrap
 //= require bootstrap-datetimepicker
 //= require locales/bootstrap-datetimepicker.ru.js
