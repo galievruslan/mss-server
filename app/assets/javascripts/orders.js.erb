@@ -91,16 +91,34 @@ function destroy_order_item(order_item) {
 	jQuery(order_item).remove();
 };
 
-function onProductChanged(product_id) {
+function onProductChanged(selected_item) {	
+	var uom_select = $(selected_item).closest('tr').find("select.uom_select");
 	jQuery.ajax({
-    url: "/orders/get_unit_of_measures",
+    url: "/products/"+ selected_item.value + "/product_unit_of_measures.json",
     type: "GET",
-    data: {"product_id" : product_id},
     dataType: "json",
-    success: function(data) { 	
-      jQuery("#order_item_template").html(data);      
-      }
-  	});
+    success: function(data) {
+    	uom_select.closest('td').find("span").text("<%= I18n.t(:select_unit_of_measure)%>");
+    	uom_select.closest('td').find("div a").addClass("select2-default");
+    	uom_select.find('option').each(function() {
+			    if ( $(this).val() != '' ) {
+			        $(this).remove();
+			    };
+			});
+      $.each(data, function(i, val){
+			    uom_select.append($('<option />', { value: val.id, text: val.name }));
+			});
+  	},
+  	error: function() {  		
+  		uom_select.closest('td').find("span").text("<%= I18n.t(:select_unit_of_measure)%>");
+  		uom_select.closest('td').find("div a").addClass("select2-default");
+    	uom_select.find('option').each(function() {
+			    if ( $(this).val() != '' ) {
+			        $(this).remove();
+			    };
+			});
+  	}
+	});
 };
 
 jQuery(document).ready(function() {

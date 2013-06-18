@@ -13,10 +13,10 @@ class ProductUnitOfMeasuresController < ApplicationController
     end
     
     @unit_of_measures = UnitOfMeasure.all
-    
+    @product_unit_of_measures_json = Product.find(params[:product_id]).unit_of_measures
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @product_unit_of_measures }
+      format.json { render json: @product_unit_of_measures_json }
     end
   end
 

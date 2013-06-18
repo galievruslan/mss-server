@@ -257,7 +257,7 @@ class OrdersController < ApplicationController
   def get_product_list
     @product_ids = ProductPrice.where(validity: true, price_list_id: params[:price_list_id]).select('product_id').map {|x| x.product_id}
     @products = Product.where(validity: true, id: @product_ids) 
-    @unit_of_measures = UnitOfMeasure.where(validity: true)   
+    @unit_of_measures = []   
     render :partial => "order_item_fields_new", :object => @products  
   end
   
