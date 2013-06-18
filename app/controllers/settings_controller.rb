@@ -35,6 +35,12 @@ class SettingsController < ApplicationController
       @errors << error
     end
     
+    if params[:ftp_passive]
+      config['ftp_passive'] = true
+    else
+      config['ftp_passive'] = false
+    end
+    
     unless params[:ftp_inbox_directory].empty?
       config['ftp_inbox_directory'] = params[:ftp_inbox_directory]
     else

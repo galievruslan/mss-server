@@ -261,6 +261,12 @@ class OrdersController < ApplicationController
     render :partial => "order_item_fields_new", :object => @products  
   end
   
+  # GET /orders/get_unit_of_measures
+  def get_unit_of_measures    
+    @unit_of_measures = Product.find(params[:product_id]).unit_of_measures
+    render :json => @unit_of_measures  
+  end
+  
   # POST /orders/multiple_change
   def multiple_change
     if params[:order_ids]

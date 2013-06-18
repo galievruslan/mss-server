@@ -41,6 +41,12 @@
 			    </div>
 			  </div>
 			  <div class="control-group">
+			    <%= label_tag :ftp_passive, t(:ftp_passive), class: "control-label" %>
+			    <div class="controls">
+			    	<%= check_box_tag 'ftp_passive', true, Settings.ftp_passive %>
+			    </div>
+			  </div>
+			  <div class="control-group">
 			    <%= label_tag :ftp_inbox_directory, t(:ftp_inbox_directory), class: "control-label" %>
 			    <div class="controls">
 			    	<%= text_field_tag :ftp_inbox_directory, Settings.ftp_inbox_directory, placeholder: t(:ftp_inbox_directory) %>

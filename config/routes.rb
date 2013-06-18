@@ -52,6 +52,7 @@
     collection do
       get :update_shipping_addresses
       get :get_product_list
+      get :get_unit_of_measures
       post :multiple_change
     end  
     resources :order_items do

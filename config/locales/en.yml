@@ -504,3 +504,4 @@ en:
   download: "Download"
   change: "Change"
   select_file: "Select file"
+  ftp_passive: "FTP passive mode"

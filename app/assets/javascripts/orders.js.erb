@@ -91,6 +91,18 @@ function destroy_order_item(order_item) {
 	jQuery(order_item).remove();
 };
 
+function onProductChanged(product_id) {
+	jQuery.ajax({
+    url: "/orders/get_unit_of_measures",
+    type: "GET",
+    data: {"product_id" : product_id},
+    dataType: "json",
+    success: function(data) { 	
+      jQuery("#order_item_template").html(data);      
+      }
+  	});
+};
+
 jQuery(document).ready(function() {
 	getProducts();		
 	// Add select2

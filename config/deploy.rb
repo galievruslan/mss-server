@@ -47,12 +47,10 @@ namespace :deploy do
     run "ln -nfs #{deploy_to}/shared/config/settings.local.yml #{release_path}/config/settings.local.yml"
   end
   
-  desc "Create tmp orders folder and mobile clients folders"
+  desc "Create tmp orders folder and symlink to mobile clients folders"
   task :create_folders do
     run "mkdir #{release_path}/tmp/orders"
-    run "mkdir #{release_path}/public/mobile_clients"
-    run "mkdir #{release_path}/public/mobile_clients/android"
-    run "mkdir #{release_path}/public/mobile_clients/winmobile"
+    run "ln -ns #{deploy_to}/shared/mobile_clients #{release_path}/public/mobile_clients"
   end
 end
 

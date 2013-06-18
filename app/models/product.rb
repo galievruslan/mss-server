@@ -4,6 +4,7 @@ class Product < ActiveRecord::Base
   has_many :product_unit_of_measures, :dependent => :destroy
   has_many :product_prices , :dependent => :destroy
   has_many :price_lists, :through => :product_prices
+  has_many :unit_of_measures, :through => :product_unit_of_measures 
   validates :name, :external_key, :category, :presence => true
   validates :external_key, :uniqueness => { :case_sensitive => false }
   belongs_to :category

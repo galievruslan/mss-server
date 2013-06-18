@@ -1,6 +1,7 @@
 ftp_server: SERVER
 ftp_user: USER
 ftp_password: PASSWORD
+ftp_passive: 'true'
 ftp_outbox_directory: DIRECTORY
 ftp_inbox_directory: DIRECTORY
 default_route_point_status_id: ID

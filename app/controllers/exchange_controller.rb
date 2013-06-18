@@ -706,8 +706,9 @@ class ExchangeController < ApplicationController
     ftp_user = Settings.ftp_user
     ftp_password = Settings.ftp_password
     ftp_directory = Settings.ftp_inbox_directory
+    ftp_mode = Setting.ftp_mode
     ftp = Net::FTP.new()
-    ftp.passive = true
+    ftp.passive = ftp_mode
     ftp.connect(ftp_server)
     ftp.login(ftp_user, ftp_password)
     files = ftp.chdir(ftp_directory)
