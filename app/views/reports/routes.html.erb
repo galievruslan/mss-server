@@ -30,27 +30,27 @@
   	</div>
   </div>
   <div class="control-group">
-  	<%= f.label :route_manager_id_eq, t(:manager)+':', class: "control-label"%>
+  	<%= f.label :route_manager_id_in, t(:manager)+':', class: "control-label"%>
   	<div class="controls">
-  		<%= f.select :route_manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_manager), :class => 'search-field'} %>
+  		<%= f.select :route_manager_id_in, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_manager), :multiple => true, :class => 'search-field'} %>
   	</div>
   </div>
   <div class="control-group">
-  	<%= f.label :shipping_address_customer_id_eq, t(:shipping_address)+':', class: "control-label"%>
+  	<%= f.label :shipping_address_customer_id_in, t(:shipping_address)+':', class: "control-label"%>
   	<div class="controls">
-  		<%= f.select :shipping_address_customer_id_eq, @customers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_customer), :class => 'search-field'} %>
+  		<%= f.select :shipping_address_customer_id_in, @customers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_customer), :multiple => true, :class => 'search-field'} %>
   	</div>
   </div>
   <div class="control-group">
-  	<%= f.label :shipping_address_id_eq, t(:shipping_address)+':', class: "control-label"%>
+  	<%= f.label :shipping_address_id_in, t(:shipping_address)+':', class: "control-label"%>
   	<div class="controls">
-  		<%= f.select :shipping_address_id_eq, @shipping_addresses.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_shipping_address), :class => 'search-field'} %>
+  		<%= f.select :shipping_address_id_in, @shipping_addresses.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_shipping_address), :multiple => true, :class => 'search-field'} %>
   	</div>
   </div>
   <div class="control-group">
-  	<%= f.label :status_id_eq, t(:status)+':', class: "control-label"%>
+  	<%= f.label :status_id_in, t(:status)+':', class: "control-label"%>
   	<div class="controls">
-  		<%= f.select :status_id_eq, @statuses.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_status), :class => 'search-field'} %>
+  		<%= f.select :status_id_in, @statuses.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_status), :multiple => true, :class => 'search-field'} %>
   	</div>
   </div>
   <div class="control-group">	  	
