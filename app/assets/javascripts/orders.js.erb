@@ -20,12 +20,17 @@ function onPriceListChanged() {
 	});
 };
 
+function onCategoryChanged() {
+	getProducts();
+};
+
 function getProducts() {
 	price_list_id = jQuery('#order_price_list_id option:selected').val();
+	category_id = jQuery('#category_id option:selected').val();
 	jQuery.ajax({
     url: "/orders/get_product_list",
     type: "GET",
-    data: {"price_list_id" : price_list_id},
+    data: {"price_list_id" : price_list_id, "category_id" : category_id},    
     dataType: "html",
     success: function(data) { 	
       jQuery("#order_item_template").html(data);      
@@ -132,5 +137,6 @@ jQuery(document).ready(function() {
 	jQuery("#q_manager_id_eq").select2({allowClear: true});
 	jQuery("#q_warehouse_id_eq").select2({allowClear: true});
 	jQuery("#q_price_list_id_eq").select2({allowClear: true});
-    jQuery("#table select.select2-field").select2({allowClear: true});
+	jQuery("#category_id").select2({allowClear: true});
+  jQuery("#table select.select2-field").select2({allowClear: true});  
 });

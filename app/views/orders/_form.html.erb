@@ -89,6 +89,21 @@
 			  </div>
 	    </div>	
 	    <div class="tab-pane" id="tab2">
+	    	<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+				  <i class="icon-filter icon-white"></i> <%= t(:filter)%>
+				</button>
+				<div id="demo" class="collapse">
+					<br />
+					<div class='well well-small'>						
+						  <div class="control-group">
+						  	<%= label_tag :category_id, t(:category)+':', class: "control-label"%>
+						  	<div class="controls">
+						  		<%= select_tag :category_id, options_from_collection_for_select(@categories, 'id', 'name'), {:include_blank => true, 'data-placeholder' => t(:select_category), class: 'search-field', :onchange => 'onCategoryChanged()'}%>
+						  	</div>
+						  </div>
+						  <button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>  	
+						 </div>
+					</div>				    	
 	    	<table  class="table table-striped table-hover">
 					<thead>
 					  <tr>

@@ -57,7 +57,7 @@ class OrdersController < ApplicationController
     @warehouses = Warehouse.where(validity: true)
     @products = []
     @unit_of_measures = UnitOfMeasure.where(validity: true)
-    
+    @categories = Category.where(validity: true)
     
     if params[:route_point_id]
       @route_point = RoutePoint.find(params[:route_point_id])
@@ -95,7 +95,8 @@ class OrdersController < ApplicationController
     @price_lists = PriceList.where(validity: true)
     @warehouses = Warehouse.where(validity: true)       
     @products = PriceList.find(@order.price_list_id).products.where(validity: true)
-    @unit_of_measures = UnitOfMeasure.where(validity: true)    
+    @unit_of_measures = UnitOfMeasure.where(validity: true)
+    @categories = Category.where(validity: true)
   end
 
   # POST /orders
@@ -124,7 +125,8 @@ class OrdersController < ApplicationController
       @products = []
     end    
     
-    @unit_of_measures = UnitOfMeasure.where(validity: true)    
+    @unit_of_measures = UnitOfMeasure.where(validity: true)
+    @categories = Category.where(validity: true)
 
     respond_to do |format|
       if @order.save
@@ -170,6 +172,7 @@ class OrdersController < ApplicationController
     end  
     
     @unit_of_measures = UnitOfMeasure.where(validity: true)
+    @categories = Category.where(validity: true)
     
     respond_to do |format|
       if @order.update_attributes(params[:order])
@@ -255,8 +258,15 @@ class OrdersController < ApplicationController
   
   # GET /orders/get_product_list
   def get_product_list
-    @product_ids = ProductPrice.where(validity: true, price_list_id: params[:price_list_id]).select('product_id').map {|x| x.product_id}
-    @products = Product.where(validity: true, id: @product_ids) 
+    if params[:price_list_id] != ""
+      if params[:category_id] != ""
+        @products = PriceList.find(params[:price_list_id]).products.where(validity: true, category_id: params[:category_id])
+      else
+        @products = PriceList.find(params[:price_list_id]).products.where(validity: true)
+      end
+    else
+      @products = []
+    end
     @unit_of_measures = []   
     render :partial => "order_item_fields_new", :object => @products  
   end
