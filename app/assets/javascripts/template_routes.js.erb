@@ -42,13 +42,15 @@ function add_route_point () {
 		var new_route_point_row = jQuery("#route_point_template").children().clone();
 		
 		var shipping_address_id = "#template_route_template_route_points_attributes_new_template_route_points_shipping_address_id";
-		var validity = "#template_route_template_route_points_attributes_new_template_route_points_validity";
+		var shipping_address_name = "template_route[template_route_points_attributes][new_template_route_points][shipping_address_id]";
+		var validity_id = "#template_route_template_route_points_attributes_new_template_route_points_validity";
+		var validity_name = "template_route[template_route_points_attributes][new_template_route_points][validity]";
 		
 		var shipping_address_id_field = jQuery(new_route_point_row).find(shipping_address_id);
-		shipping_address_id_field.attr("id", shipping_address_id.replace("new_template_route_points", timestamp));
+		shipping_address_id_field.attr("name", shipping_address_name.replace("new_template_route_points", timestamp));
 		
-		var validity_field = jQuery(new_route_point_row).find(validity);
-		validity_field.attr("id", validity.replace("new_template_route_points", timestamp));
+		var validity_field = jQuery(new_route_point_row).find(validity_id);
+		validity_field.attr("name", validity_name.replace("new_template_route_points", timestamp));
 			
 		jQuery("#table").append(new_route_point_row);
 		jQuery("#table select.select2-field").select2({allowClear: true});

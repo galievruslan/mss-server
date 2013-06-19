@@ -30,69 +30,70 @@
   <div class="row-fluid">
     <div class="span2">      
         <ul class="nav nav-tabs nav-stacked">
-        <li class="nav-header"><%= t(:menu)%> </li>        
-            <li <%= 'class=active' if @current_controller =='managers'%>>
-              <%= link_to t(:managers), managers_path%>
+        	<li class="nav-header"><%= t(:handbooks)%> </li>        
+          <li <%= 'class=active' if @current_controller =='managers'%>>
+            <%= link_to t(:managers), managers_path%>
+          </li>
+          <li <%= 'class=active' if @current_controller =='customers' or @current_controller =='shipping_addresses'%>>
+            <%= link_to t(:customers), customers_path %>
+          </li>
+          <li <%= 'class=active' if @current_controller =='warehouses'%>>
+            <%= link_to t(:warehouses), warehouses_path %>
+          </li>
+          <li <%= 'class=active' if @current_controller =='categories'%>>
+            <%= link_to t(:categories), categories_path %>
+          </li>
+          <li <%= 'class=active' if @current_controller =='price_lists'%>>
+            <%= link_to t(:price_lists), price_lists_path %>
+          </li>    
+          <li <%= 'class=active' if @current_controller =='products'%>>
+            <%= link_to t(:products), products_path %>
+          </li>
+          <li <%= 'class=active' if @current_controller =='statuses'%>>
+            <%= link_to t(:statuses), statuses_path %>
+          </li>
+          <li <%= 'class=active' if @current_controller =='unit_of_measures'%>>
+            <%= link_to t(:unit_of_measures), unit_of_measures_path %>
+          </li>
+          <li class="nav-header"><%= t(:documents)%> </li>  
+          <li <%= 'class=active' if @current_controller =='orders' or @current_controller =='order_items'%>>
+            <%= link_to t(:orders), orders_path %>
+          </li>
+          <li <%= 'class=active' if @current_controller =='routes' or @current_controller =='route_points'%>>
+            <%= link_to t(:routes), routes_path %>
+          </li>
+          <li <%= 'class=active' if @current_controller =='template_routes' or @current_controller =='template_route_points'%>>
+            <%= link_to t(:template_routes), template_routes_path %>
+          </li>            
+          <% if can? :view, :reports %>
+            <li class="nav-header"><%= t(:reports)%></li>
+            <li <%= 'class=active' if @current_controller =='reports'%>>
+              <%= link_to t(:reports), reports_path %>
             </li>
-            <li <%= 'class=active' if @current_controller =='customers' or @current_controller =='shipping_addresses'%>>
-              <%= link_to t(:customers), customers_path %>
-            </li>
-            <li <%= 'class=active' if @current_controller =='warehouses'%>>
-              <%= link_to t(:warehouses), warehouses_path %>
-            </li>
-            <li <%= 'class=active' if @current_controller =='orders' or @current_controller =='order_items'%>>
-              <%= link_to t(:orders), orders_path %>
-            </li>
-            <li <%= 'class=active' if @current_controller =='routes' or @current_controller =='route_points'%>>
-              <%= link_to t(:routes), routes_path %>
-            </li>
-            <li <%= 'class=active' if @current_controller =='template_routes' or @current_controller =='template_route_points'%>>
-              <%= link_to t(:template_routes), template_routes_path %>
-            </li>
-            <li <%= 'class=active' if @current_controller =='categories'%>>
-              <%= link_to t(:categories), categories_path %>
-            </li>            
-            <li <%= 'class=active' if @current_controller =='products'%>>
-              <%= link_to t(:products), products_path %>
-            </li>
-            <li <%= 'class=active' if @current_controller =='statuses'%>>
-              <%= link_to t(:statuses), statuses_path %>
-            </li>
-            <li <%= 'class=active' if @current_controller =='unit_of_measures'%>>
-              <%= link_to t(:unit_of_measures), unit_of_measures_path %>
-            </li>
-            <li <%= 'class=active' if @current_controller =='price_lists'%>>
-              <%= link_to t(:price_lists), price_lists_path %>
-            </li>
-            <% if can? :view, :reports %>
-	            <li class="nav-header"><%= t(:reports)%></li>
-	            <li <%= 'class=active' if @current_controller =='reports'%>>
-	              <%= link_to t(:reports), reports_path %>
-	            </li>
-            <% end %>
-            <% if can? :view, :settings %>          
-            	<li class="nav-header"><%= t(:settings)%></li>
-            <% end %>
-            <% if can? :view, :exchange %>
-            <li <%= 'class=active' if @current_controller =='exchange'%>>
-              <%= link_to t(:exchange), exchange_path %>
-            </li>
-            <% end %>
-            <% if can? :view, :settings %>  
-            <li <%= 'class=active' if @current_controller =='settings'%>>
-              <%= link_to t(:settings), settings_path %>
-            </li>
-            <% end %>            
-            <% if can? :read, User %>    
-            <li <%= 'class=active' if @current_controller =='users'%>>
-              <%= link_to t(:users), users_path %>
-            </li>
-            <% end %>
-            <% if can? :read, MobileClient %>    
-            <li <%= 'class=active' if @current_controller =='mobile_clients'%>>
-              <%= link_to t(:mobile_clients), mobile_clients_path %>
-            </li>
-            <% end %>
+          <% end %>
+          <% if can? :view, :settings %>          
+          	<li class="nav-header"><%= t(:settings)%></li>
+          <% end %>
+          <% if can? :view, :exchange %>
+          <li <%= 'class=active' if @current_controller =='exchange'%>>
+            <%= link_to t(:exchange), exchange_path %>
+          </li>
+          <% end %>
+          <% if can? :view, :settings %>  
+          <li <%= 'class=active' if @current_controller =='settings'%>>
+            <%= link_to t(:settings), settings_path %>
+          </li>
+          <% end %>            
+          <% if can? :read, User %>    
+          <li <%= 'class=active' if @current_controller =='users'%>>
+            <%= link_to t(:users), users_path %>
+          </li>
+          <% end %>
+          <% if can? :read, MobileClient %>    
+          <li <%= 'class=active' if @current_controller =='mobile_clients'%>>
+            <%= link_to t(:mobile_clients), mobile_clients_path %>
+          </li>
+          <% end %>
       </div>
       <br />
       <div class="span10 well">

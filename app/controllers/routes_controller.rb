@@ -60,7 +60,11 @@ class RoutesController < ApplicationController
   # GET /routes
   # GET /routes.json
   def index
-    @search = Route.search(params[:q])
+    if current_user.role? :manager and current_user.manager_id
+      @search = Route.where(manager_id: current_user.manager_id).search(params[:q])
+    else
+      @search = Route.search(params[:q])
+    end    
     @routes = @search.result.page(params[:page]).per(current_user.list_page_size)
     @managers = Manager.all
     @route_points_count = RoutePoint.count(:group=>:route_id)

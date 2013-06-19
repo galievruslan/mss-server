@@ -3,13 +3,23 @@ class TemplateRoutesController < ApplicationController
   # GET /template_routes.json
   def index
     @days_of_week = [0,1,2,3,4,5,6]
-    if params[:q]
-      @search = TemplateRoute.search(params[:q])
-      @template_routes = @search.result.page(params[:page]).per(current_user.list_page_size)
+    if current_user.role? :manager and current_user.manager_id
+      if params[:q]
+        @search = TemplateRoute.where(manager_id: current_user.manager_id).search(params[:q])
+        @template_routes = @search.result.page(params[:page]).per(current_user.list_page_size)
+      else
+        @search = TemplateRoute.where(validity: true, manager_id: current_user.manager_id).search(params[:q])
+        @template_routes = @search.result.page(params[:page]).per(current_user.list_page_size)
+      end
     else
-      @search = TemplateRoute.search(params[:q])
-      @template_routes = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
-    end
+      if params[:q]
+        @search = TemplateRoute.search(params[:q])
+        @template_routes = @search.result.page(params[:page]).per(current_user.list_page_size)
+      else
+        @search = TemplateRoute.search(params[:q])
+        @template_routes = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+      end
+    end    
     
     @managers = Manager.all
     @template_route_points_count = TemplateRoutePoint.count(:group=>:template_route_id)
