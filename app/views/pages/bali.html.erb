@@ -12,6 +12,7 @@ time zone: <%= Time.zone %><br />
 time now strf: <%= Time.now.strftime("%B %Y") %><br />
 Orders count: <%= Order.count %><br />
 Route count: <%= Route.count %><br />
+price_in_price_list: <%= Product.first.price_in_price_list(2)%><br />
 <select id="select2">
  <optgroup label="Alaskan/Hawaiian Time Zone">
      <option value="AK">Alaska</option>

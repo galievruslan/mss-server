@@ -48,17 +48,20 @@ function add_order_item () {
 		var new_order_item_row = jQuery("#order_item_template").children().clone();
 		
 		var product_template_id = "#order_order_items_attributes_new_order_items_product_id";
+		var product_template_name = "order[order_items_attributes][new_order_items][product_id]";
 		var uom_template_id = "#order_order_items_attributes_new_order_items_unit_of_measure_id";
+		var uom_template_name = "order[order_items_attributes][new_order_items][unit_of_measure_id]";
 		var quantity_template_id = "#order_order_items_attributes_new_order_items_quantity";
+		var quantity_template_name = "order[order_items_attributes][new_order_items][quantity]";		
 		
 		var product_id_field = jQuery(new_order_item_row).find(product_template_id);
-		product_id_field.attr("id", product_template_id.replace("new_order_items", timestamp));
+		product_id_field.attr("name", product_template_name.replace("new_order_items", timestamp));
 		
 		var uom_id_field = jQuery(new_order_item_row).find(uom_template_id);
-		uom_id_field.attr("id", uom_template_id.replace("new_order_items", timestamp));
+		uom_id_field.attr("name", uom_template_name.replace("new_order_items", timestamp));
 		
 		var quantity_field = jQuery(new_order_item_row).find(quantity_template_id);
-		quantity_field.attr("id", quantity_template_id.replace("new_order_items", timestamp));
+		quantity_field.attr("name", quantity_template_name.replace("new_order_items", timestamp));
 		
 		jQuery("#table").append(new_order_item_row);
 		jQuery("#table select.select2-field").select2({allowClear: true});
@@ -98,6 +101,17 @@ function destroy_order_item(order_item) {
 
 function onProductChanged(selected_item) {	
 	var uom_select = $(selected_item).closest('tr').find("select.uom_select");
+	var price_label = $(selected_item).closest('tr').find("label");	
+	var price_list_select_id = $('#order_price_list_id option:selected').val();
+	
+	jQuery.ajax({
+    url: "/price_lists/"+ price_list_select_id + "/price_list_lines/" + selected_item.value +".json",
+    type: "GET",
+    dataType: "json",
+    success: function(data) {
+    	price_label.html(data.price);
+  	}
+	});
 	jQuery.ajax({
     url: "/products/"+ selected_item.value + "/product_unit_of_measures.json",
     type: "GET",

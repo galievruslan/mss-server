@@ -8,4 +8,8 @@ class Product < ActiveRecord::Base
   validates :name, :external_key, :category, :presence => true
   validates :external_key, :uniqueness => { :case_sensitive => false }
   belongs_to :category
+  
+  def price_in_price_list(price_list_id)
+    ProductPrice.find_by_product_id_and_price_list_id(self.id, price_list_id).price
+  end
 end
