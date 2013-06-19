@@ -41,8 +41,19 @@ class Order < ActiveRecord::Base
     end
     return order_amount.round(2)
   end
+  
+  def self.available_for_user(user)
+    if user.role? :manager and user.manager_id   
+      self.where(manager_id: user.manager_id)
+    else
+      self
+    end  
+  end
+  
+  def self.belongs_to_route_point(route_point_id)    
+    self.where(route_point_id: route_point_id)
+  end  
 end
-
 module ActiveRecord
   class Base
     # Validate that the the objects in +collection+ are unique

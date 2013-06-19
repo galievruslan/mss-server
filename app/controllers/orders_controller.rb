@@ -5,24 +5,14 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    if current_user.role? :manager and current_user.manager_id
-      if params[:route_point_id]
-        @search = Order.where(manager_id: current_user.manager_id, route_point_id: params[:route_point_id]).search(params[:q])
-        @orders = @search.result.page(params[:page]).per(current_user.list_page_size)
-      else
-        @search = Order.where(manager_id: current_user.manager_id).search(params[:q])
-        @orders = @search.result.page(params[:page]).per(current_user.list_page_size)
-      end
+    if params[:route_point_id]
+      @search = Order.available_for_user(current_user).belongs_to_route_point(params[:route_point_id]).search(params[:q])
+      @orders = @search.result.page(params[:page]).per(current_user.list_page_size)
     else
-      if params[:route_point_id]
-        @search = Order.where(route_point_id: params[:route_point_id]).search(params[:q])
-        @orders = @search.result.page(params[:page]).per(current_user.list_page_size)
-      else
-        @search = Order.search(params[:q])
-        @orders = @search.result.page(params[:page]).per(current_user.list_page_size)
-      end
-    end    
-    
+      @search = Order.available_for_user(current_user).search(params[:q])
+      @orders = @search.result.page(params[:page]).per(current_user.list_page_size)
+    end  
+        
     @managers = Manager.all
     @warehouses = Warehouse.all
     @price_lists = PriceList.all
