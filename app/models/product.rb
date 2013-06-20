@@ -12,4 +12,8 @@ class Product < ActiveRecord::Base
   def price_in_price_list(price_list_id)
     ProductPrice.find_by_product_id_and_price_list_id(self.id, price_list_id).price
   end
+  
+  def count_in_unit_of_measure(unit_of_measure_id)
+    ProductUnitOfMeasure.find_by_product_id_and_unit_of_measure_id(self.id, unit_of_measure_id).count_in_base_unit
+  end
 end

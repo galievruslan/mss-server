@@ -92,7 +92,10 @@
   resources :products do 
     collection do
       post :multiple_change
-    end     
+    end
+    member do
+      get 'unit_of_measures/:unit_of_measure_id' => 'products#unit_of_measures' 
+    end
     resources :product_prices do
       collection do
         post :multiple_change

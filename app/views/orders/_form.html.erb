@@ -111,6 +111,7 @@
 					    <th><%= t(:unit_of_measure) %></th>
 					    <th><%= t(:quantity) %></th>					    
 					    <th><%= t(:price) %></th>
+					    <th><%= t(:count_in_base_unit) %></th>
 					    <th><%= t(:amount) %></th>
 					    <th><%= t(:actions) %></th>
 					  </tr>
@@ -121,6 +122,8 @@
 						<% end %>
 					</tbody>
 				</table>
+				<p ><b><%= t(:order_amount)%>: </b><span class="order_amount"><%= @order.order_amount %></span></p>
+				
 				<p><%= button_tag t(:add), :type => 'button', :class =>'btn', :onclick => "add_order_item()" %></p>
 						  
 	    </div>

@@ -1,9 +1,10 @@
-<tr>
-  <td><%= f.select :product_id , @products.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_product), :class => 'select2-field', :onchange => 'onProductChanged(this)'} %></td>
-  <td><%= f.select :unit_of_measure_id ,  Product.find(f.object.product_id).unit_of_measures.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_unit_of_measure), :class => 'select2-field uom_select'} %></td>
-  <td><%= f.number_field :quantity, min: 1, step: 1 %></td>
-  <td><%= f.label :product_id, Product.find(f.object.product_id).price_in_price_list(@order.price_list.id) %></td>
-  <td></td>
+<tr class="order_item">
+  <td><%= f.select :product_id , @products.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_product), :class => 'select2-field product_select', :onchange => 'onProductChanged(this)'} %></td>
+  <td><%= f.select :unit_of_measure_id , ( f.object.product_id.nil? ? [] : Product.find(f.object.product_id).unit_of_measures.collect  {|p| [ p.name, p.id ] }), {:include_blank => true}, {'data-placeholder' => t(:select_unit_of_measure), :class => 'select2-field uom_select', :onchange => 'onUOMChanged(this)'} %></td>
+  <td><%= f.number_field :quantity, min: 1, step: 1, class: "input-small quantity_input", :onchange => 'onQuantityChanged(this)' %></td>
+  <td><%= f.label :product_id, ((f.object.product_id.nil? || @order.price_list.nil?) ? 0 : Product.find(f.object.product_id).price_in_price_list(@order.price_list.id)), class: 'price_label' %></td>
+  <td><%= f.label :product_id, ((f.object.product_id.nil? || f.object.unit_of_measure_id.nil?) ? 0 : Product.find(f.object.product_id).count_in_unit_of_measure(f.object.unit_of_measure_id)), class: 'count_label' %></td>
+  <td><%= f.label :product_id, f.object.amount, class: 'amount_label' %></td>
   <td>
   	<a onclick="onDestroy(this)"><i class='icon-remove' title="<%= t(:remove)%>"></i></a>
   </td>

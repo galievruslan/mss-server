@@ -26,18 +26,24 @@ class Order < ActiveRecord::Base
   def order_amount    
     order_amount = 0    
     self.order_items.each do |order_item|
-      product = order_item.product
-      price = order_item.price_base_unit(self.price_list)
-        
-      product_unit_of_measure = product.product_unit_of_measures.find_by_unit_of_measure_id(order_item.unit_of_measure.id)
-      if product_unit_of_measure
-        product_count_in_base_unit = product_unit_of_measure.count_in_base_unit
+      if order_item.amount.nil?
+        order_item_amount = 0
       else
-        product_count_in_base_unit = 0
+        order_item_amount = order_item.amount
       end
-      
-      order_item_amount = order_item.quantity * product_count_in_base_unit * price
       order_amount = order_amount + order_item_amount
+      # product = order_item.product
+      # price = order_item.price_base_unit(self.price_list)
+#         
+      # product_unit_of_measure = product.product_unit_of_measures.find_by_unit_of_measure_id(order_item.unit_of_measure.id)
+      # if product_unit_of_measure
+        # product_count_in_base_unit = product_unit_of_measure.count_in_base_unit
+      # else
+        # product_count_in_base_unit = 0
+      # end
+#       
+      # order_item_amount = order_item.quantity * product_count_in_base_unit * price
+      # order_amount = order_amount + order_item_amount
     end
     return order_amount.round(2)
   end

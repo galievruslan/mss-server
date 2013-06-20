@@ -95,7 +95,7 @@ class ProductsController < ApplicationController
     end
   end
   
-    # POST /products/multiple_change_validity
+  # POST /products/multiple_change_validity
   def multiple_change_validity
     if params[:product_ids]
       params[:product_ids].each do |product_id|
@@ -109,6 +109,14 @@ class ProductsController < ApplicationController
       redirect_to products_url, notice: t(:validity_changed)
     else
       redirect_to products_url
+    end
+  end
+  
+  #GET /products/:id/unit_of_measures/:unit_of_measure_id
+  def unit_of_measures
+    respond_to do |format|
+      @unit_of_measure = ProductUnitOfMeasure.find_by_product_id_and_unit_of_measure_id(params[:id], params[:unit_of_measure_id]) 
+      format.json { render json: @unit_of_measure }
     end
   end
 end
