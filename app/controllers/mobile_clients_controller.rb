@@ -67,6 +67,7 @@ class MobileClientsController < ApplicationController
       Zip::ZipFile.open(zipfile_name, Zip::ZipFile::CREATE) do |zipfile|
         zipfile.add(filename, tmp.path)
       end
+      File::chmod(0644, zipfile_name)
       
       # file = File.join(directory, filename)
       # FileUtils.cp tmp.path, file      
