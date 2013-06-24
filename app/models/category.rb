@@ -4,5 +4,9 @@ class Category < ActiveRecord::Base
   has_many :childrens,  :class_name => "Category", :foreign_key => "parent_id"
   has_many :products, :dependent => :destroy
   validates :name, :external_key, :presence => true
-  validates :external_key, :uniqueness => { :case_sensitive => false }  
+  validates :external_key, :uniqueness => { :case_sensitive => false }
+  
+  def self.roots
+    self.where(parent_id: nil)
+  end
 end

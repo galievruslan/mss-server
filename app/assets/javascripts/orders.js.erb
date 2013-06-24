@@ -24,12 +24,20 @@ function destroyOrderItems() {
 };
 
 function onCategoryChanged() {
-	getProducts();
+	getProducts();		
+};
+
+function onCategoryReset() {
+    $('.tree li').hide();
+    $('.tree li:first').show();
+    $('.tree').find('a').removeClass('tree-selected');
+    getProducts();
 };
 
 function getProducts() {
 	price_list_id = jQuery('#order_price_list_id option:selected').val();
-	category_id = jQuery('#category_id option:selected').val();
+	category_id = jQuery('a.tree-selected').attr("value");
+	
 	jQuery.ajax({
     url: "/orders/get_product_list",
     type: "GET",

@@ -4,7 +4,9 @@
 //= require bootstrap-datetimepicker
 //= require locales/bootstrap-datetimepicker.ru.js
 //= require select2
+//= require select2_locale_ru
 //= require bootstrap-fileupload
+//= require tree
 /* ===================================================
  Reset button for filter form
 * ===================================================*/

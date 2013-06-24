@@ -259,7 +259,7 @@ class OrdersController < ApplicationController
   # GET /orders/get_product_list
   def get_product_list
     if params[:price_list_id] != ""
-      if params[:category_id] != ""
+      if params[:category_id]
         @products = PriceList.find(params[:price_list_id]).products.where(validity: true, category_id: params[:category_id])
       else
         @products = PriceList.find(params[:price_list_id]).products.where(validity: true)

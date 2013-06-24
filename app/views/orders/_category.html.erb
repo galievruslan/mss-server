@@ -1,0 +1,8 @@
+<li>
+  <a value="<%= category.id %>"><%= category.name %></a>  
+  <% unless category.childrens.empty? %>
+  <ul>
+    <%= render :partial => "category", :collection => category.childrens %>
+  </ul>
+  <%end%>
+</li>

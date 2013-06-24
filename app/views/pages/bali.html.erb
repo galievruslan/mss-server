@@ -1,9 +1,10 @@
-<%= image_tag("bali.png") %><br />
-Language: <%= I18n.locale %><br />
-FTP server: <%= Settings.ftp_server %><br />
 <% content_for :javascripts do %>
   <%= javascript_include_tag 'pages' %>
 <% end %>
+This is test page<br />
+<%= image_tag("bali.png") %><br />
+Language: <%= I18n.locale %><br />
+FTP server: <%= Settings.ftp_server %><br />
 FTP user: <%= Settings.ftp_user %><br />
 FTP password: <%= Settings.ftp_inbox_directory %><br />
 FTP outbox directory: <%= Settings.ftp_outbox_directory %><br />
@@ -12,29 +13,4 @@ time zone: <%= Time.zone %><br />
 time now strf: <%= Time.now.strftime("%B %Y") %><br />
 Orders count: <%= Order.count %><br />
 Route count: <%= Route.count %><br />
-price_in_price_list: <%= Product.first.price_in_price_list(2)%><br />
-<select id="select2">
- <optgroup label="Alaskan/Hawaiian Time Zone">
-     <option value="AK">Alaska</option>
-     <option value="HI">Hawaii</option>
- </optgroup>
- <optgroup label="Pacific Time Zone">
-     <option value="CA">California</option>
-     <option value="NV">Nevada</option>
-     <optgroup label="Тест">
-	     <option value="OR">Oregon</option>
-	     <option value="WA">Washington</option>
-	   </optgroup>
- </optgroup>
- <optgroup label="Mountain Time Zone">
-     <option value="AZ">Arizona</option>
-     <option value="CO">Colorado</option>
-     <option value="ID">Idaho</option>
-     <option value="MT">Montana</option>
-     <option value="NE">Nebraska</option>
-     <option value="NM">New Mexico</option>
-     <option value="ND">North Dakota</option>
-     <option value="UT">Utah</option>
-     <option value="WY">Wyoming</option>
- </optgroup>
-</select>
+----------------------------------------
