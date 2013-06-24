@@ -11,8 +11,8 @@
     <div class="container">
 			<div class="row">
 				<div class="span4 offset4 well">
-					<legend><%=t(:sign_in)%></legend>	
-					<%= render :partial => "/pages/flash", :locals => {:flash => flash}%>      	      
+					<legend><%=t(:sign_in)%></legend>   	   
+					<%= bootstrap_flash %>   
           <%= yield %>
         </div>
 			</div>
