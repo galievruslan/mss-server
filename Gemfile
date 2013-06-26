@@ -14,13 +14,14 @@ gem 'whenever', :require => false # Create cron jobs
 gem 'rails_config' # add configuration file
 #gem 'cocoon' # nested forms
 gem 'select2-rails' # Autocomplete select_tag 
+gem 'twitter-bootstrap-rails', '2.2.6'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'twitter-bootstrap-rails', '2.2.6'
+  
   gem 'bootstrap-datetimepicker-rails'
   gem 'jquery-rails'
   #gem 'jquery-ui-rails'
