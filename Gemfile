@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.13'
 gem 'sqlite3' # SQLite DB
 gem 'mysql2' # MySQL DB
 gem 'kaminari' # Pagination 
