@@ -2,13 +2,13 @@ class SettingsController < ApplicationController
   
   # GET /settings
   def show    
-    authorize! :settings , :view    
+    authorize! :view, :settings
     @statuses = Status.where(validity: true)
   end
   
   # PUT /settings
   def update
-    authorize! :settings , :manage
+    authorize! :manage, :settings
     @statuses = Status.where(validity: true)    
     @errors = []
     # Settings.ftp_server = params[:ftp_server]

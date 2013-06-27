@@ -241,6 +241,7 @@ class OrdersController < ApplicationController
   
   # GET /orders/export_again
   def export_again
+    authorize! :export_again, Order
     @order = Order.find(params[:id])
     @order.update_attributes(exported_at: nil)    
     

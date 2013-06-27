@@ -8,17 +8,17 @@ class Ability
     
     if user.role? :admin
       can :manage, :all
-      can :exchange , :view
-      can :settings , :view
-      can :reports, :view
-      can :settings , :manage
+      can :view, :exchange 
+      can :view, :settings 
+      can :view, :reports
+      can :manage, :settings
       can :export_again, Order
     elsif user.role? :supervisor
-      can :reports, :view
+      can :view, :reports
       can :read, :all           
       can :manage, [TemplateRoute, TemplateRoutePoint]
       cannot :read, [User, Role]
-      cannot :manage, MobileClient
+      cannot :manage, MobileClient      
     elsif user.role? :manager       
       can :read, :all
       can :manage, Order, :manager_id => user.manager_id 

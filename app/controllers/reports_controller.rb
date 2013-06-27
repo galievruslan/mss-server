@@ -2,12 +2,12 @@ class ReportsController < ApplicationController
   
   # GET /reports
   def index
-    authorize! :reports , :view
+    authorize! :view, :reports
   end 
   
   # GET /reports/orders
   def orders
-    authorize! :reports , :view
+    authorize! :view, :reports
     @managers = Manager.all
     @warehouses = Warehouse.all
     @price_lists = PriceList.all
@@ -19,7 +19,7 @@ class ReportsController < ApplicationController
   
   # GET /reports/routes
   def routes
-    authorize! :reports , :view
+    authorize! :view, :reports
     @managers = Manager.all
     @customers = Customer.all
     @shipping_addresses = ShippingAddress.all
@@ -30,7 +30,7 @@ class ReportsController < ApplicationController
   
   # GET /reports/template_routes
   def template_routes
-    authorize! :reports , :view
+    authorize! :view, :reports
     @managers = Manager.all
     @customers = Customer.all
     @shipping_addresses = ShippingAddress.all
