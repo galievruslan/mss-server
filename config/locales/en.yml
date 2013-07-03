@@ -517,3 +517,5 @@ en:
   general: "General"
   server_port: "Server port"
   change_password: "Change password"
+  reset_password_mail_text: "Someone has requested a link to change your password. You can do this through the link below."
+  hello: "Hello"

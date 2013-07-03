@@ -1,4 +1,5 @@
 <legend><%=t(:sign_in)%></legend>
+<%= bootstrap_flash %>
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), class: "form-horizontal") do |f| %>
 	<%= f.text_field :username, :autofocus => true, class: 'span4', placeholder: t(:username) %>  
 	<%= f.password_field :password, class: 'span4', placeholder: t(:password) %>  
