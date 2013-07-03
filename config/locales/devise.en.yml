@@ -4,6 +4,7 @@ en:
   sign_in: "Sign in" 
   remember_me: "Remamber me"
   forgot_your_password: "Forgot your password?"
+  forgot_password: "Forgot password"
   send_reset_password_instructions: "Send me reset password instructions"
   errors:
     messages:

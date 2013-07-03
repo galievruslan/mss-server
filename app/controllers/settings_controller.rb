@@ -76,6 +76,55 @@ class SettingsController < ApplicationController
       @errors << error
     end   
     
+    unless params[:email].empty?
+      config['email'] = params[:email]
+    else
+      error = t(:email) + ' ' + t('errors.messages.blank') 
+      @errors << error
+    end
+    
+    unless params[:mail_server].empty?
+      config['mail_server'] = params[:mail_server]
+    else
+      error = t(:mail_server) + ' ' + t('errors.messages.blank') 
+      @errors << error
+    end
+    
+    unless params[:smtp_port].empty?
+      config['smtp_port'] = params[:smtp_port]
+    else
+      error = t(:smtp_port) + ' ' + t('errors.messages.blank') 
+      @errors << error
+    end
+    
+    unless params[:mail_user].empty?
+      config['mail_user'] = params[:mail_user]
+    else
+      error = t(:mail_user) + ' ' + t('errors.messages.blank') 
+      @errors << error
+    end
+    
+    unless params[:mail_password].empty?
+      config['mail_password'] = params[:mail_password]
+    else
+      error = t(:mail_password) + ' ' + t('errors.messages.blank') 
+      @errors << error
+    end
+    
+    unless params[:server_name].empty?
+      config['server_name'] = params[:server_name]
+    else
+      error = t(:server_name) + ' ' + t('errors.messages.blank') 
+      @errors << error
+    end
+    
+    unless params[:server_port].empty?
+      config['server_port'] = params[:server_port]
+    else
+      error = t(:server_port) + ' ' + t('errors.messages.blank') 
+      @errors << error
+    end
+    
     if @errors.count == 0
       File.open("#{Rails.root}/config/settings.local.yml", 'w') { |f| YAML.dump(config, f) }
       Settings.reload!

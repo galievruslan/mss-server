@@ -20,6 +20,11 @@ Mss::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
+  # Mailer settings
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { :host => 'localhost' }
+  config.action_mailer.perform_deliveries = true
+  
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 

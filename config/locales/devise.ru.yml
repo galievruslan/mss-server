@@ -4,8 +4,10 @@ ru:
   sign_in: "Войти"
   remember_me: "Запомни меня"
   forgot_your_password: "Забыли пароль?"
+  forgot_password: "Восстановление пароля"
   send_reset_password_instructions: "Отправить инстукцию по смене пароля"
   errors:
+    title: "Следующие ошибки должны быть исправлены"
     messages:
       expired: "устарела. Пожалуйста, запросите новую"
       not_found: "не найдена"

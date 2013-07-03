@@ -1,4 +1,4 @@
-# encoding: UTF-8
+  # encoding: UTF-8
 
 @status1 = Status.create(name: 'Не посетил')
 @status2 = Status.create(name: 'Посетил')

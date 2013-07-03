@@ -16,12 +16,28 @@
 <%= form_tag settings_path, :method => :put, :class => "form-horizontal" do  %> 
 	<div class="tabbable">
 	  <ul class="nav nav-tabs">
-	    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:ftp_settings)%></a></li>
-	    <li><a href="#tab2" data-toggle="tab"><%= t(:cron_settings)%></a></li>
-	    <li><a href="#tab3" data-toggle="tab"><%= t(:other_settings)%></a></li>
+	  	<li class="active"><a href="#tab1" data-toggle="tab"><%= t(:general)%></a></li>
+	    <li><a href="#tab2" data-toggle="tab"><%= t(:ftp_settings)%></a></li>
+	    <li><a href="#tab3" data-toggle="tab"><%= t(:cron_settings)%></a></li>
+	    <li><a href="#tab4" data-toggle="tab"><%= t(:mail_settings)%></a></li>
+	    <li><a href="#tab5" data-toggle="tab"><%= t(:other_settings)%></a></li>
 	  </ul>
 	  <div class="tab-content">
-	    <div class="tab-pane active" id="tab1">		
+	  	<div class="tab-pane active" id="tab1">
+				<div class="control-group">
+			    <%= label_tag :server_name, t(:server_name), class: "control-label" %>
+			    <div class="controls">
+			    	<%= text_field_tag :server_name, Settings.server_name, placeholder: t(:server_name) %>
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <%= label_tag :server_port, t(:server_port), class: "control-label" %>
+			    <div class="controls">
+			    	<%= text_field_tag :server_port, Settings.server_port, placeholder: t(:server_port) %>
+			    </div>
+			  </div>
+			</div>
+	    <div class="tab-pane" id="tab2">		
 			  <div class="control-group">
 			    <%= label_tag :ftp_server, t(:ftp_server), class: "control-label" %>
 			    <div class="controls">
@@ -59,10 +75,42 @@
 			    </div>	
 			  </div>			  
 			</div>
-			<div class="tab-pane" id="tab2">
+			<div class="tab-pane" id="tab3">
 				
 			</div>
-			<div class="tab-pane" id="tab3">
+			<div class="tab-pane" id="tab4">
+				<div class="control-group">
+			    <%= label_tag :email, t(:email), class: "control-label" %>
+			    <div class="controls">
+			    	<%= text_field_tag :email, Settings.email, placeholder: t(:email) %>
+			    </div>
+			  </div>
+				<div class="control-group">					
+			    <%= label_tag :mail_server, t(:mail_server), class: "control-label" %>
+			    <div class="controls">
+			    	<%= text_field_tag :mail_server, Settings.mail_server, placeholder: t(:mail_server) %>
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <%= label_tag :smtp_port, t(:smtp_port), class: "control-label" %>
+			    <div class="controls">
+			    	<%= text_field_tag :smtp_port, Settings.smtp_port, placeholder: t(:smtp_port) %>
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <%= label_tag :mail_user, t(:mail_user), class: "control-label" %>
+			    <div class="controls">
+			    	<%= text_field_tag :mail_user, Settings.mail_user, placeholder: t(:mail_user) %>
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <%= label_tag :mail_password, t(:mail_password), class: "control-label" %>
+			    <div class="controls">
+			    	<%= password_field_tag :mail_password, Settings.mail_password, placeholder: t(:mail_password) %>
+			    </div>
+			  </div>
+			</div>
+			<div class="tab-pane" id="tab5">
 				<div class="control-group">
 			    <%= label_tag :default_route_point_status_id, t(:default_route_point_status), class: "control-label" %>
 			    <div class="controls">
