@@ -25,8 +25,8 @@ set :repository,  "git@github.com:galievruslan/mss-server.git"
 set :branch, "master"
 set :scm_command, "/usr/bin/git"
 set :deploy_via, :remote_cache
-
-before 'deploy:assets:precompile', 'deploy:symlink_db', 'deploy:symlink_config', 'deploy:create_folders'
+before 'whenever:update_crontab', 'deploy:symlink_config'
+before 'deploy:assets:precompile', 'deploy:symlink_db', 'deploy:create_folders'
 after "deploy:restart", "deploy:cleanup"
 
 # TASKS #####################################################
