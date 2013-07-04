@@ -13,4 +13,5 @@ time zone: <%= Time.zone %><br />
 time now strf: <%= Time.now.strftime("%B %Y") %><br />
 Orders count: <%= Order.count %><br />
 Route count: <%= Route.count %><br />
+<%= @setting['during_unload'].blank? %><br />
 ----------------------------------------

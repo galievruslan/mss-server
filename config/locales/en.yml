@@ -519,3 +519,8 @@ en:
   change_password: "Change password"
   reset_password_mail_text: "Someone has requested a link to change your password. You can do this through the link below."
   hello: "Hello"
+  upload_period: "Upload period"
+  in_minutes: "In minutes"
+  update_crontab: "Update crontab"
+  crontab_updated: "Crontab was succesfully updated."
+  crontab_not_updated: "Failed to update crontab."

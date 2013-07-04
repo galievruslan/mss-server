@@ -7,3 +7,12 @@ ftp_inbox_directory: DIRECTORY
 default_route_point_status_id: ID
 default_route_point_attended_status_id: ID
 order_filename: 'ORDER.xml'
+ftp_passive: true
+server_name: SERVER_NAME
+email: EMAIL
+mail_server: MAIL_SERVER
+mail_user: MAIL_USER
+mail_password: MAIL_PASSWORD
+smtp_port: 25
+server_port: 3000
+upload_period: '10'

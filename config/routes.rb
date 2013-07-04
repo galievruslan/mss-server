@@ -5,6 +5,7 @@
   
   get 'settings', :to => 'settings#show'
   put 'settings', :to => 'settings#update'
+  put 'settings/update_crontab', :to => 'settings#update_crontab'
   get 'exchange', :to => 'exchange#index'
   get 'exchange/download_zip', :to => 'exchange#download_zip'
   get 'exchange/send_to_ftp', :to => 'exchange#send_to_ftp'

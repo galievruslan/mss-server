@@ -519,3 +519,8 @@ ru:
   change_password: "Сменить пароль"
   reset_password_mail_text: "Кто-то просил ссылку для смены пароля. Вы можете сделать это по ссылке ниже."
   hello: "Привет"
+  upload_period: "Период вызгрузки"
+  in_minutes: "В минутах"
+  update_crontab: "Обновить планировщик"
+  crontab_updated: "Планировщик успешно обновлен."
+  crontab_not_updated: "Не удалось обновить планировщик."

@@ -125,6 +125,13 @@ class SettingsController < ApplicationController
       @errors << error
     end
     
+    unless params[:upload_period].empty?
+      config['upload_period'] = params[:upload_period]
+     else
+      error = t(:upload_period) + ' ' + t('errors.messages.blank') 
+      @errors << error
+    end
+    
     if @errors.count == 0
       File.open("#{Rails.root}/config/settings.local.yml", 'w') { |f| YAML.dump(config, f) }
       Settings.reload!
@@ -132,5 +139,15 @@ class SettingsController < ApplicationController
     else
       render action: "show"       
     end    
+  end
+  
+  # PUT /settings/crontab
+  def update_crontab
+    if system("cd #{Rails.root} && whenever --update-crontab mss --set environment=#{Rails.env} --roles db")
+      redirect_to settings_path, notice: t(:crontab_updated)  
+    else
+      redirect_to settings_path, notice: t(:crontab_not_updated)
+    end
+    
   end
 end
