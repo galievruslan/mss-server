@@ -120,7 +120,7 @@ class SettingsController < ApplicationController
     
     unless params[:server_port].empty?
       config['server_port'] = params[:server_port]
-    else
+     else
       error = t(:server_port) + ' ' + t('errors.messages.blank') 
       @errors << error
     end

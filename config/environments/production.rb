@@ -22,7 +22,7 @@ Mss::Application.configure do
 
   # Mailer settings
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { :host => 'localhost' }
+  # config.action_mailer.default_url_options = { :host => "#{Settings.server_name}:#{Settings.server_port}" }
   config.action_mailer.perform_deliveries = true
   
   # Defaults to nil and saved in location specified by config.assets.prefix
@@ -54,7 +54,7 @@ Mss::Application.configure do
   # config.assets.precompile += %w( search.js )
 
   # Disable delivery errors, bad email addresses will be ignored
-  # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = false
 
   # Enable threaded mode
   # config.threadsafe!

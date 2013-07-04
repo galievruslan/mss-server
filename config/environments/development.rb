@@ -15,7 +15,7 @@ Mss::Application.configure do
   
   # Mailer settings
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { :host => '192.168.3.108:3000' }
+  # config.action_mailer.default_url_options = { :host => '192.168.3.108:3000' }
   config.action_mailer.perform_deliveries = true
   
   # Don't care if the mailer can't send
