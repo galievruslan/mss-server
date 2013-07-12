@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => :unit_of_measures
   # GET /products
   # GET /products.json
   def index
