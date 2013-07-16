@@ -524,3 +524,4 @@ ru:
   update_crontab: "Обновить планировщик"
   crontab_updated: "Планировщик успешно обновлен."
   crontab_not_updated: "Не удалось обновить планировщик."
+  with_order_items: "С строками заказа"

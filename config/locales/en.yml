@@ -524,3 +524,4 @@ en:
   update_crontab: "Update crontab"
   crontab_updated: "Crontab was succesfully updated."
   crontab_not_updated: "Failed to update crontab."
+  with_order_items: "With order items"

@@ -15,6 +15,17 @@ class ReportsController < ApplicationController
     @shipping_addresses = ShippingAddress.all
     @search = Order.search(params[:q])
     @orders = @search.result
+    if params[:with_order_items]
+      respond_to do |format|
+        format.html
+        format.xls {render :template => 'reports/orders_with_items.xls.erb'}
+      end   
+    else
+      respond_to do |format|
+        format.html
+        format.xls {render :template => 'reports/orders.xls.erb'}
+      end
+    end    
   end 
   
   # GET /reports/routes
