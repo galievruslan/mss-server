@@ -1,18 +1,9 @@
-<%# encoding: utf-8 %>
-$(document).ready(function() {
-	getShippingAddresses();
-	$("a.add_fields").
-	  data("association-insertion-position", 'append').
-	  data("association-insertion-node", '#table');
-	$("#route_manager_id").select2({allowClear: true});
-	$("#q_manager_id_eq").select2({allowClear: true});
-	$("#q_status_id_eq").select2({allowClear: true});
-	$('#table').bind('cocoon:after-insert', function() {
-        $("select.shipping-address-field").select2({minimumInputLength: 2,allowClear: true});
-        $("select.status-field").select2({allowClear: true});
-    });
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+		getShippingAddresses();
+		$("#route_manager_id").select2({allowClear: true});
     $("select.select2-field").select2({allowClear: true});
-});
+	});
 
 function getShippingAddresses() {
 	manager_id = $('#route_manager_id option:selected').val();
@@ -90,3 +81,4 @@ function destroy_route_point(route_point) {
 	}
 	jQuery(route_point).remove();
 };
+</script>

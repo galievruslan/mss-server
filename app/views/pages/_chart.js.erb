@@ -1,0 +1,29 @@
+<script type="text/javascript" charset="utf-8">
+Highcharts.setOptions({
+lang: {
+    month: <%= raw I18n.t(:month_names) %>,
+    shortMonths: <%= raw I18n.t(:abbr_month_names) %>,
+    weekdays: <%= raw I18n.t(:day_names) %>
+} });
+
+$(function () {
+    new Highcharts.Chart({
+      chart: { renderTo: 'orders_mount_chart' },
+      title: { text: '<%= I18n.t(:orders_amount_by_days_this_mount) %>' },
+	    xAxis: { type: 'datetime' },
+	    yAxis: {
+	      title: { text: "<%= I18n.t(:amount) %>"}
+	    },
+      tooltip: {
+          shared: true,
+          crosshairs: true
+      },
+	    series: [{
+	    	name: "<%= I18n.t(:orders) %>",
+	    	pointInterval: <%= 1.day * 1000 %>,
+      	pointStart: <%= 1.month.ago.to_i * 1000 %>, 
+	      data: <%= orders_chart_series(Order, 1.month.ago) %>
+	    }]
+    });   
+});
+</script>

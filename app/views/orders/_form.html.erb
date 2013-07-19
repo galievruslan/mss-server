@@ -1,6 +1,4 @@
-<% content_for :javascripts do %>
-  <%= javascript_include_tag 'orders' %>
-<% end %>
+<%= render :partial => 'order', :handlers => [:erb], :formats => [:js] %>
 
   <% if @order.errors.any? %>
     <div class="alert alert-error">
@@ -127,7 +125,7 @@
 						<% end %>
 					</tbody>
 				</table>
-				<p ><b><%= t(:order_amount)%>: </b><span class="order_amount"><%= @order.order_amount %></span></p>
+				<p ><b><%= t(:order_amount)%>: </b><span class="order_amount"><%= @order.amount %></span></p>
 				
 				<p><%= button_tag t(:add), :type => 'button', :class =>'btn', :onclick => "add_order_item()" %></p>
 						  

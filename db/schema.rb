@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130620055114) do
+ActiveRecord::Schema.define(:version => 20130717073808) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20130620055114) do
     t.integer  "route_point_id"
     t.string   "guid"
     t.boolean  "complete",            :default => false
+    t.float    "amount"
   end
 
   add_index "orders", ["guid"], :name => "index_orders_on_guid"

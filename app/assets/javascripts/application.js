@@ -7,6 +7,8 @@
 //= require select2_locale_ru
 //= require bootstrap-fileupload
 //= require tree
+//= require highcharts
+//= require highcharts
 /* ===================================================
  Reset button for filter form
 * ===================================================*/

@@ -1,14 +1,12 @@
-<%# encoding: utf-8 %>
+<script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
 	getShippingAddresses();
 	$("a.add_fields").
 	  data("association-insertion-position", 'append').
 	  data("association-insertion-node", '#table');
 	$("#template_route_manager_id").select2({allowClear: true});
-	$("#template_route_day_of_week").select2({allowClear: true});	
-    $("#q_manager_id_eq").select2({allowClear: true});
-    $("#q_day_of_week_eq").select2({allowClear: true});
-    $("#table select.select2-field").select2({allowClear: true});
+	$("#template_route_day_of_week").select2({allowClear: true});
+  $("#table select.select2-field").select2({allowClear: true});
 });
 
 function getShippingAddresses() {
@@ -77,3 +75,4 @@ function destroy_route_point(route_point) {
 		jQuery(route_point).remove();
 	}	
 };
+</script>

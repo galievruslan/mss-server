@@ -130,7 +130,7 @@
 		    <td><%= order.manager.name %></td>
 		    <td><%= order.warehouse.name %></td>
 		    <td><%= order.price_list.name %></td>
-		    <td><%= order.order_amount %></td>
+		    <td><%= order.amount %></td>
 		    <td><%= order.exported_at ? l(order.exported_at, :format => :short) : t(:not_exported)%></td>
 		    <% if can? :export_again, Order %>
 		    	<td><%= link_to(export_again_order_path(order), :method => :put) do %><i class='icon-download-alt' title="<%= t(:export_again)%>"></i><%end%></td>

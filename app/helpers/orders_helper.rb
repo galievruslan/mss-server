@@ -26,4 +26,14 @@ module OrdersHelper
     end
     return order_filename_string    
   end
+  
+  def orders_chart_series(orders, start_time)
+    orders_by_day = orders.where(:date => start_time.beginning_of_day..Time.zone.now.end_of_day).
+                    group("date(date)").
+                    select("date, sum(amount) as amount")
+    (start_time.to_date..Date.today).map do |date|
+      order = orders_by_day.detect { |order| order.date.to_date == date }
+      order && order.amount.round(2) || 0
+    end.inspect
+  end
 end

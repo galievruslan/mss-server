@@ -1,6 +1,4 @@
-<% content_for :javascripts do %>
-  <%= javascript_include_tag 'routes' %>
-<% end %>
+<%= render :partial => 'route', :handlers => [:erb], :formats => [:js] %>
 <% if @route.errors.any? %>
   <div class="alert alert-error">
   	<button type="button" class="close" data-dismiss="alert">&times;</button>

@@ -8,4 +8,9 @@ class Manager < ActiveRecord::Base
   belongs_to :default_warehouse , :class_name => "Warehouse", :foreign_key => "default_warehouse_id"
   validates :name, :external_key, :presence => true
   validates :external_key, :uniqueness => { :case_sensitive => false }
+  
+  def self.best_managers(start_date, end_date)
+    best_manager_ids = Order.where(:date => start_date.beginning_of_day..end_date.end_of_day, :complete => true).group("manager_id").
+                    select("manager_id, sum(amount) as amount").order("amount DESC").limit(3)
+  end
 end

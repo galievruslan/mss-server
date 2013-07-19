@@ -525,3 +525,12 @@ en:
   crontab_updated: "Crontab was succesfully updated."
   crontab_not_updated: "Failed to update crontab."
   with_order_items: "With order items"
+  orders_amount_by_days: "Orders amount by days"
+  day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+  month_names: [January, February, March, April, May, June, July, August, September, October, November, December]
+  abbr_month_names: [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+  day_report: "Day report"
+  orders_amount: "Orders amount"
+  best_managers: "Top managers"
+  best_warehouses: "Top warehouses"
+  month_report: "Report for the month"
