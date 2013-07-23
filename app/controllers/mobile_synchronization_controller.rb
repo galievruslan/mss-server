@@ -348,5 +348,23 @@ class MobileSynchronizationController < ApplicationController
         rescue ActiveRecord::StatementInvalid
       end
     end   
-  end   
+  end
+  
+  # POST /client_information.json
+  def client_information
+    @user = current_user
+    if params[:client_type] and params[:client_version]
+      @user.update_attributes(client_type: params[:client_type], client_version: params[:client_version])
+      @responce = JSON code: 101, description: 'updated successfully'
+      respond_to do |format|      
+        format.json { render json: @responce, status: :ok}
+      end
+    else
+      @responce = JSON code: 220, description: 'no input parameters'
+      respond_to do |format|      
+        format.json { render json: @responce, status: :ok}
+      end
+    end         
+  end  
+   
 end

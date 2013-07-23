@@ -25,7 +25,7 @@
   get 'reports/template_routes', :to => 'reports#template_routes'
   
   # MobileSynchronization routes
-  get 'synchronization/mobile_client', :to => 'mobile_synchronization#mobile_client'
+  get 'synchronization/mobile_client', :to => 'mobile_synchronization#mobile_client'  
   get 'synchronization/datetime', :to => 'mobile_synchronization#datetime'
   get 'synchronization/settings', :to => 'mobile_synchronization#settings'
   get 'synchronization/customers', :to => 'mobile_synchronization#customers'
@@ -44,6 +44,7 @@
   get 'synchronization/template_route_points', :to => 'mobile_synchronization#template_route_points'
   post 'synchronization/routes', :to => 'mobile_synchronization#routes'
   post 'synchronization/orders', :to => 'mobile_synchronization#orders'
+  post 'synchronization/client_information', :to => 'mobile_synchronization#client_information'
   
   resources :orders do
     member do
