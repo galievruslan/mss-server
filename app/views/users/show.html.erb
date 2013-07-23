@@ -23,6 +23,14 @@
   <%= @user.current_sign_in_ip %>
 </p>
 <p>
+  <b><%= t(:client_type)%>:</b>
+  <%= @user.client_type %>
+</p>
+<p>
+  <b><%= t(:version)%>:</b>
+  <%= @user.client_version %>
+</p>
+<p>
   <b><%= t(:language)%>:</b>
   <%= @user.language ? @user.language : 'EN'%>
 </p>
