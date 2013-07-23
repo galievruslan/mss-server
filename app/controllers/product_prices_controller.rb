@@ -104,7 +104,7 @@ class ProductPricesController < ApplicationController
     end
   end
   
-    # POST /product/1/product_prices/multiple_change
+  # POST /product/1/product_prices/multiple_change
   def multiple_change
     @product = Product.find(params[:product_id])
     if params[:product_price_ids]

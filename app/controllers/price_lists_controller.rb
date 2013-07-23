@@ -116,5 +116,14 @@ class PriceListsController < ApplicationController
     else
       redirect_to price_lists_url
     end
+  end  
+  
+  # GET /price_lists/:id/products/:product_id
+  def show_product
+    @product = ProductPrice.where(price_list_id: params[:id], product_id: params[:product_id]).first
+
+    respond_to do |format|
+      format.json { render json: @product }
+    end
   end
 end

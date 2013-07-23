@@ -1,3 +1,7 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'users' %>
+<% end %>
+
 <h3><%= t(:listing_users)%></h3>
 
 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">

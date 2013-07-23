@@ -122,7 +122,7 @@ function onProductChanged(selected_item) {
 	amount_label.html('');
 	
 	jQuery.ajax({
-    url: "/price_lists/"+ price_list_select_id + "/price_list_lines/" + selected_item.value +".json",
+    url: "/price_lists/"+ price_list_select_id + "/products/" + selected_item.value +".json",
     type: "GET",
     dataType: "json",
     success: function(data) {
@@ -145,8 +145,32 @@ function onProductChanged(selected_item) {
 			    };
 			});
       $.each(data, function(i, val){
-			    uom_select.append($('<option />', { value: val.id, text: val.name }));
+      		if (val.base == true) {
+      			uom_select.append($('<option />', { value: val.id, text: val.name, selected: "selected"}));      			
+      		}
+      		else { 
+      			uom_select.append($('<option />', { value: val.id, text: val.name }));
+      		}      		
 			});
+			uom_select.select2({allowClear: true});
+			
+			// Rebuild this
+			
+			var unit_of_measure_id = uom_select.find('option:selected').val();
+			var product_id = uom_select.closest('tr').find("select.product_select option:selected").val();
+			var count_label = uom_select.closest('tr').find("label.count_label");
+			jQuery.ajax({
+		    url: "/products/"+ product_id + "/unit_of_measures/" + unit_of_measure_id + ".json",
+		    type: "GET",
+		    dataType: "json",
+		    success: function(data) {
+		    	count_label.html(data.count_in_base_unit);
+		    	calculateAmount(uom_select);
+		    	calculateOrderAmount();
+		  	}
+			});
+			
+			// Rebuild this
   	},
   	error: function() {  		
   		uom_select.closest('td').find("span").text("<%= I18n.t(:select_unit_of_measure)%>");

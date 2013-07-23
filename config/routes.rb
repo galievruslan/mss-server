@@ -95,7 +95,7 @@
       post :multiple_change
     end
     member do
-      get 'unit_of_measures/:unit_of_measure_id' => 'products#unit_of_measures' 
+      get 'unit_of_measures/:unit_of_measure_id' => 'products#unit_of_measures'        
     end
     resources :product_prices do
       collection do
@@ -145,6 +145,9 @@
   resources :price_lists do
     collection do
       post :multiple_change
+    end
+    member do
+      get 'products/:product_id' => 'price_lists#show_product'
     end
     resources :price_list_lines do
       collection do
