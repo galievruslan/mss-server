@@ -19,9 +19,15 @@
 		  	</div>
 		  </div>
 		  <div class="control-group">
-		  	<%= f.label :email_cont, t(:external_key)+':', class: "control-label"%>
+		  	<%= f.label :email_cont, t(:email)+':', class: "control-label"%>
 		  	<div class="controls">
 		  		<%= f.text_field :email_cont, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :phone_cont, t(:phone)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :phone_cont, class: 'search-field'%>
 		  	</div>
 		  </div>
 		  <div class="control-group">
@@ -44,7 +50,6 @@
 	  <tr>
 	  	<th><input type="checkbox" onclick="toggleChecked(this.checked)"></th>
 	  	<th><%= sort_link @search, :username, t(:username) %></th>
-	    <th><%= sort_link @search, :email, t(:email) %></th>
 	    <th><%= t(:roles)%></th>
 	    <th><%= sort_link @search, :manager_id, t(:manager) %></th>
 	    <th><%= sort_link @search, :current_sign_in_at, t(:last_login) %></th>
@@ -58,7 +63,6 @@
 	  <tr>
 	  	<td><%= check_box_tag 'user_ids[]', user.id %></td>
 	  	<td><%= user.username %></td>
-	    <td><%= user.email %></td>
 	    <td>
 	    	<% user.roles.each do |role| %>
 	    	<%= t(role.name) %> <br>

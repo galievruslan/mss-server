@@ -7,6 +7,10 @@
   <%= @user.email %>
 </p>
 <p>
+  <b><%= t(:phone)%>:</b>
+  <%= @user.phone %>
+</p>
+<p>
   <b><%= t(:manager)%>:</b>
   <%= @manager ? @manager.name : t(:no_manager) %>
 </p>

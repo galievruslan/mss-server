@@ -6,6 +6,7 @@
 //= require select2
 //= require select2_locale_ru
 //= require bootstrap-fileupload
+//= require bootstrap-inputmask.min
 //= require tree
 //= require highcharts
 //= require highcharts

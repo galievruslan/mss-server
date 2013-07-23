@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130717073808) do
+ActiveRecord::Schema.define(:version => 20130723094059) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -219,6 +219,7 @@ ActiveRecord::Schema.define(:version => 20130717073808) do
     t.integer  "list_page_size"
     t.string   "language"
     t.boolean  "banned",                 :default => false
+    t.string   "phone"
   end
 
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true

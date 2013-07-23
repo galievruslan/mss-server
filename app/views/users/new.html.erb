@@ -34,6 +34,12 @@
 			    </div>
 			  </div>
 			  <div class="control-group">
+			    <%= f.label :phone, t(:phone), class: "control-label" %>
+			    <div class="controls">
+			    	<%= f.text_field :phone %>
+			    </div>
+			  </div>
+			  <div class="control-group">
 			    <%= f.label :language, t(:language), class: "control-label" %>
 			    <div class="controls">
 			    	<%= f.select(:language, ['EN','RU'], {:include_blank => true}, {'data-placeholder' => t(:select_language)}) %>
