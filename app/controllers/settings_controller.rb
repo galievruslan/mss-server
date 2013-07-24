@@ -4,12 +4,14 @@ class SettingsController < ApplicationController
   def show    
     authorize! :view, :settings
     @statuses = Status.where(validity: true)
+    @price_lists = PriceList.where(validity: true)
   end
   
   # PUT /settings
   def update
     authorize! :manage, :settings
-    @statuses = Status.where(validity: true)    
+    @statuses = Status.where(validity: true)  
+    @price_lists = PriceList.where(validity: true)  
     @errors = []
     # Settings.ftp_server = params[:ftp_server]
     config = YAML.load_file("#{Rails.root}/config/settings.local.yml")
@@ -66,6 +68,13 @@ class SettingsController < ApplicationController
       config['default_route_point_attended_status_id'] = params[:default_route_point_attended_status_id]
     else
       error = t(:default_route_point_attended_status) + ' ' + t('errors.messages.blank') 
+      @errors << error
+    end  
+    
+    unless params[:default_price_list_id].empty?
+      config['default_price_list_id'] = params[:default_price_list_id]
+    else
+      error = t(:default_price_list) + ' ' + t('errors.messages.blank') 
       @errors << error
     end      
      

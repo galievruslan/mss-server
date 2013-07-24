@@ -6,6 +6,7 @@ ftp_outbox_directory: DIRECTORY
 ftp_inbox_directory: DIRECTORY
 default_route_point_status_id: ID
 default_route_point_attended_status_id: ID
+default_price_list_id: ID
 order_filename: 'ORDER.xml'
 ftp_passive: true
 server_name: SERVER_NAME

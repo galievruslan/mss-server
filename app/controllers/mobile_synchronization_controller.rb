@@ -40,9 +40,16 @@ class MobileSynchronizationController < ApplicationController
       @default_route_point_attended_status_id = nil
     end
     
+    if Settings.default_price_list_id
+      @default_price_list_id = Settings.default_price_list_id      
+    else
+      @default_price_list_id = nil
+    end
+    
     respond_to do |format|
       @responce = JSON default_route_point_status_id: @default_route_point_status_id,
-        default_route_point_attended_status_id: @default_route_point_attended_status_id
+        default_route_point_attended_status_id: @default_route_point_attended_status_id,
+        default_price_list_id: @default_price_list_id
       format.json { render json: @responce }
     end 
   end

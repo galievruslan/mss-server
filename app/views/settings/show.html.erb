@@ -140,6 +140,12 @@
 			    	<%= text_field_tag :order_filename, Settings.order_filename, placeholder: t(:order_filename) %>
 			    </div>
 			  </div>
+			  <div class="control-group">
+			    <%= label_tag :default_price_list_id, t(:default_price_list), class: "control-label" %>
+			    <div class="controls">
+			    	<%= select_tag :default_price_list_id, options_from_collection_for_select(@price_lists, :id, :name, Settings.default_price_list_id), {:include_blank => true, 'data-placeholder' => t(:select_price_list)} %>
+			    </div>
+			  </div>
 			</div>
 			<div class="control-group">
 			  <%= submit_tag(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>
