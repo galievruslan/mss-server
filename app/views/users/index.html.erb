@@ -51,9 +51,9 @@
 	  	<th><input type="checkbox" onclick="toggleChecked(this.checked)"></th>
 	  	<th><%= sort_link @search, :username, t(:username) %></th>
 	    <th><%= t(:roles)%></th>
-	    <th><%= sort_link @search, :manager_id, t(:manager) %></th>
+	    <th><%= sort_link @search, :manager_id, t(:manager) %></th>	    
+	    <th><%= sort_link @search, :phone, t(:phone) %></th>
 	    <th><%= sort_link @search, :current_sign_in_at, t(:last_login) %></th>
-	    <th><%= sort_link @search, :current_sign_in_ip, t(:login_ip) %></th>
 	    <th><%= sort_link @search, :banned, t(:status) %></th>
 	    <th colspan="4"><%= t(:actions)%></th>
 	  </tr>
@@ -68,9 +68,9 @@
 	    	<%= t(role.name) %> <br>
 	    	<% end %>
 	    </td>
-	    <td><%= Manager.find(user.manager_id).name if user.manager_id%></td>    
+	    <td><%= Manager.find(user.manager_id).name if user.manager_id%></td>    	    
+	    <td><%= user.phone %></td>
 	    <td><%= user.current_sign_in_at if user.current_sign_in_at %></td>
-	    <td><%= user.current_sign_in_ip %></td>
 	    <td><i class=<%= user.banned ? 'icon-remove-circle' : 'icon-ok-sign'%>></i></td>
 	    <td><%= link_to(user) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
 	    <td><%= link_to(edit_user_path(user)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>

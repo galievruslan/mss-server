@@ -45,13 +45,13 @@
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th><%= t(:role) %></th>
+      <th><%= t(:roles) %></th>
     </tr>
   </thead>
   <tbody>
     <% @user.roles.each do |role| %>  
     <tr>
-    	<td><%= role.name %></td>
+    	<td><%= t(role.name) %></td>
     </tr>
     <% end %>
   </tbody>
