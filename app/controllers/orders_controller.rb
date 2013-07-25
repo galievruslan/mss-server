@@ -59,9 +59,7 @@ class OrdersController < ApplicationController
     @unit_of_measures = UnitOfMeasure.where(validity: true)
     @categories = Category.where(validity: true)
     if Settings.default_price_list_id
-      @selected_price_list = Settings.default_price_list_id
-    else
-      @selected_price_list = nil
+      @order.price_list_id = Settings.default_price_list_id
     end
     if params[:route_point_id]
       @route_point = RoutePoint.find(params[:route_point_id])
@@ -124,14 +122,8 @@ class OrdersController < ApplicationController
     @price_lists = PriceList.where(validity: true)
     @warehouses = Warehouse.where(validity: true)
     
-    if params[:order][:price_list_id]
-      @selected_price_list = params[:order][:price_list_id]
-    else
-      if Settings.default_price_list_id
-        @selected_price_list = Settings.default_price_list_id
-      else
-        @selected_price_list = nil
-      end
+    if Settings.default_price_list_id and @order.price_list_id.nil?
+      @order.price_list_id = Settings.default_price_list_id
     end
     
     if params[:order][:price_list_id] != ""
@@ -186,14 +178,8 @@ class OrdersController < ApplicationController
       @products = []
     end  
     
-    if params[:order][:price_list_id]
-      @selected_price_list = params[:order][:price_list_id]
-    else
-      if Settings.default_price_list_id
-        @selected_price_list = Settings.default_price_list_id
-      else
-        @selected_price_list = nil
-      end
+    if Settings.default_price_list_id and params[:order][:price_list_id].empty?
+      params[:order][:price_list_id] = Settings.default_price_list_id
     end
     
     @unit_of_measures = UnitOfMeasure.where(validity: true)

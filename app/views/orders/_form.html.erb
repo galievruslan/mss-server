@@ -64,7 +64,7 @@
 			  <div class="control-group">
 			    <%= f.label :price_list_id, t(:price_list), class: "control-label" %>
 			    <div class="controls">
-			    	<%= f.select(:price_list_id, options_from_collection_for_select(@price_lists, "id", "name", @selected_price_list), {:include_blank => true}, {'data-placeholder' => t(:select_price_list), :onchange => 'onPriceListChanged()'}) %>
+			    	<%= f.select(:price_list_id, @price_lists.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_price_list), :onchange => 'onPriceListChanged()'}) %>
 			    </div>
 			  </div>
 			  <div class="control-group">
