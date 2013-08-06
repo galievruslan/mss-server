@@ -1,5 +1,5 @@
 class PriceListsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => :show_products
   # GET /price_lists
   # GET /price_lists.json
   def index
@@ -119,7 +119,7 @@ class PriceListsController < ApplicationController
   end  
   
   # GET /price_lists/:id/products/:product_id
-  def show_product
+  def show_products
     @product = ProductPrice.where(price_list_id: params[:id], product_id: params[:product_id]).first
 
     respond_to do |format|

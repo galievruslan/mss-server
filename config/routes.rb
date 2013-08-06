@@ -148,7 +148,7 @@
       post :multiple_change
     end
     member do
-      get 'products/:product_id' => 'price_lists#show_product'
+      get 'products/:product_id' => 'price_lists#show_products'
     end
     resources :price_list_lines do
       collection do
