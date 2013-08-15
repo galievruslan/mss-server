@@ -1,5 +1,5 @@
 <tr>
-	<td><%= f.select :shipping_address_id , @shipping_addresses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_shipping_address), :class => 'select2-field'} %></td>
+	<td><%= f.select :shipping_address_id , @shipping_addresses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_shipping_address), :class => 'input-xlarge select2-field'} %></td>
 	<td><%= f.select :status_id , @statuses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_status), :class => 'select2-field'} %></td>
 	<td>
   	<a onclick="onDestroy(this)"><i class='icon-remove' title="<%= t(:remove)%>"></i></a>

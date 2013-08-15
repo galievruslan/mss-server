@@ -1,27 +1,50 @@
 <h3><%= t(:profile)%></h3>
-<p>
-  <b><%= t(:username)%>:</b>
-  <%= @user.username %>
-</p>
-<p>
-  <b><%= t(:email)%>:</b>
-  <%= @user.email %>
-</p>
-<p>
-  <b><%= t(:phone)%>:</b>
-  <%= @user.phone %>
-</p>
-<p>
-  <b><%= t(:manager)%>:</b>
-  <%= @manager ? @manager.name : t(:no_manager)%>
-</p>
-<h4><%= t(:settings)%></h4>
-<p>
-  <b><%= t(:language)%>:</b>
-  <%= @user.language ? @user.language : 'EN'%>
-</p>
-<p>
-  <b><%= t(:list_page_size)%>:</b>
-  <%= @user.list_page_size ? @user.list_page_size : '25'%>
-</p>
-<%= link_to t(:edit), profile_edit_path %> | <%= link_to t(:edit_password), profile_edit_password_path %>
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:user)%></a></li>
+    <li><a href="#tab2" data-toggle="tab"><%= t(:roles)%></a></li>
+    <li><a href="#tab3" data-toggle="tab"><%= t(:settings)%></a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">	
+    	<p>
+			  <b><%= t(:username)%>:</b>
+			  <%= @user.username %>
+			</p>
+			<p>
+			  <b><%= t(:email)%>:</b>
+			  <%= @user.email %>
+			</p>
+			<p>
+			  <b><%= t(:phone)%>:</b>
+			  <%= @user.phone %>
+			</p>
+			<p>
+			  <b><%= t(:manager)%>:</b>
+			  <%= @manager ? @manager.name : t(:no_manager)%>
+			</p>
+		</div>
+		<div class="tab-pane" id="tab2">
+			<table class="table table-striped table-hover">
+			  <tbody>
+			    <% @user.roles.each do |role| %>  
+			    <tr>
+			    	<td><%= t(role.name) %></td>
+			    </tr>
+			    <% end %>
+			  </tbody>
+			</table>
+		</div>
+		<div class="tab-pane" id="tab3">
+			<p>
+			  <b><%= t(:language)%>:</b>
+			  <%= @user.language ? @user.language : 'EN'%>
+			</p>
+			<p>
+			  <b><%= t(:list_page_size)%>:</b>
+			  <%= @user.list_page_size ? @user.list_page_size : '25'%>
+			</p>
+		</div>
+	</div>
+</div>
+<%= link_to t(:edit), profile_edit_path, class: 'btn' %> <%= link_to t(:edit_password), profile_edit_password_path, class: 'btn' %>
