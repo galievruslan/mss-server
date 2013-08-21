@@ -10,7 +10,8 @@ class ProductPricesController < ApplicationController
       @search = @product.product_prices.search(params[:q])
       @product_prices = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
     end   
-
+    @price_lists = PriceList.where(validity: true)
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @product_prices }

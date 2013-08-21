@@ -90,6 +90,7 @@ en:
         price_list: "Price list"
       product_unit_of_measure:
         unit_of_measure: "Unit of measure"
+        unit_of_measure_id: "Unit of measure"
         product: "Product"
         count_in_base_unit: "Count in base unit" 
         validity: "Validity"
@@ -536,3 +537,4 @@ en:
   month_report: "Report for the month"
   phone: "Phone"
   default_price_list: "Default price list"
+  once_base_unit_per_product: "The product already has a base unit"

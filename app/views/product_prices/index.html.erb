@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'product_prices' %>
+<% end %>
 <h3><%= t(:list_product_prices)%></h3>
 
 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
@@ -8,9 +11,9 @@
 	<div class='well well-small'>		
 		<%= search_form_for [@product, @search], class: "form-horizontal" do |f| %>		  
 		  <div class="control-group">
-		  	<%= f.label :price_list_name_cont, t(:price_list)+':', class: "control-label"%>
+		  	<%= f.label :price_list_id_eq, t(:price_list)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.text_field :price_list_name_cont, class: 'search-field'%>
+		  		<%= f.select :price_list_id_eq, @price_lists.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_price_list)}, {:class => 'search-field'} %>
 		  	</div>
 		  </div>
 		  <div class="control-group">

@@ -90,6 +90,7 @@ ru:
         price_list: "Прайс-лист"
       product_unit_of_measure:
         unit_of_measure: "Единица измерения"
+        unit_of_measure_id: "Единица измерения"
         product: "Номенклатура"
         count_in_base_unit: "Количество в базовых единицах" 
         validity: "Доступность"
@@ -536,3 +537,4 @@ ru:
   month_report: "Отчет за месяц"
   phone: "Телефон"
   default_price_list: "Прайс-лист по-умолчанию"
+  once_base_unit_per_product: "У номенклатуры уже есть базовая единица измерения"

@@ -6,4 +6,6 @@ class ProductUnitOfMeasure < ActiveRecord::Base
   validates :count_in_base_unit, :numericality => {greater_than_or_equal_to: 0}
   validates :unit_of_measure_id, :uniqueness => { :scope => :product_id,
     :message => I18n.t(:once_per_product) }
+  validates :base, :uniqueness => { :scope => :product_id,
+    :message => I18n.t(:once_base_unit_per_product) }
 end
