@@ -117,7 +117,7 @@
 		    <th><%= sort_link @search, :price_list_name, t(:price_list) %></th>
 		    <th><%= t(:order_amount)%></th>
 		    <th><%= sort_link @search, :exported_at, t(:exported_date) %></th>
-		    <th colspan="5"><%= t(:actions)%></th>
+		    <th colspan="6"><%= t(:actions)%></th>
 		  </tr>
 		</thead>
 		<tbody>
@@ -136,6 +136,7 @@
 		    	<td><%= link_to(export_again_order_path(order), :method => :put) do %><i class='icon-download-alt' title="<%= t(:export_again)%>"></i><%end%></td>
 		    <% end %>
 		    <td><%= link_to(generate_xml_order_path(order)) do %><i class='icon-download' title="<%= t(:download_xml)%>"></i><% end %></td>
+		    <td><%= link_to(order_path(order, format: "xls")) do %><i class='icon-list' title="<%= t(:download_xls)%>"></i><% end %></td>
 		    <td><%= link_to(order) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
 			  <% if can? :update, Order %>
 				  <td><%= link_to(edit_order_path(order)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>

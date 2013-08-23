@@ -34,6 +34,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @order }
+      format.xls {render :template => 'orders/order.xls.erb'}
     end
   end
 

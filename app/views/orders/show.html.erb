@@ -8,15 +8,19 @@
 </p>
 <p>
   <b><%= t(:exported_date)%>:</b>
-  <%= @order.exported_at ? @order.exported_at : t(:not_exported)%>
+  <%= @order.exported_at ? @order.exported_at : t(:not_exported) %>
 </p>
 <p>
   <b><%= t(:order_complete)%>:</b>
-  <%= @order.complete ? t(:complete) : t(:not_complete)%>
+  <%= @order.complete ? t(:complete) : t(:not_complete) %>
 </p>
 <p>
   <b><%= t(:shipping_address)%>:</b>
   <%= @order.shipping_address.name %>
+</p>
+<p>
+  <b><%= t(:address)%>:</b>
+  <%= @order.shipping_address.address %>
 </p>
 <p>
   <b><%= t(:manager)%>:</b>
@@ -76,6 +80,7 @@
       <th><%= sort_link @search, :unit_of_measure_name, t(:unit_of_measure) %></th>
       <th><%= sort_link @search, :quantity, t(:quantity) %></th>
       <th><%= t(:price_base_unit) %></th>
+      <th><%= t(:amount) %></th>
     </tr>
   </thead>
   <tbody>
@@ -85,6 +90,7 @@
       <td><%= order_item.unit_of_measure.name %></td>
       <td><%= order_item.quantity %></td>
       <td><%= order_item.price_base_unit(@order.price_list) %></td>
+      <td><%= order_item.amount %></td>
     </tr>
     <%end%>
   </tbody>
