@@ -538,3 +538,4 @@ ru:
   phone: "Телефон"
   default_price_list: "Прайс-лист по-умолчанию"
   once_base_unit_per_product: "У номенклатуры уже есть базовая единица измерения"
+  select_role: "Выберите роль"

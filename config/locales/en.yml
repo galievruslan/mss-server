@@ -538,3 +538,4 @@ en:
   phone: "Phone"
   default_price_list: "Default price list"
   once_base_unit_per_product: "The product already has a base unit"
+  select_role: "Select role"

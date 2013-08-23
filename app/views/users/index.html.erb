@@ -31,10 +31,15 @@
 		  	</div>
 		  </div>
 		  <div class="control-group">
+		  	<%= f.label :roles_id_eq, t(:role)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.select :roles_id_eq, @roles.collect  {|p| [ t(p.name), p.id ]}, {:include_blank => t(:select_role)},{:class => 'search-field'} %>		  		
+		  	</div>
+		  </div>
+		  <div class="control-group">
 		  	<%= f.label :manager_id_eq, t(:manager)+':', class: "control-label"%>
 		  	<div class="controls">
-		  		<%= f.select :manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_manager)},{:class => 'search-field'} %>
-		  		
+		  		<%= f.select :manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_manager)},{:class => 'search-field'} %>		  		
 		  	</div>
 		  </div>
 		  <div class="control-group">	  	

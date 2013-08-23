@@ -3,13 +3,23 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    if params[:q]
-      @search = Product.search(params[:q])
-      @products = @search.result.page(params[:page]).per(current_user.list_page_size)
+    if params[:category_id]
+      if params[:q]
+        @search = Product.where(category_id: params[:category_id]).search(params[:q])
+        @products = @search.result.page(params[:page]).per(current_user.list_page_size)
+      else
+        @search = Product.where(category_id: params[:category_id]).search(params[:q])    
+        @products = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+      end 
     else
-      @search = Product.search(params[:q])    
-      @products = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
-    end   
+      if params[:q]
+        @search = Product.search(params[:q])
+        @products = @search.result.page(params[:page]).per(current_user.list_page_size)
+      else
+        @search = Product.search(params[:q])    
+        @products = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
+      end 
+    end     
     
     @categories = Category.all
         

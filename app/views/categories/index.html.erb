@@ -61,7 +61,7 @@
 			  	<td><%= category.external_key %></td>
 			    <td><%= category.name %></td>			    
 			    <td><%= category.parent.name if category.parent %></td>
-			    <td><%= @products_count[category.id] ? @products_count[category.id] : '0' %></td>		    
+			    <td><%= link_to(products_path(:category_id => category.id)) do%><%= @products_count[category.id] ? @products_count[category.id] : '0' %><%end%></td>		    
 			    <td><i class=<%=category.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>		    
 				  <td><%= link_to(category) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
 				  <% if can? :manage, Category %>
