@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Styles>
+    <Style ss:ID="bold">
+      <Font ss:Bold="1" />
+      <Borders>
+		    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+		  </Borders>		  
+    </Style>
+    <Style ss:ID="align_center">
+      <Font ss:Bold="1" />
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+    </Style>
+    <Style ss:ID="default">
+	  	<Borders>
+	    	<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+	 		</Borders>
+		</Style>
+  </Styles>
+  <Worksheet ss:Name="<%= t(:orders) %>">
+    <Table>
+		<Column ss:Width="400"/>
+		<Column ss:Width="100"/>
+		<Column ss:Width="100"/>
+			<Row>
+      	<Cell ss:MergeAcross="2" ss:StyleID="align_center"><Data ss:Type="String"><%= @price_list.name %></Data></Cell>
+      </Row>
+      <Row>
+      	<Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:product) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:price) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:validity) %></Data></Cell>
+      </Row>
+    <% @price_list.product_prices.each do |product_price| %>
+      <Row>
+      	<Cell ss:StyleID="default"><Data ss:Type="String"><%= product_price.product.name %></Data></Cell>
+      	<Cell ss:StyleID="default"><Data ss:Type="String"><%= product_price.price %></Data></Cell>
+      	<Cell ss:StyleID="default"><Data ss:Type="String"><%= product_price.validity ? t(:truth) : t(:lie) %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

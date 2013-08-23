@@ -34,6 +34,7 @@ class PriceListsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @price_list }
+      format.xls {render :template => 'price_lists/price_list.xls.erb'}
     end
   end
 

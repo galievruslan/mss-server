@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Styles>
+    <Style ss:ID="bold">
+      <Font ss:Bold="1" />
+      <Borders>
+		    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+		  </Borders>
+    </Style>
+    <Style ss:ID="bold_not_bordered">
+      <Font ss:Bold="1" />
+    </Style>
+    <Style ss:ID="default">
+	  	<Borders>
+	    	<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+	 		</Borders>
+		</Style>
+		<Style ss:ID="not_bordered">
+		</Style>
+  </Styles>
+  <Worksheet ss:Name="<%= t(:orders) %>">
+    <Table>
+    <Column ss:Width="300"/>
+		<Column ss:Width="120"/>
+		<Column ss:Width="80"/>
+		<Column ss:Width="130"/>
+		<Column ss:Width="50"/>
+      <Row>
+      	<Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:datetime) %></Data></Cell>
+      	<Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @order.date %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:shipping_date) %></Data></Cell>
+        <Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @order.shipping_date %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:exported_date) %></Data></Cell>
+        <Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @order.exported_at ? @order.exported_at : t(:not_exported) %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:status) %></Data></Cell>
+        <Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @order.complete ? t(:complete) : t(:not_complete) %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:shipping_address) %></Data></Cell>
+        <Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @order.shipping_address.name %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:address) %></Data></Cell>
+        <Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @order.shipping_address.address %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:manager) %></Data></Cell>
+        <Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @order.manager.name %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:warehouse) %></Data></Cell>
+        <Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @order.warehouse.name %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:price_list) %></Data></Cell>
+        <Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @order.price_list.name %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:order_amount) %></Data></Cell>
+        <Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @order.amount %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:comment) %></Data></Cell>
+        <Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @order.comment %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:product) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:unit_of_measure) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:quantity) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:price_base_unit) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:amount) %></Data></Cell>
+      </Row>      
+    <% @order.order_items.each do |order_item| %>
+      <Row>
+      	<Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.product.name %></Data></Cell>
+      	<Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.unit_of_measure.name %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.quantity %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.price_base_unit(@order.price_list) %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.amount %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
