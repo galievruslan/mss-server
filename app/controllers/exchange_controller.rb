@@ -442,15 +442,15 @@ class ExchangeController < ApplicationController
         begin
           product_unit_of_measures = xml.elements.to_a("//product_unit_of_measure")
           
-          product_external_keys = []
-          unit_of_measure_external_keys = []
+          product_unit_of_measures_true_ids = []
           product_unit_of_measures.each do |product_unit_of_measure|
-            product_external_keys << product_unit_of_measure.elements['product_external_key'].text
-            unit_of_measure_external_keys << product_unit_of_measure.elements['unit_of_measure_external_key'].text         
+            product_external_key = product_unit_of_measure.elements['product_external_key'].text
+            unit_of_measure_external_key = product_unit_of_measure.elements['unit_of_measure_external_key'].text 
+            product_id = Product.find_by_external_key(product_external_key).id
+            unit_of_measure_id = UnitOfMeasure.find_by_external_key(unit_of_measure_external_key).id
+            product_unit_of_measures_true_id = ProductUnitOfMeasure.find_by_product_id_and_unit_of_measure_id(product_id, unit_of_measure_id).id
+            product_unit_of_measures_true_ids << product_unit_of_measures_true_id
           end
-          product_ids = Product.where("external_key IN (?)", product_external_keys).select('id').map {|x| x.id}
-          unit_of_measure_ids = UnitOfMeasure.where("external_key IN (?)", unit_of_measure_external_keys).select('id').map {|x| x.id}
-          product_unit_of_measures_true_ids = ProductUnitOfMeasure.where("product_id IN (?) AND unit_of_measure_id IN (?)", product_ids, unit_of_measure_ids).select('id').map {|x| x.id}
           product_unit_of_measures_false = ProductUnitOfMeasure.where("id NOT IN (?)", product_unit_of_measures_true_ids)
           product_unit_of_measures_false.each do |product_unit_of_measure_false|
             if product_unit_of_measure_false.validity
@@ -500,15 +500,16 @@ class ExchangeController < ApplicationController
         begin
           product_prices = xml.elements.to_a("//product_price")
           
-          product_external_keys = []
-          price_list_external_keys = []
+          product_prices_true_ids = []
           product_prices.each do |product_price|
-            product_external_keys << product_price.elements['product_external_key'].text
-            price_list_external_keys << product_price.elements['price_list_external_key'].text         
+            product_external_key = product_price.elements['product_external_key'].text
+            price_list_external_key = product_price.elements['price_list_external_key'].text
+            product_id = Product.find_by_external_key(product_external_key).id
+            price_list_id = PriceList.find_by_external_key(price_list_external_key).id
+            product_prices_true_id = ProductPrice.find_by_product_id_and_price_list_id(product_id, price_list_id).id
+            product_prices_true_ids << product_prices_true_id
           end
-          product_ids = Product.where("external_key IN (?)", product_external_keys).select('id').map {|x| x.id}
-          price_list_ids = PriceList.where("external_key IN (?)", price_list_external_keys).select('id').map {|x| x.id}
-          product_prices_true_ids = ProductPrice.where("product_id IN (?) AND price_list_id IN (?)", product_ids, price_list_ids).select('id').map {|x| x.id}
+          
           product_prices_false = ProductPrice.where("id NOT IN (?)", product_prices_true_ids)
           product_prices_false.each do |product_price_false|
             if product_price_false.validity
