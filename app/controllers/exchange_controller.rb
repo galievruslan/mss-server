@@ -219,15 +219,15 @@ class ExchangeController < ApplicationController
         begin
           manager_shipping_addresses = xml.elements.to_a("//manager_shipping_address")
           
-          manager_external_keys = []
-          shipping_address_external_keys = []
+          manager_shipping_addresses_true_ids = []
           manager_shipping_addresses.each do |manager_shipping_address|
-            manager_external_keys << manager_shipping_address.elements['manager_external_key'].text
-            shipping_address_external_keys << manager_shipping_address.elements['shipping_address_external_key'].text         
-          end
-          manager_ids = Manager.where("external_key IN (?)", manager_external_keys).select('id').map {|x| x.id}
-          shipping_address_ids = ShippingAddress.where("external_key IN (?)", shipping_address_external_keys).select('id').map {|x| x.id}
-          manager_shipping_addresses_true_ids = ManagerShippingAddress.where("manager_id IN (?) AND shipping_address_id IN (?)", manager_ids, shipping_address_ids).select('id').map {|x| x.id}
+            manager_external_key = manager_shipping_address.elements['manager_external_key'].text
+            shipping_address_external_key = manager_shipping_address.elements['shipping_address_external_key'].text
+            manager_id = Manager.find_by_external_key(manager_external_key).id
+            shipping_address_id = ShippingAddress.find_by_external_key(shipping_address_external_key).id
+            manager_shipping_addresses_true_ids << ManagerShippingAddress.find_by_manager_id_and_shipping_address_id(manager_id, shipping_address_id).id
+          end          
+          
           manager_shipping_addresses_false = ManagerShippingAddress.where("id NOT IN (?)", manager_shipping_addresses_true_ids)
           manager_shipping_addresses_false.each do |manager_shipping_address_false|
             if manager_shipping_address_false.validity
