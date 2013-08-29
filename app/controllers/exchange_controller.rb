@@ -226,7 +226,7 @@ class ExchangeController < ApplicationController
             manager_id = Manager.find_by_external_key(manager_external_key).id
             shipping_address_id = ShippingAddress.find_by_external_key(shipping_address_external_key).id
             manager_shipping_addresses_true = ManagerShippingAddress.find_by_manager_id_and_shipping_address_id(manager_id, shipping_address_id)
-            manager_shipping_addresses_true_id = manager_shipping_addresses_true.id unless !manager_shipping_addresses_true.nil?
+            manager_shipping_addresses_true_id = manager_shipping_addresses_true.id unless manager_shipping_addresses_true.nil?
             manager_shipping_addresses_true_ids << manager_shipping_addresses_true_id
           end          
           
