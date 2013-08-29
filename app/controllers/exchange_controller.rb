@@ -225,7 +225,8 @@ class ExchangeController < ApplicationController
             shipping_address_external_key = manager_shipping_address.elements['shipping_address_external_key'].text
             manager_id = Manager.find_by_external_key(manager_external_key).id
             shipping_address_id = ShippingAddress.find_by_external_key(shipping_address_external_key).id
-            manager_shipping_addresses_true_id = ManagerShippingAddress.find_by_manager_id_and_shipping_address_id(manager_id, shipping_address_id).id
+            manager_shipping_addresses_true = ManagerShippingAddress.find_by_manager_id_and_shipping_address_id(manager_id, shipping_address_id)
+            manager_shipping_addresses_true_id = manager_shipping_addresses_true.id unless !manager_shipping_addresses_true.nil?
             manager_shipping_addresses_true_ids << manager_shipping_addresses_true_id
           end          
           
@@ -449,7 +450,8 @@ class ExchangeController < ApplicationController
             unit_of_measure_external_key = product_unit_of_measure.elements['unit_of_measure_external_key'].text 
             product_id = Product.find_by_external_key(product_external_key).id
             unit_of_measure_id = UnitOfMeasure.find_by_external_key(unit_of_measure_external_key).id
-            product_unit_of_measures_true_id = ProductUnitOfMeasure.find_by_product_id_and_unit_of_measure_id(product_id, unit_of_measure_id).id
+            product_unit_of_measures_true = ProductUnitOfMeasure.find_by_product_id_and_unit_of_measure_id(product_id, unit_of_measure_id)
+            product_unit_of_measures_true_id = product_unit_of_measures_true.id unless product_unit_of_measures_true.nil?
             product_unit_of_measures_true_ids << product_unit_of_measures_true_id
           end
           product_unit_of_measures_false = ProductUnitOfMeasure.where("id NOT IN (?)", product_unit_of_measures_true_ids)
@@ -507,7 +509,8 @@ class ExchangeController < ApplicationController
             price_list_external_key = product_price.elements['price_list_external_key'].text
             product_id = Product.find_by_external_key(product_external_key).id
             price_list_id = PriceList.find_by_external_key(price_list_external_key).id
-            product_prices_true_id = ProductPrice.find_by_product_id_and_price_list_id(product_id, price_list_id).id
+            product_prices_true = ProductPrice.find_by_product_id_and_price_list_id(product_id, price_list_id)
+            product_prices_true_id = product_prices_true.id unless product_prices_true.nil?
             product_prices_true_ids << product_prices_true_id
           end
           
