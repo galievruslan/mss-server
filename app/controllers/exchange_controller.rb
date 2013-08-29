@@ -225,7 +225,8 @@ class ExchangeController < ApplicationController
             shipping_address_external_key = manager_shipping_address.elements['shipping_address_external_key'].text
             manager_id = Manager.find_by_external_key(manager_external_key).id
             shipping_address_id = ShippingAddress.find_by_external_key(shipping_address_external_key).id
-            manager_shipping_addresses_true_ids << ManagerShippingAddress.find_by_manager_id_and_shipping_address_id(manager_id, shipping_address_id).id
+            manager_shipping_addresses_true_id = ManagerShippingAddress.find_by_manager_id_and_shipping_address_id(manager_id, shipping_address_id).id
+            manager_shipping_addresses_true_ids << manager_shipping_addresses_true_id
           end          
           
           manager_shipping_addresses_false = ManagerShippingAddress.where("id NOT IN (?)", manager_shipping_addresses_true_ids)
