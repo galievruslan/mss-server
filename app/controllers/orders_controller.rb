@@ -41,8 +41,12 @@ class OrdersController < ApplicationController
   # GET /orders/new
   # GET /orders/new.json
   def new
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to orders_path, notice: t(:manager_not_valid)
+      return
+    end
     @order = Order.new 
-    @order.date = Time.now.strftime("%d-%m-%Y %H:%M")    
+    @order.date = Time.now.strftime("%d-%m-%Y %H:%M")            
     if current_user.manager_id
       @order.manager_id = current_user.manager_id
       @order.warehouse_id = Manager.find(current_user.manager_id).default_warehouse_id
@@ -50,7 +54,7 @@ class OrdersController < ApplicationController
       @shipping_address_ids = ManagerShippingAddress.where(manager_id: current_user.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
       @customer_ids= ShippingAddress.where(id: @shipping_address_ids).select('customer_id').map {|x| x.customer_id}
       @customers = Customer.where(validity: true, id: @customer_ids)
-    else
+    else      
       @managers = Manager.where(validity: true)
       @customers = Customer.where(validity: true)
     end
@@ -80,11 +84,14 @@ class OrdersController < ApplicationController
   end
 
   # GET /orders/1/edit
-  def edit    
+  def edit  
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to orders_path, notice: t(:manager_not_valid)      
+    end  
     @order = Order.find(params[:id])
     if @order.exported_at
       redirect_to orders_path, notice: t(:not_edit_exported_order) 
-    end
+    end     
     @select_customer = @order.shipping_address.customer
     @select_customer_id = @select_customer.id
     @select_shipping_address_id = @order.shipping_address.id
@@ -106,6 +113,10 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to orders_path, notice: t(:manager_not_valid)
+      return
+    end  
     @order = Order.new(params[:order])
     @customers = Customer.where(validity: true)
     if params[:customer_id] != ""
@@ -150,6 +161,10 @@ class OrdersController < ApplicationController
   # PUT /orders/1
   # PUT /orders/1.json
   def update
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to orders_path, notice: t(:manager_not_valid)
+      return
+    end
     @order = Order.find(params[:id]) 
     
     if params[:customer_id] != ""

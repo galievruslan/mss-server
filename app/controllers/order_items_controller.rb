@@ -27,8 +27,12 @@ class OrderItemsController < ApplicationController
 
   # GET /order_items/new
   # GET /order_items/new.json
-  def new    
+  def new
     @order = Order.find(params[:order_id])
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to order_order_items_path(@order), notice: t(:manager_not_valid)
+      return     
+    end
     @order_item = OrderItem.new
     @product_ids = ProductPrice.where(price_list_id: @order.price_list_id).select('product_id').map {|x| x.product_id}
     @products = Product.where(validity: true).where(id: @product_ids)
@@ -41,6 +45,10 @@ class OrderItemsController < ApplicationController
   # GET /order_items/1/edit
   def edit    
     @order = Order.find(params[:order_id])
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to order_order_items_path(@order), notice: t(:manager_not_valid)
+      return     
+    end
     @order_item = OrderItem.find(params[:id])
     @product_ids = ProductPrice.where(price_list_id: @order.price_list_id).select('product_id').map {|x| x.product_id}
     @products = Product.where(validity: true).where(id: @product_ids)
@@ -53,6 +61,10 @@ class OrderItemsController < ApplicationController
   # POST /order_items.json
   def create
     @order = Order.find(params[:order_id])
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to order_order_items_path(@order), notice: t(:manager_not_valid)
+      return     
+    end
     @order_item = OrderItem.new(params[:order_item])
     @product_ids = ProductPrice.where(price_list_id: @order.price_list_id).select('product_id').map {|x| x.product_id}
     @products = Product.where(validity: true).where(id: @product_ids) 
@@ -79,6 +91,10 @@ class OrderItemsController < ApplicationController
   # PUT /order_items/1.json
   def update
     @order = Order.find(params[:order_id])
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to order_order_items_path(@order), notice: t(:manager_not_valid)
+      return     
+    end
     @order_item = OrderItem.find(params[:id])
     @product_ids = ProductPrice.where(price_list_id: @order.price_list_id).select('product_id').map {|x| x.product_id}
     @products = Product.where(validity: true).where(id: @product_ids)
@@ -103,6 +119,10 @@ class OrderItemsController < ApplicationController
   # DELETE /order_items/1.json
   def destroy
     @order = Order.find(params[:order_id])
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to order_order_items_path(@order), notice: t(:manager_not_valid)
+      return     
+    end
     @order_item = OrderItem.find(params[:id])
     @order_item.destroy
 
@@ -122,6 +142,10 @@ class OrderItemsController < ApplicationController
   # POST /order/1/order_items/multiple_change
   def multiple_change
     @order = Order.find(params[:order_id])
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to order_order_items_path(@order), notice: t(:manager_not_valid)
+      return     
+    end
     if params[:order_item_ids]
       params[:order_item_ids].each do |order_item_id|
         @order_item = OrderItem.find(order_item_id)

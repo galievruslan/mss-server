@@ -30,6 +30,10 @@ class RoutePointsController < ApplicationController
   # GET /route_points/new.json
   def new
     @route = Route.find(params[:route_id])
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to route_route_points_path(@route), notice: t(:manager_not_valid)
+      return
+    end
     @route_point = RoutePoint.new
     @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @route.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
     @shipping_addresses = ShippingAddress.where(validity: true).where(id: @manager_shipping_address_ids)
@@ -44,6 +48,10 @@ class RoutePointsController < ApplicationController
   # GET /route_points/1/edit
   def edit
     @route = Route.find(params[:route_id])
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to route_route_points_path(@route), notice: t(:manager_not_valid)
+      return
+    end
     @route_point = RoutePoint.find(params[:id])
     @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @route.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
     @shipping_addresses = ShippingAddress.where(validity: true).where(id: @manager_shipping_address_ids)
@@ -54,6 +62,10 @@ class RoutePointsController < ApplicationController
   # POST /route_points.json
   def create
     @route = Route.find(params[:route_id])
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to route_route_points_path(@route), notice: t(:manager_not_valid)
+      return
+    end
     @route_point = RoutePoint.new(params[:route_point])
     @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @route.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
     @shipping_addresses = ShippingAddress.where(validity: true).where(id: @manager_shipping_address_ids)
@@ -77,6 +89,10 @@ class RoutePointsController < ApplicationController
   # PUT /route_points/1.json
   def update    
     @route = Route.find(params[:route_id])
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to route_route_points_path(@route), notice: t(:manager_not_valid)
+      return
+    end
     @route_point = RoutePoint.find(params[:id])
     @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @route.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
     @shipping_addresses = ShippingAddress.where(validity: true).where(id: @manager_shipping_address_ids)
@@ -97,6 +113,10 @@ class RoutePointsController < ApplicationController
   # DELETE /route_points/1.json
   def destroy
     @route = Route.find(params[:route_id])
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to route_route_points_path(@route), notice: t(:manager_not_valid)
+      return
+    end
     @route_point = RoutePoint.find(params[:id])
     @route_point.destroy
 
@@ -109,6 +129,10 @@ class RoutePointsController < ApplicationController
   # POST /routes/1/route_points/multiple_change
   def multiple_change
     @route = Route.find(params[:route_id])
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to route_route_points_path(@route), notice: t(:manager_not_valid)
+      return
+    end
     if params[:route_point_ids]
       params[:route_point_ids].each do |route_point_id|
         @route_point = RoutePoint.find(route_point_id)

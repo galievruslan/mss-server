@@ -6,8 +6,12 @@ class RoutesController < ApplicationController
   def current
     authorize! :route , :current
     @user = current_user
-    if @user.manager_id
-      @manager = Manager.find(@user.manager_id)    
+    if @user.role?('manager') and @user.manager_id
+      @manager = Manager.find(@user.manager_id) 
+      if !@manager.validity
+        redirect_to routes_path, notice: t(:manager_not_valid)
+        return      
+      end      
     end
     @day_of_week = Date.today.wday
     @today = Date.today
@@ -91,7 +95,11 @@ class RoutesController < ApplicationController
   # GET /routes/new
   # GET /routes/new.json
   def new
-    @route = Route.new
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to routes_path, notice: t(:manager_not_valid)
+      return
+    end
+    @route = Route.new    
     if current_user.manager_id
       @route.manager_id = current_user.manager_id
       @managers = Manager.where(id: current_user.manager_id)
@@ -110,6 +118,9 @@ class RoutesController < ApplicationController
 
   # GET /routes/1/edit
   def edit
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to routes_path, notice: t(:manager_not_valid)      
+    end
     @route = Route.find(params[:id])
     if current_user.manager_id
       @managers = Manager.where(id: current_user.manager_id)
@@ -125,6 +136,10 @@ class RoutesController < ApplicationController
   # POST /routes
   # POST /routes.json
   def create
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to routes_path, notice: t(:manager_not_valid)
+      return
+    end
     @route = Route.new(params[:route])
     if current_user.manager_id
       @managers = Manager.where(id: current_user.manager_id)
@@ -151,7 +166,11 @@ class RoutesController < ApplicationController
 
   # PUT /routes/1
   # PUT /routes/1.json
-  def update    
+  def update
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to routes_path, notice: t(:manager_not_valid)
+      return
+    end  
     @route = Route.find(params[:id])   
     if current_user.manager_id
       @managers = Manager.where(id: current_user.manager_id)
@@ -179,6 +198,10 @@ class RoutesController < ApplicationController
   # DELETE /routes/1
   # DELETE /routes/1.json
   def destroy
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to routes_path, notice: t(:manager_not_valid)
+      return
+    end
     @route = Route.find(params[:id])
     @route.destroy
 
@@ -190,6 +213,10 @@ class RoutesController < ApplicationController
   
   # POST /routes/multiple_change
   def multiple_change
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to routes_path, notice: t(:manager_not_valid)
+      return
+    end
     if params[:route_ids]
       params[:route_ids].each do |route_id|
         @route = Route.find(route_id)
