@@ -96,7 +96,12 @@
 		  		<%= f.select :price_list_id_eq, @price_lists.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_price_list), :class => 'search-field'} %>
 		  	</div>
 		  </div>
-		  
+		  <div class="control-group">
+		  	<%= f.label :complete_eq, t(:complete)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.check_box :complete_eq, checked: true, class: 'search-field'%>
+		  	</div>
+		  </div>
 		  <div class="control-group">
 		  		<%= f.submit t(:search), class: 'btn btn-info' %>	
 		  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>  	

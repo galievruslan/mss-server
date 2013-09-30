@@ -48,5 +48,5 @@ class ApplicationController < ActionController::Base
       flash[:error] = t(:user_banned)
       root_path
     end
-  end   
+  end
 end

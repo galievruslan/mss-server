@@ -40,7 +40,7 @@
 </p>
 <p>
   <b><%= t(:comment)%>:</b>
-  <%= @order.comment %>
+  <%= simple_format(@order.comment) %>
 </p>
 
 <h4><%= t(:order_items)%></h4>
