@@ -81,10 +81,19 @@ class MobileSynchronizationController < ApplicationController
     @manager_id = current_user.manager_id
     if @manager_id
       @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}    
-      if params[:updated_at]        
-        @shipping_addresses = ShippingAddress.where(id: @manager_shipping_address_ids).where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
-      else
-        @shipping_addresses = ShippingAddress.where(id: @manager_shipping_address_ids).page(page).per(page_size)
+      # if params[:updated_at]        
+        # @shipping_addresses = ShippingAddress.where(id: @manager_shipping_address_ids).where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
+      # else
+        # @shipping_addresses = ShippingAddress.where(id: @manager_shipping_address_ids).page(page).per(page_size)
+      # end
+      if params[:updated_at]
+        @shipping_addresses = ShippingAddress.where(id: @manager_shipping_address_ids).joins(:manager_shipping_addresses).select(
+        "shipping_addresses.id, shipping_addresses.customer_id, shipping_addresses.name, shipping_addresses.address,
+        shipping_addresses.external_key, manager_shipping_addresses.validity, shipping_addresses.created_at, shipping_addresses.updated_at").where("shipping_addresses.updated_at >= ? OR manager_shipping_addresses.updated_at >= ?", params[:updated_at], params[:updated_at]).page(page).per(page_size)        
+      else        
+        @shipping_addresses = ShippingAddress.where(id: @manager_shipping_address_ids).joins(:manager_shipping_addresses).select(
+        "shipping_addresses.id, shipping_addresses.customer_id, shipping_addresses.name, shipping_addresses.address,
+        shipping_addresses.external_key, manager_shipping_addresses.validity, shipping_addresses.created_at, shipping_addresses.updated_at").page(page).per(page_size)
       end
       respond_to do |format|
         format.json { render json: @shipping_addresses }
