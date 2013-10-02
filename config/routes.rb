@@ -1,4 +1,5 @@
   Mss::Application.routes.draw do
+
   root :to => 'pages#index'
   
   devise_for :users
@@ -113,6 +114,11 @@
   resources :managers do
     collection do
       post :multiple_change
+    end
+    resources :manager_warehouses do
+      collection do
+        post :multiple_change
+      end
     end
     resources :manager_shipping_addresses do
       collection do

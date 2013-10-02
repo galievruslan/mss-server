@@ -20,7 +20,8 @@ ru:
       ability: "Привилегия"
       category: "Категория"
       customer: "Клиент"
-      manager_shipping_address: "Адрес поставки менеджера"      
+      manager_shipping_address: "Адрес поставки менеджера"
+      manager_warehouse: "Склад менеджера"
       manager: "Менеджер"
       mobile_client: "Мобильный клиент"
       order_item: "Строка заказа"
@@ -52,6 +53,10 @@ ru:
       manager_shipping_address:
         validity: "Доступность"
         shipping_address: "Адрес поставки"
+        manager: "Менеджер"
+      manager_warehouse:
+        validity: "Доступность"
+        warehouse: "Склад"
         manager: "Менеджер"
       manager:      
         name: "Наименование"
@@ -542,3 +547,12 @@ ru:
   manager_not_valid: "Менеджер не действителен"
   debt: "Долг"
   customer_debts_report: "Отчет по долгам клиентов"
+  edit_manager_warehouses: "Редактировать склады менеджера"
+  edit_manager_warehouse: "Редактирование склада менеджера"
+  new_manager_warehouse: "Новый склад менеджера"
+  listing_manager_warehouses: "Список складов менеджера"
+  manager_warehouse_destroyed: "Склад менеджера удален"
+  manager_warehouse_updated: "Склад менеджера изменен"
+  manager_warehouse_created: "Склад менеджера создан"
+  warehouses_cont: "Кол-во складов"
+  manager_warehouses: "Склады менеджера"

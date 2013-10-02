@@ -20,7 +20,8 @@ en:
       ability: "Ability"
       category: "Category"
       customer: "Customer"
-      manager_shipping_address: "Manager shipping address"      
+      manager_shipping_address: "Manager shipping address"
+      manager_warehouse: "Manager warehouse"      
       manager: "Manager"
       mobile_client: "Mobile client"
       order_item: "Order item"
@@ -52,6 +53,10 @@ en:
       manager_shipping_address:
         validity: "Validity"
         shipping_address: "Shipping address"
+        manager: "Manager"
+      manager_warehouse:
+        validity: "Validity"
+        warehouse: "Warehouse"
         manager: "Manager"
       manager:      
         name: "Name"
@@ -542,3 +547,12 @@ en:
   manager_not_valid: "Manager is not valid"
   debt: "Debt"
   customer_debts_report: "Report on debts"  
+  edit_manager_warehouses: "Edit manager warehouses"
+  edit_manager_warehouse: "Edit manager warehouse"
+  new_manager_warehouse: "New manager warehouse"
+  listing_manager_warehouses: "Listing manager warehouses"
+  manager_warehouse_destroyed: "Manager warehouse was successfully destroyed."
+  manager_warehouse_updated: "Manager warehouse was successfully updated."
+  manager_warehouse_created: "Manager warehouse was successfully created."
+  warehouses_cont: "Warehouses count"
+  manager_warehouses: "Manager warehouses"

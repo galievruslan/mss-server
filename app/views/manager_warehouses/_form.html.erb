@@ -1,0 +1,31 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'manager_warehouses' %>
+<% end %>
+<%= form_for [@manager, @manager_warehouse], :html => { :class => "form-horizontal"} do |f| %>
+  <% if @manager_warehouse.errors.any? %>
+    <div class="alert alert-error">
+    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4><%=t('errors.title')%></h4>
+      <ul>
+      <% @manager_warehouse.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="control-group">
+    <%= f.label :warehouse_id, t(:warehouse), class: "control-label"%>
+    <div class="controls">
+    	<%= f.select(:warehouse_id, @warehouses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_warehouse)}) %>
+    </div>
+  </div>
+  <div class="control-group">
+  	<%= f.label :validity, t(:validity), class: "control-label" %>  
+    <div class="controls">
+    	<%= f.check_box :validity %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.submit(t(:save), class: 'btn', :disable_with => t(:please_wait)) %>
+  </div>
+<% end %>

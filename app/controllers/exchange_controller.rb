@@ -31,6 +31,7 @@ class ExchangeController < ApplicationController
       managers_upload = true
       warehouses_upload = true
       manager_shipping_addresses_upload = true
+      manager_warehouses_upload = true
       unit_of_measures_upload = true
       price_lists_upload = true
       categories_upload = true
@@ -43,6 +44,7 @@ class ExchangeController < ApplicationController
       managers_upload = params[:managers]
       warehouses_upload = params[:warehouses]
       manager_shipping_addresses_upload = params[:managers_shipping_addresses]
+      manager_warehouses_upload = params[:managers_warehouses]
       unit_of_measures_upload = params[:unit_of_measures]
       price_lists_upload = params[:price_lists]
       categories_upload = params[:categories]
@@ -226,10 +228,10 @@ class ExchangeController < ApplicationController
             shipping_address_external_key = manager_shipping_address.elements['shipping_address_external_key'].text
             manager_id = Manager.find_by_external_key(manager_external_key).id
             shipping_address_id = ShippingAddress.find_by_external_key(shipping_address_external_key).id
-            manager_shipping_addresses_true = ManagerShippingAddress.find_by_manager_id_and_shipping_address_id(manager_id, shipping_address_id)
-            unless manager_shipping_addresses_true.nil?
-              manager_shipping_addresses_true_id = manager_shipping_addresses_true.id 
-              manager_shipping_addresses_true_ids << manager_shipping_addresses_true_id
+            manager_shipping_address_true = ManagerShippingAddress.find_by_manager_id_and_shipping_address_id(manager_id, shipping_address_id)
+            unless manager_shipping_address_true.nil?
+              manager_shipping_address_true_id = manager_shipping_address_true.id 
+              manager_shipping_addresses_true_ids << manager_shipping_address_true_id
             end            
           end          
           
@@ -271,6 +273,62 @@ class ExchangeController < ApplicationController
       end
     end
     
+    if manager_warehouses_upload
+      ManagerWarehouse.transaction do
+        begin
+          manager_warehouses = xml.elements.to_a("//manager_warehouse")
+          
+          manager_warehouses_true_ids = []
+          manager_warehouses.each do |manager_warehouse|
+            manager_external_key = manager_warehouse.elements['manager_external_key'].text
+            warehouse_external_key = manager_warehouse.elements['warehouse_external_key'].text
+            manager_id = Manager.find_by_external_key(manager_external_key).id
+            warehouse_id = Warehouse.find_by_external_key(warehouse_external_key).id
+            manager_warehouse_true = ManagerWarehouse.find_by_manager_id_and_warehouse_id(manager_id, warehouse_id)
+            unless manager_warehouse_true.nil?
+              manager_warehouse_true_id = manager_warehouse_true.id 
+              manager_warehouses_true_ids << manager_warehouse_true_id
+            end            
+          end          
+          
+          manager_warehouses_false = ManagerWarehouse.where("id NOT IN (?)", manager_warehouses_true_ids)
+          manager_warehouses_false.each do |manager_warehouse_false|
+            if manager_warehouse_false.validity
+              manager_warehouse_false.update_attributes(validity: false)
+            end
+          end
+          
+          manager_warehouses.each do |manager_warehouse|
+            manager_external_key = manager_warehouse.elements['manager_external_key'].text
+            warehouse_external_key = manager_warehouse.elements['warehouse_external_key'].text
+            manager_db = Manager.find_by_external_key(manager_external_key)
+            warehouse_db = Warehouse.find_by_external_key(warehouse_external_key)
+            
+            if !manager_db
+              error = I18n.t('errors.not_found_manager', external_key: manager_external_key) 
+              @errors << error
+              next          
+            end
+            if warehouse_db
+              error = I18n.t('errors.not_found_warehouse', external_key: warehouse_external_key) 
+              @errors << error
+              next          
+            end        
+            
+            manager_warehouse_db = ManagerWarehouse.find_by_manager_id_and_warehouse_id(manager_db.id, warehouse_db.id)
+            if manager_warehouse_db
+              new_manager_warehouse = ManagerWarehouse.create(manager: manager_db, warehouse: shipping_address_db)          
+            else
+              if !manager_warehouse_db.validity
+                manager_warehouse_db.update_attributes(validity: true)
+              end
+            end        
+          end
+          rescue ActiveRecord::StatementInvalid
+        end
+      end
+    end
+
     if unit_of_measures_upload
       UnitOfMeasure.transaction do
         begin

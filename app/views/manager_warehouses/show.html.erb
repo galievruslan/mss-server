@@ -1,0 +1,17 @@
+<p>
+  <b><%= t(:warehouse)%>:</b>
+  <%= @manager_warehouse.warehouse.name %>
+</p>
+
+<p>
+  <b><%=t(:address)%>:</b>
+  <%= @manager_warehouse.warehouse.address %>
+</p>
+
+<p>
+  <b><%= t(:validity)%>:</b>
+  <%= @manager_warehouse.validity ? t(:truth) : t(:lie) %>
+</p>
+
+<% if can? :manage, ManagerWarehouse %><%= link_to t(:edit), edit_manager_manager_warehouse_path(@manager, @manager_warehouse) %> |<% end %>
+<%= link_to t(:back), manager_manager_warehouse_path(@manager) %>

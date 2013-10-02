@@ -13,7 +13,7 @@ class ManagersController < ApplicationController
     
     @warehouses = Warehouse.all
     @manager_shipping_addresses_count = ManagerShippingAddress.where(validity: true).count(:group=>:manager_id)
-    
+    @manager_warehouses_count = ManagerWarehouse.where(validity: true).count(:group=>:manager_id)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @managers }
