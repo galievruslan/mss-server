@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130724103958) do
+ActiveRecord::Schema.define(:version => 20131002064648) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -27,10 +27,11 @@ ActiveRecord::Schema.define(:version => 20130724103958) do
   create_table "customers", :force => true do |t|
     t.string   "name"
     t.string   "external_key"
-    t.boolean  "validity",     :default => true
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.boolean  "validity",                                    :default => true
+    t.datetime "created_at",                                                    :null => false
+    t.datetime "updated_at",                                                    :null => false
     t.string   "address"
+    t.decimal  "debt",         :precision => 13, :scale => 2
   end
 
   add_index "customers", ["external_key"], :name => "index_customers_on_external_key", :unique => true

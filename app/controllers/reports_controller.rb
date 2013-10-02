@@ -51,4 +51,12 @@ class ReportsController < ApplicationController
     @template_route_points = @search.result
   end
   
+  # GET /reports/customer_debts
+  def customer_debts
+    authorize! :view, :reports
+    @customers = Customer.all
+    @search = Customer.search(params[:q])
+    @customer_debts = @search.result
+  end
+  
 end

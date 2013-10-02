@@ -29,6 +29,12 @@
     </div>
   </div>
   <div class="control-group">
+    <%= f.label :debt, t(:debt), class: "control-label" %>
+    <div class="controls">
+    	<%= f.number_field :debt, step: 0.01, min: 0, max: 99999999999.99 %>
+    </div>
+  </div>
+  <div class="control-group">
   	<%= f.label :validity, t(:validity), class: "control-label" %>
   	<div class="controls">
     	<%= f.check_box :validity %>

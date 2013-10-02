@@ -23,6 +23,7 @@
   get 'reports/orders', :to => 'reports#orders'
   get 'reports/routes', :to => 'reports#routes'
   get 'reports/template_routes', :to => 'reports#template_routes'
+  get 'reports/customer_debts', :to => 'reports#customer_debts'
   
   # MobileSynchronization routes
   get 'synchronization/mobile_client', :to => 'mobile_synchronization#mobile_client'  

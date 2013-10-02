@@ -11,6 +11,10 @@
   <%= @customer.address %>
 </p>
 <p>
+  <b><%= t(:debt)%>:</b>
+  <%= @customer.debt.nil? ? 0.00 : @customer.debt %>
+</p>
+<p>
   <b><%= t(:validity)%>:</b>
   <%= @customer.validity ? t(:truth) : t(:lie) %>
 </p>

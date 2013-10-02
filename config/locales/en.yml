@@ -540,3 +540,5 @@ en:
   once_base_unit_per_product: "The product already has a base unit"
   select_role: "Select role"
   manager_not_valid: "Manager is not valid"
+  debt: "Debt"
+  customer_debts_report: "Report on debts"  

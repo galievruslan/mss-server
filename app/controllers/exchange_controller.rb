@@ -74,14 +74,15 @@ class ExchangeController < ApplicationController
             customer_name = customer.elements['name'].text
             customer_external_key = customer.elements['external_key'].text
             customer_address = customer.elements['address'].text
+            customer_debt = customer.elements['debt'].text
             customer_db = Customer.find_by_external_key(customer_external_key)
             if !customer_db
-              new_customer = Customer.create(name: customer_name, external_key: customer_external_key, address: customer_address)
+              new_customer = Customer.create(name: customer_name, external_key: customer_external_key, address: customer_address, debt: customer_debt)
             else 
               if !customer_db.validity
-                customer_db.update_attributes(name: customer_name, address: customer_address, validity: true)            
+                customer_db.update_attributes(name: customer_name, address: customer_address, debt: customer_debt, validity: true)            
               else
-                customer_db.update_attributes(name: customer_name, address: customer_address)
+                customer_db.update_attributes(name: customer_name, address: customer_address, debt: customer_debt)
               end        
             end
           end

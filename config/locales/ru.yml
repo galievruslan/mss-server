@@ -540,3 +540,5 @@ ru:
   once_base_unit_per_product: "У номенклатуры уже есть базовая единица измерения"
   select_role: "Выберите роль"
   manager_not_valid: "Менеджер не действителен"
+  debt: "Долг"
+  customer_debts_report: "Отчет по долгам клиентов"
