@@ -48,10 +48,11 @@
 			    <div class="controls">
 			    	<%= select_tag(:customer_id, options_from_collection_for_select(@customers, "id", "name", @select_customer_id), {:include_blank => true, 'data-placeholder' => t(:select_customer), :onchange => "update_shipping_addresses(this.value)"}) %>
 			    	<div id="customer_debt">
-			    		<i>			    		
+			    		<i>
 			    		</i> 
 			    	</div>
-			  </div>
+			  	</div>
+			 	</div>
 			  <div id="shipping_addresses" class="control-group">
 			  	<%= f.label :shipping_address_id, t(:shipping_address), class: "control-label" if @shipping_addresses %>
 			  	<div class="controls">
