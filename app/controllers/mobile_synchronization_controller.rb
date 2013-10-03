@@ -192,14 +192,29 @@ class MobileSynchronizationController < ApplicationController
   
   # GET /warehouses.json
   def warehouses
-    if params[:updated_at]
-      @warehouses = Warehouse.where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
+    @manager_id = current_user.manager_id
+    if @manager_id
+      @manager_warehouses_ids = ManagerWarehouse.where(manager_id: @manager_id).select('warehouse_id').map {|x| x.warehouse_id}    
+
+      if params[:updated_at]
+        @warehouses = Warehouse.where(id: @manager_warehouses_ids).joins(:manager_warehouses).select(
+        "warehouses.id, warehouses.name, warehouses.address, warehouses.external_key, 
+        manager_warehouses.validity, warehouses.created_at, warehouses.updated_at").where("warehouses.updated_at >= ? OR manager_warehouses.updated_at >= ?", params[:updated_at], params[:updated_at]).page(page).per(page_size)        
+      else        
+        @warehouses = Warehouse.where(id: @manager_warehouses_ids).joins(:manager_warehouses).select(
+        "warehouses.id, warehouses.name, warehouses.address, warehouses.external_key, 
+        manager_warehouses.validity, warehouses.created_at, warehouses.updated_at").page(page).per(page_size)
+      end
+      
+      respond_to do |format|
+        format.json { render json: @warehouses }
+      end 
     else
-      @warehouses = Warehouse.page(page).per(page_size)
-    end 
-    respond_to do |format|
-      format.json { render json: @warehouses }
-    end 
+      respond_to do |format|
+        @responce = JSON code: 210, description: 'manager is not defined for the current user'
+        format.json { render json: @responce }
+      end
+    end     
   end
   
   # GET /statuses.json
