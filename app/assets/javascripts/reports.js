@@ -9,4 +9,6 @@ $(document).ready(function() {
 	$("#q_template_route_day_of_week_in").select2({allowClear: true});
 	$("#q_template_route_manager_id_in").select2({allowClear: true});
 	$("#q_id_in").select2({allowClear: true});
+	$("#q_product_id_in").select2({allowClear: true});
+	$("#q_unit_of_measure_id_in").select2({allowClear: true});
 });

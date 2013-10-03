@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131002104553) do
+ActiveRecord::Schema.define(:version => 20131003061914) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -139,6 +139,15 @@ ActiveRecord::Schema.define(:version => 20131002104553) do
   end
 
   add_index "products", ["external_key"], :name => "index_products_on_external_key", :unique => true
+
+  create_table "remainders", :force => true do |t|
+    t.integer  "warehouse_id"
+    t.integer  "product_id"
+    t.integer  "unit_of_measure_id"
+    t.integer  "count"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
 
   create_table "roles", :force => true do |t|
     t.string   "name"

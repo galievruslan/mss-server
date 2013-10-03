@@ -59,4 +59,14 @@ class ReportsController < ApplicationController
     @customer_debts = @search.result
   end
   
+  # GET /reports/remainders
+  def remainders
+    authorize! :view, :reports
+    @products = Product.all
+    @warehouses = Warehouse.all
+    @unit_of_measures = UnitOfMeasure.all
+    @search = Remainder.search(params[:q])
+    @remainders = @search.result
+  end
+  
 end

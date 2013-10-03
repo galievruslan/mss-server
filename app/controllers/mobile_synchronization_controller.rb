@@ -264,7 +264,6 @@ class MobileSynchronizationController < ApplicationController
       end
       
       respond_to do |format|
-        format.html # index.html.erb
         format.json { render json: @template_routes }
       end
     else
@@ -287,9 +286,30 @@ class MobileSynchronizationController < ApplicationController
       end
       
       respond_to do |format|
-        format.html # index.html.erb
         format.json { render json: @template_route_points }
       end
+    else
+      respond_to do |format|
+        @responce = JSON code: 210, description: 'manager is not defined for the current user'
+        format.json { render json: @responce }
+      end 
+    end    
+  end
+  
+  # GET /remainders.json
+  def remainders
+    @manager_id = current_user.manager_id
+    if @manager_id
+      @warehouse_ids = ManagerWarehouse.where(manager_id: @manager_id, validity: true).collect(&:warehouse_id)      
+      if params[:updated_at]        
+          @remainders = Remainder.where(warehouse_id: @warehouse_ids).where("updated_at >= ?",params[:updated_at]).page(page).per(page_size)             
+      else        
+          @remainders = Remainder.where(warehouse_id: @warehouse_ids).page(page).per(page_size)           
+      end
+      
+      respond_to do |format|
+        format.json { render json: @remainders }
+      end      
     else
       respond_to do |format|
         @responce = JSON code: 210, description: 'manager is not defined for the current user'

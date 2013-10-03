@@ -82,6 +82,8 @@ class WarehousesController < ApplicationController
     @warehouse = Warehouse.find(params[:id])
     if @warehouse.validity
       @warehouse.update_attributes(validity: false)
+      @manager_warehouses = ManagerWarehouse.where(warehouse_id: params[:id])
+      @manager_warehouses.each { |x| x.update_attributes(validity: false)}
     else
       @warehouse.update_attributes(validity: true)
     end
@@ -99,6 +101,8 @@ class WarehousesController < ApplicationController
         @warehouse = Warehouse.find(warehouse_id)
         if @warehouse.validity
           @warehouse.update_attributes(validity: false)
+          @manager_warehouses = ManagerWarehouse.where(warehouse_id: warehouse_id)
+          @manager_warehouses.each { |x| x.update_attributes(validity: false)}
         else
           @warehouse.update_attributes(validity: true)
         end

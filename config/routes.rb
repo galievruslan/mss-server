@@ -25,6 +25,7 @@
   get 'reports/routes', :to => 'reports#routes'
   get 'reports/template_routes', :to => 'reports#template_routes'
   get 'reports/customer_debts', :to => 'reports#customer_debts'
+  get 'reports/remainders', :to => 'reports#remainders'
   
   # MobileSynchronization routes
   get 'synchronization/mobile_client', :to => 'mobile_synchronization#mobile_client'  
@@ -44,6 +45,7 @@
   get 'synchronization/unit_of_measures', :to => 'mobile_synchronization#unit_of_measures'
   get 'synchronization/template_routes', :to => 'mobile_synchronization#template_routes'
   get 'synchronization/template_route_points', :to => 'mobile_synchronization#template_route_points'
+  get 'synchronization/remainders', :to => 'mobile_synchronization#remainders'
   post 'synchronization/routes', :to => 'mobile_synchronization#routes'
   post 'synchronization/orders', :to => 'mobile_synchronization#orders'
   post 'synchronization/client_information', :to => 'mobile_synchronization#client_information'
@@ -175,5 +177,9 @@
   end
   
   resources :mobile_clients
-  
+  resources :remainders do
+    collection do
+      post :multiple_change
+    end
+  end
 end

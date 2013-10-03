@@ -90,6 +90,8 @@ class ShippingAddressesController < ApplicationController
     @shipping_address = ShippingAddress.find(params[:id])
     if @shipping_address.validity
       @shipping_address.update_attributes(validity: false)
+      @manager_shipping_addresses = ManagerShippingAddress.where(shipping_address_id: params[:id])
+      @manager_shipping_addresses.each { |x| x.update_attributes(validity: false)}
     else
       @shipping_address.update_attributes(validity: true)
     end  
@@ -108,6 +110,8 @@ class ShippingAddressesController < ApplicationController
         @shipping_address = ShippingAddress.find(shipping_address_id)
         if @shipping_address.validity
           @shipping_address.update_attributes(validity: false)
+          @manager_shipping_addresses = ManagerShippingAddress.where(shipping_address_id: params[:id])
+          @manager_shipping_addresses.each { |x| x.update_attributes(validity: false)}
         else
           @shipping_address.update_attributes(validity: true)
         end

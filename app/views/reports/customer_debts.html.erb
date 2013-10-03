@@ -8,6 +8,7 @@
   <li><%= link_to t(:route_report), reports_routes_path%></li>
   <li><%= link_to t(:template_route_report), reports_template_routes_path%></li>
   <li class="active"><%= link_to t(:customer_debts_report), reports_customer_debts_path%></li>
+  <li><%= link_to t(:remainders_report), reports_remainders_path%></li>
 </ul>
 <%= search_form_for @search, :url => reports_customer_debts_path(format: "xls"), class: "form-horizontal" do |f| %>
   <div class="control-group">

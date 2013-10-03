@@ -38,6 +38,7 @@ class ExchangeController < ApplicationController
       products_upload = true
       product_unit_of_measures_upload = true
       product_prices_upload = true
+      remainders_upload = true
     else
       customers_upload = params[:customers]
       shipping_addresses_upload = params[:shipping_addresses]
@@ -51,6 +52,7 @@ class ExchangeController < ApplicationController
       products_upload = params[:products]
       product_unit_of_measures_upload = params[:product_unit_of_measures]
       product_prices_upload = params[:product_prices]
+      remainders_upload = params[:remainders]
     end
     
     @errors = []
@@ -620,7 +622,51 @@ class ExchangeController < ApplicationController
           rescue ActiveRecord::StatementInvalid
         end
       end
-    end        
+    end
+    
+    if remainders_upload
+      Remainder.transaction do        
+        begin
+          remainders = xml.elements.to_a("//remainder")
+          
+          remainders.each do |remainder| 
+            warehouse_external_key = remainder.elements['warehouse_external_key'].text
+            product_external_key = remainder.elements['product_external_key'].text
+            unit_of_measure_external_key = remainder.elements['unit_of_measure_external_key'].text
+            count = remainder.elements['count'].text
+            
+            warehouse = Warehouse.find_by_external_key(warehouse_external_key)
+            if !warehouse
+              error = I18n.t('errors.not_found_warehouse', external_key: product_external_key) 
+              @errors << error
+              next          
+            end
+            product = Product.find_by_external_key(product_external_key)
+            if !product
+              error = I18n.t('errors.not_found_product', external_key: product_external_key) 
+              @errors << error
+              next          
+            end
+            unit_of_measure = UnitOfMeasure.find_by_external_key(unit_of_measure_external_key)
+            if !unit_of_measure
+              error = I18n.t('errors.not_found_unit_of_measure', external_key: unit_of_measure_external_key) 
+              @errors << error
+              next          
+            end
+            remainder_db = Remainder.find_by_warehouse_id_and_product_id_and_unit_of_measure_id(warehouse.id, product.id, unit_of_measure.id)
+            if !remainder_db
+              new_remainder = Remainder.create(warehouse: warehouse, product: product, unit_of_measure: unit_of_measure, count: count)
+            else 
+              if remainder_db.count != count
+                remainder_db.update_attributes(count: count)
+              end        
+            end
+          end
+          rescue ActiveRecord::StatementInvalid
+        end         
+      end  
+    end
+    
     if !from_ftp 
       if @errors.count == 0
         redirect_to exchange_path, notice: t(:handbook_imported)
