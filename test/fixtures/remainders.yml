@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  warehouse_id: 1
+  product_id: 1
+  unit_of_measure_id: 1
+  count: 1
+
+two:
+  warehouse_id: 1
+  product_id: 1
+  unit_of_measure_id: 1
+  count: 1

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Styles>
+    <Style ss:ID="bold">
+      <Font ss:Bold="1" />
+      <Borders>
+		    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+		  </Borders>
+    </Style>
+    <Style ss:ID="default">
+	  	<Borders>
+	    	<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+	 		</Borders>
+		</Style>
+  </Styles>
+  <Worksheet ss:Name="<%= t(:remainders_report) %>">
+    <Table>
+    <Column ss:Width="250"/>
+		<Column ss:Width="250"/>
+		<Column ss:Width="120"/>
+		<Column ss:Width="80"/>
+      <Row>
+      	<Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:warehouse) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:product) %></Data></Cell>        
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:unit_of_measure) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:count) %></Data></Cell>
+      </Row>
+    <% @remainders.each do |remainder| %>
+      <Row>
+      	<Cell ss:StyleID="default"><Data ss:Type="String"><%= remainder.warehouse.name %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= remainder.product.name %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= remainder.unit_of_measure.name %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="Number"><%= remainder.count %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

@@ -49,7 +49,7 @@ ru:
         product_id: "Номенклатура"
         unit_of_measure: "Единица измерения"
         unit_of_measure_id: "Единица измерения"
-        count: "Количество"
+        quantity: "Количество"
       category:
         name: "Наименование"
         external_key: "Внешний ключ"

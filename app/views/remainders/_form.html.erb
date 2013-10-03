@@ -1,0 +1,44 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'remainders' %>
+<% end %>
+<%= form_for @remainder, :html => { :class => "form-horizontal"} do |f| %>
+  <% if @remainder.errors.any? %>
+    <div class="alert alert-error">
+    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4><%=t('errors.title')%></h4>
+      <ul>
+      <% @remainder.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :warehouse_id, t(:warehouse), class: "control-label" %>
+    <div class="controls">
+    	<%= f.select(:warehouse_id, @warehouses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_warehouse)}) %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :product_id, t(:product), class: "control-label" %>
+    <div class="controls">
+    	<%= f.select(:product_id, @products.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_product)}) %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :unit_of_measure_id, t(:unit_of_measure), class: "control-label" %>
+    <div class="controls">
+    	<%= f.select(:unit_of_measure_id, @unit_of_measures.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_unit_of_measure)}) %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :quantity, t(:quantity), class: "control-label" %>
+    <div class="controls">
+    	<%= f.number_field :quantity, min: 0, step: 1 %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.submit(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>
+  </div>
+<% end %>

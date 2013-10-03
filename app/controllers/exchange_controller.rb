@@ -633,7 +633,7 @@ class ExchangeController < ApplicationController
             warehouse_external_key = remainder.elements['warehouse_external_key'].text
             product_external_key = remainder.elements['product_external_key'].text
             unit_of_measure_external_key = remainder.elements['unit_of_measure_external_key'].text
-            count = remainder.elements['count'].text
+            quantity = remainder.elements['quantity'].text
             
             warehouse = Warehouse.find_by_external_key(warehouse_external_key)
             if !warehouse
@@ -655,10 +655,10 @@ class ExchangeController < ApplicationController
             end
             remainder_db = Remainder.find_by_warehouse_id_and_product_id_and_unit_of_measure_id(warehouse.id, product.id, unit_of_measure.id)
             if !remainder_db
-              new_remainder = Remainder.create(warehouse: warehouse, product: product, unit_of_measure: unit_of_measure, count: count)
+              new_remainder = Remainder.create(warehouse: warehouse, product: product, unit_of_measure: unit_of_measure, quantity: quantity)
             else 
-              if remainder_db.count != count
-                remainder_db.update_attributes(count: count)
+              if remainder_db.quantity != quantity
+                remainder_db.update_attributes(quantity: quantity)
               end        
             end
           end

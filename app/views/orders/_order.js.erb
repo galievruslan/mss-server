@@ -1,6 +1,6 @@
 <script type="text/javascript" charset="utf-8">
 function update_shipping_addresses(customer_id) {
-	getCustomerDebt(customer_id);
+	getCustomerDebt();
   jQuery.ajax({
     url: "/orders/update_shipping_addresses",
     type: "GET",
@@ -13,15 +13,19 @@ function update_shipping_addresses(customer_id) {
   });
 };
 
-function getCustomerDebt(customer_id) {
-  jQuery.ajax({
-    url: "/customers/"+ customer_id + ".json",
-    type: "GET",
-    dataType: "json",
-    success: function(data) {
-      jQuery("#customer_debt i").html("<%= I18n.t(:debt) %>: " + data.debt);
-    }
-  });
+function getCustomerDebt() {
+	customer_id = jQuery('#customer_id option:selected').val();
+	jQuery("#customer_debt i").html('');
+  if(jQuery("#customer_id option:selected").val()) {
+	  jQuery.ajax({
+	    url: "/customers/"+ customer_id + ".json",
+	    type: "GET",
+	    dataType: "json",
+	    success: function(data) {
+	      jQuery("#customer_debt i").html("<%= I18n.t(:debt) %>: " + data.debt);
+	    }
+	  });
+	}
 };
 
 function onPriceListChanged() {
@@ -239,6 +243,7 @@ function calculateOrderAmount() {
 };
 jQuery(document).ready(function() {
 	getProducts();
+	getCustomerDebt();
 	if (jQuery("#order_price_list_id option:selected").val()=="") {
 		destroyOrderItems();
 	}

@@ -1,0 +1,23 @@
+<p>
+  <b><%=t(:warehouse)%>:</b>
+  <%= @remainder.warehouse.name %>
+</p>
+
+<p>
+  <b><%=t(:product)%>:</b>
+  <%= @remainder.product.name %>
+</p>
+
+<p>
+  <b><%=t(:unit_of_measure)%>:</b>
+  <%= @remainder.unit_of_measure.name %>
+</p>
+
+<p>
+  <b><%=t(:quantity)%>:</b>
+  <%= @remainder.quantity %>
+</p>
+
+
+<% if can? :manage, Remainder %><%= link_to t(:edit), edit_remainder_path(@remainder) %> |<%end%>
+<%= link_to t(:back), remainders_path %>

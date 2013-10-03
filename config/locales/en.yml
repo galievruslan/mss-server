@@ -49,7 +49,7 @@ en:
         product_id: "Product"
         unit_of_measure_id: "Unit of measure"
         unit_of_measure: "Unit of measure"
-        count: "Count"
+        quantity: "Quantity"
       category:
         name: "Name"
         external_key: "External key"

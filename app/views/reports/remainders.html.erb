@@ -1,0 +1,36 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'reports' %>
+<% end %>
+<h3><%= t(:reports)%></h3>
+<ul class="nav nav-tabs">
+  <li><%= link_to t(:reports), reports_path %></li>
+  <li><%= link_to t(:order_report), reports_orders_path%></li>
+  <li><%= link_to t(:route_report), reports_routes_path%></li>
+  <li><%= link_to t(:template_route_report), reports_template_routes_path%></li>
+  <li><%= link_to t(:customer_debts_report), reports_customer_debts_path%></li>
+  <li class="active"><%= link_to t(:remainders_report), reports_remainders_path%></li>
+</ul>
+<%= search_form_for @search, :url => reports_remainders_path(format: "xls"), class: "form-horizontal" do |f| %>
+  <div class="control-group">
+  	<%= f.label :warehouse_id_in, t(:warehouse)+':', class: "control-label"%>
+  	<div class="controls">
+  		<%= f.select :warehouse_id_in, @warehouses.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_warehouse), :multiple => true, :class => 'search-field'} %>
+  	</div>
+  </div>
+  <div class="control-group">
+  	<%= f.label :product_id_in, t(:product)+':', class: "control-label"%>
+  	<div class="controls">
+  		<%= f.select :product_id_in, @products.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_product), :multiple => true, :class => 'search-field'} %>
+  	</div>
+  </div>
+  <div class="control-group">
+  	<%= f.label :unit_of_measure_id_in, t(:product)+':', class: "control-label"%>
+  	<div class="controls">
+  		<%= f.select :unit_of_measure_id_in, @unit_of_measures.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_unit_of_measure), :multiple => true, :class => 'search-field'} %>
+  	</div>
+  </div>
+  <div class="control-group">	  	
+  		<%= f.submit t(:download_xls), class: 'btn btn-info' %>
+  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>	  	
+  </div>	
+<%end%>
