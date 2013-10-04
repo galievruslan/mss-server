@@ -4,6 +4,7 @@
 	<td><%= number_field_tag( 'order[order_items_attributes][new_order_items][quantity]', {}, min: 1, step: 1, class: "input-small quantity_input", :onchange => 'onQuantityChanged(this)') %></td>
 	<td><%= label_tag 'order[order_items_attributes][new_order_items][product_id]', '', class: 'price_label' %></td>
 	<td><%= label_tag 'order[order_items_attributes][new_order_items][product_id]', '', class: 'count_label' %></td>
+	<td><%= label_tag 'order[order_items_attributes][new_order_items][product_id]', '', class: 'remainder_label' %></td>
 	<td><%= label_tag 'order[order_items_attributes][new_order_items][product_id]', '', class: 'amount_label' %></td>
 	<td>
 		<a onclick="onDestroy(this)"><i class='icon-remove' title="<%= t(:remove)%>"></i></a>

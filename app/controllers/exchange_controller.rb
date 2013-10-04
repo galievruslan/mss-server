@@ -637,7 +637,7 @@ class ExchangeController < ApplicationController
             
             warehouse = Warehouse.find_by_external_key(warehouse_external_key)
             if !warehouse
-              error = I18n.t('errors.not_found_warehouse', external_key: product_external_key) 
+              error = I18n.t('errors.not_found_warehouse', external_key: warehouse_external_key) 
               @errors << error
               next          
             end

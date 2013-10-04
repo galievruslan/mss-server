@@ -186,7 +186,7 @@ function onProductChanged(selected_item) {
 		  	}
 			});
 			
-			// Rebuild this
+			// Rebuild this			
   	},
   	error: function() {  		
   		uom_select.closest('td').find("span").text("<%= I18n.t(:select_unit_of_measure)%>");
@@ -198,6 +198,7 @@ function onProductChanged(selected_item) {
 			});
   	}
 	});
+	getRemainder(selected_item);
 };
 
 function onUOMChanged(selected_item) {
@@ -213,22 +214,50 @@ function onUOMChanged(selected_item) {
     	calculateAmount(selected_item);
     	calculateOrderAmount();
   	}
-	});	  
+	});
+	getRemainder(selected_item);
 };
 
 function onQuantityChanged(selected_item) {
 	calculateAmount(selected_item);
 	calculateOrderAmount();
-}
+	checkRemainder(selected_item);
+};
 
 function calculateAmount(selected_item) {
-	var amount_filed = jQuery(selected_item).closest('tr').find("label.amount_label");
+	var amount_field = jQuery(selected_item).closest('tr').find("label.amount_label");
 	var count = jQuery(selected_item).closest('tr').find("label.count_label").html();
 	var price = jQuery(selected_item).closest('tr').find("label.price_label").html();	
 	var quantity = jQuery(selected_item).closest('tr').find("input.quantity_input").val();
 	var amount = count*price*quantity;
 	
-	amount_filed.html(amount.toFixed(2));
+	amount_field.html(amount.toFixed(2));
+};
+
+function getRemainder(selected_item) {	
+	var remainder_field = jQuery(selected_item).closest('tr').find("label.remainder_label");	
+	var warehouse_id = jQuery('#order_warehouse_id option:selected').val();
+	var product_id = $(selected_item).closest('tr').find("select.product_select option:selected").val();
+	remainder_field.html('');
+	jQuery.ajax({
+    url: "/remainders/get_remainder.json",
+    type: "GET",
+    data: {"warehouse_id" : warehouse_id, "product_id" : product_id},
+    dataType: "json",
+    success: function(data) {
+    	remainder_field.html(data.quantity);
+  	}
+	});
+};
+
+function checkRemainder(selected_item) {
+	var remainder_field = jQuery(selected_item).closest('tr').find("label.remainder_label");	
+	remainder_field.css("color", "black");
+	var quantity = jQuery(selected_item).closest('tr').find("input.quantity_input").val();
+	var remainder = jQuery(selected_item).closest('tr').find("label.remainder_label").html();
+	if (parseInt(quantity)>remainder) {
+		remainder_field.css("color", "red");
+	}
 };
 
 function calculateOrderAmount() {	

@@ -179,6 +179,7 @@
   resources :mobile_clients
   resources :remainders do
     collection do
+      get :get_remainder
       post :multiple_change
     end
   end

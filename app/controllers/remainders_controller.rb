@@ -89,8 +89,9 @@ class RemaindersController < ApplicationController
   # DELETE /remainders/1.json
   def destroy
     @remainder = Remainder.find(params[:id])
-    @remainder.destroy
-
+    @remainder.update_attributes(quantity: 0)
+    # @remainder.destroy
+    
     respond_to do |format|
       format.html { redirect_to remainders_url, notice: t(:remainder_destroyed) }
       format.json { head :no_content }
@@ -102,11 +103,22 @@ class RemaindersController < ApplicationController
     if params[:remainder_ids]
       params[:remainder_ids].each do |remainder_id|
         @remainder = Remainder.find(remainder_id)
-        @remainder.destroy
+        @remainder.update_attributes(quantity: 0)
+        # @remainder.destroy
       end
       redirect_to remainders_url, notice: t(:remainder_destroyed)
     else
       redirect_to remainders_url
+    end
+  end
+  
+  # GET /remainders/get_remainder
+  def get_remainder
+    if params[:warehouse_id] and params[:product_id]
+      @remainder = Remainder.find_by_warehouse_id_and_product_id(params[:warehouse_id], params[:product_id])
+      respond_to do |format|         
+        format.json { render json: @remainder }
+      end
     end
   end
 end

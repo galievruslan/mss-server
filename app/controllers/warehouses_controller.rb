@@ -20,8 +20,10 @@ class WarehousesController < ApplicationController
   # GET /warehouses/1
   # GET /warehouses/1.json
   def show
-    @warehouse = Warehouse.find(params[:id])
-
+    @warehouse = Warehouse.find(params[:id])     
+    @search = @warehouse.remainders.search(params[:q])
+    @remainders = @search.result.page(params[:page]).per(current_user.list_page_size)
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @warehouse }

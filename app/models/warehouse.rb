@@ -5,6 +5,7 @@ class Warehouse < ActiveRecord::Base
   has_many :orders, :dependent => :destroy
   has_many :manager_warehouses, :dependent => :destroy
   has_many :managers, :through => :manager_warehouses
+  has_many :remainders, :dependent => :destroy
   
   def self.best_warehouses(start_date, end_date)
     best_manager_ids = Order.where(:date => start_date.beginning_of_day..end_date.end_of_day, :complete => true).group("warehouse_id").
