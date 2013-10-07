@@ -6,3 +6,9 @@
  = require bootstrap-fileupload
  = require tree
 */
+
+/* For route_point_photos */
+.row-fluid li.photo:nth-child(5n) {
+    margin: 0;
+    padding: 0;
+ }

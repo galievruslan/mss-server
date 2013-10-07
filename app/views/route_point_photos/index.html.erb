@@ -1,0 +1,31 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'route_point_photos' %>
+<% end %>
+<h3><%=t(:listing_route_point_photos)%></h3>
+<div class="row-fluid">
+	<ul class="thumbnails">
+		<% @route_point_photos.each do |route_point_photo| %>
+			<li class="span3 photo">
+				<div class="thumbnail">
+					<%= image_tag route_point_photo.photo.thumb.url %>
+					<p class="text-center">
+						<%= t(:comment) + ': ' + route_point_photo.comment.truncate(10)%>
+					</p>
+					<div class="caption text-center">
+						<%= link_to(route_route_point_photo_path(@route, @route_point, route_point_photo)) do%><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%>
+						<% if can? :manage, RoutePointPhoto %>
+							<%= link_to(edit_route_route_point_photo_path(@route, @route_point, route_point_photo)) do%><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%>
+							<%= link_to(route_route_point_photo_path(@route, @route_point, route_point_photo), method: :delete, data: { confirm: t(:are_you_sure) }) do%><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%>
+						<%end%>
+					</div>
+				</div>
+			</li>
+		<% end %>
+	</ul>
+</div>
+<%= paginate @route_point_photos %>
+<% if can? :manage, RoutePointPhoto %>
+	<%= link_to t(:new_route_point_photo), new_route_route_point_photo_path, class: 'btn', :disable_with => t(:please_wait) %>
+<% end %>
+<br /><br />
+<%= link_to t(:back), route_route_point_path(@route, @route_point) %>

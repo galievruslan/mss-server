@@ -417,5 +417,48 @@ class MobileSynchronizationController < ApplicationController
       end
     end         
   end  
-   
+  
+  # POST /route_point_photos.json
+  def route_point_photos
+    @manager_id = current_user.manager_id
+    @datetime = params[:route_point_photo][:date]
+    @shipping_address_id = params[:route_point_photo][:shipping_address_id]
+    @route = Route.find_by_date_and_manager_id(@datetime.to_date, @manager_id)
+    if @route
+      @route_point = @route.route_points.find_by_shipping_address_id(@shipping_address_id)
+      if @route_point
+        @route_point_id = @route_point.id        
+      else
+        @route_point_id = nil
+      end
+    else
+      @route_point_id = nil
+    end
+    
+    @guid = params[:route_point_photo][:guid]    
+    @route_point_photo = RoutePointPhoto.find_by_guid(@guid)
+    RoutePointPhoto.transaction do
+      begin
+        if @route_point_photo      
+          respond_to do |format|
+            @responce = JSON code: 100, description: 'already exists'
+            format.json { render json: @responce, status: :ok, location: @order }
+          end
+        else
+          params[:route_point_photo][:route_point_id] = @route_point_id
+          @route_point_photo = RoutePointPhoto.new(params[:order])
+          respond_to do |format|
+            if @route_point_photo.save
+              @responce = JSON code: 100, description: 'created successfully'
+              format.json { render json: @responce, status: :created, location: @order }
+            else
+              @responce = JSON code: 200, description: 'the data format is not valid'
+              format.json { render json: @responce, status: :unprocessable_entity }
+            end
+          end
+        end
+        rescue ActiveRecord::StatementInvalid
+      end
+    end     
+  end   
 end

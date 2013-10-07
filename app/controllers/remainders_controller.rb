@@ -1,4 +1,5 @@
 class RemaindersController < ApplicationController
+  load_and_authorize_resource
   # GET /remainders
   # GET /remainders.json
   def index    

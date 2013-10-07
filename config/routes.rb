@@ -49,6 +49,7 @@
   post 'synchronization/routes', :to => 'mobile_synchronization#routes'
   post 'synchronization/orders', :to => 'mobile_synchronization#orders'
   post 'synchronization/client_information', :to => 'mobile_synchronization#client_information'
+  post 'synchronization/route_point_photos', :to => 'mobile_synchronization#route_point_photos'
   
   resources :orders do
     member do
@@ -74,6 +75,7 @@
       post :multiple_change
     end       
     resources :route_points do
+      resources :route_point_photos, as: 'photos', path: 'photos'
       collection do
         post :multiple_change
       end 

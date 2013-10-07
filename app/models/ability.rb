@@ -28,6 +28,7 @@ class Ability
       can :manage, RoutePoint, :route => { :id => Manager.find(user.manager_id).route_ids}
       can :create, RoutePoint
       can :route , :current
+      can :manage, RoutePointPhoto
       cannot :read, [User, Role] 
       cannot :export_again, Order
       cannot :destroy, Order

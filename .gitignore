@@ -26,5 +26,8 @@ config/settings/*.local.yml
 config/environments/*.local.yml
 
 # Ignore mobile_client files
-
 public/mobile_clients
+
+# Ignore upload files
+
+public/uploads

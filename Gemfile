@@ -15,6 +15,8 @@ gem 'rails_config' # add configuration file
 #gem 'cocoon' # nested forms
 gem 'select2-rails' # Autocomplete select_tag 
 gem 'twitter-bootstrap-rails', '2.2.6'
+gem 'carrierwave' # Add upload files
+gem 'mini_magick' # Wrapper for Image 
 
 # Gems used only for assets and not required
 # in production environments by default.

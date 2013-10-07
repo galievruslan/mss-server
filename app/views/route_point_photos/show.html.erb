@@ -1,0 +1,13 @@
+<h3><%=t(:photo)%></h3>
+<p>
+  <%= image_tag @route_point_photo.photo.large.url %>
+</p>
+
+<p>
+  <b><%=t(:comment)%>:</b>
+  <%= simple_format @route_point_photo.comment %>
+</p>
+
+
+<% if can? :manage, RoutePointPhoto %><%= link_to t(:edit), edit_route_route_point_photo_path(@route, @route_point, @route_point_photo) %> |<%end%>
+<%= link_to t(:back), route_route_point_photos_path(@route, @route_point) %>

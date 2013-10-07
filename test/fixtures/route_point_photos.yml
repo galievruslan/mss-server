@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  route_point_id: 1
+  photo: MyString
+  comment: MyText
+
+two:
+  route_point_id: 1
+  photo: MyString
+  comment: MyText

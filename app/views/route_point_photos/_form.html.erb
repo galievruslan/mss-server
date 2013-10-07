@@ -1,0 +1,43 @@
+<%= form_for @route_point_photo, url: route_route_point_photos_path(@route, @route_point) , :html => { :class => "form-horizontal"} do |f| %>
+  <% if @route_point_photo.errors.any? %>
+    <div class="alert alert-error">
+    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4><%=t('errors.title')%></h4>
+      <ul>
+      <% @route_point_photo.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :photo, t(:photo), class: "control-label" %>
+    <div class="controls">
+    	<div class="field">
+		  	<div class="fileupload fileupload-new" data-provides="fileupload">
+				  <div class="input-append">
+				    <div class="uneditable-input"><i class="icon-file fileupload-exists"></i>
+				    	<span class="fileupload-preview"></span>
+				    </div>
+				    <span class="btn btn-file">
+				    	<span class="fileupload-new"><%= t(:select_file)%></span>
+				    	<span class="fileupload-exists"><%=t(:change)%></span>
+				    	<%= f.file_field :photo, accept: 'image/png,image/gif,image/jpeg' %>
+				    </span>
+				    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><%=t(:remove)%></a>
+				  </div>
+				</div>
+			</div>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :comment, t(:comment), class: "control-label" %>
+    <div class="controls">
+    	<%= f.text_area :comment, :cols => 20, :rows => 4 %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.submit(t(:save), class: 'btn', :disable_with => t(:please_wait)) %>
+  </div>
+<% end %>
