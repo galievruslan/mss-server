@@ -16,6 +16,7 @@
 							<b><%=t(:comment) + ': '%></b><%= route_point_photo.comment.truncate(10)%>
 						</p>
 							<%= link_to(route_route_point_photo_path(@route, @route_point, route_point_photo), class: 'btn') do%><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%>
+							<%= link_to(download_route_route_point_photo_path(@route, @route_point, route_point_photo), class: 'btn' ) do%><i class='icon-download' title='<%= t(:download) %>'></i><%end%>
 							<% if can? :manage, RoutePointPhoto %>
 								<%= link_to(edit_route_route_point_photo_path(@route, @route_point, route_point_photo), class: 'btn') do%><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%>
 								<%= link_to(route_route_point_photo_path(@route, @route_point, route_point_photo), method: :delete, class: 'btn', data: { confirm: t(:are_you_sure) }) do%><i class='icon-remove' title="<%=t(:remove)%>"></i><%end%>

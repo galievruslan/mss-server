@@ -75,7 +75,11 @@
       post :multiple_change
     end       
     resources :route_points do
-      resources :route_point_photos, as: 'photos', path: 'photos'
+      resources :route_point_photos, as: 'photos', path: 'photos' do
+        member do
+          get :download
+        end
+      end      
       collection do
         post :multiple_change
       end 

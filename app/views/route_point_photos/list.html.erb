@@ -57,7 +57,8 @@
 							<b><%=t(:customer) + ': '%></b><%= route_point_photo.route_point.shipping_address.name %><br />
 							<b><%=t(:comment) + ': '%></b><%= route_point_photo.comment.truncate(10)%>
 						</p>
-							<%= link_to(route_route_point_photo_path(route_point_photo.route_point.route, route_point_photo.route_point, route_point_photo), class: 'btn' ) do%><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%>		        	
+							<%= link_to(route_route_point_photo_path(route_point_photo.route_point.route, route_point_photo.route_point, route_point_photo), class: 'btn' ) do%><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%>
+							<%= link_to(download_route_route_point_photo_path(route_point_photo.route_point.route, route_point_photo.route_point, route_point_photo), class: 'btn' ) do%><i class='icon-download' title='<%= t(:download) %>'></i><%end%>
 	        	</p>
 			    </div>		
 					<%= image_tag route_point_photo.photo.thumb.url %>					
