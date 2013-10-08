@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131004052009) do
+ActiveRecord::Schema.define(:version => 20131008055125) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -166,7 +166,10 @@ ActiveRecord::Schema.define(:version => 20131004052009) do
     t.text     "comment"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.string   "guid"
   end
+
+  add_index "route_point_photos", ["guid"], :name => "index_route_point_photos_on_guid"
 
   create_table "route_points", :force => true do |t|
     t.integer  "shipping_address_id"
