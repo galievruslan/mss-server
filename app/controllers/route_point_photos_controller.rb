@@ -12,6 +12,18 @@ class RoutePointPhotosController < ApplicationController
       format.json { render json: @route_point_photos }
     end
   end
+  
+  # GET /route_point_photos
+  # GET /route_point_photos.json
+  def list
+    @search = RoutePointPhoto.search(params[:q])
+    @route_point_photos = @search.result.page(params[:page]).per(4)
+    @managers = Manager.all
+    respond_to do |format|
+      format.html #list.html.erb
+      format.json { render json: @route_point_photos }
+    end
+  end
 
   # GET /route_point_photos/1
   # GET /route_point_photos/1.json

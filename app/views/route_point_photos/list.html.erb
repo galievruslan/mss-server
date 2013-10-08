@@ -1,0 +1,63 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'route_point_photos' %>
+<% end %>
+<h3><%=t(:photos)%></h3>
+<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+  <i class="icon-filter icon-white"></i> <%= t(:filter)%>
+</button>
+
+<div id="demo" class="collapse">
+	<br>
+	<div class='well well-small'>
+		<%= search_form_for @search, url: route_point_photos_path, class: "form-horizontal" do |f| %>
+		  <div class="control-group">
+		  	<%= f.label :created_at_gt, t(:date_period)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<div class="input-append date datetimepicker">
+				    <%= f.text_field :created_at_gt, class: "input-medium search-field"%>
+				    <span class="add-on">
+				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				      </i>
+				    </span>
+				  </div>
+		  		- 
+		  		<div class="input-append date datetimepicker">
+				    <%= f.text_field :created_at_lt, class: "input-medium search-field"%>
+				    <span class="add-on">
+				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				      </i>
+				    </span>
+				  </div>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :route_point_route_manager_id_eq, t(:manager)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.select :route_point_route_manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_manager), :class => 'search-field'} %>
+		  	</div>
+		  </div>
+		  <div class="control-group">	  	
+		  		<%= f.submit t(:search), class: 'btn btn-info' %>	
+		  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>  	
+		  </div>	
+		<%end%>
+	</div>
+</div>
+<br />
+<div class="row-fluid">
+	<ul class="thumbnails">
+		<% @route_point_photos.each do |route_point_photo| %>
+			<li class="span3 photo">
+				<div class="thumbnail">
+					<%= image_tag route_point_photo.photo.thumb.url %>
+					<p class="text-center">
+						<b><%=t(:datetime) + ': '%></b><%= route_point_photo.created_at %><br />
+						<b><%=t(:manager) + ': '%></b><%= route_point_photo.route_point.route.manager.name %><br />
+						<b><%=t(:customer) + ': '%></b><%= route_point_photo.route_point.shipping_address.name %><br />						
+					</p>					
+				</div>
+			</li>
+		<% end %>
+	</ul>
+</div>
+<%= paginate @route_point_photos %>

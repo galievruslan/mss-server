@@ -11,14 +11,14 @@
   get 'exchange/download_zip', :to => 'exchange#download_zip'
   get 'exchange/send_to_ftp', :to => 'exchange#send_to_ftp'
   post 'exchange/upload', :to => 'exchange#upload'  
-  get 'profile/show', :to => 'profiles#show'
-  match 'profile/edit', :to => 'profiles#edit'
+  get 'profile/show', :to => 'profiles#show'  
   put 'profile/update', :to => 'profiles#update'
-  match 'profile/edit_password', :to => 'profiles#edit_password'
   put 'profile/update_password', :to => 'profiles#update_password'
+  match 'profile/edit', :to => 'profiles#edit'
+  match 'profile/edit_password', :to => 'profiles#edit_password'  
   get 'bali', :to => 'pages#bali'
-  get 'orders/order_items/update_product_unit_of_measures', :to => 'order_items#update_product_unit_of_measures'
-  
+  get 'orders/order_items/update_product_unit_of_measures', :to => 'order_items#update_product_unit_of_measures'  
+  get 'route_point_photos', to: 'route_point_photos#list'
   # Reports
   get 'reports', :to => 'reports#index'
   get 'reports/orders', :to => 'reports#orders'
@@ -80,7 +80,7 @@
         post :multiple_change
       end 
     end
-  end
+  end  
   resources :template_routes do
     collection do
       get :get_shipping_address_list
