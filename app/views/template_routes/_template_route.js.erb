@@ -22,6 +22,21 @@ function getShippingAddresses() {
     });
 }; 
 
+function onShippingAddressChanged(selected_item) {	
+  var address_field = jQuery(selected_item).closest('tr').find("label.address_label");
+  var manager_id = $('#template_route_manager_id option:selected').val();
+  var shipping_address_id = jQuery(selected_item).val();
+  
+  jQuery.ajax({
+    url: "/managers/"+ manager_id + "/manager_shipping_addresses/" + shipping_address_id + ".json",
+    type: "GET",
+    dataType: "json",
+    success: function(data) {
+    	address_field.html(data.address);
+  	}
+	});	
+};
+
 function onManagerChanged(manager_id) {
 	getShippingAddresses();
 	

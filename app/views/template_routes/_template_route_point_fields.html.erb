@@ -1,5 +1,6 @@
 <tr>
-	<td><%= f.select :shipping_address_id , @shipping_addresses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_shipping_address), :class => 'input-xlarge select2-field'} %></td>
+	<td><%= f.select :shipping_address_id , @shipping_addresses.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_shipping_address), :class => 'input-xlarge select2-field', :onchange => 'onShippingAddressChanged(this)'} %></td>
+	<td><%= f.label :shipping_address_id, f.object.shipping_address.address, class: 'address_label' %></td>
 	<td><%= f.check_box :validity%></td>
   <td>
   </td>
