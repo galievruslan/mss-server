@@ -1,5 +1,6 @@
 <tr>
-	<td><%= select_tag 'route[route_points_attributes][new_route_points][shipping_address_id]' , options_from_collection_for_select(@shipping_addresses, "id", "name"), {:include_blank => true, 'data-placeholder' => t(:select_shipping_address), :class => 'input-xlarge select2-field'} %></td>
+	<td><%= select_tag 'route[route_points_attributes][new_route_points][shipping_address_id]' , options_from_collection_for_select(@shipping_addresses, "id", "name"), {:include_blank => true, 'data-placeholder' => t(:select_shipping_address), :class => 'input-xlarge select2-field', :onchange => 'onShippingAddressChanged(this)'} %></td>
+	<td><%= label_tag 'route[route_points_attributes][new_route_points][shipping_address_id]', '', class: 'address_label' %></td>
 	<td><%= select_tag 'route[route_points_attributes][new_route_points][status_id]' , options_from_collection_for_select(@statuses, "id", "name"), {:include_blank => true, 'data-placeholder' => t(:select_status), :class => 'select2-field'} %></td>
 	<td>
   	<a onclick="onDestroy(this)"><i class='icon-remove' title="<%= t(:remove)%>"></i></a>

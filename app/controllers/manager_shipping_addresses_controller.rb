@@ -11,7 +11,7 @@ class ManagerShippingAddressesController < ApplicationController
       @search = @manager.manager_shipping_addresses.search(params[:q])
       @manager_shipping_addresses = @search.result.where(validity: true).page(params[:page]).per(current_user.list_page_size)
     end
-
+          
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @manager_shipping_addresses }
@@ -22,11 +22,11 @@ class ManagerShippingAddressesController < ApplicationController
   # GET /manager_shipping_addresses/1.json
   def show
     @manager = Manager.find(params[:manager_id])
-    @manager_shipping_address = ManagerShippingAddress.find(params[:id])
-
+    @manager_shipping_address = ManagerShippingAddress.find(params[:id])    
+    @manager_shipping_address_json = ManagerShippingAddress.joins(:shipping_address).find(params[:id],:select => "manager_shipping_addresses.id, manager_shipping_addresses.manager_id, manager_shipping_addresses.shipping_address_id, manager_shipping_addresses.created_at, manager_shipping_addresses.updated_at, manager_shipping_addresses.validity, shipping_addresses.name, shipping_addresses.address")
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @manager_shipping_address }
+      format.json { render json: @manager_shipping_address_json }
     end
   end
 
