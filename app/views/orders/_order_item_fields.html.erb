@@ -4,7 +4,7 @@
   <td><%= f.number_field :quantity, min: 1, step: 1, class: "input-small quantity_input", :onchange => 'onQuantityChanged(this)' %></td>
   <td><%= f.label :product_id, ((f.object.product_id.nil? || @order.price_list.nil?) ? 0 : Product.find(f.object.product_id).price_in_price_list(@order.price_list.id)), class: 'price_label' %></td>  
   <td><%= f.label :product_id, ((f.object.product_id.nil? || f.object.unit_of_measure_id.nil?) ? 0 : Product.find(f.object.product_id).count_in_unit_of_measure(f.object.unit_of_measure_id)), class: 'count_label' %></td>
-  <td><%= f.label :product_id, Remainder.find_by_warehouse_id_and_product_id(@order.warehouse.id, f.object.product_id).nil? ? 0 : Remainder.find_by_warehouse_id_and_product_id(@order.warehouse.id, f.object.product_id).quantity, class: 'remainder_label' %></td>
+  <td><%= f.label :product_id, Remainder.find_by_warehouse_id_and_product_id(@order.warehouse_id, f.object.product_id).nil? ? 0 : Remainder.find_by_warehouse_id_and_product_id(@order.warehouse.id, f.object.product_id).quantity, class: 'remainder_label' %></td>
   <td><%= f.label :product_id, f.object.amount, class: 'amount_label' %></td>
   <td>
   	<a onclick="onDestroy(this)"><i class='icon-remove' title="<%= t(:remove)%>"></i></a>

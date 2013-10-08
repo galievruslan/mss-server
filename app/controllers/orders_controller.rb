@@ -54,12 +54,13 @@ class OrdersController < ApplicationController
       @shipping_address_ids = ManagerShippingAddress.where(manager_id: current_user.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
       @customer_ids= ShippingAddress.where(id: @shipping_address_ids).select('customer_id').map {|x| x.customer_id}
       @customers = Customer.where(validity: true, id: @customer_ids)
+      @warehouses = Manager.find(current_user.manager_id).warehouses
     else      
       @managers = Manager.where(validity: true)
       @customers = Customer.where(validity: true)
+      @warehouses = Warehouse.where(validity: true)
     end
-    @price_lists = PriceList.where(validity: true)
-    @warehouses = Warehouse.where(validity: true)
+    @price_lists = PriceList.where(validity: true)    
     @products = []
     @unit_of_measures = UnitOfMeasure.where(validity: true)
     @categories = Category.where(validity: true)
@@ -95,15 +96,21 @@ class OrdersController < ApplicationController
     @select_customer = @order.shipping_address.customer
     @select_customer_id = @select_customer.id
     @select_shipping_address_id = @order.shipping_address.id
-    @shipping_addresses = @select_customer.shipping_addresses
-    @customers = Customer.where(validity: true)    
+            
     if current_user.manager_id
       @managers = Manager.where(id: current_user.manager_id)
+      @warehouses = Manager.find(current_user.manager_id).warehouses
+      @shipping_address_ids = ManagerShippingAddress.where(manager_id: current_user.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+      @customer_ids= ShippingAddress.where(id: @shipping_address_ids).select('customer_id').map {|x| x.customer_id}
+      @customers = Customer.where(validity: true, id: @customer_ids)
+      @shipping_addresses = ShippingAddress.where(id: @shipping_address_ids, customer_id: @select_customer_id)      
     else
       @managers = Manager.where(validity: true)
+      @warehouses = Warehouse.where(validity: true)
+      @customers = Customer.where(validity: true)
+      @shipping_addresses = @select_customer.shipping_addresses
     end
-    @price_lists = PriceList.where(validity: true)
-    @warehouses = Warehouse.where(validity: true)       
+    @price_lists = PriceList.where(validity: true)      
     @products = PriceList.find(@order.price_list_id).products.where(validity: true)
     @unit_of_measures = UnitOfMeasure.where(validity: true)
     @categories = Category.where(validity: true)    
@@ -118,27 +125,37 @@ class OrdersController < ApplicationController
       return
     end  
     @order = Order.new(params[:order])
-    @customers = Customer.where(validity: true)
-    if params[:customer_id] != ""
-      @select_customer_id = params[:customer_id]
-      @shipping_addresses = Customer.find(params[:customer_id]).shipping_addresses
-    end
-    if params[:order][:shipping_address_id] !=""
+    
+    unless params[:order][:shipping_address_id].nil?
       @select_shipping_address_id = params[:order][:shipping_address_id]
     end
+    
     if current_user.manager_id
       @managers = Manager.where(id: current_user.manager_id)
+      @warehouses = Manager.find(current_user.manager_id).warehouses
+      @shipping_address_ids = ManagerShippingAddress.where(manager_id: current_user.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+      @customer_ids= ShippingAddress.where(id: @shipping_address_ids).select('customer_id').map {|x| x.customer_id}
+      @customers = Customer.where(validity: true, id: @customer_ids)
+      unless params[:customer_id].nil?
+        @select_customer_id = params[:customer_id]
+        @shipping_addresses = Customer.find(params[:customer_id]).shipping_addresses.where(id: @shipping_address_ids)
+      end
     else
       @managers = Manager.where(validity: true)
+      @warehouses = Warehouse.where(validity: true)
+      @customers = Customer.where(validity: true)
+      unless params[:customer_id].nil?
+        @select_customer_id = params[:customer_id]
+        @shipping_addresses = Customer.find(params[:customer_id]).shipping_addresses
+      end
     end
-    @price_lists = PriceList.where(validity: true)
-    @warehouses = Warehouse.where(validity: true)
+    @price_lists = PriceList.where(validity: true)    
     
     if Settings.default_price_list_id and @order.price_list_id.nil?
       @order.price_list_id = Settings.default_price_list_id
     end
     
-    if params[:order][:price_list_id] != ""
+    unless params[:order][:price_list_id].nil?
       @products = PriceList.find(params[:order][:price_list_id]).products.where(validity: true) 
     else
       @products = []
@@ -167,28 +184,39 @@ class OrdersController < ApplicationController
     end
     @order = Order.find(params[:id]) 
     
-    if params[:customer_id] != ""
-      @select_customer_id = params[:customer_id]
-      @shipping_addresses = Customer.find(params[:customer_id]).shipping_addresses
-    else
-      @select_customer = @order.shipping_address.customer
-      @select_customer_id = @select_customer.id
-      @shipping_addresses = @select_customer.shipping_addresses
-    end
-    if params[:order][:shipping_address_id] != ""
+    unless params[:order][:shipping_address_id].nil?
       @select_shipping_address_id = params[:order][:shipping_address_id]
-    end    
+    end       
     
-    @customers = Customer.where(validity: true)    
     if current_user.manager_id
       @managers = Manager.where(id: current_user.manager_id)
+      @warehouses = Manager.find(current_user.manager_id).warehouses
+      @shipping_address_ids = ManagerShippingAddress.where(manager_id: current_user.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+      @customer_ids= ShippingAddress.where(id: @shipping_address_ids).select('customer_id').map {|x| x.customer_id}
+      @customers = Customer.where(validity: true, id: @customer_ids)
+      unless params[:customer_id].nil?
+        @select_customer_id = params[:customer_id]
+        @shipping_addresses = ShippingAddress.where(id: @shipping_address_ids, customer_id: @select_customer_id)
+      else
+        @select_customer = @order.shipping_address.customer
+        @select_customer_id = @select_customer.id
+        @shipping_addresses = @select_customer.shipping_addresses.where(id: @shipping_address_ids)
+      end
     else
       @managers = Manager.where(validity: true)
-    end
-    @price_lists = PriceList.where(validity: true)
-    @warehouses = Warehouse.where(validity: true)
+      @warehouses = Warehouse.where(validity: true)
+      @customers = Customer.where(validity: true)
+      unless params[:customer_id].nil?
+        @select_customer_id = params[:customer_id]
+        @shipping_addresses = Customer.find(params[:customer_id]).shipping_addresses
+      else
+        @select_customer = @order.shipping_address.customer
+        @select_customer_id = @select_customer.id
+        @shipping_addresses = @select_customer.shipping_addresses
+      end
+    end    
     
-    if params[:order][:price_list_id] != ""
+    unless params[:order][:price_list_id].nil?
       @products = PriceList.find(params[:order][:price_list_id]).products.where(validity: true) 
     else
       @products = []
@@ -198,6 +226,7 @@ class OrdersController < ApplicationController
       params[:order][:price_list_id] = Settings.default_price_list_id
     end
     
+    @price_lists = PriceList.where(validity: true)
     @unit_of_measures = UnitOfMeasure.where(validity: true)
     @categories = Category.where(validity: true)
     
@@ -280,13 +309,14 @@ class OrdersController < ApplicationController
   
   # GET /orders/update_shipping_addresses
   def update_shipping_addresses
-    @shipping_addresses = ShippingAddress.where(customer_id: params[:customer_id]) 
+    @shipping_address_ids = ManagerShippingAddress.where(manager_id: current_user.manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
+    @shipping_addresses = ShippingAddress.where(id: @shipping_address_ids, customer_id: params[:customer_id])
     render :partial => "shipping_addresses", :object => @shipping_addresses  
   end
   
   # GET /orders/get_product_list
   def get_product_list
-    if params[:price_list_id] != ""
+    unless params[:price_list_id].nil?
       if params[:category_id]
         @products = PriceList.find(params[:price_list_id]).products.where(validity: true, category_id: params[:category_id])
       else
