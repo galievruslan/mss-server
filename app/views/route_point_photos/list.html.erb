@@ -45,16 +45,22 @@
 </div>
 <br />
 <div class="row-fluid">
-	<ul class="thumbnails">
+	<ul class="thumbnails" id="hover-cap-4col">
 		<% @route_point_photos.each do |route_point_photo| %>
 			<li class="span3 photo">
-				<div class="thumbnail">
-					<%= image_tag route_point_photo.photo.thumb.url %>
-					<p class="text-center">
-						<b><%=t(:datetime) + ': '%></b><%= route_point_photo.created_at %><br />
-						<b><%=t(:manager) + ': '%></b><%= route_point_photo.route_point.route.manager.name %><br />
-						<b><%=t(:customer) + ': '%></b><%= route_point_photo.route_point.shipping_address.name %><br />						
-					</p>					
+				<div class="thumbnail">	
+					<div class="caption" style="display: none;">
+		        <h4><%= t(:photo) %></h4>        
+		       	<p>
+							<b><%=t(:datetime) + ': '%></b><%= route_point_photo.created_at %><br />
+							<b><%=t(:manager) + ': '%></b><%= route_point_photo.route_point.route.manager.name %><br />
+							<b><%=t(:customer) + ': '%></b><%= route_point_photo.route_point.shipping_address.name %><br />
+							<b><%=t(:comment) + ': '%></b><%= route_point_photo.comment.truncate(10)%>
+						</p>
+							<%= link_to(route_route_point_photo_path(route_point_photo.route_point.route, route_point_photo.route_point, route_point_photo), class: 'btn' ) do%><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%>		        	
+	        	</p>
+			    </div>		
+					<%= image_tag route_point_photo.photo.thumb.url %>					
 				</div>
 			</li>
 		<% end %>

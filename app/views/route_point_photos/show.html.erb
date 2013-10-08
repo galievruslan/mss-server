@@ -2,7 +2,14 @@
 <p>
   <%= image_tag @route_point_photo.photo.large.url %>
 </p>
-
+<p>
+  <b><%=t(:datetime)%>:</b>
+  <%= @route_point_photo.created_at %>
+</p>
+<p>
+  <b><%=t(:shipping_address)%>:</b>
+  <%= @route_point_photo.route_point.shipping_address.name %>
+</p>
 <p>
   <b><%=t(:comment)%>:</b>
   <%= simple_format @route_point_photo.comment %>

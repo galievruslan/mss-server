@@ -11,4 +11,19 @@
 .row-fluid li.photo:nth-child(5n) {
     margin: 0;
     padding: 0;
- }
+}
+/* Thumbnail caption stylesheet */
+#hover-cap-4col .thumbnail {
+    position:relative;
+    overflow:hidden;    
+}
+.caption {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.4);
+    width: 100%;
+    height: 100%;
+    color:#fff !important;
+}
