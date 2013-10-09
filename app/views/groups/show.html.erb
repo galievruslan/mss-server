@@ -1,0 +1,8 @@
+<p>
+  <b><%= t(:name) %>:</b>
+  <%= @group.name %>
+</p>
+
+
+<% if can? :manage, Group %><%= link_to t(:edit), edit_group_path(@group) %> |<%end%>
+<%= link_to t(:back), groups_path %>

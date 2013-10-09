@@ -20,6 +20,7 @@ en:
       ability: "Ability"
       category: "Category"
       customer: "Customer"
+      group: "Group"
       manager_shipping_address: "Manager shipping address"
       manager_warehouse: "Manager warehouse"      
       manager: "Manager"
@@ -60,6 +61,8 @@ en:
         name: "Name"
         external_key: "External key"
         validity: "Validity"
+      group:
+        name: "Name"
       manager_shipping_address:
         validity: "Validity"
         shipping_address: "Shipping address"
@@ -591,3 +594,11 @@ en:
   destroy: "Destroy"
   photos: "Photos"
   created_date: "Created date"
+  group: "Group"
+  groups: "Groups"
+  listing_groups: "Listing groups"
+  new_group: "New group"
+  edit_group: "Edit group"
+  group_created: "Group was successfully created."
+  group_updated: "Group was successfully updated."
+  group_destroyed: "Group was successfully destroyed."

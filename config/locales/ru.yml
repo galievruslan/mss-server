@@ -20,6 +20,7 @@ ru:
       ability: "Привилегия"
       category: "Категория"
       customer: "Клиент"
+      group: "Группа"
       manager_shipping_address: "Адрес поставки менеджера"
       manager_warehouse: "Склад менеджера"
       manager: "Менеджер"
@@ -60,6 +61,8 @@ ru:
         name: "Наименование"
         external_key: "Внешний ключ"
         validity: "Доступность"
+      group:
+        name: "Наименование"
       manager_shipping_address:
         validity: "Доступность"
         shipping_address: "Адрес поставки"
@@ -591,3 +594,11 @@ ru:
   destroy: "Удалить"
   photos: "Фотографии"
   created_date: "Дата создания"
+  group: "Группа"
+  groups: "Группы"
+  listing_groups: "Список групп"
+  new_group: "Новая группа"
+  edit_group: "Редактирование группы"
+  group_created: "Группа успешно создана."
+  group_updated: "Группа успешно изменена."
+  group_destroyed: "Группа успешно удалена."

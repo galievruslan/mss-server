@@ -1,5 +1,5 @@
   Mss::Application.routes.draw do
-
+  
   root :to => 'pages#index'
   
   devise_for :users
@@ -183,6 +183,7 @@
   end
   
   resources :mobile_clients
+  resources :groups
   resources :remainders do
     collection do
       get :get_remainder

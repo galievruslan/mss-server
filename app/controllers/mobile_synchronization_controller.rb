@@ -456,7 +456,7 @@ class MobileSynchronizationController < ApplicationController
           end
         else
           params[:route_point_photo][:route_point_id] = @route_point_id
-          @route_point_photo = RoutePointPhoto.new(params[:order])
+          @route_point_photo = RoutePointPhoto.new(params[:route_point_photo])
           respond_to do |format|
             if @route_point_photo.save
               @responce = JSON code: 100, description: 'created successfully'

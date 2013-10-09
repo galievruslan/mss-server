@@ -1,0 +1,46 @@
+<h3><%= t(:listing_groups)%></h3>
+<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+  <i class="icon-filter icon-white"></i> <%= t(:filter)%>
+</button>
+<div id="demo" class="collapse">
+	<br />
+	<div class='well well-small'>		
+		<%= search_form_for @search, class: "form-horizontal" do |f| %>
+		  <div class="control-group">
+		  	<%= f.label :name_cont, t(:name)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :name_cont, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">	  	
+		  		<%= f.submit t(:search), class: 'btn btn-info' %>	
+		  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>  	
+		  </div>	
+		<%end%>
+	</div>
+</div>
+<table class="table table-striped table-hover">
+  <thead>
+  	<tr>
+    	<th><%= sort_link @search, :name, t(:name) %></th>
+    	<th colspan="3"><%= t(:actions)%></th>
+  	</tr>
+  </thead>
+	<tbody>
+		<% @groups.each do |group| %>
+	  <tr>
+	    <td><%= group.name %></td>
+	    <td><%= link_to(group) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
+	    <% if can? :manage, Group %>
+			  <td><%= link_to(edit_group_path(group)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+			  <td><%= link_to(group, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%= t(:remove)%>"></i><%end%></td>
+			<% end %>
+	  </tr>
+		<% end %>
+	</tbody>
+</table>
+
+<%= paginate @groups %>
+<% if can? :create, Group %>
+	<%= link_to t(:new_group), new_group_path, :class =>'btn', :disable_with => t(:please_wait) %>
+<% end %>

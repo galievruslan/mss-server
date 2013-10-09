@@ -94,6 +94,11 @@
             <%= link_to t(:users), users_path %>
           </li>
           <% end %>
+          <% if can? :read, Group %>    
+          <li <%= 'class=active' if @current_controller =='groups'%>>
+            <%= link_to t(:groups), groups_path %>
+          </li>
+          <% end %>
           <% if can? :read, MobileClient %>    
           <li <%= 'class=active' if @current_controller =='mobile_clients'%>>
             <%= link_to t(:mobile_clients), mobile_clients_path %>
