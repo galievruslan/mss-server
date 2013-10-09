@@ -42,6 +42,12 @@
 		  		<%= f.select :manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_manager)},{:class => 'search-field'} %>		  		
 		  	</div>
 		  </div>
+		  <div class="control-group">
+		  	<%= f.label :banned_eq, t(:banned)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.check_box :banned_eq, checked: false, class: 'search-field'%>
+		  	</div>
+		  </div>
 		  <div class="control-group">	  	
 		  		<%= f.submit t(:search), class: 'btn btn-info' %>
 		  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>	  	
