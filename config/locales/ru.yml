@@ -602,3 +602,4 @@ ru:
   group_created: "Группа успешно создана."
   group_updated: "Группа успешно изменена."
   group_destroyed: "Группа успешно удалена."
+  select_groups: "Выбрать группы"

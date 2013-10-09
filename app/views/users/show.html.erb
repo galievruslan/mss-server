@@ -56,6 +56,20 @@
     <% end %>
   </tbody>
 </table>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th><%= t(:groups) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user.groups.each do |group| %>  
+    <tr>
+    	<td><%= group.name %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <%= link_to t(:edit), edit_user_path(@user) %> |
 <%= link_to t(:back), users_path %>

@@ -27,7 +27,8 @@ class UsersController < ApplicationController
   # GET /users/new.json  
   def new
     @user = User.new
-    @managers = Manager.where(validity: true) 
+    @managers = Manager.where(validity: true)
+    @groups = Group.all
     
     respond_to do |format|
       format.html # new.html.erb
@@ -37,7 +38,8 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @managers = Manager.where(validity: true) 
+    @managers = Manager.where(validity: true)
+    @groups = Group.all 
     @user = User.find(params[:id])
     @user.roles.each do |role|
       case role.name
@@ -73,8 +75,9 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @managers = Manager.where(validity: true)     
-    @user = User.new(params[:user])
+    @managers = Manager.where(validity: true)
+    @groups = Group.all 
+    @user = User.new(params[:user])    
     
     if params[:admin]
       @role_admin = true
@@ -125,7 +128,8 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.json  
   def update
-    @managers = Manager.where(validity: true) 
+    @managers = Manager.where(validity: true)
+    @groups = Group.all
     @user = User.find(params[:id])
     
     if params[:admin]

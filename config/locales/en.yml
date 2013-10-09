@@ -602,3 +602,4 @@ en:
   group_created: "Group was successfully created."
   group_updated: "Group was successfully updated."
   group_destroyed: "Group was successfully destroyed."
+  select_groups: "Select groups"

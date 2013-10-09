@@ -5,9 +5,10 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :username, :password, :password_confirmation, :remember_me, :manager_id, :role_ids, :list_page_size, :language, :banned, :phone, :client_type, :client_version
+  attr_accessible :email, :username, :password, :password_confirmation, :remember_me, :manager_id, :role_ids, :list_page_size, :language, :banned, :phone, :client_type, :client_version, :group_ids
   # attr_accessible :title, :body
   has_and_belongs_to_many :roles
+  has_and_belongs_to_many :groups
   validates :username, :presence => true
   validates :username, :uniqueness => { :case_sensitive => false }
   validates :manager_id, :uniqueness => {:message => I18n.t(:is_tied_to_the_user_manager)}, :allow_nil => true 
