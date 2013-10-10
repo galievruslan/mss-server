@@ -1,5 +1,5 @@
-  Mss::Application.routes.draw do
-  
+  Mss::Application.routes.draw do 
+
   root :to => 'pages#index'
   
   devise_for :users
@@ -184,6 +184,11 @@
   
   resources :mobile_clients
   resources :groups
+  resources :messages do
+    collection do
+      post :multiple_change
+    end
+  end
   resources :remainders do
     collection do
       get :get_remainder

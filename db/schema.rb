@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131009041857) do
+ActiveRecord::Schema.define(:version => 20131010070225) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -73,6 +73,13 @@ ActiveRecord::Schema.define(:version => 20131009041857) do
   end
 
   add_index "managers", ["external_key"], :name => "index_managers_on_external_key", :unique => true
+
+  create_table "messages", :force => true do |t|
+    t.string   "subject"
+    t.text     "body"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "mobile_clients", :force => true do |t|
     t.string   "client_type"

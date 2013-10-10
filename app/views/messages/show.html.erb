@@ -1,0 +1,19 @@
+<h3><%=t(:message)%></h3>
+
+<p>
+  <b><%=t(:datetime)%>:</b>
+  <%= @message.created_at %>
+</p>
+<p>
+  <b><%=t(:subject)%>:</b>
+  <%= @message.subject %>
+</p>
+
+<p>
+  <b><%=t(:body)%>:</b>
+  <%= simple_format @message.body %>
+</p>
+
+
+<% if can? :manage, Message %><%= link_to t(:edit), edit_message_path(@message) %> |<%end%>
+<%= link_to t(:back), messages_path %>

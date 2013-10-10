@@ -1,0 +1,29 @@
+<%= form_for @message, :html => { :class => "form-horizontal"} do |f| %>
+  <% if @message.errors.any? %>
+    <div class="alert alert-error">
+    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4><%=t('errors.title')%></h4>
+      <ul>
+      <% @message.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :subject, t(:subject), class: "control-label" %>
+    <div class="controls">
+    	<%= f.text_field :subject %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :body, t(:body), class: "control-label" %>
+    <div class="controls">
+    	<%= f.text_area :body, :cols => 20, :rows => 4 %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.submit(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>
+  </div>
+<% end %>
