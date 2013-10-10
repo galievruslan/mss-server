@@ -481,7 +481,7 @@ en:
   order_items_destroyed: "Order items destroyed"
   orders_export_again: "Orders exported datetime removed"
   route_points_destroyed: "Route points destroyed"
-  is_tied_to_the_user_manager: "is tied to the user"
+  is_tied_to_the_user: "is tied to the user"
   default_route_point_attended_status: "Default attended route point status"
   routes_destroyed: "Routes was successfully destroyed."
   orders_removed: "Orders was successfully destroyed."

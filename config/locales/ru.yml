@@ -481,7 +481,7 @@ ru:
   order_items_destroyed: "Элементы заказа удалены"
   orders_export_again: "Дата и время выгрузки заказов успешно удалены"
   route_points_destroyed: "Точки маршрута удалены"
-  is_tied_to_the_user_manager: "уже привязан к другому пользователю"
+  is_tied_to_the_user: "уже привязан к другому пользователю"
   default_route_point_attended_status: "Статус посещенной точки маршрута по-умолчанию"
   routes_destroyed: "Маршруты успешно удалены"
   orders_removed: "Заказы успешно удалены"

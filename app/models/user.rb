@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :groups
   validates :username, :presence => true
   validates :username, :uniqueness => { :case_sensitive => false }
-  validates :manager_id, :uniqueness => {:message => I18n.t(:is_tied_to_the_user_manager)}, :allow_nil => true 
+  validates :manager_id, :uniqueness => {:message => I18n.t(:is_tied_to_the_user)}, :allow_nil => true 
     
   def role?(role)
     return self.roles.find_by_name(role).try(:name) == role.to_s
