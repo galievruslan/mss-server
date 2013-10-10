@@ -78,6 +78,7 @@ ru:
         default_warehouse: "Склад по-умолчанию"
         validity: "Доступность"
       message:
+        sender: "Отправитель"
         subject: "Тема"
         body: "Текст сообщения"
       mobile_client:
@@ -619,3 +620,4 @@ ru:
   message_updated: "Сообщение успешно изменено."
   message_destroyed: "Сообщение успешно удалено."
   edit_message: "Редактирование сообщения"
+  sender: "Отправитель"

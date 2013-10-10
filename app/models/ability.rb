@@ -16,7 +16,7 @@ class Ability
     elsif user.role? :supervisor
       can :view, :reports
       can :read, :all           
-      can :manage, [TemplateRoute, TemplateRoutePoint]
+      can :manage, [TemplateRoute, TemplateRoutePoint, Message]
       cannot :read, [User, Role]
       cannot :manage, MobileClient      
     elsif user.role? :manager       

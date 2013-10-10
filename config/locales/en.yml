@@ -24,6 +24,7 @@ en:
       manager_shipping_address: "Manager shipping address"
       manager_warehouse: "Manager warehouse"      
       manager: "Manager"
+      message: "Message"
       mobile_client: "Mobile client"
       order_item: "Order item"
       order: "Order"
@@ -76,6 +77,10 @@ en:
         external_key: "External key"
         default_warehouse: "Default warehouse"
         validity: "Validity"
+      message:
+        sender: "Sender"
+        subject: "Subject"
+        body: "Message body"
       mobile_client:
         date: "Date"
         client_type: "Client type"
@@ -615,3 +620,4 @@ en:
   message_updated: "Message was successfully updated."
   message_destroyed: "Message was successfully destroyed."
   edit_message: "Edit message"
+  sender: "Sender"

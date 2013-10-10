@@ -5,6 +5,10 @@
   <%= @message.created_at %>
 </p>
 <p>
+  <b><%=t(:sender)%>:</b>
+  <%= @message.user.username %>
+</p>
+<p>
   <b><%=t(:subject)%>:</b>
   <%= @message.subject %>
 </p>

@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :groups
+  has_many :messages, foreign_key: "sender"
   validates :username, :presence => true
   validates :username, :uniqueness => { :case_sensitive => false }
   validates :manager_id, :uniqueness => {:message => I18n.t(:is_tied_to_the_user)}, :allow_nil => true 
