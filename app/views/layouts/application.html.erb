@@ -68,6 +68,8 @@
           <li class="nav-header"><%= t(:registers)%> </li>
           <li <%= 'class=active' if @current_controller =='remainders'%>>
             <%= link_to t(:remainders), remainders_path %>
+          </li>
+          <li <%= 'class=active' if @current_controller =='route_point_photos'%>>
             <%= link_to t(:photos), route_point_photos_path %>
           </li>
           <% if can? :view, :reports %>
