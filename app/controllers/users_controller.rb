@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     @users = @search.result.page(params[:page]).per(current_user.list_page_size)
     @managers = Manager.all
     @roles = Role.all
+    @groups = Group.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @users }

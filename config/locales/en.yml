@@ -631,3 +631,4 @@ en:
   not_read: "Not read"
   select_sender: "Select sender"
   one_message_per_user: "one message per user"
+  select_group: "Select group"

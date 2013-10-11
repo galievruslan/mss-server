@@ -631,3 +631,4 @@ ru:
   select_sender: "Выбрать отправителя"
   reading: "Прочитано"
   one_message_per_user: "одно сообщение для пользователя"
+  select_group: "Выберите группу"

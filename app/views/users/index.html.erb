@@ -37,6 +37,12 @@
 		  	</div>
 		  </div>
 		  <div class="control-group">
+		  	<%= f.label :groups_id_eq, t(:group)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.select :groups_id_eq, @groups.collect  {|p| [ t(p.name), p.id ]}, {:include_blank => t(:select_group)},{:class => 'search-field'} %>		  		
+		  	</div>
+		  </div>
+		  <div class="control-group">
 		  	<%= f.label :manager_id_eq, t(:manager)+':', class: "control-label"%>
 		  	<div class="controls">
 		  		<%= f.select :manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_manager)},{:class => 'search-field'} %>		  		
