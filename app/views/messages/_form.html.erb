@@ -20,9 +20,15 @@
     </div>
   </div>
   <div class="control-group">
+    <%= label_tag :message_group_ids, t(:group), class: "control-label" %>
+    <div class="controls">
+    	<%= select_tag(:message_group_ids, options_from_collection_for_select(@groups, "id", "name", @select_group_ids), {:include_blank => true, 'data-placeholder' => t(:select_groups), :multiple => true}) %>			    	
+  	</div>
+ 	</div>
+  <div class="control-group">
   	<%= f.label :user_ids, t(:users)+':', class: "control-label"%>
   	<div class="controls">
-  		<%= f.select :user_ids, @users.collect  {|p| [ p.username, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_recipients), :multiple => true, :class => 'search-field'} %>
+  		<%= f.select :user_ids, @users.collect  {|p| [ p.username, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_recipients), :multiple => true} %>
   	</div>
   </div>
   <div class="control-group">

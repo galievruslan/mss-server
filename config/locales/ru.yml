@@ -630,3 +630,4 @@ ru:
   not_read: "Не прочитано"
   select_sender: "Выбрать отправителя"
   reading: "Прочитано"
+  one_message_per_user: "одно сообщение для пользователя"

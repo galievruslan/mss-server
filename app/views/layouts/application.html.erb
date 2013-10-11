@@ -68,9 +68,6 @@
           <li <%= 'class=active' if @current_controller =='template_routes' or @current_controller =='template_route_points'%>>
             <%= link_to t(:template_routes), template_routes_path %>
           </li>
-          <li <%= 'class=active' if @current_controller =='messages'%>>
-            <%= link_to t(:messages), messages_path %>
-          </li>
           <li class="nav-header"><%= t(:registers)%> </li>
           <li <%= 'class=active' if @current_controller =='remainders'%>>
             <%= link_to t(:remainders), remainders_path %>

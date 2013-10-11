@@ -46,7 +46,8 @@ class MessagesController < ApplicationController
   # GET /messages/new
   # GET /messages/new.json
   def new
-    @users = User.all 
+    @users = User.all
+    @groups = Group.all
     @message = Message.new
     
     respond_to do |format|
@@ -58,6 +59,7 @@ class MessagesController < ApplicationController
   # GET /messages/1/edit
   def edit
     @users = User.all
+    @groups = Group.all
     @message = Message.find(params[:id])
   end
 
@@ -65,7 +67,21 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     @users = User.all
+    @groups = Group.all
+    if params[:message_group_ids]
+      @select_group_ids = params[:message_group_ids]
+    end
     params[:message][:user_id] = current_user.id
+    if !params[:message_group_ids].nil?
+      params[:message_group_ids].each do |group_id|
+        user_ids = Group.find(group_id).users.collect(&:id)
+        user_ids.each do |user_id|
+          unless params[:message][:user_ids].include?(user_id.to_s)
+            params[:message][:user_ids] << user_id.to_s
+          end
+        end
+      end
+    end
     @message = Message.new(params[:message])
 
     respond_to do |format|
@@ -82,8 +98,22 @@ class MessagesController < ApplicationController
   # PUT /messages/1
   # PUT /messages/1.json
   def update
+    @groups = Group.all
     @users = User.all
     @message = Message.find(params[:id])
+    if params[:message_group_ids]      
+      @select_group_ids = params[:message_group_ids]
+    end
+    if !params[:message_group_ids].nil?
+      params[:message_group_ids].each do |group_id|
+        user_ids = Group.find(group_id).users.collect(&:id)
+        user_ids.each do |user_id|
+          if !params[:message][:user_ids].include?(user_id.to_s)
+            params[:message][:user_ids] << user_id.to_s
+          end
+        end
+      end
+    end
 
     respond_to do |format|
       if @message.update_attributes(params[:message])
