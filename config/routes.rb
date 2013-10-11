@@ -29,6 +29,7 @@
   
   # MobileSynchronization routes
   get 'synchronization/mobile_client', :to => 'mobile_synchronization#mobile_client'  
+  get 'synchronization/messages', :to => 'mobile_synchronization#messages'  
   get 'synchronization/datetime', :to => 'mobile_synchronization#datetime'
   get 'synchronization/settings', :to => 'mobile_synchronization#settings'
   get 'synchronization/customers', :to => 'mobile_synchronization#customers'

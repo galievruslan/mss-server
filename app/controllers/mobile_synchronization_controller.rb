@@ -16,6 +16,17 @@ class MobileSynchronizationController < ApplicationController
       end
     end    
   end
+  
+  # GET /messages.json
+  def messages
+    @message_ids = current_user.user_messages.where(delivered: false).collect(&:message_id)
+    @messages = Message.where(id: @message_ids)
+    
+    respond_to do |format|      
+      format.json { render json: @messages }
+    end
+        
+  end
     
   # GET /datetime.json
   def datetime
