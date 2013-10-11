@@ -1,0 +1,21 @@
+<h3><%=t(:message)%></h3>
+
+<p>
+  <b><%=t(:datetime)%>:</b>
+  <%= @message.created_at %>
+</p>
+<p>
+  <b><%=t(:sender)%>:</b>
+  <%= @message.sender.username %>
+</p>
+<p>
+  <b><%=t(:subject)%>:</b>
+  <%= @message.subject %>
+</p>
+
+<p>
+  <b><%=t(:body)%>:</b>
+  <%= simple_format @message.body %>
+</p>
+
+<%= link_to t(:back), messages_path %>

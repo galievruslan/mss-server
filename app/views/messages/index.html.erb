@@ -1,83 +1,170 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'messages' %>
+<% end %>
 <h3><%= t(:listing_messages)%></h3>
-<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
-  <i class="icon-filter icon-white"></i> <%= t(:filter)%>
-</button>
-<div id="demo" class="collapse">
-	<br />
-	<div class='well well-small'>		
-		<%= search_form_for @search, class: "form-horizontal" do |f| %>
-			<div class="control-group">
-		  	<%= f.label :created_at_gt, t(:created_period)+':', class: "control-label"%>
-		  	<div class="controls">
-		  		<div class="input-append date datetimepicker">
-				    <%= f.text_field :created_at_gt, class: "input-medium search-field"%>
-				    <span class="add-on">
-				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-				      </i>
-				    </span>
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:inbox)%></a></li>
+    <% if !current_user.role? :manager %>
+    <li><a href="#tab2" data-toggle="tab"><%= t(:outbox)%></a></li>
+    <%end%>
+  </ul>
+<div class="tab-content">
+  <div class="tab-pane active" id="tab1">
+  	<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+		  <i class="icon-filter icon-white"></i> <%= t(:filter)%>
+		</button>
+		<div id="demo" class="collapse">
+			<br />
+			<div class='well well-small'>		
+				<%= search_form_for @search_inbox, url: messages_path, class: "form-horizontal" do |f| %>
+					<div class="control-group">
+				  	<%= f.label :created_at_gt, t(:created_period)+':', class: "control-label"%>
+				  	<div class="controls">
+				  		<div class="input-append date datetimepicker">
+						    <%= f.text_field :created_at_gt, class: "input-medium search-field"%>
+						    <span class="add-on">
+						      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+						      </i>
+						    </span>
+						  </div>
+				  		- 
+				  		<div class="input-append date datetimepicker">
+						    <%= f.text_field :created_at_lt, class: "input-medium search-field"%>
+						    <span class="add-on">
+						      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+						      </i>
+						    </span>
+						  </div>
+				  	</div>
 				  </div>
-		  		- 
-		  		<div class="input-append date datetimepicker">
-				    <%= f.text_field :created_at_lt, class: "input-medium search-field"%>
-				    <span class="add-on">
-				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-				      </i>
-				    </span>
+				  <div class="control-group">
+				  	<%= f.label :message_sender_id_eq, t(:sender)+':', class: "control-label"%>
+				  	<div class="controls">
+				  		<%= f.select :message_sender_id_eq, @users.collect  {|p| [ p.username, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_sender), :class => 'search-field'} %>
+				  	</div>
 				  </div>
-		  	</div>
-		  </div>
-		  <div class="control-group">
-		  	<%= f.label :subject_cont, t(:subject)+':', class: "control-label"%>
-		  	<div class="controls">
-		  		<%= f.text_field :subject_cont, class: 'search-field'%>
-		  	</div>
-		  </div>
-		  <div class="control-group">
-		  	<%= f.label :body_cont, t(:body)+':', class: "control-label"%>
-		  	<div class="controls">
-		  		<%= f.text_field :body_cont, class: 'search-field'%>
-		  	</div>
-		  </div>
-		  <div class="control-group">	  	
-		  		<%= f.submit t(:search), class: 'btn btn-info' %>	
-		  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>  	
-		  </div>	
+				  <div class="control-group">
+				  	<%= f.label :message_subject_cont, t(:subject)+':', class: "control-label"%>
+				  	<div class="controls">
+				  		<%= f.text_field :message_subject_cont, class: 'search-field'%>
+				  	</div>
+				  </div>
+				  <div class="control-group">
+				  	<%= f.label :delivered_eq, t(:reading)+'?:', class: "control-label"%>
+				  	<div class="controls">
+				  		<%= f.check_box :delivered_eq, checked: false, class: 'search-field'%>
+				  	</div>
+				  </div>
+				  <div class="control-group">	  	
+				  		<%= f.submit t(:search), class: 'btn btn-info' %>	
+				  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>  	
+				  </div>	
+				<%end%>
+			</div>
+		</div>
+		<table class="table table-striped table-hover">
+		  <thead>
+		  	<tr>  		
+		    	<th><%= sort_link @search_inbox, :created_at, t(:datetime) %></th>
+		    	<th><%= sort_link @search_inbox, :message_sender_username, t(:sender) %></th>
+		    	<th><%= sort_link @search_inbox, :message_subject, t(:subject) %></th>
+		    	<th><%= t(:status) %></th>
+		    	<th><%= t(:actions)%></th>
+		  	</tr>
+		  </thead>
+			<tbody>
+				<% @inboxes.each do |inbox| %>
+			  <tr>
+			    <td><%= inbox.created_at %></td>
+			    <td><%= inbox.message.sender.username %></td>
+			    <td><%= inbox.message.subject.truncate(20) %></td>
+			    <td><%= inbox.delivered ?  t(:reading) : t(:not_read) %></td>
+			    <td><%= link_to(read_message_path(inbox.message)) do %><i class='icon-envelope' title='<%= t(:read) %>'></i><%end%></td>
+			  </tr>
+				<% end %>
+			</tbody>
+		</table>
+		<%= paginate @inboxes %>
+  </div>
+  <% if !current_user.role? :manager %>
+  <div class="tab-pane" id="tab2">
+  	<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo2">
+		  <i class="icon-filter icon-white"></i> <%= t(:filter)%>
+		</button>
+		<div id="demo2" class="collapse">
+			<br />
+			<div class='well well-small'>		
+				<%= search_form_for @search, class: "form-horizontal" do |f| %>
+					<div class="control-group">
+				  	<%= f.label :created_at_gt, t(:created_period)+':', class: "control-label"%>
+				  	<div class="controls">
+				  		<div class="input-append date datetimepicker">
+						    <%= f.text_field :created_at_gt, class: "input-medium search-field"%>
+						    <span class="add-on">
+						      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+						      </i>
+						    </span>
+						  </div>
+				  		- 
+				  		<div class="input-append date datetimepicker">
+						    <%= f.text_field :created_at_lt, class: "input-medium search-field"%>
+						    <span class="add-on">
+						      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+						      </i>
+						    </span>
+						  </div>
+				  	</div>
+				  </div>
+				  <div class="control-group">
+				  	<%= f.label :subject_cont, t(:subject)+':', class: "control-label"%>
+				  	<div class="controls">
+				  		<%= f.text_field :subject_cont, class: 'search-field'%>
+				  	</div>
+				  </div>
+				  <div class="control-group">	  	
+				  		<%= f.submit t(:search), class: 'btn btn-info' %>	
+				  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>  	
+				  </div>	
+				<%end%>
+			</div>
+		</div>
+		<%= form_tag multiple_change_messages_path do%>
+		<table class="table table-striped table-hover">
+		  <thead>
+		  	<tr>
+		  		<th><input type="checkbox" onclick="toggleChecked(this.checked)"></th>  		
+		    	<th><%= sort_link @search, :created_at, t(:datetime) %></th>
+		    	<th><%= sort_link @search, :sender_username, t(:sender) %></th>
+		    	<th><%= sort_link @search, :subject, t(:subject) %></th>
+		    	<th colspan="3"><%= t(:actions)%></th>
+		  	</tr>
+		  </thead>
+			<tbody>
+				<% @messages.each do |message| %>
+			  <tr>
+			  	<td><%= check_box_tag 'message_ids[]', message.id %></td>
+			    <td><%= message.created_at %></td>
+			    <td><%= message.sender.username %></td>
+			    <td><%= message.subject.truncate(20) %></td>
+			    <td><%= link_to(message) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
+			    <% if can? :manage, Message %>
+					  <td><%= link_to(edit_message_path(message)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
+					  <td><%= link_to(message, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%= t(:remove)%>"></i><%end%></td>
+					<% end %>
+			  </tr>
+				<% end %>
+			</tbody>
+		</table>
+		
+		<%= paginate @messages %>
+		<% if can? :create, Message %>
+			<%= link_to t(:new_message), new_message_path, :class =>'btn', :disable_with => t(:please_wait) %>
+		<% end %>
+		<% if can? :manage, Message %>
+				<%= submit_tag t(:remove), class: 'btn', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
+			<%end%>
 		<%end%>
 	</div>
-</div>
-<%= form_tag multiple_change_messages_path do%>
-<table class="table table-striped table-hover">
-  <thead>
-  	<tr>
-  		<th><input type="checkbox" onclick="toggleChecked(this.checked)"></th>
-    	<th><%= sort_link @search, :created_at, t(:datetime) %></th>
-    	<th><%= sort_link @search, :subject, t(:subject) %></th>
-    	<th><%= sort_link @search, :body, t(:body) %></th>
-    	<th colspan="3"><%= t(:actions)%></th>
-  	</tr>
-  </thead>
-	<tbody>
-		<% @messages.each do |message| %>
-	  <tr>
-	  	<td><%= check_box_tag 'message_ids[]', message.id %></td>
-	    <td><%= message.created_at %></td>
-	    <td><%= message.subject.truncate(20) %></td>
-	    <td><%= message.body.truncate(50) %></td>
-	    <td><%= link_to(message) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
-	    <% if can? :manage, Message %>
-			  <td><%= link_to(edit_message_path(message)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-			  <td><%= link_to(message, method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%= t(:remove)%>"></i><%end%></td>
-			<% end %>
-	  </tr>
-		<% end %>
-	</tbody>
-</table>
-
-<%= paginate @messages %>
-<% if can? :create, Message %>
-	<%= link_to t(:new_message), new_message_path, :class =>'btn', :disable_with => t(:please_wait) %>
-<% end %>
-<% if can? :manage, Message %>
-		<%= submit_tag t(:remove), class: 'btn', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
 	<%end%>
-<%end%>
+</div>

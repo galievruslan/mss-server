@@ -6,7 +6,7 @@
 </p>
 <p>
   <b><%=t(:sender)%>:</b>
-  <%= @message.user.username %>
+  <%= @message.sender.username %>
 </p>
 <p>
   <b><%=t(:subject)%>:</b>
@@ -17,7 +17,23 @@
   <b><%=t(:body)%>:</b>
   <%= simple_format @message.body %>
 </p>
-
+<h4><%= t(:recipients)%></h4>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th><%= t(:recipient)%></th>
+      <th><%= t(:status)%></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @message.user_messages.each do |user_message| %>  
+    <tr <%='class=success' if user_message.delivered %>>
+      <td><%= user_message.user.username %></td>
+      <td><%= user_message.delivered ? t(:reading) : t(:not_read)%></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <% if can? :manage, Message %><%= link_to t(:edit), edit_message_path(@message) %> |<%end%>
 <%= link_to t(:back), messages_path %>

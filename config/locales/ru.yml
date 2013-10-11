@@ -78,7 +78,7 @@ ru:
         default_warehouse: "Склад по-умолчанию"
         validity: "Доступность"
       message:
-        sender: "Отправитель"
+        user_id: "Отправитель"
         subject: "Тема"
         body: "Текст сообщения"
       mobile_client:
@@ -621,3 +621,12 @@ ru:
   message_destroyed: "Сообщение успешно удалено."
   edit_message: "Редактирование сообщения"
   sender: "Отправитель"
+  select_recipients: "Выбрать получателей"
+  recipient: "Получатель"
+  recipients: "Получатели"
+  outbox: "Исходящие"
+  inbox: "Входящие"
+  read: "Читать"
+  not_read: "Не прочитано"
+  select_sender: "Выбрать отправителя"
+  reading: "Прочитано"

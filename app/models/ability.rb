@@ -16,8 +16,12 @@ class Ability
     elsif user.role? :supervisor
       can :view, :reports
       can :read, :all           
-      can :manage, [TemplateRoute, TemplateRoutePoint, Message]
-      cannot :read, [User, Role]
+      can :manage, [TemplateRoute, TemplateRoutePoint]      
+      cannot :read, Message
+      can :read, Message, :user_id => user.id      
+      can :read, Message, :id => user.message_ids
+      can :manage, Message, :user_id => user.id      
+      cannot :read, [User, Role, Group]
       cannot :manage, MobileClient      
     elsif user.role? :manager       
       can :read, :all
@@ -30,6 +34,8 @@ class Ability
       can :route , :current
       can :manage, RoutePointPhoto, :route_point => { :id => RoutePoint.where(id: Route.where(manager_id: user.manager_id).collect(&:id)).collect(&:id)}
       can :create, RoutePointPhoto
+      cannot :read, Message
+      can :read, Message, :id => user.message_ids
       cannot :read, [User, Role, Group] 
       cannot :export_again, Order
       cannot :destroy, Order

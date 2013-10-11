@@ -1,10 +1,20 @@
 class MessagesController < ApplicationController
+  load_and_authorize_resource
   # GET /messages
   # GET /messages.json
   def index
-    @search = Message.search(params[:q])
-    @messages = @search.result.page(params[:page]).per(current_user.list_page_size)
-
+    @users = User.all
+    if current_user.role? :supervisor
+      @search = current_user.posted.search(params[:q])
+      @messages = @search.result.page(params[:page]).per(current_user.list_page_size)
+    elsif current_user.role? :admin
+      @search = Message.search(params[:q])
+      @messages = @search.result.page(params[:page]).per(current_user.list_page_size)
+    end      
+    
+    @search_inbox = current_user.user_messages.search(params[:q])
+    @inboxes = @search_inbox.result.page(params[:page]).per(current_user.list_page_size)
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @messages }
@@ -21,10 +31,22 @@ class MessagesController < ApplicationController
       format.json { render json: @message }
     end
   end
+  
+  # GET /messages/1/read
+  # GET /messages/1/read.json
+  def read
+    @message = Message.find(params[:id])
+    @message.read(current_user)
+    respond_to do |format|
+      format.html # read.html.erb
+      format.json { render json: @message }
+    end
+  end
 
   # GET /messages/new
   # GET /messages/new.json
   def new
+    @users = User.all 
     @message = Message.new
     
     respond_to do |format|
@@ -35,13 +57,15 @@ class MessagesController < ApplicationController
 
   # GET /messages/1/edit
   def edit
+    @users = User.all
     @message = Message.find(params[:id])
   end
 
   # POST /messages
   # POST /messages.json
   def create
-    params[:message][:sender] = current_user.id
+    @users = User.all
+    params[:message][:user_id] = current_user.id
     @message = Message.new(params[:message])
 
     respond_to do |format|
@@ -58,6 +82,7 @@ class MessagesController < ApplicationController
   # PUT /messages/1
   # PUT /messages/1.json
   def update
+    @users = User.all
     @message = Message.find(params[:id])
 
     respond_to do |format|

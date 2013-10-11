@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'messages' %>
+<% end %>
 <%= form_for @message, :html => { :class => "form-horizontal"} do |f| %>
   <% if @message.errors.any? %>
     <div class="alert alert-error">
@@ -10,12 +13,17 @@
       </ul>
     </div>
   <% end %>
-
   <div class="control-group">
     <%= f.label :subject, t(:subject), class: "control-label" %>
     <div class="controls">
     	<%= f.text_field :subject %>
     </div>
+  </div>
+  <div class="control-group">
+  	<%= f.label :user_ids, t(:users)+':', class: "control-label"%>
+  	<div class="controls">
+  		<%= f.select :user_ids, @users.collect  {|p| [ p.username, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_recipients), :multiple => true, :class => 'search-field'} %>
+  	</div>
   </div>
   <div class="control-group">
     <%= f.label :body, t(:body), class: "control-label" %>

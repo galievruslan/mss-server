@@ -185,6 +185,9 @@
   resources :mobile_clients
   resources :groups
   resources :messages do
+    member do
+      get :read
+    end
     collection do
       post :multiple_change
     end
