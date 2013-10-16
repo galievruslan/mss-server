@@ -477,6 +477,11 @@ class ExchangeController < ApplicationController
           products.each do |product| 
             product_name = product.elements['name'].text
             product_external_key = product.elements['external_key'].text
+            if product.elements['mml']
+              product_mml = product.elements['mml'].text
+            else
+              product_mml = false
+            end
             product_category_external_key = product.elements['category_external_key'].text
             product_category = Category.find_by_external_key(product_category_external_key)
             
@@ -488,12 +493,12 @@ class ExchangeController < ApplicationController
             
             product_db = Product.find_by_external_key(product_external_key)
             if !product_db
-              new_product = Product.create(name: product_name, external_key: product_external_key, category: product_category)
+              new_product = Product.create(name: product_name, external_key: product_external_key, category: product_category, mml: product_mml)
             else
               if !product_db.validity
-                product_db.update_attributes(validity: true, name: product_name, category: product_category)
+                product_db.update_attributes(validity: true, name: product_name, category: product_category, mml: product_mml)
               else
-                product_db.update_attributes(name: product_name, category: product_category)
+                product_db.update_attributes(name: product_name, category: product_category, mml: product_mml)
               end
             end          
           end  
