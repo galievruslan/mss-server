@@ -12,6 +12,10 @@
 </p>
 <p>
   <b><%= t(:validity)%>:</b>
+  <%= @product.validity ? t(:yes) : t(:no) %>
+</p>
+<p>
+  <b><%= t(:validity)%>:</b>
   <%= @product.validity ? t(:truth) : t(:lie) %>
 </p>
 
