@@ -6,7 +6,7 @@
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= yield :stylesheets %> 
-  <%= yield :javascripts %> 
+  <%= yield :javascripts %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -79,6 +79,9 @@
             <li class="nav-header"><%= t(:reports)%></li>
             <li <%= 'class=active' if @current_controller =='reports'%>>
               <%= link_to t(:reports), reports_path %>
+            </li>
+            <li <%= 'class=active' if @current_controller =='reports' and @current_action == 'locations'%>>
+              <%= link_to t(:manager_movement), reports_locations_path %>
             </li>
           <% end %>
           <% if can? :view, :settings %>          

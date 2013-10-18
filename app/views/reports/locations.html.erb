@@ -1,0 +1,44 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'locations' %>
+  <%= javascript_include_tag 'reports' %>
+<% end %>
+<h4><%= t(:location_report)%></h4>
+<%= search_form_for @search, url: reports_locations_path, class: "form-horizontal" do |f| %>
+	<div class="control-group">
+  	<%= f.label :timestamp_gt, t(:date_period)+':', class: "control-label"%>
+  	<div class="controls">
+  		<div class="input-append date datetimepicker">
+		    <%= f.text_field :timestamp_gt, class: "input-medium search-field"%>
+		    <span class="add-on">
+		      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+		      </i>
+		    </span>
+		  </div>
+  		- 
+  		<div class="input-append date datetimepicker">
+		    <%= f.text_field :timestamp_lt, class: "input-medium search-field"%>
+		    <span class="add-on">
+		      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+		      </i>
+		    </span>
+		  </div>
+  	</div>
+  </div>
+  <div class="control-group">
+  	<%= f.label :user_manager_id_eq, t(:manager)+':', class: "control-label"%>
+  	<div class="controls">
+  		<%= f.select :user_manager_id_eq, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => t(:select_manager)},{:class => 'search-field'} %>		  		
+  	</div>
+  </div>
+  <p>
+  	<i><%= t(:datetime_not_last_position)%></i>
+  </p>
+  <div class="control-group">	  	
+		<%= f.submit t(:search), class: 'btn btn-info' %>
+		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>	  	
+  </div>	
+<%end%>
+<%if params[:q] and params[:q][:user_manager_id_eq] != ''%>
+	<%= gmaps({"markers" => {"data" => @markers}, "polylines" => { "data" => @polyline, "options" => { "strokeColor" => "#0088cc" }}}) %>
+<%end%>
+<%= yield :scripts %>

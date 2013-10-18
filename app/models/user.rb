@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :posted, foreign_key: "user_id", class_name: 'Message'
   has_many :messages, through: :user_messages
   has_many :user_messages, :dependent => :destroy
+  has_many :locations, :dependent => :destroy
   validates :username, :presence => true
   validates :username, :uniqueness => { :case_sensitive => false }
   validates :manager_id, :uniqueness => {:message => I18n.t(:is_tied_to_the_user)}, :allow_nil => true 

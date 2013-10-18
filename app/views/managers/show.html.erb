@@ -1,3 +1,6 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'locations' %>
+<% end %>
 <p>
   <b><%= t(:external_key)%>:</b>
   <%= @manager.external_key %>
@@ -14,7 +17,12 @@
   <b><%= t(:validity)%>:</b>
   <%= @manager.validity ? t(:truth) : t(:lie) %>
 </p>
-
+<b><%= t(:last_location)%>:</b>
+<% if @location%>
+	<%= gmaps4rails(@location) %>
+<%else%>
+	<%= t(:not) %>
+<%end%>
 <h4><%=t(:shipping_addresses)%></h4>
 
 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
@@ -82,3 +90,4 @@
 
 <% if can? :manage, Manager %><%= link_to t(:edit), edit_manager_path(@manager) %> |<% end %>
 <%= link_to t(:back), managers_path %>
+<%= yield :scripts %>

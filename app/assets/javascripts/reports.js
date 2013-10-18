@@ -11,4 +11,5 @@ $(document).ready(function() {
 	$("#q_id_in").select2({allowClear: true});
 	$("#q_product_id_in").select2({allowClear: true});
 	$("#q_unit_of_measure_id_in").select2({allowClear: true});
+	$("#q_user_manager_id_eq").select2({allowClear: true});
 });

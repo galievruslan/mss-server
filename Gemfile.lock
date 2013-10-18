@@ -58,6 +58,7 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    gmaps4rails (1.5.6)
     highcharts-rails (3.0.2)
       railties (>= 3.1)
     highline (1.6.19)
@@ -169,6 +170,7 @@ DEPENDENCIES
   carrierwave
   coffee-rails (~> 3.2.1)
   devise
+  gmaps4rails
   highcharts-rails
   jquery-rails
   kaminari

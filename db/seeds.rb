@@ -20,3 +20,10 @@
 @user_supervisor.save
 @user_manager.roles << @role_manager
 @user_manager.save
+
+@user_manager.locations.create(timestamp: '2013-10-17 11:00:00', latitude: 55.811314, longitude: 49.102508)
+@user_manager.locations.create(timestamp: '2013-10-17 11:05:00', latitude: 55.801377, longitude: 49.102337)
+@user_manager.locations.create(timestamp: '2013-10-17 11:10:00', latitude: 55.797904, longitude: 49.10165)
+@user_manager.locations.create(timestamp: '2013-10-17 11:15:00', latitude: 55.787578, longitude: 49.114181)
+@user_manager.locations.create(timestamp: '2013-10-17 11:20:00', latitude: 55.784682, longitude: 49.118988)
+@user_manager.locations.create(timestamp: '2013-10-17 11:25:00', latitude: 55.773387, longitude: 49.103023)

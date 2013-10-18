@@ -24,7 +24,11 @@ class ManagersController < ApplicationController
   # GET /managers/1.json
   def show
     @manager = Manager.find(params[:id])
-    
+    if User.find_by_manager_id(@manager.id)
+      if User.find_by_manager_id(@manager.id).locations.present?
+        @location = User.find_by_manager_id(@manager.id).locations.last.to_gmaps4rails
+      end
+    end
     if params[:q]
       @search = @manager.manager_shipping_addresses.search(params[:q])
       @manager_shipping_addresses = @search.result.page(params[:page]).per(current_user.list_page_size)

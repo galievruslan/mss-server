@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @search = User.search(params[:q])
-    @users = @search.result.page(params[:page]).per(current_user.list_page_size)
+    @users = @search.result(distinct: true).page(params[:page]).per(current_user.list_page_size)
     @managers = Manager.all
     @roles = Role.all
     @groups = Group.all
@@ -19,6 +19,9 @@ class UsersController < ApplicationController
   # GET /users/1.json  
   def show
     @user = User.find(params[:id])
+    if @user.locations.present?
+      @location = @user.locations.last.to_gmaps4rails
+    end
     if @user.manager_id
       @manager = Manager.find(@user.manager_id)
     end    

@@ -69,4 +69,55 @@ class ReportsController < ApplicationController
     @remainders = @search.result
   end
   
+  # GET /reports/locations
+  def locations
+    authorize! :view, :reports
+    @managers = Manager.all
+    @search = Location.search(params[:q])
+    if params[:q] and params[:q][:user_manager_id_eq] != ''
+      if params[:q][:timestamp_gt] != ''
+        @locations = @search.result
+        @polyline_point = [] 
+        @polyline = []         
+        @locations.each do |loc|
+          @polyline_point << { :lng => loc[:longitude], :lat => loc[:latitude]}
+        end
+        @polyline << @polyline_point
+        @polyline =  @polyline.to_json
+      else
+        @locations = @search.result.last
+        @polyline = []
+      end      
+      @markers = @locations.to_gmaps4rails do |location, marker|
+        if location == @locations.first 
+          marker.infowindow render_to_string(:partial => "/reports/location", :locals => { :object => location})
+          marker.picture({
+                          :picture => '/assets/start.png',
+                          :width   => 24,
+                          :height  => 24,
+                          :marker_anchor => [12, 24]
+                         })
+          marker.title   location.timestamp.to_s
+        elsif location == @locations.last 
+          marker.infowindow render_to_string(:partial => "/reports/location", :locals => { :object => location})
+          marker.picture({
+                          :picture => '/assets/finish.png',
+                          :width   => 24,
+                          :height  => 24,
+                          :marker_anchor => [12, 24]
+                         })
+          marker.title   location.timestamp.to_s
+        else
+          marker.infowindow render_to_string(:partial => "/reports/location", :locals => { :object => location})
+          marker.picture({
+                          :picture => '/assets/point.png',
+                          :width   => 8,
+                          :height  => 8,
+                          :marker_anchor => [4, 4]
+                         })
+          marker.title   location.timestamp.to_s
+        end        
+      end
+    end
+  end  
 end

@@ -9,7 +9,6 @@
 //= require bootstrap-inputmask.min
 //= require tree
 //= require highcharts
-//= require highcharts
 /* ===================================================
  Reset button for filter form
 * ===================================================*/

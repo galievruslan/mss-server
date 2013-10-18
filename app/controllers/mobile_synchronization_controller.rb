@@ -455,5 +455,32 @@ class MobileSynchronizationController < ApplicationController
         rescue ActiveRecord::StatementInvalid
       end
     end     
+  end  
+  
+  # POST /locations.json
+  def locations
+    params[:location][:user_id] = current_user.id
+    @location = Location.find_by_timestamp_and_user_id(params[:location][:timestamp], current_user.id)
+    Location.transaction do
+      begin
+        if @location
+          respond_to do |format|
+            @responce = JSON code: 100, description: 'already exists'
+            format.json { render json: @responce, status: :ok, location: @order }
+          end
+        else
+          @location = Location.new(params[:location])
+          respond_to do |format|      
+            if @location.save
+              @responce = JSON code: 100, description: 'created successfully'
+              format.json { render json: @responce, status: :created, location: @order }
+            else
+              @responce = JSON code: 200, description: 'the data format is not valid'
+              format.json { render json: @responce, status: :unprocessable_entity }
+            end
+          end
+        end
+      rescue ActiveRecord::StatementInvalid
+    end           
   end   
 end

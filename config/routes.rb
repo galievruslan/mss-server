@@ -26,6 +26,7 @@
   get 'reports/template_routes', :to => 'reports#template_routes'
   get 'reports/customer_debts', :to => 'reports#customer_debts'
   get 'reports/remainders', :to => 'reports#remainders'
+  get 'reports/locations', :to => 'reports#locations'
   
   # MobileSynchronization routes
   get 'synchronization/mobile_client', :to => 'mobile_synchronization#mobile_client'  
@@ -51,6 +52,7 @@
   post 'synchronization/orders', :to => 'mobile_synchronization#orders'
   post 'synchronization/client_information', :to => 'mobile_synchronization#client_information'
   post 'synchronization/route_point_photos', :to => 'mobile_synchronization#route_point_photos'
+  post 'synchronization/locations', :to => 'mobile_synchronization#locations'
   
   resources :orders do
     member do

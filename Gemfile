@@ -17,6 +17,8 @@ gem 'select2-rails' # Autocomplete select_tag
 gem 'twitter-bootstrap-rails', '2.2.6'
 gem 'carrierwave' # Add upload files
 gem 'mini_magick' # Wrapper for Image 
+gem 'gmaps4rails' # For google maps view
+
 
 # Gems used only for assets and not required
 # in production environments by default.
