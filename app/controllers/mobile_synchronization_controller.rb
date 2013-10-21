@@ -480,7 +480,8 @@ class MobileSynchronizationController < ApplicationController
             end
           end
         end
-      rescue ActiveRecord::StatementInvalid
+        rescue ActiveRecord::StatementInvalid
+      end
     end           
   end   
 end
