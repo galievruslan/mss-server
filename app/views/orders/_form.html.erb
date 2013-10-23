@@ -74,7 +74,7 @@
 			  <div class="control-group">
 			    <%= f.label :manager_id, t(:manager), class: "control-label" %>
 			    <div class="controls">
-			    	<%= f.select(:manager_id, @managers.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_manager)}) %>
+			    	<%= f.select(:manager_id, options_from_collection_for_select(@managers, "id", "name", @select_manager_id), {:include_blank => true}, {'data-placeholder' => t(:select_manager)}) %>
 			    </div>
 			  </div>
 			  <div class="control-group">

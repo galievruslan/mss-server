@@ -62,6 +62,9 @@
           <li <%= 'class=active' if @current_controller =='orders' or @current_controller =='order_items'%>>
             <%= link_to t(:orders), orders_path %>
           </li>
+          <li <%= 'class=active' if @current_controller =='audit_documents' or @current_controller =='audit_document_items'%>>
+            <%= link_to t(:audit_documents), audit_documents_path %>
+          </li>
           <li <%= 'class=active' if @current_controller =='routes' or @current_controller =='route_points'%>>
             <%= link_to t(:routes), routes_path %>
           </li>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  date: 2013-10-23 09:05:32
+  manager_id: 1
+  shipping_address_id: 1
+  percentage_shelves: 1
+  comment: MyText
+
+two:
+  date: 2013-10-23 09:05:32
+  manager_id: 1
+  shipping_address_id: 1
+  percentage_shelves: 1
+  comment: MyText

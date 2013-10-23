@@ -1,9 +1,6 @@
   Mss::Application.routes.draw do 
-
-  root :to => 'pages#index'
-  
-  devise_for :users
-  
+  root :to => 'pages#index'  
+  devise_for :users  
   get 'settings', :to => 'settings#show'
   put 'settings', :to => 'settings#update'
   put 'settings/update_crontab', :to => 'settings#update_crontab'
@@ -200,5 +197,11 @@
       get :get_remainder
       post :multiple_change
     end
+  end
+  resources :audit_documents do
+    collection do
+      get :update_shipping_addresses
+      post :multiple_change
+    end 
   end
 end

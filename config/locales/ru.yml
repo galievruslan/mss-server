@@ -18,6 +18,7 @@ ru:
   activerecord:
     models:
       ability: "Привилегия"
+      audit_document: "Мерчендайзинг"
       category: "Категория"
       customer: "Клиент"
       group: "Группа"
@@ -46,6 +47,14 @@ ru:
       warehouse: "Склад"
       remainder: "Остаток"
     attributes:
+      audit_document:
+        date: "Дата"
+        manager: "Менеджер"
+        manager_id: "Менеджер"
+        shipping_address: "Адрес поставки"
+        shipping_address_id: "Адрес поставки"
+        comment: "Комментарий"
+        percentage_shelves: "Процент полок"
       remainder:
         warehouse: "Склад"
         warehouse_id: "Склад"
@@ -650,3 +659,14 @@ ru:
   longitude: "Долгота"
   manager_movement: "Передвижения менеджеров"
   datetime_not_last_position: "* - Если не будет выбрано начало периода, будет выведено последнее местоположение"
+  one_audit_document_per_date: "уже имеет документ мерчендайзинга на этот день"
+  listing_audit_documents: "Список документов мерчендайзинга"
+  new_document: "Новый документ"
+  percentage_shelves: "Процент полок"
+  new_audit_document: "Новый документ мерчендайзинга"
+  edit_audit_document: "Редактировать документ мерчендайзинга"
+  audit_document_created: "Документ мерчендайзинга успешно создан."
+  audit_document_updated: "Документ мерчендайзинга успешно обновлен."
+  audit_document_destroyed: "Документ мерчендайзинга успешно удален."
+  audit_documents: "Мерчендайзинг"
+  audit_documents_destroyed: "Документы мерчендайзинга успешно удалены."

@@ -1,0 +1,27 @@
+<p>
+  <b><%= t(:datetime) %>:</b>
+  <%= @audit_document.date %>
+</p>
+<p>
+  <b><%= t(:manager) %>:</b>
+  <%= @audit_document.manager.name %>
+</p>
+<p>
+  <b><%= t(:shipping_address) %>:</b>
+  <%= @audit_document.shipping_address.name %>
+</p>
+<p>
+  <b><%= t(:address) %>:</b>
+  <%= @audit_document.shipping_address.address %>
+</p>
+<p>
+  <b><%= t(:percentage_shelves) %>:</b>
+  <%= @audit_document.percentage_shelves %>%
+</p>
+<p>
+  <b><%= t(:comment) %>:</b>
+  <%= simple_format @audit_document.comment %>
+</p>
+
+<% if can? :manage, AuditDocument %><%= link_to t(:edit), edit_audit_document_path(@audit_document) %> |<%end%>
+<%= link_to t(:back), audit_documents_path %>

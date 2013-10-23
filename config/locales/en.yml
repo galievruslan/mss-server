@@ -18,6 +18,7 @@ en:
   activerecord:
     models:
       ability: "Ability"
+      audit_document: "Merchandising"
       category: "Category"
       customer: "Customer"
       group: "Group"
@@ -46,6 +47,14 @@ en:
       warehouse: "Warehouse"
       remainder: "Remainder"
     attributes:
+      audit_document:
+        date: "Date"
+        manager: "Manager"
+        manager_id: "Manager"
+        shipping_address: "Shipping address"
+        shipping_address_id: "Shipping address"
+        comment: "Comment"
+        percentage_shelves: "Percentage of shelves"
       remainder:
         warehouse_id: "Warehouse"
         warehouse: "Warehouse"
@@ -650,3 +659,14 @@ en:
   longitude: "longitude"
   manager_movement: "Managers movement"
   datetime_not_last_position: "* - If it points in the beginning of the period, you will get the last location"
+  one_audit_document_per_date: "already has paper merchandising for this day"
+  listing_audit_documents: "List of documents merchandising"
+  new_document: "New document"
+  percentage_shelves: "Percentage of shelves"
+  new_audit_document: "New document merchandising"
+  edit_audit_document: "Edit document merchandising"
+  audit_document_created: "Merchandising document was successfully created."
+  audit_document_updated: "Merchandising document successfully updated."
+  audit_document_destroyed: "Merchandising document was successfully deleted."
+  audit_documents: "Merchandising"
+  audit_documents_destroyed: "Documents merchandising successfully removed."

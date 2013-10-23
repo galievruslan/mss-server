@@ -25,10 +25,11 @@ class Ability
       cannot :manage, MobileClient      
     elsif user.role? :manager       
       can :read, :all
-      can :manage, Order, :manager_id => user.manager_id 
+      can :manage, Order, :manager_id => [user.manager_id,nil]
       can :manage, OrderItem , :order => { :id => Manager.find(user.manager_id).order_ids}
       can :create, OrderItem
-      can :manage, Route, :manager_id => user.manager_id
+      can :manage, AuditDocument, :manager_id => [user.manager_id, nil]
+      can :manage, Route, :manager_id => [user.manager_id, nil]
       can :manage, RoutePoint, :route => { :id => Manager.find(user.manager_id).route_ids}
       can :create, RoutePoint
       can :route , :current
@@ -39,6 +40,7 @@ class Ability
       cannot :read, [User, Role, Group] 
       cannot :export_again, Order
       cannot :destroy, Order
+      cannot :destroy, AuditDocument
       cannot :manage, MobileClient
     end
     #

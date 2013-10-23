@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131017075755) do
+ActiveRecord::Schema.define(:version => 20131023050532) do
+
+  create_table "audit_documents", :force => true do |t|
+    t.datetime "date"
+    t.integer  "manager_id"
+    t.integer  "shipping_address_id"
+    t.integer  "percentage_shelves"
+    t.text     "comment"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
 
   create_table "categories", :force => true do |t|
     t.string   "name"
