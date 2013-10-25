@@ -694,3 +694,4 @@ ru:
   audit_document_items_destroyed: "Элементы документа мерчендайзинга успешно удалены."
   edit_audit_document_items: "Редактирование элементов документа"
   dublicate_audit_document_item: "Есть дублированные товары в документе мерчендайзинга"
+  with_audit_document_items: "С строками документа"

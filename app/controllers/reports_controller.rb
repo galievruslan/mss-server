@@ -119,5 +119,27 @@ class ReportsController < ApplicationController
         end        
       end
     end
-  end  
+  end
+  
+  # GET /reports/audit_documents
+  def audit_documents
+    authorize! :view, :reports
+    @managers = Manager.all
+    @shipping_addresses = ShippingAddress.all
+    @customers = Customer.all    
+    @search = AuditDocument.search(params[:q])
+    @audit_documents = @search.result
+    
+    if params[:with_audit_document_items]
+      respond_to do |format|
+        format.html
+        format.xls {render :template => 'reports/audit_documents_with_items.xls.erb'}
+      end   
+    else
+      respond_to do |format|
+        format.html
+        format.xls {render :template => 'reports/audit_documents.xls.erb'}
+      end
+    end 
+  end
 end

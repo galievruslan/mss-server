@@ -25,6 +25,7 @@
   get 'reports/customer_debts', :to => 'reports#customer_debts'
   get 'reports/remainders', :to => 'reports#remainders'
   get 'reports/locations', :to => 'reports#locations'
+  get 'reports/audit_documents', :to => 'reports#audit_documents'
   
   # MobileSynchronization routes
   get 'synchronization/mobile_client', :to => 'mobile_synchronization#mobile_client'  

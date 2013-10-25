@@ -60,9 +60,9 @@
 	        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.order.warehouse.name %></Data></Cell>
 	        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.order.price_list.name %></Data></Cell>
 	        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.product.name %></Data></Cell>
-	        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.quantity %></Data></Cell>
-	        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.product.price_in_price_list(order_item.order.price_list.id) %></Data></Cell>
-	        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.amount %></Data></Cell>
+	        <Cell ss:StyleID="default"><Data ss:Type="Number"><%= order_item.quantity %></Data></Cell>
+	        <Cell ss:StyleID="default"><Data ss:Type="Number"><%= order_item.product.price_in_price_list(order_item.order.price_list.id) %></Data></Cell>
+	        <Cell ss:StyleID="default"><Data ss:Type="Number"><%= order_item.amount %></Data></Cell>
 	      </Row>
 	    <% end %>
     <% end %>

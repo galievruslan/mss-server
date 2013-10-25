@@ -694,3 +694,4 @@ en:
   audit_document_items_destroyed: "Merchandising document items was successfully destroyed."
   edit_audit_document_items: "Edit document items"
   dublicate_audit_document_item: "There are duplicate items in the document merchandising"
+  with_audit_document_items: "With document items"
