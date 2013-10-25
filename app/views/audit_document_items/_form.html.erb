@@ -1,0 +1,56 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'audit_document_items' %>
+<% end %>
+<%= form_for [@audit_document, @audit_document_item], :html => { :class => "form-horizontal"} do |f| %>
+  <% if @audit_document_item.errors.any? %>
+    <div class="alert alert-error">
+    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4><%=t('errors.title')%></h4>
+      <ul>
+      <% @audit_document_item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="control-group">
+    <%= f.label :product_id , t(:product), class: "control-label" %>
+    <div class="controls">
+    	<%= f.select :product_id , @products.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_product)} %>
+    </div>
+  </div> 
+  <div class="control-group">
+    <%= f.label :quantity, t(:quantity), class: "control-label" %>
+    <div class="controls">
+    	<%= f.text_field :quantity %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :price, t(:price), class: "control-label" %>
+    <div class="controls">
+    	<%= f.text_field :price %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :face, t(:face), class: "control-label" %>
+    <div class="controls">
+    	<%= f.text_field :face %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :facing, t(:facing), class: "control-label" %>
+    <div class="controls">
+    	<%= f.text_field :facing %>
+    </div>
+  </div>
+  <div class="control-group">
+  	<%= f.label :golden_shelf, t(:golden_shelf), class: "control-label" %>
+  	<div class="controls">
+  		<%= f.check_box :golden_shelf %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.submit(t(:save), class: 'btn', :disable_with => t(:please_wait)) %>
+  </div>
+<% end %>

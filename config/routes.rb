@@ -1,4 +1,5 @@
   Mss::Application.routes.draw do 
+    
   root :to => 'pages#index'  
   devise_for :users  
   get 'settings', :to => 'settings#show'
@@ -200,8 +201,14 @@
   end
   resources :audit_documents do
     collection do
-      get :update_shipping_addresses
+      get :update_shipping_addresses      
+      get :get_product_list
       post :multiple_change
     end 
+    resources :audit_document_items do
+      collection do
+      post :multiple_change
+    end
+    end
   end
 end

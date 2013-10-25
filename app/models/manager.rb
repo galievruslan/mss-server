@@ -1,5 +1,5 @@
 class Manager < ActiveRecord::Base
-  attr_accessible :name, :external_key, :validity, :order_ids, :route_ids, :template_route_ids, :default_warehouse_id, :default_warehouse
+  attr_accessible :name, :external_key, :validity, :order_ids, :route_ids, :template_route_ids, :default_warehouse_id, :default_warehouse, :audit_document_ids
   has_many :orders, :dependent => :destroy
   has_many :routes, :dependent => :destroy
   has_many :template_routes, :dependent => :destroy

@@ -1,6 +1,8 @@
 <h3><%= t(:edit_order)%></h3>
 
 <%= render 'form' %>
-<%= link_to t(:edit_order_items), order_order_items_path(@order), :class =>'btn' %><br><br>
+<% if can? :manage, OrderItem %>
+	<%= link_to t(:edit_order_items), order_order_items_path(@order), :class =>'btn' %><br><br>
+<%end%>
 <%= link_to t(:show), @order %> |
 <%= link_to t(:back), orders_path %>

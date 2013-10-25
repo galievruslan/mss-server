@@ -1,6 +1,8 @@
 <h3><%= t(:edit_audit_document) %></h3>
 
 <%= render 'form' %>
-
+<% if can? :manage, AuditDocumentItem %>
+	<%= link_to t(:edit_audit_document_items), audit_document_audit_document_items_path(@audit_document), :class =>'btn' %><br><br>
+<%end%>
 <%= link_to t(:show), @audit_document %> |
 <%= link_to t(:back), audit_documents_path %>

@@ -1,5 +1,5 @@
 class ShippingAddress < ActiveRecord::Base
-  attr_accessible :address, :customer_id, :name, :external_key, :customer, :validity, :order_ids, :route_point_ids, :template_route_point_ids
+  attr_accessible :address, :customer_id, :name, :external_key, :customer, :validity, :order_ids, :route_point_ids, :template_route_point_ids, :audit_document_ids
   belongs_to :customer  
   has_many :orders, :dependent => :destroy
   has_many :route_points, :dependent => :destroy

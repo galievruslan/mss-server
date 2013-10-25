@@ -6,6 +6,7 @@
  = require bootstrap-fileupload
  = require tree
  = require gmaps4rails
+ = require bootstrap-spinedit
 */
 
 /* For route_point_photos */

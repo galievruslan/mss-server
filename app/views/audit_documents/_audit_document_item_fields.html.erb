@@ -1,0 +1,9 @@
+<tr class="audit_document_item">
+  <td><%= f.select :product_id , @products.collect  {|p| [ p.name, p.id ] }, {:include_blank => true}, {'data-placeholder' => t(:select_product), :class => 'select2-field'} %></td>
+  <td><%= f.number_field :quantity, min: 1, step: 1, class: "input-small quantity_input"%></td>
+  <td><%= f.number_field :price, min: 0, step: 0.01, class: "input-small quantity_input"%></td>
+  <td><%= f.number_field :face, min: 0, step: 1, class: "input-small quantity_input"%></td>
+  <td><%= f.number_field :facing, min: 0, step: 1, class: "input-small quantity_input"%></td>
+  <td><%= f.check_box :golden_shelf %></td>
+  <td><a onclick="onDestroy(this)"><i class='icon-remove' title="<%= t(:remove)%>"></i></a></td>
+</tr>

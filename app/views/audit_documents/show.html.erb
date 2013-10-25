@@ -23,5 +23,77 @@
   <%= simple_format @audit_document.comment %>
 </p>
 
+<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+  <i class="icon-filter icon-white"></i> <%=t(:filter)%>
+</button>
+
+<div id="demo" class="collapse">
+	<br>
+	<div class='well well-small'>
+		<%= search_form_for @search, :url => audit_document_path(@audit_document), class: "form-horizontal" do |f| %>
+		  <div class="control-group">
+		  	<%= f.label :product_name_cont, t(:product)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :product_name_cont, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :quantity_eq, t(:quantity)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :quantity_eq, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :price_eq, t(:price)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :price_eq, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :face_eq, t(:face)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :face_eq, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">
+		  	<%= f.label :facing_eq, t(:facing)+':', class: "control-label"%>
+		  	<div class="controls">
+		  		<%= f.text_field :facing_eq, class: 'search-field'%>
+		  	</div>
+		  </div>
+		  <div class="control-group">	  	
+		  		<%= f.submit t(:search), class: 'btn btn-info' %>
+		  		<button type="button" class='btn btn-info' id="q_reset"><%=t(:reset)%></button>	  	
+		  </div>	
+		<%end%>
+	</div>
+</div>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th><%= sort_link @search, :product_name, t(:product) %></th>
+      <th><%= sort_link @search, :quantity, t(:quantity) %></th>
+      <th><%= sort_link @search, :price, t(:price) %></th>
+      <th><%= sort_link @search, :face, t(:face) %></th>
+      <th><%= sort_link @search, :facing, t(:facing) %></th>
+      <th><%= sort_link @search, :golden_shelf, t(:golden_shelf) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @audit_document_items.each do |audit_document_item| %>  
+    <tr>
+      <td><%= audit_document_item.product.name %></td>
+      <td><%= audit_document_item.quantity %></td>
+      <td><%= audit_document_item.price %></td>
+      <td><%= audit_document_item.face %></td>
+      <td><%= audit_document_item.facing %></td>
+      <td><%= audit_document_item.golden_shelf ? t(:yes) : t(:not) %></td>
+    </tr>
+    <%end%>
+  </tbody>
+</table>
+<%= paginate @audit_document_items %>
+
 <% if can? :manage, AuditDocument %><%= link_to t(:edit), edit_audit_document_path(@audit_document) %> |<%end%>
 <%= link_to t(:back), audit_documents_path %>

@@ -9,6 +9,7 @@
 //= require bootstrap-inputmask.min
 //= require tree
 //= require highcharts
+//= require bootstrap-spinedit
 /* ===================================================
  Reset button for filter form
 * ===================================================*/

@@ -4,7 +4,7 @@ class OrderItem < ActiveRecord::Base
   belongs_to :product
   belongs_to :unit_of_measure
   validates :product, :quantity, :unit_of_measure, :presence => true
-  validates :quantity, :numericality => {:greater_than => 0 }
+  validates :quantity, :numericality => {:greater_than => 0, :only_integer => true}
   validates :product_id, :uniqueness => { :scope => :order_id,
     :message => I18n.t(:one_product_per_order) }
   

@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131023050532) do
+ActiveRecord::Schema.define(:version => 20131023115602) do
+
+  create_table "audit_document_items", :force => true do |t|
+    t.integer  "audit_document_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.decimal  "price",             :precision => 7, :scale => 2
+    t.integer  "face"
+    t.integer  "facing"
+    t.boolean  "golden_shelf",                                    :default => false
+    t.datetime "created_at",                                                         :null => false
+    t.datetime "updated_at",                                                         :null => false
+  end
 
   create_table "audit_documents", :force => true do |t|
     t.datetime "date"

@@ -1,0 +1,100 @@
+<script type="text/javascript" charset="utf-8">
+function update_shipping_addresses(customer_id) {
+  jQuery.ajax({
+    url: "/audit_documents/update_shipping_addresses",
+    type: "GET",
+    data: {"customer_id" : customer_id},
+    dataType: "html",
+    success: function(data) {
+      jQuery("#shipping_addresses").html(data);      
+      jQuery("#audit_document_shipping_address_id").select2({allowClear: true});
+    }
+  });  
+};
+function getProducts() {
+	jQuery.ajax({
+    url: "/audit_documents/get_product_list",
+    type: "GET",    
+    dataType: "html",
+    success: function(data) { 	
+      jQuery("#audit_document_item_template").html(data);      
+      }
+  	});
+};
+function add_audit_document_item () {
+	var timestamp = new Date().getTime();
+	var new_audit_document_item_row = jQuery("#audit_document_item_template").children().clone();
+	
+	var product_template_id = "#audit_document_audit_document_items_attributes_new_audit_document_items_product_id";
+	var product_template_name = "audit_document[audit_document_items_attributes][new_audit_document_items][product_id]";
+	var quantity_template_id = "#audit_document_audit_document_items_attributes_new_audit_document_items_quantity";
+	var quantity_template_name = "audit_document[audit_document_items_attributes][new_audit_document_items][quantity]";
+	var price_template_id = "#audit_document_audit_document_items_attributes_new_audit_document_items_price";
+	var price_template_name = "audit_document[audit_document_items_attributes][new_audit_document_items][price]";
+	var face_template_id = "#audit_document_audit_document_items_attributes_new_audit_document_items_face";
+	var face_template_name = "audit_document[audit_document_items_attributes][new_audit_document_items][face]";
+	var facing_template_id = "#audit_document_audit_document_items_attributes_new_audit_document_items_facing";
+	var facing_template_name = "audit_document[audit_document_items_attributes][new_audit_document_items][facing]";
+	var golden_shelf_template_id = "#audit_document_audit_document_items_attributes_new_audit_document_items_golden_shelf";
+	var golden_shelf_template_name = "audit_document[audit_document_items_attributes][new_audit_document_items][golden_shelf]";
+	
+	var product_id_field = jQuery(new_audit_document_item_row).find(product_template_id);
+	product_id_field.attr("name", product_template_name.replace("new_audit_document_items", timestamp));
+	
+	var quantity_field = jQuery(new_audit_document_item_row).find(quantity_template_id);
+	quantity_field.attr("name", quantity_template_name.replace("new_audit_document_items", timestamp));
+	
+	var price_field = jQuery(new_audit_document_item_row).find(price_template_id);
+	price_field.attr("name", price_template_name.replace("new_audit_document_items", timestamp));
+	
+	var face_field = jQuery(new_audit_document_item_row).find(face_template_id);
+	face_field.attr("name", face_template_name.replace("new_audit_document_items", timestamp));
+	
+	var facing_field = jQuery(new_audit_document_item_row).find(facing_template_id);
+	facing_field.attr("name", facing_template_name.replace("new_audit_document_items", timestamp));
+	
+	jQuery("#table").append(new_audit_document_item_row);
+	jQuery("#table select.select2-field").select2({allowClear: true});
+};
+
+function onDestroy (sender) {
+  var audit_document_item = jQuery(sender).closest('tr');
+  destroy_audit_document_item(audit_document_item);
+};
+
+function destroy_audit_document_item(audit_document_item) {
+	if (isSaved(audit_document_item)) {
+		var audit_document_item_hidden = jQuery(audit_document_item).next('input');
+		var audit_document_item_destroy = jQuery(audit_document_item_hidden).clone();
+		
+		jQuery(audit_document_item_destroy).insertAfter(audit_document_item_hidden);
+		
+		var name = audit_document_item_destroy.attr('name').replace("[id]", "[_destroy]");
+		
+		audit_document_item_destroy.attr("name", name);
+		audit_document_item_destroy.val(1);
+	}
+	
+	jQuery(audit_document_item).remove();
+};
+
+function isSaved (sender) {
+  if (jQuery(sender).next().length > 0) {
+	var tag_name = jQuery(sender).next().get(0).tagName;
+	if (tag_name == 'INPUT') {
+  		return true;
+  	}
+  }  
+  return false;
+};
+
+jQuery(document).ready(function() {
+	getProducts();	
+	// Add select2
+	$("#audit_document_manager_id").select2({allowClear: true});
+	$("#customer_id").select2({minimumInputLength: 2, allowClear: true});
+	$("#audit_document_percentage_shelves").select2({allowClear: true});
+	$("#audit_document_shipping_address_id").select2({allowClear: true});	
+	$("#table select.select2-field").select2({allowClear: true});  
+});
+</script>

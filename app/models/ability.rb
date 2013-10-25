@@ -29,6 +29,8 @@ class Ability
       can :manage, OrderItem , :order => { :id => Manager.find(user.manager_id).order_ids}
       can :create, OrderItem
       can :manage, AuditDocument, :manager_id => [user.manager_id, nil]
+      can :manage, AuditDocumentItem , :audit_document => { :id => Manager.find(user.manager_id).audit_document_ids}
+      can :create, AuditDocumentItem
       can :manage, Route, :manager_id => [user.manager_id, nil]
       can :manage, RoutePoint, :route => { :id => Manager.find(user.manager_id).route_ids}
       can :create, RoutePoint

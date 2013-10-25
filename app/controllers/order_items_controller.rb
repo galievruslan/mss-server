@@ -76,8 +76,6 @@ class OrderItemsController < ApplicationController
     
     respond_to do |format|
       if @order_item.save
-        # amount = @order_item.product.price_in_price_list(@order.price_list_id) * @order_item.quantity * @order_item.product.count_in_unit_of_measure(@order_item.unit_of_measure_id)
-        # @order_item.update_attributes(amount: amount)
         format.html { redirect_to order_order_item_path(@order, @order_item), notice: t(:order_item_created) }
         format.json { render json: @order_item, status: :created, location: @order_item }
       else
@@ -104,8 +102,6 @@ class OrderItemsController < ApplicationController
     
     respond_to do |format|
       if @order_item.update_attributes(params[:order_item])
-        # amount = @order_item.product.price_in_price_list(@order.price_list_id) * @order_item.quantity * @order_item.product.count_in_unit_of_measure(@order_item.unit_of_measure_id)
-        # @order_item.update_attributes(amount: amount)
         format.html { redirect_to order_order_item_path(@order, @order_item), notice: t(:order_item_updated) }
         format.json { head :no_content }
       else

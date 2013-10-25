@@ -1,0 +1,34 @@
+<p>
+  <b><%=t(:product)%>:</b>
+  <%= @audit_document_item.product.name %>
+</p>
+
+<p>
+  <b><%=t(:quantity)%>:</b>
+  <%= @audit_document_item.quantity %>
+</p>
+
+<p>
+  <b><%=t(:price)%>:</b>
+  <%= @audit_document_item.price %>
+</p>
+
+<p>
+  <b><%=t(:face)%>:</b>
+  <%= @audit_document_item.face %>
+</p>
+
+<p>
+  <b><%=t(:facing)%>:</b>
+  <%= @audit_document_item.facing %>
+</p>
+
+<p>
+  <b><%=t(:golden_shelf)%>:</b>
+  <%= @audit_document_item.golden_shelf ? t(:yes) : t(:not) %>
+</p>
+
+
+<% if can? :manage, AuditDocumentItem %><%= link_to t(:edit), edit_audit_document_audit_document_item_path(@audit_document, @audit_document_item) %> |<% end %>
+<%= link_to t(:back), audit_document_audit_document_items_path(@audit_document) %>
+

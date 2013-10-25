@@ -97,7 +97,8 @@ class OrdersController < ApplicationController
     end     
     @select_customer = @order.shipping_address.customer
     @select_customer_id = @select_customer.id
-    @select_shipping_address_id = @order.shipping_address.id
+    @select_shipping_address_id = @order.shipping_address_id
+    @select_manager_id = @order.manager_id
             
     if current_user.manager_id
       @managers = Manager.where(id: current_user.manager_id)

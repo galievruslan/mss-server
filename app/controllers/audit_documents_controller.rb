@@ -18,7 +18,8 @@ class AuditDocumentsController < ApplicationController
   # GET /audit_documents/1.json
   def show
     @audit_document = AuditDocument.find(params[:id])
-
+    @search = @audit_document.audit_document_items.search(params[:q])
+    @audit_document_items = @search.result.page(params[:page]).per(current_user.list_page_size)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @audit_document }
@@ -42,7 +43,7 @@ class AuditDocumentsController < ApplicationController
       @customers = Customer.where(validity: true)
       @managers = Manager.where(validity: true)
     end
-    
+    @products = Product.where(validity: true)
     @audit_document = AuditDocument.new
 
     respond_to do |format|
@@ -61,7 +62,8 @@ class AuditDocumentsController < ApplicationController
     @select_customer = @audit_document.shipping_address.customer
     @select_customer_id = @select_customer.id
     @select_manager_id = @audit_document.manager_id
-    @select_shipping_address_id = @audit_document.shipping_address.id
+    @select_shipping_address_id = @audit_document.shipping_address_id
+    @products = Product.where(validity: true)
     if current_user.manager_id
       @shipping_address_ids = ManagerShippingAddress.where(manager_id: current_user.manager_id).collect(&:shipping_address_id)
       @customer_ids= ShippingAddress.where(id: @shipping_address_ids).collect(&:customer_id)
@@ -99,7 +101,7 @@ class AuditDocumentsController < ApplicationController
       else
         params[:audit_document][:shipping_address_id] = ''
       end
-    else
+    else      
       @customers = Customer.where(validity: true)
       @managers = Manager.where(validity: true)
       unless params[:customer_id] == ''
@@ -110,7 +112,7 @@ class AuditDocumentsController < ApplicationController
       end
     end
     @audit_document = AuditDocument.new(params[:audit_document])
-
+    @products = Product.where(validity: true)
     respond_to do |format|
       if @audit_document.save
         format.html { redirect_to @audit_document, notice: t(:audit_document_created) }
@@ -137,7 +139,7 @@ class AuditDocumentsController < ApplicationController
       @select_manager_id = params[:audit_document][:manager_id]
     end
     @audit_document = AuditDocument.find(params[:id])
-    
+    @products = Product.where(validity: true)
     if current_user.manager_id
       @shipping_address_ids = ManagerShippingAddress.where(manager_id: current_user.manager_id).collect(&:shipping_address_id)
       @customer_ids = ShippingAddress.where(id: @shipping_address_ids).collect(&:customer_id)
@@ -178,6 +180,10 @@ class AuditDocumentsController < ApplicationController
   # DELETE /audit_documents/1
   # DELETE /audit_documents/1.json
   def destroy
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to audit_documents_path, notice: t(:manager_not_valid)
+      return
+    end
     @audit_document = AuditDocument.find(params[:id])
     @audit_document.destroy
 
@@ -200,6 +206,10 @@ class AuditDocumentsController < ApplicationController
   
   # POST /audit_documents/multiple_change
   def multiple_change
+    if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
+      redirect_to audit_documents_path, notice: t(:manager_not_valid)
+      return
+    end
     if params[:audit_document_ids]
       params[:audit_document_ids].each do |audit_document_id|
         @audit_document = AuditDocument.find(audit_document_id)
@@ -209,5 +219,11 @@ class AuditDocumentsController < ApplicationController
     else
       redirect_to audit_documents_url
     end
+  end
+  
+  # GET /audit_documents/get_product_list
+  def get_product_list
+    @products = Product.where(validity: true)
+    render :partial => "audit_document_item_fields_new", :object => @products  
   end
 end

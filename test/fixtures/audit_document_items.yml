@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  audit_document_id: 1
+  product_id: 1
+  count: 1
+  price: 9.99
+  face: 1
+  facing: 1
+  golden_shelf: false
+
+two:
+  audit_document_id: 1
+  product_id: 1
+  count: 1
+  price: 9.99
+  face: 1
+  facing: 1
+  golden_shelf: false

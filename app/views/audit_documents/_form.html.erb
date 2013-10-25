@@ -1,6 +1,7 @@
 <% content_for :javascripts do %>
   <%= javascript_include_tag 'audit_documents' %>
 <% end %>
+<%= render :partial => 'audit_document', :handlers => [:erb], :formats => [:js] %>
 <%= form_for @audit_document, :html => { :class => "form-horizontal"} do |f| %>
   <% if @audit_document.errors.any? %>
     <div class="alert alert-error">
@@ -13,48 +14,81 @@
       </ul>
     </div>
   <% end %>
-	<div class="control-group">
-    <%= f.label :date, t(:datetime), class: "control-label" %>
-    <div class="controls">
-	    <div class="input-append date datetimepicker">
-		    <%= f.text_field :date, :placeholder => t(:select_datetime)%>
-		    <span class="add-on">
-		      <i class="icon-calendar"></i>
-		    </span>
-		  </div>
-		</div>
-  </div>
-  <div class="control-group">
-    <%= label_tag :customer_id, t(:customer), class: "control-label" %>
-    <div class="controls">
-    	<%= select_tag(:customer_id, options_from_collection_for_select(@customers, "id", "name", @select_customer_id), {:include_blank => true, 'data-placeholder' => t(:select_customer), :onchange => "update_shipping_addresses(this.value)"}) %>    	
-  	</div>
- 	</div>
- 	<div id="shipping_addresses" class="control-group">
-  	<%= f.label :shipping_address_id, t(:shipping_address), class: "control-label" if @shipping_addresses %>
-  	<div class="controls">
-  		<%= select_tag("audit_document[shipping_address_id]", options_from_collection_for_select(@shipping_addresses, "id", "address", @select_shipping_address_id), {:include_blank => true, 'data-placeholder' => t(:select_shipping_address)}) if @shipping_addresses %>
-  	</div>	  
+	<div class="tabbable">
+	  <ul class="nav nav-tabs">
+	    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:details)%></a></li>
+	    <li><a href="#tab2" data-toggle="tab"><%= t(:products)%></a></li>
+	  </ul>
+		<div class="tab-content">
+	    <div class="tab-pane active" id="tab1">
+				<div class="control-group">
+			    <%= f.label :date, t(:datetime), class: "control-label" %>
+			    <div class="controls">
+				    <div class="input-append date datetimepicker">
+					    <%= f.text_field :date, :placeholder => t(:select_datetime)%>
+					    <span class="add-on">
+					      <i class="icon-calendar"></i>
+					    </span>
+					  </div>
+					</div>
+			  </div>
+			  <div class="control-group">
+			    <%= label_tag :customer_id, t(:customer), class: "control-label" %>
+			    <div class="controls">
+			    	<%= select_tag(:customer_id, options_from_collection_for_select(@customers, "id", "name", @select_customer_id), {:include_blank => true, 'data-placeholder' => t(:select_customer), :onchange => "update_shipping_addresses(this.value)"}) %>    	
+			  	</div>
+			 	</div>
+			 	<div id="shipping_addresses" class="control-group">
+			  	<%= f.label :shipping_address_id, t(:shipping_address), class: "control-label" if @shipping_addresses %>
+			  	<div class="controls">
+			  		<%= select_tag("audit_document[shipping_address_id]", options_from_collection_for_select(@shipping_addresses, "id", "address", @select_shipping_address_id), {:include_blank => true, 'data-placeholder' => t(:select_shipping_address)}) if @shipping_addresses %>
+			  	</div>	  
+				</div>
+				<div class="control-group">
+			    <%= f.label :manager_id, t(:manager), class: "control-label" %>
+			    <div class="controls">
+			    	<%= f.select(:manager_id, options_from_collection_for_select(@managers, "id", "name", @select_manager_id), {:include_blank => true}, {'data-placeholder' => t(:select_manager)}) %>
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <%= f.label :percentage_shelves, t(:percentage_shelves), class: "control-label" %>
+			    <div class="controls">
+			    	<%= f.select(:percentage_shelves, (0..100).map{|s| ["#{s}%", s]}) %>
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <%= f.label :comment, t(:comment), class: "control-label" %>
+			    <div class="controls">
+			    	<%= f.text_area :comment, :cols => 20, :rows => 4 %>
+			    </div>
+			  </div>
+  		</div>
+	    <div class="tab-pane" id="tab2">
+	    	<table  class="table table-striped table-hover">
+					<thead>
+					  <tr>
+					    <th><%= t(:product) %></th>
+					    <th><%= t(:quantity) %></th>					    
+					    <th><%= t(:price) %></th>
+					    <th><%= t(:face) %></th>
+					    <th><%= t(:facing) %></th>
+					    <th><%= t(:golden_shelf) %></th>
+					    <th><%= t(:actions) %></th>
+					  </tr>
+					</thead>
+					<tbody id="table">      
+						<%= f.fields_for :audit_document_items do |audit_document_item| %>
+							<%= render 'audit_document_item_fields', :f => audit_document_item %>						
+						<% end %>
+					</tbody>
+				</table>
+				<p><%= button_tag t(:add), :type => 'button', :class =>'btn', :onclick => "add_audit_document_item()" %></p>
+    	</div>
+    </div>
+	  <div>
+	    <%= f.submit(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>
+	  </div>
 	</div>
-	<div class="control-group">
-    <%= f.label :manager_id, t(:manager), class: "control-label" %>
-    <div class="controls">
-    	<%= f.select(:manager_id, options_from_collection_for_select(@managers, "id", "name", @select_manager_id), {:include_blank => true}, {'data-placeholder' => t(:select_manager)}) %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :percentage_shelves, t(:percentage_shelves), class: "control-label" %>
-    <div class="controls">
-    	<%= f.select(:percentage_shelves, (0..100).map{|s| ["#{s}%", s]}) %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :comment, t(:comment), class: "control-label" %>
-    <div class="controls">
-    	<%= f.text_area :comment, :cols => 20, :rows => 4 %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.submit(t(:save), :class =>'btn', :disable_with => t(:please_wait)) %>
-  </div>
 <% end %>
+<div id="audit_document_item_template" hidden="true" style="display:none;">
+</div>
