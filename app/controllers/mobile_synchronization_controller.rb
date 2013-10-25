@@ -43,24 +43,34 @@ class MobileSynchronizationController < ApplicationController
       @default_route_point_status_id = Settings.default_route_point_status_id      
     else
       @default_route_point_status_id = nil
-    end
-    
+    end    
     if Settings.default_route_point_attended_status_id
       @default_route_point_attended_status_id = Settings.default_route_point_attended_status_id      
     else
       @default_route_point_attended_status_id = nil
-    end
-    
+    end    
     if Settings.default_price_list_id
       @default_price_list_id = Settings.default_price_list_id      
     else
       @default_price_list_id = nil
+    end    
+    if Settings.photo_width_res and Settings.photo_height_res
+      @photo_width_res = Settings.photo_width_res
+      @photo_height_res = Settings.photo_height_res
+    else
+      @photo_width_res = nil
+      @photo_height_res = nil
     end
-    
-    respond_to do |format|
-      @responce = JSON default_route_point_status_id: @default_route_point_status_id,
+    if Settings.message_pull_frequency
+      @message_pull_frequency = Settings.message_pull_frequency      
+    else
+      @message_pull_frequency = nil
+    end
+    @responce = JSON default_route_point_status_id: @default_route_point_status_id,
         default_route_point_attended_status_id: @default_route_point_attended_status_id,
-        default_price_list_id: @default_price_list_id
+        default_price_list_id: @default_price_list_id, photo_width_res: @photo_width_res,
+        photo_height_res: @photo_height_res, message_pull_frequency: @message_pull_frequency
+    respond_to do |format|     
       format.json { render json: @responce }
     end 
   end

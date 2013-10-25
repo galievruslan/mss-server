@@ -90,9 +90,9 @@
       <Row>
       	<Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.product.name %></Data></Cell>
       	<Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.unit_of_measure.name %></Data></Cell>
-        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.quantity %></Data></Cell>
-        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.price_base_unit(@order.price_list) %></Data></Cell>
-        <Cell ss:StyleID="default"><Data ss:Type="String"><%= order_item.amount %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="Number"><%= order_item.quantity %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="Number"><%= order_item.price_base_unit(@order.price_list) %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="Number"><%= order_item.amount %></Data></Cell>
       </Row>
     <% end %>
     </Table>

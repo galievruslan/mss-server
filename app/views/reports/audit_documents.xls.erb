@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Styles>
+    <Style ss:ID="bold">
+      <Font ss:Bold="1" />
+      <Borders>
+		    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+		  </Borders>
+    </Style>
+    <Style ss:ID="default">
+	  	<Borders>
+	    	<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+	 		</Borders>
+		</Style>
+  </Styles>
+  <Worksheet ss:Name="<%= t(:audit_documents) %>">
+    <Table>
+    <Column ss:Width="100"/>
+		<Column ss:Width="100"/>
+		<Column ss:Width="150"/>
+		<Column ss:Width="250"/>
+		<Column ss:Width="80"/>
+      <Row>
+      	<Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:datetime) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:manager) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:customer) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:shipping_address) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:percentage_shelves) %></Data></Cell>
+      </Row>
+    <% @audit_documents.each do |audit_document| %>
+      <Row>
+      	<Cell ss:StyleID="default"><Data ss:Type="String"><%= audit_document.date %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= audit_document.manager.name %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= audit_document.shipping_address.customer.name %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= audit_document.shipping_address.name %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="Number"><%= audit_document.percentage_shelves %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

@@ -17,3 +17,6 @@ mail_password: MAIL_PASSWORD
 smtp_port: 25
 server_port: 3000
 upload_period: '10'
+photo_width_res: '800'
+photo_height_res: '600'
+message_pull_frequency: '10'

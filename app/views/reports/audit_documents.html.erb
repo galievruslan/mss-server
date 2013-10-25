@@ -1,0 +1,56 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'reports' %>
+<% end %>
+<h3><%= t(:reports)%></h3>
+<%= render 'tab_menu' %>
+<%= search_form_for @search, :url => reports_audit_documents_path(format: "xls"), class: "form-horizontal" do |f| %>
+
+  <div class="control-group">
+  	<%= f.label :date_gt, t(:date_period)+':', class: "control-label"%>
+  	<div class="controls">
+  		<div class="input-append date datetimepicker">
+		    <%= f.text_field :date_gt, class: "input-medium search-field"%>
+		    <span class="add-on">
+		      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+		      </i>
+		    </span>
+		  </div>
+  		- 
+  		<div class="input-append date datetimepicker">
+		    <%= f.text_field :date_lt, class: "input-medium search-field"%>
+		    <span class="add-on">
+		      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+		      </i>
+		    </span>
+		  </div>
+  	</div>
+  </div>
+  <div class="control-group">
+  	<%= f.label :shipping_address_customer_id_in, t(:customer)+':', class: "control-label"%>
+  	<div class="controls">
+  		<%= f.select :shipping_address_customer_id_in, @customers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_customer), :multiple => true, :class => 'search-field'} %>
+  	</div>
+  </div>
+  <div class="control-group">
+  	<%= f.label :shipping_address_id_in, t(:shipping_address)+':', class: "control-label"%>
+  	<div class="controls">
+  		<%= f.select :shipping_address_id_in, @shipping_addresses.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_shipping_address), :multiple => true, :class => 'search-field'} %>
+  	</div>
+  </div>
+  <div class="control-group">
+  	<%= f.label :manager_id_in, t(:manager)+':', class: "control-label"%>
+  	<div class="controls">
+  		<%= f.select :manager_id_in, @managers.collect  {|p| [ p.name, p.id ]}, {:include_blank => true}, {'data-placeholder' => t(:select_manager), :multiple => true, :class => 'search-field'} %>
+  	</div>
+  </div>
+  <div class="control-group">
+  	<%= label_tag :with_audit_document_items, t(:with_audit_document_items)+':', class: "control-label"%>
+  	<div class="controls">
+  		<%= check_box_tag :with_audit_document_items, true, false %>
+  	</div>
+  </div>  
+  <div class="control-group">
+  		<%= f.submit t(:download_xls), class: 'btn btn-info' %>	
+  		<button type="button" class='btn btn-info' id="q_reset"><%= t(:reset)%></button>  	
+  </div>	
+<%end%>

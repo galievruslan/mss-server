@@ -1,0 +1,23 @@
+<ul class="nav nav-tabs">
+  <li <%= 'class=active' if @current_action =='index'%>>
+  	<%= link_to reports_path do %><i class='icon-home' title='<%= t(:home) %>'></i><%end%>  	
+  </li>
+  <li <%= 'class=active' if @current_action =='orders'%>>
+  	<%= link_to t(:order_report), reports_orders_path%>
+  </li>
+  <li <%= 'class=active' if @current_action =='routes'%>>
+  	<%= link_to t(:route_report), reports_routes_path%>
+  </li>
+  <li <%= 'class=active' if @current_action =='template_routes'%>>
+  	<%= link_to t(:template_route_report), reports_template_routes_path%>
+  </li>
+  <li <%= 'class=active' if @current_action =='customer_debts'%>>
+  	<%= link_to t(:customer_debts_report), reports_customer_debts_path%>
+  </li>
+  <li <%= 'class=active' if @current_action =='remainders'%>>
+  	<%= link_to t(:remainders_report), reports_remainders_path%>
+  </li>
+  <li <%= 'class=active' if @current_action =='audit_documents'%>>
+  	<%= link_to t(:audit_documents), reports_audit_documents_path%>
+  </li>
+</ul>

@@ -5,13 +5,31 @@ class SettingsController < ApplicationController
     authorize! :view, :settings
     @statuses = Status.where(validity: true)
     @price_lists = PriceList.where(validity: true)
+    @photo_width_res = [320,400,640,800,1024,1152,1280,1400,1440,1600,1680,1920,2048,2560,3200,3840]
+    @photo_heigth_res = [240,480,600,768,864,900,1024,1050,1080,1152,1200,1536,1600,2048,2400]
+    @photo_resolutions = ['320x240','400x240','640x240','640x480','800x480','800x600','1024x600',
+                          '1024x768','1152x864','1280x768','1280x1024','1440x900','1600x900','1400x1050',
+                          '1600x1024','1680x1050','1600x1200','1920x1080','1920x1200','2048x1536','2048x1152',
+                          '2560x1600','2560x2048','3200x2048','3200x2400','3840x2400']
+    if Settings.photo_width_res.present? and Settings.photo_height_res.present?
+      @select_photo_resolution = Settings.photo_width_res + 'x' + Settings.photo_height_res
+    end
   end
   
   # PUT /settings
   def update
     authorize! :manage, :settings
     @statuses = Status.where(validity: true)  
-    @price_lists = PriceList.where(validity: true)  
+    @price_lists = PriceList.where(validity: true)
+    @photo_width_res = [320,400,640,800,1024,1152,1280,1400,1440,1600,1680,1920,2048,2560,3200,3840]
+    @photo_heigth_res = [240,480,600,768,864,900,1024,1050,1080,1152,1200,1536,1600,2048,2400]
+    @photo_resolutions = ['320x240','400x240','640x240','640x480','800x480','800x600','1024x600',
+                          '1024x768','1152x864','1280x768','1280x1024','1440x900','1600x900','1400x1050',
+                          '1600x1024','1680x1050','1600x1200','1920x1080','1920x1200','2048x1536','2048x1152',
+                          '2560x1600','2560x2048','3200x2048','3200x2400','3840x2400']
+    if Settings.photo_width_res and Settings.photo_height_res
+      @select_photo_resolution = Settings.photo_width_res + 'x' + Settings.photo_height_res
+    end                       
     @errors = []
     # Settings.ftp_server = params[:ftp_server]
     config = YAML.load_file("#{Rails.root}/config/settings.local.yml")
@@ -138,6 +156,22 @@ class SettingsController < ApplicationController
       config['upload_period'] = params[:upload_period]
      else
       error = t(:upload_period) + ' ' + t('errors.messages.blank') 
+      @errors << error
+    end
+    
+    unless params[:photo_resolution].empty?
+      photo_resolutions = params[:photo_resolution].split('x')
+      config['photo_width_res'] = photo_resolutions[0]
+      config['photo_height_res'] = photo_resolutions[1]
+     else
+      error = t(:photo_resolution) + ' ' + t('errors.messages.blank') 
+      @errors << error
+    end
+    
+    unless params[:message_pull_frequency].empty?
+      config['message_pull_frequency'] = params[:message_pull_frequency]
+     else
+      error = t(:message_pull_frequency) + ' ' + t('errors.messages.blank') 
       @errors << error
     end
     

@@ -80,7 +80,7 @@
 			    <%= label_tag :upload_period, t(:upload_period), class: "control-label" %>
 			    <div class="controls">
 			    	<div class="input-append">
-				    	<%= number_field_tag :upload_period, Settings.upload_period, placeholder: t(:upload_period), in: 1..59, step: 1 %>				    	
+				    	<%= number_field_tag :upload_period, Settings.upload_period, placeholder: t(:upload_period), in: 1..59, step: 1 %>
 			    	</div>
 			    	 <div class="help-block"><i>* <%= t(:in_minutes)%></i></div>
 			    </div>
@@ -144,6 +144,18 @@
 			    <%= label_tag :default_price_list_id, t(:default_price_list), class: "control-label" %>
 			    <div class="controls">
 			    	<%= select_tag :default_price_list_id, options_from_collection_for_select(@price_lists, :id, :name, Settings.default_price_list_id), {:include_blank => true, 'data-placeholder' => t(:select_price_list)} %>
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <%= label_tag :photo_resolution, t(:photo_resolution), class: "control-label" %>
+			    <div class="controls">
+			    	<%= select_tag :photo_resolution, options_for_select(@photo_resolutions, @select_photo_resolution), {:include_blank => true, 'data-placeholder' => t(:select_photo_resolution)} %>
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <%= label_tag :message_pull_frequency, t(:message_pull_frequency), class: "control-label" %>
+			    <div class="controls">
+			    	<%= number_field_tag :message_pull_frequency, Settings.message_pull_frequency, placeholder: t(:message_pull_frequency), in: 1..60, step: 1 %>			    	
 			    </div>
 			  </div>
 			</div>

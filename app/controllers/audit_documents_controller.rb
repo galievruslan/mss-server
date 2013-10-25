@@ -23,6 +23,7 @@ class AuditDocumentsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @audit_document }
+      format.xls { render :template => 'audit_documents/audit_document.xls.erb' }
     end
   end
 

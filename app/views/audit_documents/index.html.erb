@@ -57,7 +57,7 @@
 	    	<th><%= sort_link @search, :manager, t(:manager) %></th>
 	    	<th><%= sort_link @search, :shipping_address, t(:shipping_address) %></th>
 	    	<th><%= sort_link @search, :shipping_address_address, t(:address) %></th>
-	    	<th colspan="3"><%= t(:actions)%></th>
+	    	<th colspan="4"><%= t(:actions)%></th>
 	  	</tr>
 	  </thead>
 		<tbody>
@@ -68,6 +68,7 @@
 		    <td><%= audit_document.manager.name %></td>
 		    <td><%= audit_document.shipping_address.name %></td>
 		    <td><%= audit_document.shipping_address.address %></td>
+		    <td><%= link_to(audit_document_path(audit_document, format: "xls")) do %><i class='icon-list' title="<%= t(:download_xls)%>"></i><% end %></td>
 		    <td><%= link_to(audit_document) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
 		    <% if can? :manage, AuditDocument %>
 				  <td><%= link_to(edit_audit_document_path(audit_document)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>

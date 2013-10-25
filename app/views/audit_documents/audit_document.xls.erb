@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Styles>
+    <Style ss:ID="bold">
+      <Font ss:Bold="1" />
+      <Borders>
+		    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+		    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+		  </Borders>
+    </Style>
+    <Style ss:ID="bold_not_bordered">
+      <Font ss:Bold="1" />
+    </Style>
+    <Style ss:ID="default">
+	  	<Borders>
+	    	<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+	 		</Borders>
+		</Style>
+		<Style ss:ID="not_bordered">
+		</Style>
+  </Styles>
+  <Worksheet ss:Name="<%= t(:audit_documents) %>">
+    <Table>
+    <Column ss:Width="300"/>
+		<Column ss:Width="120"/>
+		<Column ss:Width="80"/>
+		<Column ss:Width="130"/>
+		<Column ss:Width="90"/>
+		<Column ss:Width="90"/>
+      <Row>
+      	<Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:datetime) %></Data></Cell>
+      	<Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @audit_document.date %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:shipping_address) %></Data></Cell>
+        <Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @audit_document.shipping_address.name %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:address) %></Data></Cell>
+        <Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @audit_document.shipping_address.address %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:manager) %></Data></Cell>
+        <Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @audit_document.manager.name %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:percentage_shelves) %></Data></Cell>
+        <Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="Number"><%= @audit_document.percentage_shelves %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold_not_bordered"><Data ss:Type="String"><%= t(:comment) %></Data></Cell>
+        <Cell ss:MergeAcross="3" ss:StyleID="not_bordered"><Data ss:Type="String"><%= @audit_document.comment %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:product) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:quantity) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:price) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:face) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:facing) %></Data></Cell>
+        <Cell ss:StyleID="bold"><Data ss:Type="String"><%= t(:golden_shelf) %></Data></Cell>
+      </Row>      
+    <% @audit_document.audit_document_items.each do |audit_document_item| %>
+      <Row>
+      	<Cell ss:StyleID="default"><Data ss:Type="String"><%= audit_document_item.product.name %></Data></Cell>
+      	<Cell ss:StyleID="default"><Data ss:Type="Number"><%= audit_document_item.quantity %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="Number"><%= audit_document_item.price %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="Number"><%= audit_document_item.face %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="Number"><%= audit_document_item.facing %></Data></Cell>
+        <Cell ss:StyleID="default"><Data ss:Type="String"><%= audit_document_item.golden_shelf ? t(:yes) : t(:not) %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
