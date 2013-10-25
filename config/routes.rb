@@ -52,6 +52,7 @@
   post 'synchronization/client_information', :to => 'mobile_synchronization#client_information'
   post 'synchronization/route_point_photos', :to => 'mobile_synchronization#route_point_photos'
   post 'synchronization/locations', :to => 'mobile_synchronization#locations'
+  post 'synchronization/audit_documents', :to => 'mobile_synchronization#audit_documents'
   
   resources :orders do
     member do

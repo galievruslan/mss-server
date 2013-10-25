@@ -406,6 +406,36 @@ class MobileSynchronizationController < ApplicationController
     end   
   end
   
+  # POST /audit_documents.json
+  def audit_documents
+    @manager_id = current_user.manager_id    
+    @guid = params[:audit_document][:guid]    
+    @audit_document = AuditDocument.find_by_guid(@guid)
+    AuditDocument.transaction do
+      begin
+        if @audit_document      
+          respond_to do |format|
+            @responce = JSON code: 100, description: 'already exists'
+            format.json { render json: @responce, status: :ok, location: @audit_document }
+          end
+        else          
+          @audit_document = AuditDocument.new(params[:audit_document])
+          @audit_document.manager_id = @manager_id
+          respond_to do |format|
+            if @audit_document.save
+              @responce = JSON code: 100, description: 'created successfully'
+              format.json { render json: @responce, status: :created, location: @audit_document }
+            else
+              @responce = JSON code: 200, description: 'the data format is not valid'
+              format.json { render json: @responce, status: :unprocessable_entity }
+            end
+          end
+        end
+        rescue ActiveRecord::StatementInvalid
+      end
+    end   
+  end
+  
   # POST /client_information.json
   def client_information
     @user = current_user
