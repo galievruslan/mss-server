@@ -456,8 +456,8 @@ class MobileSynchronizationController < ApplicationController
   # POST /route_point_photos.json
   def route_point_photos
     @manager_id = current_user.manager_id
-    @datetime = params[:route_point_photo][:date]
-    @shipping_address_id = params[:route_point_photo][:shipping_address_id]
+    @datetime = params[:date]
+    @shipping_address_id = params[:shipping_address_id]
     @route = Route.find_by_date_and_manager_id(@datetime.to_date, @manager_id)
     if @route
       @route_point = @route.route_points.find_by_shipping_address_id(@shipping_address_id)
