@@ -702,3 +702,4 @@ ru:
   message_pull_frequency: "Частота отправки сообщений"
   photo_resolution: "Разрешение фотографии"
   select_photo_resolution: "Выберите разрешение фотографии"
+  not_destroy_exported_order: "Удалять уже выгруженный заказ запрещено"

@@ -19,5 +19,8 @@
 </p>
 
 
-<% if can? :manage, Remainder %><%= link_to t(:edit), edit_remainder_path(@remainder) %> |<%end%>
+<% if can? :manage, Remainder %>
+	<%= link_to t(:edit), edit_remainder_path(@remainder) %> |
+	<%= link_to t(:destroy), remainder_path(@remainder), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<%end%>
 <%= link_to t(:back), remainders_path %>

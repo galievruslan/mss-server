@@ -101,5 +101,8 @@
 </table>
 <%= paginate @order_items %>
 
-<% if can? :manage, Order %><%= link_to t(:edit), edit_order_path(@order) %> |<% end %>
+<% if can? :manage, Order %>
+	<%= link_to t(:edit), edit_order_path(@order) %> |
+	<%= link_to t(:remove), order_path(@order), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<% end %>
 <%= link_to t(:back), orders_path %>

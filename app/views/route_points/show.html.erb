@@ -13,5 +13,8 @@
   <%= @route_point.status.name %>
 </p>
 
-<% if can? :manage, RoutePoint %><%= link_to t(:edit), edit_route_route_point_path(@route, @route_point) %> |<%end%>
+<% if can? :manage, RoutePoint %>
+	<%= link_to t(:edit), edit_route_route_point_path(@route, @route_point) %> |
+	<%= link_to t(:destroy), route_route_point_path(@route, @route_point), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<%end%>
 <%= link_to t(:back), route_route_points_path(@route) %>

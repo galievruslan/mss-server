@@ -11,7 +11,7 @@
   <b><%= t(:validity)%>:</b>
   <%= @template_route.validity ? t(:truth) : t(:lie) %>
 </p>
-<h4><%= t(:listing_template_route_points)%></h4>
+<h4><%= link_to t(:listing_template_route_points), template_route_template_route_points_path(@template_route)%></h4>
 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
   <i class="icon-filter icon-white"></i> <%=t(:filter)%>
 </button>
@@ -66,5 +66,8 @@
 
 <%= paginate @template_route_points %>
 
-<% if can? :manage, TemplateRoute %><%= link_to t(:edit), edit_template_route_path(@template_route) %> |<% end %>
+<% if can? :manage, TemplateRoute %>
+	<%= link_to t(:edit), edit_template_route_path(@template_route) %> |
+	<%= link_to (@template_route.validity ? t(:make_void) : t(:make_valid)), template_route_path(@template_route), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<% end %>
 <%= link_to t(:back), template_routes_path %>

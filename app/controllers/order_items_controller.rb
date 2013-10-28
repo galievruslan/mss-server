@@ -49,6 +49,11 @@ class OrderItemsController < ApplicationController
       redirect_to order_order_items_path(@order), notice: t(:manager_not_valid)
       return     
     end
+        
+    if @order.exported_at
+      redirect_to order_path(@order), notice: t(:not_edit_exported_order) 
+    end
+     
     @order_item = OrderItem.find(params[:id])
     @product_ids = ProductPrice.where(price_list_id: @order.price_list_id).select('product_id').map {|x| x.product_id}
     @products = Product.where(validity: true).where(id: @product_ids)
@@ -92,7 +97,11 @@ class OrderItemsController < ApplicationController
     if current_user.role?('manager') and !Manager.find(current_user.manager_id).validity
       redirect_to order_order_items_path(@order), notice: t(:manager_not_valid)
       return     
+    end    
+    if @order.exported_at
+      redirect_to order_path(@order), notice: t(:not_edit_exported_order) 
     end
+    
     @order_item = OrderItem.find(params[:id])
     @product_ids = ProductPrice.where(price_list_id: @order.price_list_id).select('product_id').map {|x| x.product_id}
     @products = Product.where(validity: true).where(id: @product_ids)
@@ -119,6 +128,11 @@ class OrderItemsController < ApplicationController
       redirect_to order_order_items_path(@order), notice: t(:manager_not_valid)
       return     
     end
+        
+    if @order.exported_at
+      redirect_to order_path(@order), notice: t(:not_edit_exported_order) 
+    end
+    
     @order_item = OrderItem.find(params[:id])
     @order_item.destroy
 

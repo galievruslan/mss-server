@@ -23,7 +23,7 @@
 <%else%>
 	<%= t(:not) %>
 <%end%>
-<h4><%=t(:shipping_addresses)%></h4>
+<h4><%=t(:shipping_addresses)%>:</h4>
 
 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">
   <i class="icon-filter icon-white"></i> <%=t(:filter)%>
@@ -88,6 +88,9 @@
 </table>
 <%= paginate @manager_shipping_addresses %>
 
-<% if can? :manage, Manager %><%= link_to t(:edit), edit_manager_path(@manager) %> |<% end %>
+<% if can? :manage, Manager %>
+	<%= link_to t(:edit), edit_manager_path(@manager) %> |
+	<%= link_to (@manager.validity ? t(:make_void) : t(:make_valid)), manager_path(@manager), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<% end %>
 <%= link_to t(:back), managers_path %>
 <%= yield :scripts %>

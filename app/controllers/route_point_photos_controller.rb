@@ -28,7 +28,7 @@ class RoutePointPhotosController < ApplicationController
   # GET /route_point_photos/download
   def download
     @route_point_photo = RoutePointPhoto.find(params[:id])
-    send_file @route_point_photo.photo.large.path, :filename => "photo.jpg", :type => "jmage/jpeg"
+    send_file @route_point_photo.photo.path, :filename => "photo.jpg", :type => "jmage/jpeg"
   end
 
   # GET /route_point_photos/1

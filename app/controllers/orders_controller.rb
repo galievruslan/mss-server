@@ -191,6 +191,10 @@ class OrdersController < ApplicationController
     end
     @order = Order.find(params[:id]) 
     
+    if @order.exported_at
+      redirect_to orders_path, notice: t(:not_edit_exported_order) 
+    end
+    
     unless params[:order][:shipping_address_id] == ''
       @select_shipping_address_id = params[:order][:shipping_address_id]
     end       
@@ -252,6 +256,11 @@ class OrdersController < ApplicationController
   # DELETE /orders/1.json
   def destroy
     @order = Order.find(params[:id])
+    
+    if @order.exported_at
+      redirect_to order_path(@order), notice: t(:not_destroy_exported_order) 
+    end
+    
     @order.destroy
 
     respond_to do |format|

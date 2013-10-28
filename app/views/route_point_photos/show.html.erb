@@ -15,6 +15,9 @@
   <%= simple_format @route_point_photo.comment %>
 </p>
 
-
-<% if can? :manage, RoutePointPhoto %><%= link_to t(:edit), edit_route_route_point_photo_path(@route, @route_point, @route_point_photo) %> |<%end%>
+<%= link_to t(:download), download_route_route_point_photo_path(@route, @route_point, @route_point_photo)%> |
+<% if can? :manage, RoutePointPhoto %>
+	<%= link_to t(:edit), edit_route_route_point_photo_path(@route, @route_point, @route_point_photo) %> |
+	<%= link_to t(:destroy), route_route_point_photo_path(@route, @route_point, @route_point_photo), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<%end%>
 <%= link_to t(:back), route_route_point_photos_path(@route, @route_point) %>

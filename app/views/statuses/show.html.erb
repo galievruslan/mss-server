@@ -7,5 +7,8 @@
   <%= @status.validity ? t(:truth) : t(:lie) %>
 </p>
 
-<% if can? :manage, Status %><%= link_to t(:edit), edit_status_path(@status) %> |<% end %>
+<% if can? :manage, Status %>
+	<%= link_to t(:edit), edit_status_path(@status) %> |
+	<%= link_to (@status.validity ? t(:make_void) : t(:make_valid)), status_path(@status), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<% end %>
 <%= link_to t(:back), statuses_path %>

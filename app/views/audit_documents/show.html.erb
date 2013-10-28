@@ -95,5 +95,8 @@
 </table>
 <%= paginate @audit_document_items %>
 
-<% if can? :manage, AuditDocument %><%= link_to t(:edit), edit_audit_document_path(@audit_document) %> |<%end%>
+<% if can? :manage, AuditDocument %>
+	<%= link_to t(:edit), edit_audit_document_path(@audit_document) %> |
+	<%= link_to t(:destroy), audit_document_path(@audit_document), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<%end%>
 <%= link_to t(:back), audit_documents_path %>

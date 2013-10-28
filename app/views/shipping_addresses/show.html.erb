@@ -14,5 +14,8 @@
 </p>
 
 
-<% if can? :manage, ShippingAddress %><%= link_to t(:edit), edit_customer_shipping_address_path(@customer, @shipping_address) %> |<% end %>
+<% if can? :manage, ShippingAddress %>
+	<%= link_to t(:edit), edit_customer_shipping_address_path(@customer, @shipping_address) %> |
+	<%= link_to (@shipping_address.validity ? t(:make_void) : t(:make_valid)), customer_shipping_address_path(@customer, @shipping_address), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<% end %>
 <%= link_to t(:back), customer_shipping_addresses_path(@customer) %>

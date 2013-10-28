@@ -35,5 +35,8 @@
   </tbody>
 </table>
 
-<% if can? :manage, Message %><%= link_to t(:edit), edit_message_path(@message) %> |<%end%>
+<% if can? :manage, Message %>
+	<%= link_to t(:edit), edit_message_path(@message) %> |
+	<%= link_to t(:remove), message_path(@message), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<%end%>
 <%= link_to t(:back), messages_path %>

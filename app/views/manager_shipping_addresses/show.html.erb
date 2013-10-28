@@ -17,5 +17,8 @@
   <%= @manager_shipping_address.validity ? t(:truth) : t(:lie) %>
 </p>
 
-<% if can? :manage, ManagerShippingAddress %><%= link_to t(:edit), edit_manager_manager_shipping_address_path(@manager, @manager_shipping_address) %> |<% end %>
+<% if can? :manage, ManagerShippingAddress %>
+	<%= link_to t(:edit), edit_manager_manager_shipping_address_path(@manager, @manager_shipping_address) %> |
+	<%= link_to (@manager_shipping_address.validity ? t(:make_void) : t(:make_valid)), manager_manager_shipping_address_path(@manager, @manager_shipping_address), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<% end %>
 <%= link_to t(:back), manager_manager_shipping_addresses_path(@manager) %>

@@ -55,5 +55,8 @@
   </tbody>
 </table>
 
-<% if can? :manage, Product %><%= link_to t(:edit), edit_product_path(@product) %> |<% end %>
+<% if can? :manage, Product %>
+	<%= link_to t(:edit), edit_product_path(@product) %> |
+	<%= link_to (@product.validity ? t(:make_void) : t(:make_valid)), product_path(@product), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<% end %>
 <%= link_to t(:back), products_path %>

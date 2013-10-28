@@ -11,5 +11,8 @@
   <%= @template_route_point.validity ? t(:truth) : t(:lie) %>
 </p>
 
-<% if can? :manage, TemplateRoutePoint %><%= link_to t(:edit), edit_template_route_template_route_point_path(@template_route, @template_route_point) %> |<% end %>
+<% if can? :manage, TemplateRoutePoint %>
+	<%= link_to t(:edit), edit_template_route_template_route_point_path(@template_route, @template_route_point) %> |
+	<%= link_to (@template_route_point.validity ? t(:make_void) : t(:make_valid)), template_route_template_route_point_path(@template_route, @template_route_point), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<% end %>
 <%= link_to t(:back), template_route_template_route_points_path %>

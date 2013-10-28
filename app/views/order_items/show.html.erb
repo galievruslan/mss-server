@@ -13,5 +13,8 @@
 </p>
 
 
-<% if can? :manage, OrderItem %><%= link_to t(:edit), edit_order_order_item_path(@order, @order_item) %> |<% end %>
+<% if can? :manage, OrderItem %>
+	<%= link_to t(:edit), edit_order_order_item_path(@order, @order_item) %> |
+	<%= link_to t(:destroy), order_order_item_path(@order, @order_item), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<% end %>
 <%= link_to t(:back), order_order_items_path(@order) %>

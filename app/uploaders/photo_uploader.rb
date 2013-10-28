@@ -36,6 +36,9 @@ class PhotoUploader < CarrierWave::Uploader::Base
   # def scale(width, height)
   #   # do something
   # end
+  
+  process :resize_to_limit => [Settings.photo_width_res, Settings.photo_height_res]
+  
   version :large do
     resize_to_limit(600, 600)
   end

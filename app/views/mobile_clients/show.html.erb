@@ -15,5 +15,8 @@
   <%= link_to t(:download), root_path + @mobile_client.file %>
 </p>
 
-<% if can? :manage, MobileClient %><%= link_to t(:edit), edit_mobile_client_path(@mobile_client) %> |<% end %>
+<% if can? :manage, MobileClient %>
+	<%= link_to t(:edit), edit_mobile_client_path(@mobile_client) %> |
+	<%= link_to t(:destroy), mobile_client_path(@mobile_client), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<% end %>
 <%= link_to t(:back), mobile_clients_path %>

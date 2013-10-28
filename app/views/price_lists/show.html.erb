@@ -63,5 +63,8 @@
 
 <%= paginate @product_prices %>
 
-<% if can? :manage, PriceList %><%= link_to t(:edit), edit_price_list_path(@price_list) %> |<% end %>
+<% if can? :manage, PriceList %>
+	<%= link_to t(:edit), edit_price_list_path(@price_list) %> |
+	<%= link_to (@price_list.validity ? t(:make_void) : t(:make_valid)), price_list_path(@price_list), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<% end %>
 <%= link_to t(:back), price_lists_path %>

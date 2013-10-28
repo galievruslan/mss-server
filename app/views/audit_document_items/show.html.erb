@@ -28,7 +28,9 @@
   <%= @audit_document_item.golden_shelf ? t(:yes) : t(:not) %>
 </p>
 
-
-<% if can? :manage, AuditDocumentItem %><%= link_to t(:edit), edit_audit_document_audit_document_item_path(@audit_document, @audit_document_item) %> |<% end %>
+<% if can? :manage, AuditDocumentItem %>
+	<%= link_to t(:edit), edit_audit_document_audit_document_item_path(@audit_document, @audit_document_item) %> |
+	<%= link_to t(:destroy), audit_document_audit_document_item_path(@audit_document, @audit_document_item), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<% end %>
 <%= link_to t(:back), audit_document_audit_document_items_path(@audit_document) %>
 

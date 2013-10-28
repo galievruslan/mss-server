@@ -67,5 +67,8 @@
 </table>
 <%= paginate @products %>
 
-<% if can? :manage, Category %><%= link_to t(:edit), edit_category_path(@category) %> | <%end%>
+<% if can? :manage, Category %>
+	<%= link_to t(:edit), edit_category_path(@category) %> |
+	<%= link_to (@category.validity ? t(:make_void) : t(:make_valid)), category_path(@category), method: :delete, data: { confirm: t(:are_you_sure) } %> | 
+<%end%>
 <%= link_to t(:back), categories_path %>

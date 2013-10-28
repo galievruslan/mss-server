@@ -17,5 +17,8 @@
   <%= @product_price.validity ? t(:truth) : t(:lie) %>
 </p>
 
-<% if can? :manage, ProductPrice %><%= link_to t(:edit), edit_product_product_price_path(@product, @product_price) %> |<% end %>
+<% if can? :manage, ProductPrice %>
+	<%= link_to t(:edit), edit_product_product_price_path(@product, @product_price) %> |
+	<%= link_to (@product_price.validity ? t(:make_void) : t(:make_valid)), product_product_price_path(@product, @product_price), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<% end %>
 <%= link_to t(:back), product_product_prices_path(@product) %>

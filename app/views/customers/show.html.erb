@@ -82,5 +82,8 @@
 </table>
 <%= paginate @shipping_addresses %>
 
-<% if can? :manage, Customer %><%= link_to t(:edit), edit_customer_path(@customer) %> |<% end %>
+<% if can? :manage, Customer %>
+	<%= link_to t(:edit), edit_customer_path(@customer) %> |
+	<%= link_to (@customer.validity ? t(:make_void) : t(:make_valid)), customer_path(@customer), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<% end %>
 <%= link_to t(:back), customers_path %>
