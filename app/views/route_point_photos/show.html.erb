@@ -1,6 +1,6 @@
 <h3><%=t(:photo)%></h3>
 <p>
-  <%= image_tag @route_point_photo.photo.large.url %>
+  <%= image_tag @route_point_photo.photo.url %>
 </p>
 <p>
   <b><%=t(:datetime)%>:</b>
@@ -9,6 +9,10 @@
 <p>
   <b><%=t(:shipping_address)%>:</b>
   <%= @route_point_photo.route_point.shipping_address.name %>
+</p>
+<p>
+  <b><%=t(:address)%>:</b>
+  <%= @route_point_photo.route_point.shipping_address.address %>
 </p>
 <p>
   <b><%=t(:comment)%>:</b>

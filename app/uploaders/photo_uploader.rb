@@ -39,10 +39,10 @@ class PhotoUploader < CarrierWave::Uploader::Base
   
   process :resize_to_limit => [Settings.photo_width_res, Settings.photo_height_res]
   
-  version :large do
-    resize_to_limit(600, 600)
-  end
-  
+  # version :large do
+    # resize_to_limit(600, 600)
+  # end
+
   # Create different versions of your uploaded files:
   # version :thumb do
   #   process :scale => [50, 50]
