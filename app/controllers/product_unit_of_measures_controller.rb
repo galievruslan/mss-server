@@ -15,7 +15,7 @@ class ProductUnitOfMeasuresController < ApplicationController
     @unit_of_measures = UnitOfMeasure.all
     # @product_unit_of_measures_json = @product.unit_of_measures
     @product_unit_of_measures_json = []
-    @product.product_unit_of_measures.each do |product_unit_of_measure|
+    @product.product_unit_of_measures.where(validity: true).each do |product_unit_of_measure|
       
         @product_unit_of_measure_json = {"name" => product_unit_of_measure.unit_of_measure.name, "id" => product_unit_of_measure.unit_of_measure_id, "base" => product_unit_of_measure.base }
       
