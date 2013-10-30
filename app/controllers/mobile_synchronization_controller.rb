@@ -79,12 +79,14 @@ class MobileSynchronizationController < ApplicationController
   def customers
     @manager_id = current_user.manager_id
     if @manager_id
-      @manager_shipping_address_ids = ManagerShippingAddress.where(manager_id: @manager_id).select('shipping_address_id').map {|x| x.shipping_address_id}
-      @manager_customer_ids = ShippingAddress.where(id: @manager_shipping_address_ids).select('customer_id').map {|x| x.customer_id} 
+      @shipping_address_ids = ManagerShippingAddress.where(manager_id: @manager_id).collect(&:shipping_address_id)
+      @manager_customer_ids = ShippingAddress.where(id: @shipping_address_ids).collect(&:customer_id)
       if params[:updated_at]
-        @customers = Customer.where(id: @manager_customer_ids).where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
+        @customers = ShippingAddress.where(id: @shipping_address_ids).joins(:manager_shipping_addresses, :customer).uniq.select("customers.id, customers.address, customers.name, customers.external_key, customers.updated_at, customers.created_at, customers.debt, manager_shipping_addresses.validity").where("customers.updated_at >= ? OR manager_shipping_addresses.updated_at >= ?", params[:updated_at], params[:updated_at]).page(page).per(page_size) 
+        # @customers = Customer.where(id: @manager_customer_ids).where("updated_at >= ?", params[:updated_at]).page(page).per(page_size)
       else
-        @customers = Customer.where(id: @manager_customer_ids).page(page).per(page_size)
+        @customers = ShippingAddress.where(id: @shipping_address_ids).joins(:manager_shipping_addresses, :customer).uniq.select("customers.id, customers.address, customers.name, customers.external_key, customers.updated_at, customers.created_at, customers.debt, manager_shipping_addresses.validity").page(page).per(page_size)
+        # @customers = Customer.where(id: @manager_customer_ids).page(page).per(page_size)
       end
       respond_to do |format|
         format.json { render json: @customers }
