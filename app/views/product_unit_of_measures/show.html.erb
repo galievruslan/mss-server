@@ -24,6 +24,10 @@
 
 <% if can? :manage, ProductUnitOfMeasure %>
 	<%= link_to t(:edit), edit_product_product_unit_of_measure_path(@product, @product_unit_of_measure) %> |
-	<%= link_to (@product_unit_of_measure.validity ? t(:make_void) : t(:make_valid)), product_product_unit_of_measure_path(@product, @product_unit_of_measure), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+		<% if @product_unit_of_measure.validity? %>
+  	<%= link_to(t(:make_void), set_invalid_product_product_unit_of_measure_path(@product, @product_unit_of_measure), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% else %>
+  	<%= link_to(t(:make_valid), set_valid_product_product_unit_of_measure_path(@product, @product_unit_of_measure), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% end %> 
 <% end %>
 <%= link_to t(:back), product_product_unit_of_measures_path(@product) %>

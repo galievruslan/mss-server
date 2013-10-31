@@ -1,4 +1,4 @@
-class TemplateRoutePointsController < ApplicationController
+class TemplateRoutePointsController < ValidableModelController
   # GET /template_route_points
   # GET /template_route_points.json
   def index
@@ -86,41 +86,6 @@ class TemplateRoutePointsController < ApplicationController
         format.html { render action: "edit" }
         format.json { render json: @template_route_point.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /template_route_points/1
-  # DELETE /template_route_points/1.json
-  def destroy
-    @template_route = TemplateRoute.find(params[:template_route_id])
-    @template_route_point = TemplateRoutePoint.find(params[:id])
-    if @template_route_point.validity
-      @template_route_point.update_attributes(validity: false)
-    else
-      @template_route_point.update_attributes(validity: true)
-    end
-
-    respond_to do |format|
-      format.html { redirect_to template_route_template_route_points_path(@template_route), notice: t(:validity_changed) }
-      format.json { head :no_content }
-    end
-  end
-  
-  # POST /template_routes/1/template_route_points/multiple_change
-  def multiple_change
-    @template_route = TemplateRoute.find(params[:template_route_id])
-    if params[:template_route_point_ids]
-      params[:template_route_point_ids].each do |template_route_point_id|
-        @template_route_point = TemplateRoutePoint.find(template_route_point_id)
-        if @template_route_point.validity
-          @template_route_point.update_attributes(validity: false)
-        else
-          @template_route_point.update_attributes(validity: true)
-        end
-      end
-      redirect_to template_route_template_route_points_path(@template_route), notice: t(:validity_changed)
-    else
-      redirect_to template_route_template_route_points_path(@template_route)
     end
   end
 end

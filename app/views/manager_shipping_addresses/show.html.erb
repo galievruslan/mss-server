@@ -19,6 +19,10 @@
 
 <% if can? :manage, ManagerShippingAddress %>
 	<%= link_to t(:edit), edit_manager_manager_shipping_address_path(@manager, @manager_shipping_address) %> |
-	<%= link_to (@manager_shipping_address.validity ? t(:make_void) : t(:make_valid)), manager_manager_shipping_address_path(@manager, @manager_shipping_address), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+	<% if @manager_shipping_address.validity? %>
+  	<%= link_to(t(:make_void), set_invalid_manager_manager_shipping_address_path(@manager, @manager_shipping_address), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% else %>
+  	<%= link_to(t(:make_valid), set_valid_manager_manager_shipping_address_path(@manager, @manager_shipping_address), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% end %> 
 <% end %>
 <%= link_to t(:back), manager_manager_shipping_addresses_path(@manager) %>

@@ -1,4 +1,4 @@
-class Product < ActiveRecord::Base
+class Product < ValidableModel
   attr_accessible :name, :external_key, :validity, :order_item_ids, :product_unit_of_measure_ids, :product_price_ids, :category_id, :category, :mml, :audit_document_item_ids
   has_many :order_items, :dependent => :destroy
   has_many :product_unit_of_measures, :dependent => :destroy
@@ -17,5 +17,15 @@ class Product < ActiveRecord::Base
   
   def count_in_unit_of_measure(unit_of_measure_id)
     ProductUnitOfMeasure.find_by_product_id_and_unit_of_measure_id(self.id, unit_of_measure_id).count_in_base_unit
+  end
+  
+  def set_invalid
+    self.product_prices.each do |product_price|
+      product_price.set_invalid
+    end
+    self.product_unit_of_measures.each do |product_unit_of_measure|
+      product_unit_of_measure.set_invalid
+    end
+    super
   end
 end

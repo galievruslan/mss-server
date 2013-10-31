@@ -68,6 +68,10 @@
 
 <% if can? :manage, TemplateRoute %>
 	<%= link_to t(:edit), edit_template_route_path(@template_route) %> |
-	<%= link_to (@template_route.validity ? t(:make_void) : t(:make_valid)), template_route_path(@template_route), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+	<% if @template_route.validity? %>
+  	<%= link_to(t(:make_void), set_invalid_template_route_path(@template_route), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% else %>
+  	<%= link_to(t(:make_valid), set_valid_template_route_path(@template_route), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% end %> 
 <% end %>
 <%= link_to t(:back), template_routes_path %>

@@ -1,4 +1,4 @@
-class ShippingAddressesController < ApplicationController
+class ShippingAddressesController < ValidableModelController
   load_and_authorize_resource
   # GET /shipping_addresses
   # GET /shipping_addresses.json
@@ -83,42 +83,42 @@ class ShippingAddressesController < ApplicationController
     end
   end
 
-  # DELETE /shipping_addresses/1
-  # DELETE /shipping_addresses/1.json
-  def destroy
-    @customer = Customer.find(params[:customer_id])
-    @shipping_address = ShippingAddress.find(params[:id])
-    if @shipping_address.validity
-      @shipping_address.update_attributes(validity: false)
-      @manager_shipping_addresses = ManagerShippingAddress.where(shipping_address_id: params[:id])
-      @manager_shipping_addresses.each { |x| x.update_attributes(validity: false)}
-    else
-      @shipping_address.update_attributes(validity: true)
-    end  
-
-    respond_to do |format|
-      format.html { redirect_to customer_shipping_addresses_path(@customer), notice: t(:validity_changed) }
-      format.json { head :no_content }
-    end
-  end
-  
-    # POST /customers/1/shipping_addresses/multiple_change
-  def multiple_change
-    @customer = Customer.find(params[:customer_id])
-    if params[:shipping_address_ids]
-      params[:shipping_address_ids].each do |shipping_address_id|
-        @shipping_address = ShippingAddress.find(shipping_address_id)
-        if @shipping_address.validity
-          @shipping_address.update_attributes(validity: false)
-          @manager_shipping_addresses = ManagerShippingAddress.where(shipping_address_id: params[:id])
-          @manager_shipping_addresses.each { |x| x.update_attributes(validity: false)}
-        else
-          @shipping_address.update_attributes(validity: true)
-        end
-      end
-      redirect_to customer_shipping_addresses_path(@customer), notice: t(:validity_changed)
-    else
-      redirect_to customer_shipping_addresses_path(@customer)
-    end
-  end
+  # # DELETE /shipping_addresses/1
+  # # DELETE /shipping_addresses/1.json
+  # def destroy
+    # @customer = Customer.find(params[:customer_id])
+    # @shipping_address = ShippingAddress.find(params[:id])
+    # if @shipping_address.validity
+      # @shipping_address.update_attributes(validity: false)
+      # @manager_shipping_addresses = ManagerShippingAddress.where(shipping_address_id: params[:id])
+      # @manager_shipping_addresses.each { |x| x.update_attributes(validity: false)}
+    # else
+      # @shipping_address.update_attributes(validity: true)
+    # end  
+# 
+    # respond_to do |format|
+      # format.html { redirect_to customer_shipping_addresses_path(@customer), notice: t(:validity_changed) }
+      # format.json { head :no_content }
+    # end
+  # end
+#   
+    # # POST /customers/1/shipping_addresses/multiple_change
+  # def multiple_change
+    # @customer = Customer.find(params[:customer_id])
+    # if params[:shipping_address_ids]
+      # params[:shipping_address_ids].each do |shipping_address_id|
+        # @shipping_address = ShippingAddress.find(shipping_address_id)
+        # if @shipping_address.validity
+          # @shipping_address.update_attributes(validity: false)
+          # @manager_shipping_addresses = ManagerShippingAddress.where(shipping_address_id: params[:id])
+          # @manager_shipping_addresses.each { |x| x.update_attributes(validity: false)}
+        # else
+          # @shipping_address.update_attributes(validity: true)
+        # end
+      # end
+      # redirect_to customer_shipping_addresses_path(@customer), notice: t(:validity_changed)
+    # else
+      # redirect_to customer_shipping_addresses_path(@customer)
+    # end
+  # end
 end

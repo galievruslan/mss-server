@@ -65,6 +65,10 @@
 
 <% if can? :manage, PriceList %>
 	<%= link_to t(:edit), edit_price_list_path(@price_list) %> |
-	<%= link_to (@price_list.validity ? t(:make_void) : t(:make_valid)), price_list_path(@price_list), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+	<% if @price_list.validity? %>
+  	<%= link_to(t(:make_void), set_invalid_price_list_path(@price_list), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% else %>
+  	<%= link_to(t(:make_valid), set_valid_price_list_path(@price_list), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% end %> 
 <% end %>
 <%= link_to t(:back), price_lists_path %>

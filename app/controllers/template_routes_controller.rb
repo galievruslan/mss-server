@@ -1,4 +1,4 @@
-class TemplateRoutesController < ApplicationController
+class TemplateRoutesController < ValidableModelController
   # GET /template_routes
   # GET /template_routes.json
   def index
@@ -117,44 +117,11 @@ class TemplateRoutesController < ApplicationController
       end
     end
   end
-
-  # DELETE /template_routes/1
-  # DELETE /template_routes/1.json
-  def destroy
-    @template_route = TemplateRoute.find(params[:id])
-    if @template_route.validity
-      @template_route.update_attributes(validity: false)
-    else
-      @template_route.update_attributes(validity: true)
-    end
-    
-    respond_to do |format|
-      format.html { redirect_to template_routes_url, notice: t(:validity_changed) }
-      format.json { head :no_content }
-    end
-  end
   
   # GET /template_routes/get_shipping_address_list
   def get_shipping_address_list
     @shipping_address_ids = ManagerShippingAddress.where(validity: true, manager_id: params[:manager_id]).select('shipping_address_id').map {|x| x.shipping_address_id}
     @shipping_addresses = ShippingAddress.where(validity: true, id: @shipping_address_ids) 
     render :partial => "template_route_point_fields_new", :object => @shipping_addresses  
-  end
-  
-  # POST /template_routes/multiple_change
-  def multiple_change
-    if params[:template_route_ids]
-      params[:template_route_ids].each do |template_route_id|
-        @template_route = TemplateRoute.find(template_route_id)
-        if @template_route.validity
-          @template_route.update_attributes(validity: false)
-        else
-          @template_route.update_attributes(validity: true)
-        end
-      end
-      redirect_to template_routes_url, notice: t(:validity_changed)
-    else
-      redirect_to template_routes_url
-    end
   end
 end

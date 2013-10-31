@@ -1,4 +1,4 @@
-class TemplateRoute < ActiveRecord::Base
+class TemplateRoute < ValidableModel
   attr_accessible :day_of_week, :manager_id, :manager, :template_route_point_ids, :template_route_points_attributes, :validity
   has_many :template_route_points, :dependent => :destroy
   belongs_to :manager
@@ -11,6 +11,13 @@ class TemplateRoute < ActiveRecord::Base
   def validate_unique_template_route_points
     validate_uniqueness_of_in_memory(
       template_route_points, [:shipping_address_id], I18n.t(:dublicate_template_route_point))
+  end
+  
+  def set_invalid
+    self.template_route_points.each do |template_route_point|
+      template_route_point.set_invalid
+    end
+    super
   end
 end
 module ActiveRecord

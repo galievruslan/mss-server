@@ -1,4 +1,4 @@
-class ManagerWarehouse < ActiveRecord::Base
+class ManagerWarehouse < ValidableModel
   attr_accessible :manager_id, :warehouse_id, :manager, :warehouse, :validity
   belongs_to :manager
   belongs_to :warehouse

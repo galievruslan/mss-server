@@ -69,6 +69,10 @@
 
 <% if can? :manage, Warehouse %>
 	<%= link_to t(:edit), edit_warehouse_path(@warehouse) %> |
-	<%= link_to (@warehouse.validity ? t(:make_void) : t(:make_valid)), warehouse_path(@warehouse), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+	<% if @warehouse.validity? %>
+  	<%= link_to(t(:make_void), set_invalid_warehouse_path(@warehouse), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% else %>
+  	<%= link_to(t(:make_valid), set_valid_warehouse_path(@warehouse), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% end %> 
 <% end %>
 <%= link_to t(:back), warehouses_path %>

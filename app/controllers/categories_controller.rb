@@ -1,4 +1,4 @@
-class CategoriesController < ApplicationController
+class CategoriesController < ValidableModelController
   load_and_authorize_resource
   # GET /categories
   # GET /categories.json
@@ -79,39 +79,6 @@ class CategoriesController < ApplicationController
         format.html { render action: "edit" }
         format.json { render json: @category.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /categories/1
-  # DELETE /categories/1.json
-  def destroy
-    @category = Category.find(params[:id])
-    if @category.validity 
-      @category.update_attributes(validity: false)
-    else
-      @category.update_attributes(validity: true)
-    end
-    
-    respond_to do |format|
-      format.html { redirect_to categories_url, notice: t(:category_validity_changed) }
-      format.json { head :no_content }
-    end
-  end
-  
-  # POST /categories/multiple_change
-  def multiple_change
-    if params[:category_ids]
-      params[:category_ids].each do |category_id|
-        @category = Category.find(category_id)
-        if @category.validity
-          @category.update_attributes(validity: false)
-        else
-          @category.update_attributes(validity: true)
-        end
-      end
-      redirect_to categories_url, notice: t(:validity_changed)      
-    else
-      redirect_to categories_url
     end
   end
 end

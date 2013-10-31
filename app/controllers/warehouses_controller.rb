@@ -1,4 +1,4 @@
-class WarehousesController < ApplicationController
+class WarehousesController < ValidableModelController
   load_and_authorize_resource
   # GET /warehouses
   # GET /warehouses.json
@@ -78,40 +78,40 @@ class WarehousesController < ApplicationController
     end
   end
 
-  # DELETE /warehouses/1
-  # DELETE /warehouses/1.json
-  def destroy
-    @warehouse = Warehouse.find(params[:id])
-    if @warehouse.validity
-      @warehouse.update_attributes(validity: false)
-      @manager_warehouses = ManagerWarehouse.where(warehouse_id: params[:id])
-      @manager_warehouses.each { |x| x.update_attributes(validity: false)}
-    else
-      @warehouse.update_attributes(validity: true)
-    end
-        
-    respond_to do |format|
-      format.html { redirect_to warehouses_url, notice: t(:validity_changed) }
-      format.json { head :no_content }
-    end
-  end
-  
-    # POST /warehouses/multiple_change
-  def multiple_change
-    if params[:warehouse_ids]
-      params[:warehouse_ids].each do |warehouse_id|
-        @warehouse = Warehouse.find(warehouse_id)
-        if @warehouse.validity
-          @warehouse.update_attributes(validity: false)
-          @manager_warehouses = ManagerWarehouse.where(warehouse_id: warehouse_id)
-          @manager_warehouses.each { |x| x.update_attributes(validity: false)}
-        else
-          @warehouse.update_attributes(validity: true)
-        end
-      end
-      redirect_to warehouses_url, notice: t(:validity_changed)
-    else
-      redirect_to warehouses_url
-    end
-  end
+  # # DELETE /warehouses/1
+  # # DELETE /warehouses/1.json
+  # def destroy
+    # @warehouse = Warehouse.find(params[:id])
+    # if @warehouse.validity
+      # @warehouse.update_attributes(validity: false)
+      # @manager_warehouses = ManagerWarehouse.where(warehouse_id: params[:id])
+      # @manager_warehouses.each { |x| x.update_attributes(validity: false)}
+    # else
+      # @warehouse.update_attributes(validity: true)
+    # end
+#         
+    # respond_to do |format|
+      # format.html { redirect_to warehouses_url, notice: t(:validity_changed) }
+      # format.json { head :no_content }
+    # end
+  # end
+#   
+    # # POST /warehouses/multiple_change
+  # def multiple_change
+    # if params[:warehouse_ids]
+      # params[:warehouse_ids].each do |warehouse_id|
+        # @warehouse = Warehouse.find(warehouse_id)
+        # if @warehouse.validity
+          # @warehouse.update_attributes(validity: false)
+          # @manager_warehouses = ManagerWarehouse.where(warehouse_id: warehouse_id)
+          # @manager_warehouses.each { |x| x.update_attributes(validity: false)}
+        # else
+          # @warehouse.update_attributes(validity: true)
+        # end
+      # end
+      # redirect_to warehouses_url, notice: t(:validity_changed)
+    # else
+      # redirect_to warehouses_url
+    # end
+  # end
 end

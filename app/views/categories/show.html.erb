@@ -69,6 +69,10 @@
 
 <% if can? :manage, Category %>
 	<%= link_to t(:edit), edit_category_path(@category) %> |
-	<%= link_to (@category.validity ? t(:make_void) : t(:make_valid)), category_path(@category), method: :delete, data: { confirm: t(:are_you_sure) } %> | 
+	<% if @category.validity? %>
+  	<%= link_to(t(:make_void), set_invalid_category_path(@category), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% else %>
+  	<%= link_to(t(:make_valid), set_valid_category_path(@category), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% end %> 
 <%end%>
 <%= link_to t(:back), categories_path %>

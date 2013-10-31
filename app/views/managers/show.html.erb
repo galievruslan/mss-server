@@ -90,7 +90,11 @@
 
 <% if can? :manage, Manager %>
 	<%= link_to t(:edit), edit_manager_path(@manager) %> |
-	<%= link_to (@manager.validity ? t(:make_void) : t(:make_valid)), manager_path(@manager), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+	<% if @manager.validity? %>
+  	<%= link_to(t(:make_void), set_invalid_manager_path(@manager), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% else %>
+  	<%= link_to(t(:make_valid), set_valid_manager_path(@manager), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% end %> 
 <% end %>
 <%= link_to t(:back), managers_path %>
 <%= yield :scripts %>

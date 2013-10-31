@@ -1,4 +1,4 @@
-class ShippingAddress < ActiveRecord::Base
+class ShippingAddress < ValidableModel
   attr_accessible :address, :customer_id, :name, :external_key, :customer, :validity, :order_ids, :route_point_ids, :template_route_point_ids, :audit_document_ids
   belongs_to :customer  
   has_many :orders, :dependent => :destroy
@@ -9,4 +9,11 @@ class ShippingAddress < ActiveRecord::Base
   has_many :audit_documents, :dependent => :destroy
   validates :name, :address, :customer, :external_key, :presence => true
   validates :external_key, :uniqueness => { :case_sensitive => false }
+  
+  def set_invalid
+    self.manager_shipping_addresses.each do |manager_shipping_address|
+      manager_shipping_address.set_invalid
+    end
+    super
+  end
 end

@@ -88,65 +88,111 @@
       end 
     end
   end  
-  resources :template_routes do
+  resources :template_routes, except: :destroy do
+    member do
+      put :set_valid
+      put :set_invalid
+    end
     collection do
       get :get_shipping_address_list
       post :multiple_change
     end
-    resources :template_route_points do
+    resources :template_route_points, except: :destroy do
+      member do
+        put :set_valid
+        put :set_invalid
+      end
       collection do
         post :multiple_change
       end
     end
   end
-  resources :unit_of_measures do
+  resources :unit_of_measures, except: :destroy do
+    member do
+      put :set_valid
+      put :set_invalid
+    end
     collection do
       post :multiple_change
     end
   end  
-  resources :products do 
+  resources :products, except: :destroy do 
     collection do
       post :multiple_change
     end
     member do
+      put :set_valid
+      put :set_invalid
       get 'unit_of_measures/:unit_of_measure_id' => 'products#unit_of_measures'        
     end
-    resources :product_prices do
+    resources :product_prices, except: :destroy do
+      member do
+        put :set_valid
+        put :set_invalid
+      end
       collection do
         post :multiple_change
       end
     end    
-    resources :product_unit_of_measures do
+    resources :product_unit_of_measures, except: :destroy do
+      member do
+        put :set_valid
+        put :set_invalid
+      end
       collection do
         post :multiple_change
       end
     end
   end
-  resources :managers do
+  resources :managers, except: :destroy do
+    member do
+      put :set_valid
+      put :set_invalid
+    end
     collection do
       post :multiple_change
     end
-    resources :manager_warehouses do
+    resources :manager_warehouses, except: :destroy do
+      member do
+        put :set_valid
+        put :set_invalid
+      end
       collection do
         post :multiple_change
       end
     end
-    resources :manager_shipping_addresses do
+    resources :manager_shipping_addresses, except: :destroy do
+      member do
+        put :set_valid
+        put :set_invalid
+      end
       collection do
         post :multiple_change
       end
     end
   end
-  resources :statuses do
+  resources :statuses, except: :destroy do
+    member do
+      put :set_valid
+      put :set_invalid
+    end
     collection do
       post :multiple_change
     end
   end
-  resources :customers do
+  resources :customers, except: :destroy do
     collection do
       post :multiple_change
     end
-    resources  :shipping_addresses do
+    member do
+      put :set_valid
+      put :set_invalid
+    end
+    resources  :shipping_addresses, except: :destroy do
+      member do 
+        put :set_valid
+        put :set_invalid
+      end
       collection do
         post :multiple_change
       end
@@ -161,25 +207,39 @@
       put :update_password
     end
   end
-  resources :price_lists do
+  resources :price_lists, except: :destroy do
+    member do
+      put :set_valid
+      put :set_invalid
+      get 'products/:product_id' => 'price_lists#show_products'
+    end
     collection do
       post :multiple_change
     end
-    member do
-      get 'products/:product_id' => 'price_lists#show_products'
-    end
-    resources :price_list_lines do
+    resources :price_list_lines, except: :destroy do
+      member do 
+        put :set_valid
+        put :set_invalid
+      end
       collection do
         post :multiple_change
       end
     end
   end
-  resources :warehouses do
+  resources :warehouses, except: :destroy do
+    member do
+      put :set_valid
+      put :set_invalid
+    end
     collection do
       post :multiple_change
     end
   end
-  resources :categories do
+  resources :categories, except: :destroy do
+    member do
+      put :set_valid
+      put :set_invalid
+    end
     collection do
       post :multiple_change
     end

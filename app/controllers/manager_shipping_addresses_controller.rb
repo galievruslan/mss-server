@@ -1,4 +1,4 @@
-class ManagerShippingAddressesController < ApplicationController
+class ManagerShippingAddressesController < ValidableModelController
   # GET /manager_shipping_addresses
   # GET /manager_shipping_addresses.json
   def index
@@ -84,41 +84,5 @@ class ManagerShippingAddressesController < ApplicationController
         format.json { render json: @manager_shipping_address.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  # DELETE /manager_shipping_addresses/1
-  # DELETE /manager_shipping_addresses/1.json
-  def destroy
-    @manager = Manager.find(params[:manager_id])
-    @manager_shipping_address = ManagerShippingAddress.find(params[:id]) 
-       
-    if @manager_shipping_address.validity 
-      @manager_shipping_address.update_attributes(validity: false)
-    else
-      @manager_shipping_address.update_attributes(validity: true)
-    end
-
-    respond_to do |format|
-      format.html { redirect_to manager_manager_shipping_addresses_path(@manager), notice: t(:validity_changed) }
-      format.json { head :no_content }
-    end
-  end
-  
-  # POST /manager/1/manager_shipping_addresses/multiple_change
-  def multiple_change
-    @manager = Manager.find(params[:manager_id])
-    if params[:manager_shipping_address_ids]      
-      params[:manager_shipping_address_ids].each do |manager_shipping_address_id|
-        @manager_shipping_address = ManagerShippingAddress.find(manager_shipping_address_id)
-        if @manager_shipping_address.validity
-          @manager_shipping_address.update_attributes(validity: false)
-        else
-          @manager_shipping_address.update_attributes(validity: true)
-        end
-      end
-      redirect_to manager_manager_shipping_addresses_path(@manager), notice: t(:validity_changed)
-    else
-      redirect_to manager_manager_shipping_addresses_path(@manager)  
-    end     
   end
 end

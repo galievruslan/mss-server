@@ -33,7 +33,7 @@
 		<%end%>
 	</div>
 </div>
-<%= form_tag multiple_change_template_route_template_route_points_path(@template_route) do%>
+<%= form_tag multiple_change_template_route_template_route_points_path(@template_route), class: 'multiple_change_form' do%>
 	<table class="table table-striped table-hover">
 		<thead>
 	  <tr>
@@ -47,14 +47,18 @@
 	
 	<% @template_route_points.each do |template_route_point| %>
 	  <tr>
-	  	<td><%= check_box_tag 'template_route_point_ids[]', template_route_point.id %></td>
+	  	<td><%= check_box_tag 'ids[]', template_route_point.id %></td>
 	    <td><%= template_route_point.shipping_address.name %></td>
 	    <td><%= template_route_point.shipping_address.address %></td>
 	    <td><i class=<%= template_route_point.validity ? 'icon-ok-sign' : 'icon-remove-circle'%>></i></td>
 	    <td><%= link_to(template_route_template_route_point_path(@template_route, template_route_point)) do %><i class='icon-info-sign' title='<%= t(:show) %>'></i><%end%></td>
 	    <% if can? :manage, TemplateRoutePoint %>
 		    <td><%= link_to(edit_template_route_template_route_point_path(@template_route, template_route_point)) do %><i class='icon-edit' title='<%=t(:edit)%>'></i><%end%></td>
-		    <td><%= link_to(template_route_template_route_point_path(@template_route, template_route_point), method: :delete, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%= template_route_point.validity ? t(:make_void) : t(:make_valid)%>"></i><%end%></td>
+		    <% if template_route_point.validity? %>
+				    	<td><%= link_to(set_invalid_template_route_template_route_point_path(@template_route, template_route_point), :method => :put, data: { confirm: t(:are_you_sure) }) do %><i class='icon-remove' title="<%=t(:make_void)%>"></i><%end%></td>
+				    <% else %>
+				    	<td><%= link_to(set_valid_template_route_template_route_point_path(@template_route, template_route_point), :method => :put, data: { confirm: t(:are_you_sure) }) do %><i class='icon-ok' title="<%=t(:make_valid)%>"></i><%end%></td>
+				    <% end %>
 	    <% end %>
 	  </tr>
 	<% end %>
@@ -65,7 +69,19 @@
 		<%= link_to t(:new_template_route_point), new_template_route_template_route_point_path, class: 'btn', :disable_with => t(:please_wait) %>
 	<% end %>
 	<% if can? :manage, TemplateRoutePoint %>
-		<%= submit_tag t(:change_validity), class: 'btn', :disable_with => t(:please_wait), data: { confirm: t(:are_you_sure) }%>
+		<input id="operation" name="operation" type="hidden" />
+		<div class="btn-group">
+		  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+		    <%=t(:selected)%>
+		    <span class="caret"></span>
+		  </a>
+		  <ul class="dropdown-menu">
+		    <li>
+		    	<%= link_to t(:make_void), '#', :onclick=>"jQuery('#operation').val('set_invalid'); $('.multiple_change_form').submit(); return false;", data: { confirm: t(:are_you_sure)} %>
+		    	<%= link_to t(:make_valid), '#', :onclick=>"jQuery('#operation').val('set_valid'); $('.multiple_change_form').submit(); return false;", data: { confirm: t(:are_you_sure)} %>		    	
+		    </li>
+		  </ul>
+		</div>	
 	<%end%>
 <%end%>
 <%= link_to t(:back), template_route_path(@template_route) %> | <%= link_to t(:back_template_routes), template_routes_path %>

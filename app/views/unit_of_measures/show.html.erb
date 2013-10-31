@@ -13,6 +13,10 @@
 
 <% if can? :manage, UnitOfMeasure %>
 	<%= link_to t(:edit), edit_unit_of_measure_path(@unit_of_measure) %> |
-	<%= link_to (@unit_of_measure.validity ? t(:make_void) : t(:make_valid)), unit_of_measure_path(@unit_of_measure), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+	<% if @unit_of_measure.validity? %>
+  	<%= link_to(t(:make_void), set_invalid_unit_of_measure_path(@unit_of_measure), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% else %>
+  	<%= link_to(t(:make_valid), set_valid_unit_of_measure_path(@unit_of_measure), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% end %> 
 <% end %>
 <%= link_to t(:back), unit_of_measures_path %>

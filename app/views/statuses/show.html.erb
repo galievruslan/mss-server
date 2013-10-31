@@ -9,6 +9,10 @@
 
 <% if can? :manage, Status %>
 	<%= link_to t(:edit), edit_status_path(@status) %> |
-	<%= link_to (@status.validity ? t(:make_void) : t(:make_valid)), status_path(@status), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+	<% if @status.validity? %>
+  	<%= link_to(t(:make_void), set_invalid_status_path(@status), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% else %>
+  	<%= link_to(t(:make_valid), set_valid_status_path(@status), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% end %> 
 <% end %>
 <%= link_to t(:back), statuses_path %>

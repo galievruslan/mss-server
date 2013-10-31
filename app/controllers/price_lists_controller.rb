@@ -1,4 +1,4 @@
-class PriceListsController < ApplicationController
+class PriceListsController < ValidableModelController
   load_and_authorize_resource :except => :show_products
   # GET /price_lists
   # GET /price_lists.json
@@ -85,39 +85,6 @@ class PriceListsController < ApplicationController
       end
     end
   end
-
-  # DELETE /price_lists/1
-  # DELETE /price_lists/1.json
-  def destroy
-    @price_list = PriceList.find(params[:id])
-    if @price_list.validity
-      @price_list.update_attributes(validity: false)
-    else
-      @price_list.update_attributes(validity: true)
-    end
-
-    respond_to do |format|
-      format.html { redirect_to price_lists_url, notice: t(:validity_changed) }
-      format.json { head :no_content }
-    end
-  end
-  
-  # POST /price_lists/multiple_change
-  def multiple_change
-    if params[:price_list_ids]
-      params[:price_list_ids].each do |price_list_id|
-        @price_list = PriceList.find(price_list_id)
-        if @price_list.validity
-          @price_list.update_attributes(validity: false)
-        else
-          @price_list.update_attributes(validity: true)
-        end
-      end
-      redirect_to price_lists_url, notice: t(:validity_changed)
-    else
-      redirect_to price_lists_url
-    end
-  end  
   
   # GET /price_lists/:id/products/:product_id
   def show_products

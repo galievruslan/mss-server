@@ -1,4 +1,4 @@
-class ManagerWarehousesController < ApplicationController
+class ManagerWarehousesController < ValidableModelController
   # GET /manager/1/manager_warehouses
   # GET /manager/1/manager_warehouses.json
   def index
@@ -86,41 +86,5 @@ class ManagerWarehousesController < ApplicationController
         format.json { render json: @manager_warehouse.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  # DELETE /manager/1/manager_warehouses/1
-  # DELETE /manager/1/manager_warehouses/1.json
-  def destroy
-    @manager = Manager.find(params[:manager_id])
-    @manager_warehouse = ManagerWarehouse.find(params[:id])
-    
-    if @manager_warehouse.validity 
-      @manager_warehouse.update_attributes(validity: false)
-    else
-      @manager_warehouse.update_attributes(validity: true)
-    end
-
-    respond_to do |format|
-      format.html { redirect_to manager_manager_warehouses_path(@manager), notice: t(:validity_changed)}
-      format.json { head :no_content }
-    end
-  end
-  
-  # POST /manager/1/manager_warehouses/multiple_change
-  def multiple_change
-    @manager = Manager.find(params[:manager_id])
-    if params[:manager_warehouse_ids]      
-      params[:manager_warehouse_ids].each do |manager_warehouse_id|
-        @manager_warehouse = ManagerWarehouse.find(manager_warehouse_id)
-        if @manager_warehouse.validity
-          @manager_warehouse.update_attributes(validity: false)
-        else
-          @manager_warehouse.update_attributes(validity: true)
-        end
-      end
-      redirect_to manager_manager_warehouses_path(@manager), notice: t(:validity_changed)
-    else
-      redirect_to manager_manager_warehouses_path(@manager)  
-    end     
   end
 end

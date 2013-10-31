@@ -1,4 +1,4 @@
-class ProductsController < ApplicationController
+class ProductsController < ValidableModelController
   load_and_authorize_resource :except => :unit_of_measures
   # GET /products
   # GET /products.json
@@ -86,39 +86,6 @@ class ProductsController < ApplicationController
         format.html { render action: "edit" }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /products/1
-  # DELETE /products/1.json
-  def destroy
-    @product = Product.find(params[:id])
-    if @product.validity
-      @product.update_attributes(validity: false)
-    else
-      @product.update_attributes(validity: true)
-    end
-    
-    respond_to do |format|
-      format.html { redirect_to products_url, notice: t(:validity_changed) }
-      format.json { head :no_content }
-    end
-  end
-  
-  # POST /products/multiple_change_validity
-  def multiple_change_validity
-    if params[:product_ids]
-      params[:product_ids].each do |product_id|
-        @product = Product.find(product_id)
-        if @product.validity
-          @product.update_attributes(validity: false)
-        else
-          @product.update_attributes(validity: true)
-        end
-      end
-      redirect_to products_url, notice: t(:validity_changed)
-    else
-      redirect_to products_url
     end
   end
   

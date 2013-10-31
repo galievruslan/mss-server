@@ -1,4 +1,4 @@
-class PriceListLinesController < ApplicationController
+class PriceListLinesController < ValidableModelController
   # GET /price_list_lines
   # GET /price_list_lines.json
   def index
@@ -86,39 +86,46 @@ class PriceListLinesController < ApplicationController
       end
     end
   end
-
-  # DELETE /price_list_lines/1
-  # DELETE /price_list_lines/1.json
-  def destroy
-    @price_list = PriceList.find(params[:price_list_id])
-    @price_list_line = ProductPrice.find(params[:id])
-    if @price_list_line.validity
-      @price_list_line.update_attributes(validity: false)
-    else
-      @price_list_line.update_attributes(validity: true)
-    end
-
+  
+  def set_valid
+    object = ProductPrice.find(params[:id])
+    object.set_valid
     respond_to do |format|
-      format.html { redirect_to price_list_price_list_lines_path(@price_list), notice: t(:validity_changed)}
+      format.html { redirect_to({:controller => controller_name, :action => 'index'}, notice: t(:validity_changed)) }
       format.json { head :no_content }
+    end    
+  end
+  
+  def set_invalid
+    object = ProductPrice.find(params[:id])
+    object.set_invalid
+    respond_to do |format|
+      format.html { redirect_to({:controller=> controller_name, :action => 'index'}, notice: t(:validity_changed)) }
+      format.json { head :no_content }
+    end    
+  end  
+    
+  def multiple_invalid
+    if params[:ids]
+      params[:ids].each do |id|
+        object = ProductPrice.find(id)
+        object.set_invalid
+      end
+      redirect_to({:controller=> controller_name, :action => 'index'}, notice: t(:validity_changed))      
+    else
+      redirect_to({:controller=> controller_name, :action => 'index'})
     end
   end
   
-  # POST /price_list/1/price_list_lines/multiple_change
-  def multiple_change
-    @price_list = PriceList.find(params[:price_list_id])
-    if params[:price_list_line_ids]
-      params[:price_list_line_ids].each do |price_list_line_id|
-        @price_list_line = ProductPrice.find(price_list_line_id)
-        if @price_list_line.validity
-          @price_list_line.update_attributes(validity: false)
-        else
-          @price_list_line.update_attributes(validity: true)
-        end
+  def multiple_valid
+    if params[:ids]
+      params[:ids].each do |id|
+        object = ProductPrice.find(id)
+        object.set_valid
       end
-      redirect_to price_list_price_list_lines_path(@price_list), notice: t(:validity_changed)
+      redirect_to({:controller=> controller_name, :action => 'index'}, notice: t(:validity_changed))      
     else
-      redirect_to price_list_price_list_lines_path(@price_list)
+      redirect_to({:controller=> controller_name, :action => 'index'})
     end
   end
 end

@@ -1,4 +1,4 @@
-class ManagersController < ApplicationController
+class ManagersController < ValidableModelController
   load_and_authorize_resource
   # GET /managers
   # GET /managers.json
@@ -95,39 +95,6 @@ class ManagersController < ApplicationController
         format.html { render action: "edit" }
         format.json { render json: @manager.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /managers/1
-  # DELETE /managers/1.json
-  def destroy
-    @manager = Manager.find(params[:id])
-    if @manager.validity 
-      @manager.update_attributes(validity: false)
-    else
-      @manager.update_attributes(validity: true)
-    end  
-
-    respond_to do |format|
-      format.html { redirect_to managers_url, notice: t(:validity_changed) }
-      format.json { head :no_content }
-    end
-  end
-  
-  # POST /managers/multiple_change
-  def multiple_change
-    if params[:manager_ids]
-      params[:manager_ids].each do |manager_id|
-        @manager = Manager.find(manager_id)
-        if @manager.validity
-          @manager.update_attributes(validity: false)
-        else
-          @manager.update_attributes(validity: true)
-        end
-      end
-      redirect_to managers_url, notice: t(:validity_changed)
-    else
-      redirect_to managers_url
     end
   end
 end

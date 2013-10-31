@@ -84,6 +84,10 @@
 
 <% if can? :manage, Customer %>
 	<%= link_to t(:edit), edit_customer_path(@customer) %> |
-	<%= link_to (@customer.validity ? t(:make_void) : t(:make_valid)), customer_path(@customer), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+	<% if @customer.validity? %>
+  	<%= link_to(t(:make_void), set_invalid_customer_path(@customer), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% else %>
+  	<%= link_to(t(:make_valid), set_valid_customer_path(@customer), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% end %> 
 <% end %>
 <%= link_to t(:back), customers_path %>

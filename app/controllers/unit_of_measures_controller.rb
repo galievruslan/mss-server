@@ -1,4 +1,4 @@
-class UnitOfMeasuresController < ApplicationController
+class UnitOfMeasuresController < ValidableModelController
   load_and_authorize_resource
   # GET /unit_of_measures
   # GET /unit_of_measures.json
@@ -73,39 +73,6 @@ class UnitOfMeasuresController < ApplicationController
         format.html { render action: "edit" }
         format.json { render json: @unit_of_measure.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /unit_of_measures/1
-  # DELETE /unit_of_measures/1.json
-  def destroy
-    @unit_of_measure = UnitOfMeasure.find(params[:id])
-    if @unit_of_measure.validity 
-      @unit_of_measure.update_attributes(validity: false)
-    else
-      @unit_of_measure.update_attributes(validity: true)
-    end
-
-    respond_to do |format|
-      format.html { redirect_to unit_of_measures_url, notice: t(:validity_changed) }
-      format.json { head :no_content }
-    end
-  end
-  
-  # POST /unit_of_measures/multiple_change
-  def multiple_change
-    if params[:unit_of_measure_ids]
-      params[:unit_of_measure_ids].each do |unit_of_measure_id|
-        @unit_of_measure = UnitOfMeasure.find(unit_of_measure_id)
-        if @unit_of_measure.validity
-          @unit_of_measure.update_attributes(validity: false)
-        else
-          @unit_of_measure.update_attributes(validity: true)
-        end
-      end
-      redirect_to unit_of_measures_url, notice: t(:validity_changed)
-    else
-      redirect_to unit_of_measures_url
     end
   end
 end

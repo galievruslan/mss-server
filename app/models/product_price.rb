@@ -1,4 +1,4 @@
-class ProductPrice < ActiveRecord::Base
+class ProductPrice < ValidableModel
   attr_accessible :price, :price_list_id, :product_id, :price_list, :product, :validity
   belongs_to :price_list
   belongs_to :product

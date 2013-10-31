@@ -1,4 +1,4 @@
-class ProductPricesController < ApplicationController
+class ProductPricesController < ValidableModelController
   # GET /product_prices
   # GET /product_prices.json
   def index
@@ -85,41 +85,6 @@ class ProductPricesController < ApplicationController
         format.html { render action: "edit" }
         format.json { render json: @product_price.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /product_prices/1
-  # DELETE /product_prices/1.json
-  def destroy
-    @product = Product.find(params[:product_id])
-    @product_price = ProductPrice.find(params[:id])
-    if @product_price.validity
-      @product_price.update_attributes(validity: false)
-    else
-      @product_price.update_attributes(validity: true)
-    end
-
-    respond_to do |format|
-      format.html { redirect_to product_product_prices_path(@product), notice: t(:validity_changed)}
-      format.json { head :no_content }
-    end
-  end
-  
-  # POST /product/1/product_prices/multiple_change
-  def multiple_change
-    @product = Product.find(params[:product_id])
-    if params[:product_price_ids]
-      params[:product_price_ids].each do |product_price_id|
-        @product_price = ProductPrice.find(product_price_id)
-        if @product_price.validity
-          @product_price.update_attributes(validity: false)
-        else
-          @product_price.update_attributes(validity: true)
-        end
-      end
-      redirect_to product_product_prices_path(@product), notice: t(:validity_changed)
-    else
-      redirect_to product_product_prices_path(@product) 
     end
   end
 end

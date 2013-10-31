@@ -19,6 +19,10 @@
 
 <% if can? :manage, ProductPrice %>
 	<%= link_to t(:edit), edit_product_product_price_path(@product, @product_price) %> |
-	<%= link_to (@product_price.validity ? t(:make_void) : t(:make_valid)), product_product_price_path(@product, @product_price), method: :delete, data: { confirm: t(:are_you_sure) } %> |
+	<% if @product_price.validity? %>
+  	<%= link_to(t(:make_void), set_invalid_product_product_price_path(@product, @product_price), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% else %>
+  	<%= link_to(t(:make_valid), set_valid_product_product_price_path(@product, @product_price), :method => :put, data: { confirm: t(:are_you_sure) }) %> |
+  <% end %> 
 <% end %>
 <%= link_to t(:back), product_product_prices_path(@product) %>

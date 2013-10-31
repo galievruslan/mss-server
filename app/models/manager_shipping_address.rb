@@ -1,4 +1,4 @@
-class ManagerShippingAddress < ActiveRecord::Base
+class ManagerShippingAddress < ValidableModel
   attr_accessible :manager_id, :shipping_address_id, :manager, :shipping_address, :validity
   belongs_to :manager
   belongs_to :shipping_address

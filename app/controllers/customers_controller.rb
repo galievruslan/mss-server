@@ -1,4 +1,4 @@
-class CustomersController < ApplicationController
+class CustomersController < ValidableModelController
   load_and_authorize_resource
   # GET /customers
   # GET /customers.json
@@ -80,39 +80,6 @@ class CustomersController < ApplicationController
         format.html { render action: "edit" }
         format.json { render json: @customer.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /customers/1
-  # DELETE /customers/1.json
-  def destroy
-    @customer = Customer.find(params[:id])
-    if @customer.validity 
-      @customer.update_attributes(validity: false)
-    else
-      @customer.update_attributes(validity: true)
-    end
-
-    respond_to do |format|
-      format.html { redirect_to customers_url, notice: t(:validity_changed) }
-      format.json { head :no_content }
-    end
-  end
-  
-  # POST /customers/multiple_change
-  def multiple_change
-    if params[:customer_ids]
-      params[:customer_ids].each do |customer_id|
-        @customer = Customer.find(customer_id)
-        if @customer.validity
-          @customer.update_attributes(validity: false)
-        else
-          @customer.update_attributes(validity: true)
-        end
-      end
-      redirect_to customers_url, notice: t(:validity_changed)          
-    else
-      redirect_to customers_url
     end
   end
 end

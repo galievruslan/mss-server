@@ -1,4 +1,4 @@
-class StatusesController < ApplicationController
+class StatusesController < ValidableModelController
   load_and_authorize_resource
   # GET /statuses
   # GET /statuses.json
@@ -73,39 +73,6 @@ class StatusesController < ApplicationController
         format.html { render action: "edit" }
         format.json { render json: @status.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /statuses/1
-  # DELETE /statuses/1.json
-  def destroy
-    @status = Status.find(params[:id])
-    if @status.validity 
-      @status.update_attributes(validity: false)
-    else
-      @status.update_attributes(validity: true)
-    end
-
-    respond_to do |format|
-      format.html { redirect_to statuses_url, notice: t(:validity_changed) }
-      format.json { head :no_content }
-    end
-  end
-  
-  # POST /statuses/multiple_change
-  def multiple_change
-    if params[:status_ids]
-      params[:status_ids].each do |status_id|
-        @status = Status.find(status_id)
-        if @status.validity
-          @status.update_attributes(validity: false)
-        else
-          @status.update_attributes(validity: true)
-        end
-      end
-      redirect_to statuses_url, notice: t(:validity_changed)
-    else
-      redirect_to statuses_url
     end
   end
 end

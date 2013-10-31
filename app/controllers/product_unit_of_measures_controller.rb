@@ -1,4 +1,4 @@
-class ProductUnitOfMeasuresController < ApplicationController
+class ProductUnitOfMeasuresController < ValidableModelController
   load_and_authorize_resource
   # GET /product_unit_of_measures
   # GET /product_unit_of_measures.json
@@ -95,41 +95,6 @@ class ProductUnitOfMeasuresController < ApplicationController
         format.html { render action: "edit" }
         format.json { render json: @product_unit_of_measure.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /product_unit_of_measures/1
-  # DELETE /product_unit_of_measures/1.json
-  def destroy
-    @product = Product.find(params[:product_id])
-    @product_unit_of_measure = ProductUnitOfMeasure.find(params[:id])
-    if @product_unit_of_measure.validity
-      @product_unit_of_measure.update_attributes(validity: false)
-    else
-      @product_unit_of_measure.update_attributes(validity: true)
-    end
-
-    respond_to do |format|
-      format.html { redirect_to product_product_unit_of_measures_path(@product), notice: t(:validity_changed) }
-      format.json { head :no_content }
-    end
-  end
-  
-    # POST /product/1/product_unit_of_measures/multiple_change_validity
-  def multiple_change_validity
-    @product = Product.find(params[:product_id])
-    if params[:product_unit_of_measure_ids]
-      params[:product_unit_of_measure_ids].each do |product_unit_of_measure_id|
-        @product_unit_of_measure = ProductUnitOfMeasure.find(product_unit_of_measure_id)
-        if @product_unit_of_measure.validity
-          @product_unit_of_measure.update_attributes(validity: false)
-        else
-          @product_unit_of_measure.update_attributes(validity: true)
-        end
-      end
-      redirect_to product_product_unit_of_measures_path(@product), notice: t(:validity_changed)
-    else
-      redirect_to product_product_unit_of_measures_path(@product)
     end
   end
 end
