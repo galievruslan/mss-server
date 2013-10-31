@@ -9,15 +9,6 @@
  = require bootstrap-spinedit
 */
 
-/* For route_point_photos */
-.row-fluid li.photo:nth-child(5n) {
-    margin: 0;
-    padding: 0;
-}
-.row-fluid li.photo:nth-child(9n) {
-    margin: 0;
-    padding: 0;
-}
 /* Thumbnail caption stylesheet */
 #hover-cap-4col .thumbnail {
     position:relative;
